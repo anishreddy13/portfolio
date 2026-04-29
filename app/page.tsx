@@ -11,7 +11,6 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 
 export default function Home() {
   useEffect(() => {
-    // Prevent default scroll restoration
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
