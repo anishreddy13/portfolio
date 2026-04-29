@@ -69,7 +69,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.02 }}
             >
               <span className="font-display text-2xl tracking-widest gradient-text-blue">
-                ALEX.DEV
+                Anishreddy.DEV
               </span>
               <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-[#00f5ff] group-hover:w-full transition-all duration-500" />
             </motion.a>
