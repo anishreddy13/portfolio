@@ -239,7 +239,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
     if (!text.trim()) { setError("Please enter some text."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("http://localhost:8000/predict", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+      const res = await fetch("https://portfolio-pkdj.onrender.com/predict", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
       if (!res.ok) throw new Error((await res.json()).detail || "Failed");
       const data: SentimentResult = await res.json();
       setResult(data); setHistory((p) => [{ ...data, id: Date.now() }, ...p.slice(0, 4)]);
@@ -297,7 +297,7 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
     if (!text.trim()) { setError("Please enter a message."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("http://localhost:8000/predict/spam", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+      const res = await fetch("https://portfolio-pkdj.onrender.com/predict/spam", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
       if (!res.ok) throw new Error((await res.json()).detail || "Failed");
       const data: SpamResult = await res.json();
       setResult(data); setHistory((p) => [{ ...data, id: Date.now() }, ...p.slice(0, 4)]);
@@ -354,7 +354,7 @@ function EmotionTab({ serverStatus }: { serverStatus: string }) {
     if (!text.trim()) { setError("Please enter some text."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("http://localhost:8000/predict/emotion", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+      const res = await fetch("https://portfolio-pkdj.onrender.com/predict/emotion", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
       if (!res.ok) throw new Error((await res.json()).detail || "Failed");
       setResult(await res.json());
     } catch (e) { setError(e instanceof Error ? e.message : "Cannot connect."); } finally { setLoading(false); }
@@ -425,7 +425,7 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
   const handlePredict = async () => {
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("http://localhost:8000/predict/cancer", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ features }) });
+      const res = await fetch("https://portfolio-pkdj.onrender.com/predict/cancer", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ features }) });
       if (!res.ok) throw new Error((await res.json()).detail || "Failed");
       setResult(await res.json());
     } catch (e) { setError(e instanceof Error ? e.message : "Cannot connect."); } finally { setLoading(false); }
@@ -521,7 +521,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
     if (!imageBase64) { setError("Please upload an image first."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("http://localhost:8000/predict/skin", {
+      const res = await fetch("https://portfolio-pkdj.onrender.com/predict/skin", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ image: imageBase64 }),
       });
@@ -703,7 +703,7 @@ export default function MLPage() {
 
   useEffect(() => {
     const check = async () => {
-      try { const r = await fetch("http://localhost:8000/health"); setServerStatus(r.ok ? "online" : "offline"); }
+      try { const r = await fetch("https://portfolio-pkdj.onrender.com/health"); setServerStatus(r.ok ? "online" : "offline"); }
       catch { setServerStatus("offline"); }
     };
     check();
