@@ -5,3 +5,6 @@ torchvision
 pillow
 numpy
 python-multipart
+joblib
+scikit-learn
+pandas

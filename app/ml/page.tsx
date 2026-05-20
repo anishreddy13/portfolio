@@ -521,7 +521,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
     if (!imageBase64) { setError("Please upload an image first."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("https://portfolio-pkdj.onrender.com/predict/skin", {
+      const res = await fetch("https://anishreddy13-skin-cancer-api.hf.space/predict/skin", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ image: imageBase64 }),
       });
