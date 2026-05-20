@@ -518,36 +518,47 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
   }, [processFile]);
 
   const handlePredict = async () => {
-    if (!imageBase64) { setError("Please upload an image first."); return; }
-    setLoading(true); setError(null); setResult(null);
-    try {
-  const res = await fetch("https://anishreddy13-skin-cancer-api.hf.space/predict/skin", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      image: imageBase64,
-    }),
-  });
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.detail || "Prediction failed");
+  if (!imageBase64) {
+    setError("Please upload an image first.");
+    return;
   }
 
-  setResult(data);
+  setLoading(true);
+  setError(null);
+  setResult(null);
 
-} catch (e) {
-  setError(
-    e instanceof Error
-      ? e.message
-      : "Cannot connect to ML server."
-  );
-} finally {
-  setLoading(false);
-}
+  try {
+    const res = await fetch(
+      "https://anishreddy13-skin-cancer-api.hf.space/predict/skin",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image: imageBase64,
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.detail || "Prediction failed");
+    }
+
+    setResult(data);
+
+  } catch (e) {
+    setError(
+      e instanceof Error
+        ? e.message
+        : "Cannot connect to ML server."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   const riskColors: Record<string, string> = { Low: "#00f5ff", Moderate: "#f59e0b", High: "#ec4899" };
 
