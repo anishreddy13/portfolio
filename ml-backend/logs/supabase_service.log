@@ -2178,3 +2178,4 @@ Traceback (most recent call last):
   File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
     raise APIError(r.json())
 postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:37 | INFO | supabase_service | ✅ Supabase connection established
