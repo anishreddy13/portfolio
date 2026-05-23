@@ -1,0 +1,70 @@
+2026-05-24 01:10:01 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-24 01:10:01 | ERROR | main | ❌ Model loading failed: <class 'numpy.random._mt19937.MT19937'> is not a known BitGenerator module.
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 103, in lifespan
+    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+          ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 415, in load_build
+    self.stack.append(array_wrapper.read(self))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 252, in read
+    array = self.read_array(unpickler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 152, in read_array
+    array = pickle.load(unpickler.file_handle)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\numpy\random\_pickle.py", line 34, in __bit_generator_ctor
+    raise ValueError(str(bit_generator_name) + ' is not a known '
+ValueError: <class 'numpy.random._mt19937.MT19937'> is not a known BitGenerator module.
+2026-05-24 01:16:47 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-24 01:16:47 | ERROR | main | ❌ Model loading failed: <class 'numpy.random._mt19937.MT19937'> is not a known BitGenerator module.
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 103, in lifespan
+    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+          ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 415, in load_build
+    self.stack.append(array_wrapper.read(self))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 252, in read
+    array = self.read_array(unpickler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\joblib\numpy_pickle.py", line 152, in read_array
+    array = pickle.load(unpickler.file_handle)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\numpy\random\_pickle.py", line 34, in __bit_generator_ctor
+    raise ValueError(str(bit_generator_name) + ' is not a known '
+ValueError: <class 'numpy.random._mt19937.MT19937'> is not a known BitGenerator module.
+2026-05-24 01:18:21 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-24 01:18:21 | INFO | main | ✅ All ML models loaded
+2026-05-24 01:18:21 | WARNING | main | ⚠️  Redis unavailable (non-fatal): Port could not be cast to integer value as '6379"'
+2026-05-24 01:18:21 | INFO | main | ✅ Supabase status: {'status': 'unavailable', 'connected': False, 'error': 'Supabase client not initialized — check .env keys'}
+2026-05-24 01:18:21 | INFO | main | ✅ API startup complete
+2026-05-24 01:22:32 | INFO | main | 🛑 Shutting down API
+2026-05-24 01:22:42 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-24 01:22:43 | INFO | main | ✅ All ML models loaded
+2026-05-24 01:22:43 | INFO | main | ✅ Redis connected
+2026-05-24 01:22:45 | INFO | main | ✅ Supabase status: {'status': 'healthy', 'connected': True}
+2026-05-24 01:22:45 | INFO | main | ✅ API startup complete
+2026-05-24 01:30:14 | INFO | main | 🛑 Shutting down API

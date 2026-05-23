@@ -1,0 +1,2180 @@
+2026-05-24 00:39:40 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid URL
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 48, in _connect
+    self.client = create_client(
+                  ^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 335, in create_client
+    return SyncClient.create(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 58, in __init__
+    raise SupabaseException("Invalid URL")
+supabase._sync.client.SupabaseException: Invalid URL
+2026-05-24 00:51:17 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 48, in _connect
+    self.client = create_client(
+                  ^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 335, in create_client
+    return SyncClient.create(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 64, in __init__
+    raise SupabaseException("Invalid API key")
+supabase._sync.client.SupabaseException: Invalid API key
+2026-05-24 00:52:03 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 48, in _connect
+    self.client = create_client(
+                  ^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 335, in create_client
+    return SyncClient.create(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 64, in __init__
+    raise SupabaseException("Invalid API key")
+supabase._sync.client.SupabaseException: Invalid API key
+2026-05-24 00:59:22 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 48, in _connect
+    self.client = create_client(
+                  ^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 335, in create_client
+    return SyncClient.create(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 64, in __init__
+    raise SupabaseException("Invalid API key")
+supabase._sync.client.SupabaseException: Invalid API key
+2026-05-24 01:06:23 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 48, in _connect
+    self.client = create_client(
+                  ^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 335, in create_client
+    return SyncClient.create(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\supabase\_sync\client.py", line 64, in __init__
+    raise SupabaseException("Invalid API key")
+supabase._sync.client.SupabaseException: Invalid API key
+2026-05-24 01:09:58 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key — check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env
+2026-05-24 01:10:01 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key — check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env
+2026-05-24 01:16:43 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key — check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env
+2026-05-24 01:16:46 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key — check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env
+2026-05-24 01:18:17 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key — check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env
+2026-05-24 01:18:20 | ERROR | supabase_service | ❌ Failed to connect to Supabase: Invalid API key — check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env
+2026-05-24 01:22:38 | INFO | supabase_service | ✅ Supabase connection established
+2026-05-24 01:22:42 | INFO | supabase_service | ✅ Supabase connection established
+2026-05-24 01:44:20 | INFO | supabase_service | ✅ Supabase connection established
+2026-05-24 01:54:46 | INFO | supabase_service | ✅ Supabase connection established
+2026-05-24 02:01:17 | INFO | supabase_service | ✅ Supabase connection established
+2026-05-24 02:09:42 | INFO | supabase_service | ✅ Supabase connection established
+2026-05-24 02:13:21 | INFO | supabase_service | ✅ Supabase connection established
+2026-05-24 02:14:08 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:08 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:08 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:16 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:16 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:16 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:16 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:16 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:14:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:05 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:05 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:05 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:06 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:06 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:06 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:06 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:07 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:07 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:07 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:07 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:08 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:08 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:08 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:08 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:15:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:09 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:10 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:11 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:12 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:13 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:14 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:15 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:16 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:16 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:16 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:16:44 | INFO | supabase_service | ✅ Supabase connection established
+2026-05-24 02:17:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:21 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:21 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:21 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:21 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:17:29 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:17 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:18 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:19 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:20 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:21 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:21 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:21 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:18:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:22 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:23 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:24 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:25 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:29 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:29 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:29 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:29 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:30 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:30 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:30 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:30 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:31 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:31 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:31 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:31 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:32 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:19:32 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:26 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:27 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:28 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:29 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:29 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:29 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:30 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:30 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:30 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:30 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:31 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+2026-05-24 02:20:31 | ERROR | supabase_service | Insert failed: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\services\supabase_service.py", line 112, in insert
+    .execute()
+     ^^^^^^^^^
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\venv\Lib\site-packages\postgrest\_sync\request_builder.py", line 78, in execute
+    raise APIError(r.json())
+postgrest.exceptions.APIError: {'code': '42501', 'details': None, 'hint': None, 'message': 'new row violates row-level security policy for table "news_predictions"'}

@@ -1,4 +1,8 @@
+from dotenv import load_dotenv
+load_dotenv()  # FIRST — must be before all other imports
+
 from contextlib import asynccontextmanager
+from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -6,6 +10,10 @@ from typing import List
 import os
 import uvicorn
 
+
+# ─────────────────────────────────────────────────────────────
+# EXISTING MODELS
+# ─────────────────────────────────────────────────────────────
 from model import predict_sentiment, load_model
 from spam_model import predict_spam, load_spam_model
 from emotion_model import predict_emotion, load_emotion_models
@@ -17,61 +25,142 @@ from cancer_model import (
     BENIGN_SAMPLE,
 )
 
-# ── Model paths ────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────
+# NEW INFRASTRUCTURE
+# ─────────────────────────────────────────────────────────────
+from utils.config import settings
+from utils.logger import get_logger
+
+from services.redis_service import redis_service
+from services.supabase_service import supabase_service
+
+
+# ─────────────────────────────────────────────────────────────
+# LOGGER
+# ─────────────────────────────────────────────────────────────
+logger = get_logger("main")
+
+
+# ─────────────────────────────────────────────────────────────
+# MODEL PATHS
+# ─────────────────────────────────────────────────────────────
 SENTIMENT_MODEL_PATH = "sentiment_model.pkl"
-SPAM_MODEL_PATH = "spam_model.pkl"
-EMOTION_MODEL_PATH = "emotion_model.pkl"
-CANCER_MODEL_PATH = "cancer_model.pkl"
+SPAM_MODEL_PATH      = "spam_model.pkl"
+EMOTION_MODEL_PATH   = "emotion_model.pkl"
+CANCER_MODEL_PATH    = "cancer_model.pkl"
 
-# ── Global model refs ──────────────────────────────────────────────────────────
+
+# ─────────────────────────────────────────────────────────────
+# GLOBAL MODEL REFS
+# ─────────────────────────────────────────────────────────────
 sentiment_pipeline = None
-spam_pipeline = None
-emotion_pipeline = None
-gender_pipeline = None
-age_pipeline = None
-cancer_pipeline = None
+spam_pipeline      = None
+emotion_pipeline   = None
+gender_pipeline    = None
+age_pipeline       = None
+cancer_pipeline    = None
 
 
+# ─────────────────────────────────────────────────────────────
+# APP START TIME
+# ─────────────────────────────────────────────────────────────
+START_TIME = datetime.utcnow()
+
+
+# ─────────────────────────────────────────────────────────────
+# FASTAPI LIFESPAN
+# ─────────────────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global sentiment_pipeline, spam_pipeline
     global emotion_pipeline, gender_pipeline, age_pipeline
     global cancer_pipeline
 
+    logger.info("🚀 Starting ML Portfolio API")
+
+    # ── Validate model files exist ────────────────────────────
     for path, name in [
         (SENTIMENT_MODEL_PATH, "Sentiment"),
-        (SPAM_MODEL_PATH, "Spam"),
-        (EMOTION_MODEL_PATH, "Emotion"),
-        (CANCER_MODEL_PATH, "Cancer"),
+        (SPAM_MODEL_PATH,      "Spam"),
+        (EMOTION_MODEL_PATH,   "Emotion"),
+        (CANCER_MODEL_PATH,    "Cancer"),
     ]:
         if not os.path.exists(path):
-            raise RuntimeError(
-                f"{name} model not found at {path}. "
-                "Run the corresponding training script first."
-            )
+            logger.error(f"❌ {name} model missing at {path}")
+            raise RuntimeError(f"{name} model not found at {path}")
 
-    sentiment_pipeline = load_model(SENTIMENT_MODEL_PATH)
-    spam_pipeline = load_spam_model(SPAM_MODEL_PATH)
-    emotion_pipeline, gender_pipeline, age_pipeline = load_emotion_models()
-    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+    # ── Load ML models ────────────────────────────────────────
+    try:
+        sentiment_pipeline = load_model(SENTIMENT_MODEL_PATH)
+        spam_pipeline      = load_spam_model(SPAM_MODEL_PATH)
 
-    print("✅ Sentiment model loaded!")
-    print("✅ Spam model loaded!")
-    print("✅ Emotion + Gender + Age models loaded!")
-    print("✅ Breast cancer model loaded!")
+        (
+            emotion_pipeline,
+            gender_pipeline,
+            age_pipeline,
+        ) = load_emotion_models()
 
-    yield
+        cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
 
-    print("Shutting down...")
+        logger.info("✅ All ML models loaded")
+
+    except Exception as e:
+        logger.exception(f"❌ Model loading failed: {e}")
+        raise
+
+    # ── Connect Redis (non-fatal) ─────────────────────────────
+    try:
+        await redis_service.connect()
+        logger.info("✅ Redis connected")
+
+    except Exception as e:
+        logger.warning(f"⚠️  Redis unavailable (non-fatal): {e}")
+
+    # ── Verify Supabase (non-fatal) ───────────────────────────
+    #
+    # WHY NON-FATAL:
+    # Supabase is used for logging/analytics, not core inference.
+    # A bad API key should NOT prevent the ML API from starting.
+    # Fix your .env keys, but the server will still serve predictions.
+    #
+    try:
+        supabase_health = supabase_service.health_check()
+        logger.info(f"✅ Supabase status: {supabase_health}")
+
+    except Exception as e:
+        logger.warning(f"⚠️  Supabase unavailable (non-fatal): {e}")
+
+    logger.info("✅ API startup complete")
+
+    yield  # ← app runs here
+
+    # ── Shutdown ──────────────────────────────────────────────
+    logger.info("🛑 Shutting down API")
+
+    try:
+        await redis_service.close()
+
+    except Exception as e:
+        logger.exception(f"Redis shutdown error: {e}")
 
 
+# ─────────────────────────────────────────────────────────────
+# FASTAPI APP
+# ─────────────────────────────────────────────────────────────
 app = FastAPI(
-    title="ML Portfolio API",
-    description="Sentiment + Spam + Emotion + Cancer Detection",
-    version="5.0.0",
+    title=settings.APP_NAME,
+    description=(
+        "Production ML Portfolio API with "
+        "Realtime Streaming + MLOps"
+    ),
+    version=settings.APP_VERSION,
     lifespan=lifespan,
 )
 
+
+# ─────────────────────────────────────────────────────────────
+# CORS
+# ─────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -80,8 +169,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Request / Response schemas ────────────────────────────────────────────────
 
+# ─────────────────────────────────────────────────────────────
+# REQUEST / RESPONSE SCHEMAS
+# ─────────────────────────────────────────────────────────────
 class TextInput(BaseModel):
     text: str
 
@@ -91,67 +182,70 @@ class CancerInput(BaseModel):
 
 
 class SentimentResponse(BaseModel):
-    sentiment: str
-    confidence: float
-    scores: dict
-    cleaned_text: str
+    sentiment:     str
+    confidence:    float
+    scores:        dict
+    cleaned_text:  str
     original_text: str
 
 
 class SpamResponse(BaseModel):
-    label: str
-    confidence: float
-    scores: dict
-    spam_keywords_found: list
-    cleaned_text: str
-    original_text: str
-    is_spam: bool
+    label:                str
+    confidence:           float
+    scores:               dict
+    spam_keywords_found:  list
+    cleaned_text:         str
+    original_text:        str
+    is_spam:              bool
 
 
 class EmotionItem(BaseModel):
     emotion: str
-    score: float
-    emoji: str
-    color: str
+    score:   float
+    emoji:   str
+    color:   str
 
 
 class EmotionResponse(BaseModel):
-    primary_emotion: str
-    emotion_emoji: str
-    emotion_color: str
+    primary_emotion:    str
+    emotion_emoji:      str
+    emotion_color:      str
     emotion_confidence: float
-    top_emotions: List[EmotionItem]
-    gender: str
-    gender_confidence: float
-    gender_scores: dict
-    age_group: str
-    age_confidence: float
-    age_scores: dict
-    cleaned_text: str
-    original_text: str
+    top_emotions:       List[EmotionItem]
+    gender:             str
+    gender_confidence:  float
+    gender_scores:      dict
+    age_group:          str
+    age_confidence:     float
+    age_scores:         dict
+    cleaned_text:       str
+    original_text:      str
 
 
 class FeatureImportance(BaseModel):
-    feature: str
+    feature:    str
     importance: float
 
 
 class CancerResponse(BaseModel):
-    prediction: str
-    confidence: float
-    malignant_probability: float
-    benign_probability: float
-    risk_level: str
-    top_features: List[FeatureImportance]
-    is_malignant: bool
+    prediction:             str
+    confidence:             float
+    malignant_probability:  float
+    benign_probability:     float
+    risk_level:             str
+    top_features:           List[FeatureImportance]
+    is_malignant:           bool
 
 
-# ── Health / Meta ──────────────────────────────────────────────────────────────
-
+# ─────────────────────────────────────────────────────────────
+# ROOT
+# ─────────────────────────────────────────────────────────────
 @app.get("/")
 def root():
     return {
-        "message": "ML Portfolio API v5.0",
+        "message":     "ML Production API",
+        "version":     settings.APP_VERSION,
+        "environment": settings.ENVIRONMENT,
         "models": [
             "sentiment-analysis",
             "spam-detector",
@@ -162,30 +256,58 @@ def root():
     }
 
 
+# ─────────────────────────────────────────────────────────────
+# HEALTH
+# ─────────────────────────────────────────────────────────────
 @app.get("/health")
-def health():
+async def health():
+    redis_health = await redis_service.health_check()
+
+    # Supabase health is wrapped so a bad key doesn't 500 this endpoint
+    try:
+        supabase_health = supabase_service.health_check()
+    except Exception as e:
+        supabase_health = {"status": "unavailable", "error": str(e)}
+
+    uptime_seconds = (datetime.utcnow() - START_TIME).total_seconds()
+
     return {
-        "status": "ok",
-        "sentiment_model": sentiment_pipeline is not None,
-        "spam_model": spam_pipeline is not None,
-        "emotion_model": emotion_pipeline is not None,
-        "cancer_model": cancer_pipeline is not None,
+        "status":          "ok",
+        "environment":     settings.ENVIRONMENT,
+        "uptime_seconds":  uptime_seconds,
+
+        "models": {
+            "sentiment_model": sentiment_pipeline is not None,
+            "spam_model":      spam_pipeline      is not None,
+            "emotion_model":   emotion_pipeline   is not None,
+            "cancer_model":    cancer_pipeline     is not None,
+        },
+
+        "services": {
+            "redis":    redis_health,
+            "supabase": supabase_health,
+        },
     }
 
 
+# ─────────────────────────────────────────────────────────────
+# CANCER META
+# ─────────────────────────────────────────────────────────────
 @app.get("/cancer/meta")
 def cancer_meta():
     return {
-        "feature_ranges": FEATURE_RANGES,
+        "feature_ranges":   FEATURE_RANGES,
         "malignant_sample": MALIGNANT_SAMPLE,
-        "benign_sample": BENIGN_SAMPLE,
+        "benign_sample":    BENIGN_SAMPLE,
     }
 
 
-# ── Sentiment ──────────────────────────────────────────────────────────────────
-
+# ─────────────────────────────────────────────────────────────
+# SENTIMENT
+# ─────────────────────────────────────────────────────────────
 @app.post("/predict", response_model=SentimentResponse)
 def predict_sentiment_route(input: TextInput):
+
     if not input.text.strip():
         raise HTTPException(400, "Text cannot be empty")
 
@@ -196,6 +318,7 @@ def predict_sentiment_route(input: TextInput):
         raise HTTPException(503, "Model not loaded")
 
     r = predict_sentiment(input.text, sentiment_pipeline)
+    logger.info("Sentiment prediction generated")
 
     return SentimentResponse(
         sentiment=r["sentiment"],
@@ -206,10 +329,12 @@ def predict_sentiment_route(input: TextInput):
     )
 
 
-# ── Spam ───────────────────────────────────────────────────────────────────────
-
+# ─────────────────────────────────────────────────────────────
+# SPAM
+# ─────────────────────────────────────────────────────────────
 @app.post("/predict/spam", response_model=SpamResponse)
 def predict_spam_route(input: TextInput):
+
     if not input.text.strip():
         raise HTTPException(400, "Text cannot be empty")
 
@@ -217,6 +342,7 @@ def predict_spam_route(input: TextInput):
         raise HTTPException(503, "Model not loaded")
 
     r = predict_spam(input.text, spam_pipeline)
+    logger.info("Spam prediction generated")
 
     return SpamResponse(
         label=r["label"],
@@ -229,10 +355,12 @@ def predict_spam_route(input: TextInput):
     )
 
 
-# ── Emotion ────────────────────────────────────────────────────────────────────
-
+# ─────────────────────────────────────────────────────────────
+# EMOTION
+# ─────────────────────────────────────────────────────────────
 @app.post("/predict/emotion", response_model=EmotionResponse)
 def predict_emotion_route(input: TextInput):
+
     if not input.text.strip():
         raise HTTPException(400, "Text cannot be empty")
 
@@ -245,6 +373,7 @@ def predict_emotion_route(input: TextInput):
         gender_pipeline,
         age_pipeline,
     )
+    logger.info("Emotion prediction generated")
 
     return EmotionResponse(
         primary_emotion=r["primary_emotion"],
@@ -263,10 +392,12 @@ def predict_emotion_route(input: TextInput):
     )
 
 
-# ── Breast Cancer ──────────────────────────────────────────────────────────────
-
+# ─────────────────────────────────────────────────────────────
+# BREAST CANCER
+# ─────────────────────────────────────────────────────────────
 @app.post("/predict/cancer", response_model=CancerResponse)
 def predict_cancer_route(input: CancerInput):
+
     if not input.features:
         raise HTTPException(400, "Features cannot be empty")
 
@@ -274,6 +405,7 @@ def predict_cancer_route(input: CancerInput):
         raise HTTPException(503, "Model not loaded")
 
     r = predict_cancer(input.features, cancer_pipeline)
+    logger.info("Cancer prediction generated")
 
     return CancerResponse(
         prediction=r["prediction"],
@@ -286,5 +418,13 @@ def predict_cancer_route(input: CancerInput):
     )
 
 
+# ─────────────────────────────────────────────────────────────
+# MAIN
+# ─────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(
+        "main:app",
+        host=settings.API_HOST,
+        port=settings.API_PORT,
+        reload=settings.DEBUG,
+    )
