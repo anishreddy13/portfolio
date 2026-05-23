@@ -5947,3 +5947,54 @@
 2026-05-24 03:50:29 | INFO | data_ingestion | Published headline: The Boys is dead. Long live Vought Rising.
 2026-05-24 03:50:29 | INFO | data_ingestion | Published headline: Police boast of hacking VPN where criminals "believed themse
 2026-05-24 03:50:29 | INFO | data_ingestion | Sleeping 60s
+2026-05-24 03:51:29 | INFO | data_ingestion | Starting ingestion cycle
+2026-05-24 03:51:29 | INFO | data_ingestion | Fetching TechCrunch
+2026-05-24 03:51:29 | INFO | data_ingestion | TechCrunch → 10 new headlines
+2026-05-24 03:51:29 | INFO | data_ingestion | Fetching The Verge
+2026-05-24 03:51:30 | INFO | data_ingestion | The Verge → 10 new headlines
+2026-05-24 03:51:30 | INFO | data_ingestion | Fetching Wired
+2026-05-24 03:51:30 | INFO | data_ingestion | Wired → 10 new headlines
+2026-05-24 03:51:30 | INFO | data_ingestion | Fetching Ars Technica
+2026-05-24 03:51:32 | INFO | data_ingestion | Ars Technica → 10 new headlines
+2026-05-24 03:51:32 | INFO | data_ingestion | Collected 40 headlines
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: SolarSquare in talks to raise up to $60M as India’s rooftop 
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: These special phone and app features can help protect you fr
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: Ferrari is using IBM’s AI to create F1 superfans
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: Nuclear startup Deep Fission says it’s going public, again, 
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: Elon Musk has given up on solar power (on Earth)
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: Peec, one of Berlin’s rising startups, more than doubled ann
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: AI is being used to resurrect the voices of dead pilots
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: SpaceX launches Starship V3 for the first time, but loses bo
+2026-05-24 03:51:32 | INFO | data_ingestion | Published headline: Blue Origin cleared to fly New Glenn mega-rocket after April
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Google goes for the glitter with disco-ball icons: ‘Are y’al
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: The man behind the legendary MPC, Roger Linn, stays focused 
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Here are 38 Memorial Day deals we recommend for $50 or less
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Hanging out in my favorite virtual coffee shop in Tokyo
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: I have a new go-to browser
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Google’s new anything-to-anything AI model is wild
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Google&#8217;s AI search is so broken it can &#8216;disregar
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Twelve South’s AirFly Pro 2 has hit one of its best prices a
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Meta’s Forum is part Reddit, part Facebook, and part Google 
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Elon, stop trying to make Grok happen
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: The best Memorial Day sales you can shop this weekend
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Best Power Banks (2026): My Picks After Testing Over 100
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Memorial Day Dyson Vacuum Deals: V15 Detect, Gen5Detect, Pen
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: L.L.Bean's Zip Hunter's Tote Is the Only Carryall You Need
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Quantum ‘Jamming’ Could Help Unlock the Mysteries of Causali
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: The Best Smart Sprinklers and Irrigation Systems: In-Ground 
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: The FBI Wants ‘Near Real-Time’ Access to US License Plate Re
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Cosmic Voids May Contain the Universe’s Best Secrets
+2026-05-24 03:51:33 | INFO | data_ingestion | Published headline: Best Memorial Day Deals: Garmin, Birdfy, Branch (2026)
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: A 'Golden Orb' on the Ocean Floor Came From a Mysterious Ani
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: All Vehicles Sold in the EU Must Be Able to Hook Up to a Bre
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: SpaceX's Starship V3—still a work in progress—mostly success
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: Two space shuttle-era spacewalkers enter Astronaut Hall of F
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: China’s shark finning could lead to US seafood sanctions
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: Four Russian satellites are now within striking distance of 
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: Ebola outbreak now third largest recorded and "spreading rap
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: First-generation Chromecast users stressed by devices sudden
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: Trump FCC asks public to comment on whether ABC's The View i
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: US scrambles to stop Internet users re-creating dead pilots’
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: The Boys is dead. Long live Vought Rising.
+2026-05-24 03:51:34 | INFO | data_ingestion | Published headline: Police boast of hacking VPN where criminals "believed themse
+2026-05-24 03:51:34 | INFO | data_ingestion | Sleeping 60s
