@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { trackActivity } from "../lib/trackActivity";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -17,15 +18,27 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    trackActivity("home", "page_visit");
+  }, []);
+
   return (
-    <main className="relative min-h-screen bg-[#03040a]">
+    <main
+      className="relative min-h-screen"
+      style={{ background: "var(--surface-0)" }}
+    >
+      {/* Fixed background — sits behind everything */}
       <AnimatedBackground />
-      <Navbar />
-      <Hero />
-      <About />
-      <Projects />
-      <Contact />
-      <Footer />
+
+      {/* Page content — layered above background */}
+      <div className="relative z-10">
+        <Navbar />
+        <Hero />
+        <About />
+        <Projects />
+        <Contact />
+        <Footer />
+      </div>
     </main>
   );
 }

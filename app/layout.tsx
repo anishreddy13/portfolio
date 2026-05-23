@@ -3,13 +3,22 @@ import "./globals.css";
 import CursorEffect from "@/components/CursorEffect";
 
 export const metadata: Metadata = {
-  title: "Portfolio — Creative Developer",
+  title: "Anish.Dev — Full Stack Developer",
   description:
-    "Full-stack developer crafting immersive digital experiences at the intersection of design and technology.",
-  keywords: ["developer", "portfolio", "full-stack", "creative", "next.js"],
+    "Full-stack developer crafting bold, electric digital experiences at the intersection of design and engineering.",
+  keywords: [
+    "developer",
+    "portfolio",
+    "full-stack",
+    "creative",
+    "next.js",
+    "react",
+    "typescript",
+  ],
   openGraph: {
-    title: "Portfolio — Creative Developer",
-    description: "Full-stack developer crafting immersive digital experiences.",
+    title: "Anish.Dev — Full Stack Developer",
+    description:
+      "Full-stack developer crafting bold, electric digital experiences.",
     type: "website",
   },
 };
@@ -20,7 +29,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="noise">
+    <html lang="en">
+      <head>
+        <meta name="theme-color" content="#0A0A0A" />
+        <meta name="color-scheme" content="dark" />
+      </head>
       <body className="antialiased">
         <CursorEffect />
         {children}

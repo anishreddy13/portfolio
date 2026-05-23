@@ -4,56 +4,182 @@ import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
 const footerLinks = {
-  Navigation: ["About", "Projects", "Contact"],
-  Connect: ["GitHub", "LinkedIn", "Twitter", "Dribbble"],
-  Legal: ["Privacy", "Terms"],
+  Navigation: [
+    { label: "About",    href: "#about"    },
+    { label: "Projects", href: "#projects" },
+    { label: "Contact",  href: "#contact"  },
+  ],
+  Connect: [
+    { label: "GitHub",   href: "https://github.com"   },
+    { label: "LinkedIn", href: "https://linkedin.com"  },
+    { label: "Twitter",  href: "https://twitter.com"   },
+    { label: "Dribbble", href: "https://dribbble.com"  },
+  ],
+  Legal: [
+    { label: "Privacy", href: "#" },
+    { label: "Terms",   href: "#" },
+  ],
 };
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
-  return (
-    <footer className="relative border-t border-white/[0.04] pt-16 pb-8 px-6">
-      {/* Top gradient */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00f5ff]/20 to-transparent" />
+  const scrollTo = (href: string) => {
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          {/* Brand col */}
+  return (
+    <footer
+      className="relative overflow-hidden"
+      style={{
+        background: "var(--surface-1)",
+        borderTop:  "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
+      {/* Top red accent line */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, #FF2D2D, #FF6B35, transparent)",
+        }}
+      />
+
+      {/* Background glow */}
+      <div
+        className="absolute bottom-0 left-0 w-[500px] h-[300px] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at bottom left, rgba(255,45,45,0.05) 0%, transparent 65%)",
+        }}
+      />
+      <div
+        className="absolute top-0 right-0 w-[400px] h-[300px] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at top right, rgba(200,255,0,0.03) 0%, transparent 65%)",
+        }}
+      />
+
+      {/* ── Large background wordmark ── */}
+      <div
+        className="absolute bottom-0 left-0 right-0 flex justify-center
+                   pointer-events-none overflow-hidden select-none"
+      >
+        <span
+          className="font-display tracking-[0.12em] leading-none"
+          style={{
+            fontSize:   "clamp(5rem, 18vw, 14rem)",
+            color:      "transparent",
+            WebkitTextStroke: "1px rgba(255,255,255,0.03)",
+            transform:  "translateY(25%)",
+          }}
+        >
+          ANISH.DEV
+        </span>
+      </div>
+
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-8 lg:px-12
+                      pt-14 pb-8">
+
+        {/* ── Top section ── */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+
+          {/* Brand column */}
           <div className="md:col-span-1">
             <ScrollReveal>
-              <motion.div
-                className="font-display text-3xl tracking-widest gradient-text-blue mb-4"
+              <motion.button
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="flex items-center gap-2 mb-4 group"
                 whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                ALEX.DEV
-              </motion.div>
+                <span
+                  className="w-1 h-5 rounded-full"
+                  style={{
+                    background: "linear-gradient(to bottom, #FF2D2D, #FF6B35)",
+                  }}
+                />
+                <span
+                  className="font-display text-xl tracking-[0.16em]"
+                  style={{ color: "#F0F0F0" }}
+                >
+                  ANISH
+                  <span style={{ color: "#FF2D2D" }}>.</span>
+                  DEV
+                </span>
+              </motion.button>
             </ScrollReveal>
+
             <ScrollReveal delay={0.1}>
-              <p className="font-body text-white/30 text-sm leading-relaxed max-w-xs">
-                Full-stack developer crafting immersive digital experiences at the intersection of
-                design and technology.
+              <p
+                className="font-body text-sm leading-relaxed"
+                style={{ color: "#606060" }}
+              >
+                Full-stack developer crafting bold digital experiences at the
+                intersection of{" "}
+                <span style={{ color: "#A0A0A0" }}>
+                  design and engineering.
+                </span>
               </p>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.15}>
+              <div
+                className="mt-5"
+                style={{
+                  width:      "40px",
+                  height:     "2px",
+                  background: "linear-gradient(90deg, #FF2D2D, transparent)",
+                }}
+              />
             </ScrollReveal>
           </div>
 
-          {/* Link cols */}
+          {/* Link columns */}
           {Object.entries(footerLinks).map(([section, links], i) => (
-            <ScrollReveal key={section} delay={0.1 * (i + 1)} direction="up">
+            <ScrollReveal key={section} delay={0.07 * (i + 1)} direction="up">
               <div>
-                <h4 className="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase mb-4">
+                <h4
+                  className="font-mono text-[0.58rem] tracking-[0.32em]
+                             uppercase mb-5"
+                  style={{ color: "#FF2D2D" }}
+                >
                   {section}
                 </h4>
                 <ul className="space-y-3">
                   {links.map((link) => (
-                    <li key={link}>
+                    <li key={link.label}>
                       <motion.a
-                        href="#"
-                        className="font-body text-sm text-white/40 hover:text-white transition-colors duration-300"
-                        whileHover={{ x: 4 }}
+                        href={link.href}
+                        onClick={
+                          link.href.startsWith("#")
+                            ? (e) => { e.preventDefault(); scrollTo(link.href); }
+                            : undefined
+                        }
+                        target={
+                          link.href.startsWith("http") ? "_blank" : undefined
+                        }
+                        rel={
+                          link.href.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        className="group flex items-center gap-2 font-body
+                                   text-sm transition-colors duration-200"
+                        style={{ color: "#606060" }}
+                        whileHover={{ x: 4, color: "#F0F0F0" }}
                         transition={{ type: "spring", stiffness: 400 }}
                       >
-                        {link}
+                        <span
+                          className="w-0 h-px group-hover:w-3
+                                     transition-all duration-200"
+                          style={{ background: "#FF2D2D" }}
+                        />
+                        {link.label}
                       </motion.a>
                     </li>
                   ))}
@@ -63,29 +189,68 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-white/[0.04] mb-8" />
+        {/* ── Divider ── */}
+        <div
+          className="mb-7"
+          style={{
+            height:     "1px",
+            background: "rgba(255,255,255,0.05)",
+          }}
+        />
 
-        {/* Bottom bar */}
+        {/* ── Bottom bar ── */}
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="font-mono text-[10px] tracking-widest text-white/20 uppercase">
-              © {currentYear} Alex.Dev — All rights reserved
+          <div className="flex flex-col sm:flex-row items-center
+                          justify-between gap-4">
+
+            {/* Copyright */}
+            <p
+              className="font-mono text-[0.58rem] tracking-[0.22em] uppercase
+                         order-2 sm:order-1"
+              style={{ color: "#606060" }}
+            >
+              © {currentYear} Anish.Dev — All rights reserved
             </p>
 
             {/* Status badge */}
             <motion.div
-              className="flex items-center gap-2 glass border border-white/[0.06] rounded-full px-4 py-2"
-              whileHover={{ scale: 1.05 }}
+              className="flex items-center gap-2 px-4 py-2 rounded-sm
+                         order-1 sm:order-2"
+              style={{
+                background:  "rgba(255,45,45,0.08)",
+                border:      "1px solid rgba(255,45,45,0.2)",
+              }}
+              whileHover={{
+                scale:       1.04,
+                borderColor: "rgba(255,45,45,0.4)",
+                boxShadow:   "0 0 20px rgba(255,45,45,0.15)",
+              }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <span className="font-mono text-[10px] tracking-widest text-white/30 uppercase">
+              <span
+                className="w-1.5 h-1.5 rounded-full animate-pulse"
+                style={{
+                  background: "#FF2D2D",
+                  boxShadow:  "0 0 6px #FF2D2D",
+                }}
+              />
+              <span
+                className="font-mono text-[0.58rem] tracking-[0.2em] uppercase"
+                style={{ color: "#FF2D2D" }}
+              >
                 Available for projects
               </span>
             </motion.div>
 
-            <p className="font-mono text-[10px] tracking-widest text-white/20 uppercase">
-              Built with Next.js + Framer Motion
+            {/* Stack */}
+            <p
+              className="font-mono text-[0.58rem] tracking-[0.22em] uppercase
+                         order-3"
+              style={{ color: "#606060" }}
+            >
+              Built with{" "}
+              <span style={{ color: "#A0A0A0" }}>Next.js</span>
+              {" + "}
+              <span style={{ color: "#A0A0A0" }}>Framer Motion</span>
             </p>
           </div>
         </ScrollReveal>

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 const words = ["DEVELOPER", "DESIGNER", "ENGINEER", "CREATOR"];
 
@@ -18,18 +19,14 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 }
 
 function WordCycle() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   return (
-    <div ref={containerRef} className="relative overflow-hidden h-[1em]">
+    <div className="relative overflow-hidden" style={{ height: "1em" }}>
       {words.map((word, i) => (
         <motion.span
           key={word}
           className="absolute inset-0 flex items-center"
-          initial={{ y: "100%" }}
-          animate={{
-            y: ["100%", "0%", "0%", "-100%"],
-          }}
+          initial={{ y: "110%" }}
+          animate={{ y: ["110%", "0%", "0%", "-110%"] }}
           transition={{
             duration: 3,
             delay: i * 3,
@@ -49,161 +46,393 @@ function WordCycle() {
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 600], [0, -120]);
+  const y       = useTransform(scrollY, [0, 600], [0, -80]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   const charVariants = {
-    hidden: { opacity: 0, y: 60, skewY: 5 },
+    hidden:  { opacity: 0, y: 60, skewY: 4 },
     visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      skewY: 0,
-      transition: {
-        delay: i * 0.06,
-        duration: 0.9,
-        ease: [0.16, 1, 0.3, 1],
-      },
+      opacity: 1, y: 0, skewY: 0,
+      transition: { delay: i * 0.05, duration: 0.9, ease: [0.16, 1, 0.3, 1] },
     }),
   };
-
-  const title = "FULL STACK";
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
       id="hero"
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: "var(--surface-0)" }}
     >
-      {/* Animated grid lines */}
-      <div className="absolute inset-0 opacity-[0.03]">
+      {/* ── Red grid overlay ── */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <div
           className="w-full h-full"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(0,245,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,245,255,1) 1px, transparent 1px)",
+              "linear-gradient(rgba(255,45,45,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,45,45,1) 1px, transparent 1px)",
             backgroundSize: "80px 80px",
           }}
         />
       </div>
 
-      {/* Center glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[#00f5ff]/5 via-purple-900/5 to-transparent" />
+      {/* ── Corner accents ── */}
+      <div
+        className="absolute top-0 left-0 w-72 h-72 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at top left, rgba(255,45,45,0.12) 0%, transparent 65%)",
+        }}
+      />
+      <div
+        className="absolute bottom-0 right-0 w-96 h-96 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at bottom right, rgba(200,255,0,0.07) 0%, transparent 65%)",
+        }}
+      />
+
+      {/* ── Horizontal red rule — desktop only ── */}
+      <div
+        className="absolute left-0 right-0 hidden lg:block pointer-events-none"
+        style={{ top: "50%", height: "1px", background: "rgba(255,45,45,0.06)" }}
+      />
 
       <motion.div
         style={{ y, opacity }}
-        className="relative z-10 text-center px-6 max-w-7xl mx-auto"
+        className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12
+                   pt-28 pb-16 md:pt-32"
       >
-        {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center justify-center gap-3 mb-8"
-        >
-          <span className="w-8 h-px bg-[#00f5ff]/50" />
-          <span className="font-mono text-xs tracking-[0.4em] text-[#00f5ff]/70 uppercase">
-            Available for work · 2025
-          </span>
-          <span className="w-8 h-px bg-[#00f5ff]/50" />
-        </motion.div>
+        {/* ════════════════════════════════════
+            LAYOUT: two-col on lg+, stacked on mobile
+            ════════════════════════════════════ */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-12 xl:gap-20">
 
-        {/* Main heading */}
-        <div className="overflow-hidden mb-2">
-          <div className="flex justify-center flex-wrap gap-x-6">
-            {title.split("").map((char, i) => (
-              <motion.span
-                key={i}
-                custom={i}
-                variants={charVariants}
-                initial="hidden"
-                animate="visible"
-                className="font-display text-[clamp(4rem,14vw,12rem)] leading-none tracking-tight text-white"
-                style={{ display: char === " " ? "inline-block" : "inline-block", width: char === " " ? "0.3em" : "auto" }}
+          {/* ── LEFT: text block ── */}
+          <div className="flex-1 min-w-0">
+
+            {/* Eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-center gap-3 mb-6 md:mb-8"
+            >
+              <span
+                className="w-8 h-px"
+                style={{ background: "#FF2D2D" }}
+              />
+              <span
+                className="font-mono text-[0.62rem] tracking-[0.35em] uppercase"
+                style={{ color: "#FF2D2D" }}
               >
-                {char}
-              </motion.span>
-            ))}
-          </div>
-        </div>
+                Available for work · 2025
+              </span>
+              <span
+                className="w-1.5 h-1.5 rounded-full animate-pulse"
+                style={{ background: "#FF2D2D", boxShadow: "0 0 8px #FF2D2D" }}
+              />
+            </motion.div>
 
-        {/* Gradient cycling word */}
-        <div className="overflow-hidden mb-6">
+            {/* FULL STACK — character stagger */}
+            <div className="overflow-visible mb-0 lg:mb-1">
+              <div className="flex flex-wrap">
+                {"FULL STACK".split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    custom={i}
+                    variants={charVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="font-display leading-[0.9] tracking-tight"
+                    style={{
+                      fontSize: "clamp(3.2rem, 10vw, 8.5rem)",
+                      color: "#F0F0F0",
+                      display: "inline-block",
+                      width: char === " " ? "0.22em" : "auto",
+                    }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+
+            {/* Cycling word — red gradient */}
+            <div className="overflow-hidden mb-4 md:mb-6">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+                className="font-display leading-[0.9] tracking-tight"
+                style={{
+                  fontSize: "clamp(3.2rem, 10vw, 8.5rem)",
+                  background:
+                    "linear-gradient(135deg, #FF2D2D 0%, #FF6B35 50%, #C8FF00 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                <WordCycle />
+              </motion.div>
+            </div>
+
+            {/* Red divider */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="origin-left mb-6 md:mb-8"
+              style={{
+                width: "56px",
+                height: "2px",
+                background: "linear-gradient(90deg, #FF2D2D, #FF6B35, transparent)",
+              }}
+            />
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="font-body text-base md:text-lg max-w-lg mb-8 md:mb-10 leading-relaxed"
+              style={{ color: "#A0A0A0" }}
+            >
+              Crafting bold digital experiences where{" "}
+              <span style={{ color: "#F0F0F0" }}>design meets engineering</span>{" "}
+              — precise, electric, alive.
+            </motion.p>
+
+            {/* CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-12 lg:mb-0"
+            >
+              {/* Primary */}
+              <motion.button
+                onClick={() =>
+                  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="relative overflow-hidden px-7 py-3.5 rounded-sm
+                           font-mono text-[0.7rem] tracking-[0.2em] uppercase
+                           min-w-[160px] text-center"
+                style={{ background: "#FF2D2D", color: "#fff", border: "none" }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <motion.div
+                  className="absolute inset-0"
+                  style={{ background: "#FF6B35" }}
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                />
+                <span className="relative z-10">View My Work</span>
+                {/* glow */}
+                <motion.div
+                  className="absolute inset-0 opacity-0 hover:opacity-100"
+                  style={{ boxShadow: "0 0 30px rgba(255,45,45,0.6)" }}
+                />
+              </motion.button>
+
+              {/* Secondary */}
+              <motion.button
+                onClick={() =>
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="group flex items-center gap-3 px-7 py-3.5 rounded-sm
+                           font-mono text-[0.7rem] tracking-[0.2em] uppercase
+                           transition-all duration-300 min-w-[160px] text-center justify-center"
+                style={{
+                  color: "#A0A0A0",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  background: "transparent",
+                }}
+                whileHover={{
+                  color: "#F0F0F0",
+                  borderColor: "rgba(255,45,45,0.4)",
+                  scale: 1.03,
+                }}
+                whileTap={{ scale: 0.97 }}
+              >
+                Get in Touch
+                <span className="group-hover:translate-x-1 transition-transform duration-300">
+                  →
+                </span>
+              </motion.button>
+            </motion.div>
+
+            {/* Stats — desktop inline, mobile below photo */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.9, duration: 0.8 }}
+              className="hidden lg:flex items-center gap-10 mt-10 pt-10"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+            >
+              {[
+                { value: 5,  suffix: "+", label: "Years Exp." },
+                { value: 40, suffix: "+", label: "Projects" },
+                { value: 99, suffix: "%", label: "Satisfaction" },
+              ].map((stat, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div>
+                    <div
+                      className="font-display text-3xl leading-none"
+                      style={{ color: "#F0F0F0" }}
+                    >
+                      <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                    </div>
+                    <div
+                      className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mt-1"
+                      style={{ color: "#606060" }}
+                    >
+                      {stat.label}
+                    </div>
+                  </div>
+                  {i < 2 && (
+                    <div
+                      className="w-px h-10 mt-1 ml-3"
+                      style={{ background: "rgba(255,255,255,0.06)" }}
+                    />
+                  )}
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* ── RIGHT: profile photo ── */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="font-display text-[clamp(4rem,14vw,12rem)] leading-none tracking-tight gradient-text"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative shrink-0 mx-auto lg:mx-0
+                       w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96
+                       mt-10 lg:mt-0"
           >
-            <WordCycle />
+            {/* Rotating border ring */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 rounded-2xl pointer-events-none"
+              style={{
+                background:
+                  "conic-gradient(from 0deg, #FF2D2D, #FF6B35, #C8FF00, #A855F7, #FF2D2D)",
+                padding: "2px",
+                borderRadius: "18px",
+              }}
+            >
+              <div
+                className="w-full h-full"
+                style={{ background: "var(--surface-0)", borderRadius: "16px" }}
+              />
+            </motion.div>
+
+            {/* Photo container */}
+            <div
+              className="absolute inset-[3px] overflow-hidden"
+              style={{ borderRadius: "15px" }}
+            >
+              <Image
+                src="/profile.jpeg"
+                alt="Anish — Full Stack Developer"
+                fill
+                className="object-cover object-top"
+                priority
+              />
+              {/* Color overlay — subtle red tint at bottom */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(255,45,45,0.25) 0%, transparent 100%)",
+                }}
+              />
+            </div>
+
+            {/* Floating badge — top right */}
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-3 -right-3 z-10"
+            >
+              <div
+                className="font-mono text-[0.58rem] tracking-[0.15em] uppercase
+                           px-2.5 py-1.5 rounded-sm"
+                style={{
+                  background:  "rgba(10,10,10,0.95)",
+                  border:      "1px solid rgba(255,45,45,0.4)",
+                  color:       "#FF2D2D",
+                  boxShadow:   "0 0 16px rgba(255,45,45,0.25)",
+                }}
+              >
+                Open to work
+              </div>
+            </motion.div>
+
+            {/* Floating badge — bottom left */}
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute -bottom-3 -left-3 z-10"
+            >
+              <div
+                className="font-mono text-[0.58rem] tracking-[0.15em] uppercase
+                           px-2.5 py-1.5 rounded-sm"
+                style={{
+                  background:  "rgba(10,10,10,0.95)",
+                  border:      "1px solid rgba(200,255,0,0.35)",
+                  color:       "#C8FF00",
+                  boxShadow:   "0 0 16px rgba(200,255,0,0.15)",
+                }}
+              >
+                Full Stack
+              </div>
+            </motion.div>
+
+            {/* Red glow behind photo */}
+            <div
+              className="absolute inset-0 -z-10 blur-2xl opacity-30"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(255,45,45,0.4) 0%, transparent 70%)",
+                transform: "scale(1.2)",
+              }}
+            />
           </motion.div>
         </div>
 
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-body text-white/40 text-lg md:text-xl max-w-lg mx-auto mb-12 leading-relaxed"
-        >
-          Crafting immersive digital experiences where{" "}
-          <span className="text-white/70">design meets engineering</span> — pixel perfect,
-          performance obsessed.
-        </motion.p>
-
-        {/* CTA buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <motion.button
-            onClick={() => {
-              document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="relative group px-8 py-4 rounded-full overflow-hidden font-mono text-sm tracking-widest uppercase text-[#03040a] bg-[#00f5ff]"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="relative z-10">View My Work</span>
-            <motion.div
-              className="absolute inset-0 bg-white"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: "100%" }}
-              transition={{ duration: 0.4 }}
-            />
-          </motion.button>
-
-          <motion.button
-            onClick={() => {
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="group flex items-center gap-3 px-8 py-4 rounded-full font-mono text-sm tracking-widest uppercase text-white/60 border border-white/10 hover:border-white/30 hover:text-white transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Get in Touch
-            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </motion.button>
-        </motion.div>
-
-        {/* Stats */}
+        {/* ── Stats mobile ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="mt-20 flex items-center justify-center gap-12 md:gap-20"
+          transition={{ delay: 1.9, duration: 0.8 }}
+          className="flex lg:hidden items-center justify-center gap-8 mt-12 pt-8"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
         >
           {[
-            { value: 5, suffix: "+", label: "Years Exp." },
+            { value: 5,  suffix: "+", label: "Years" },
             { value: 40, suffix: "+", label: "Projects" },
             { value: 99, suffix: "%", label: "Satisfaction" },
           ].map((stat, i) => (
             <div key={i} className="text-center">
-              <div className="font-display text-3xl md:text-4xl gradient-text-blue">
+              <div
+                className="font-display text-2xl sm:text-3xl leading-none"
+                style={{ color: "#F0F0F0" }}
+              >
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="font-mono text-xs text-white/30 tracking-widest uppercase mt-1">
+              <div
+                className="w-4 h-px mx-auto my-1.5"
+                style={{ background: "#FF2D2D" }}
+              />
+              <div
+                className="font-mono text-[0.58rem] tracking-[0.22em] uppercase"
+                style={{ color: "#606060" }}
+              >
                 {stat.label}
               </div>
             </div>
@@ -211,18 +440,28 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* ── Scroll indicator ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        transition={{ delay: 2.4 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2
+                   flex flex-col items-center gap-2"
       >
-        <span className="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase">Scroll</span>
+        <span
+          className="font-mono text-[0.55rem] tracking-[0.4em] uppercase"
+          style={{ color: "#606060" }}
+        >
+          Scroll
+        </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-10 bg-gradient-to-b from-[#00f5ff]/50 to-transparent"
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            width: "1px",
+            height: "40px",
+            background: "linear-gradient(to bottom, #FF2D2D, transparent)",
+          }}
         />
       </motion.div>
     </section>

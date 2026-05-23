@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
@@ -19,24 +19,16 @@ interface FocusedState {
 }
 
 const socials = [
-  { label: "GitHub", href: "https://github.com", icon: "GH" },
+  { label: "GitHub",   href: "https://github.com",  icon: "GH" },
   { label: "LinkedIn", href: "https://linkedin.com", icon: "LI" },
-  { label: "Twitter", href: "https://twitter.com", icon: "TW" },
+  { label: "Twitter",  href: "https://twitter.com",  icon: "TW" },
   { label: "Dribbble", href: "https://dribbble.com", icon: "DR" },
 ];
 
 function AnimatedInput({
-  label,
-  name,
-  type = "text",
-  value,
-  onChange,
-  focused,
-  onFocus,
-  onBlur,
-  multiline = false,
-  rows = 1,
-  required = false,
+  label, name, type = "text", value, onChange,
+  focused, onFocus, onBlur,
+  multiline = false, rows = 1, required = false,
 }: {
   label: string;
   name: keyof FormState;
@@ -50,38 +42,41 @@ function AnimatedInput({
   rows?: number;
   required?: boolean;
 }) {
-  const hasValue = value.length > 0;
-  const isActive = focused || hasValue;
+  const isActive = focused || value.length > 0;
 
   const inputClass =
-    "w-full bg-transparent font-body text-white/80 text-sm pt-5 pb-2 focus:outline-none resize-none transition-colors duration-300";
+    "w-full bg-transparent font-body text-sm pt-6 pb-2 focus:outline-none resize-none transition-colors duration-300";
 
   return (
-    <div className="relative group">
+    <div className="relative">
       <div
-        className={`relative glass rounded-xl border transition-all duration-500 overflow-hidden ${
-          focused
-            ? "border-[#00f5ff]/40 shadow-[0_0_20px_rgba(0,245,255,0.08)]"
-            : "border-white/[0.06] hover:border-white/10"
-        }`}
+        className="relative overflow-hidden rounded-sm transition-all duration-300"
+        style={{
+          background: "var(--surface-1)",
+          border: `1px solid ${
+            focused ? "rgba(255,45,45,0.45)" : "rgba(255,255,255,0.06)"
+          }`,
+          boxShadow: focused ? "0 0 20px rgba(255,45,45,0.08)" : "none",
+        }}
       >
-        {/* Animated label */}
+        {/* Floating label */}
         <motion.label
-          className="absolute left-4 font-mono text-xs tracking-wider pointer-events-none"
+          className="absolute left-4 font-mono text-[0.62rem] tracking-wider pointer-events-none"
           animate={{
-            y: isActive ? 10 : multiline ? 20 : 18,
+            y:     isActive ? 8 : multiline ? 18 : 16,
             scale: isActive ? 0.85 : 1,
-            x: isActive ? 0 : 0,
-            color: focused ? "#00f5ff" : "rgba(255,255,255,0.3)",
+            color: focused ? "#FF2D2D" : "#606060",
           }}
           style={{ originX: 0, originY: 0, top: 0 }}
-          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
         >
           {label}
-          {required && <span className="text-[#00f5ff]/60 ml-0.5">*</span>}
+          {required && (
+            <span style={{ color: "#FF2D2D", marginLeft: "2px" }}>*</span>
+          )}
         </motion.label>
 
-        <div className="px-4">
+        <div className="px-4" style={{ color: "#F0F0F0" }}>
           {multiline ? (
             <textarea
               name={name}
@@ -92,6 +87,7 @@ function AnimatedInput({
               rows={rows}
               required={required}
               className={inputClass}
+              style={{ color: "#F0F0F0" }}
             />
           ) : (
             <input
@@ -103,17 +99,21 @@ function AnimatedInput({
               onBlur={onBlur}
               required={required}
               className={inputClass}
+              style={{ color: "#F0F0F0" }}
             />
           )}
         </div>
 
-        {/* Bottom line animation */}
-        <div className="absolute bottom-0 left-0 h-px w-full bg-transparent overflow-hidden">
+        {/* Bottom animated line */}
+        <div className="absolute bottom-0 left-0 h-px w-full overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#00f5ff] to-purple-500"
+            className="h-full"
             animate={{ scaleX: focused ? 1 : 0 }}
-            style={{ originX: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              background: "linear-gradient(90deg, #FF2D2D, #FF6B35)",
+              originX: 0,
+            }}
           />
         </div>
       </div>
@@ -123,35 +123,25 @@ function AnimatedInput({
 
 export default function Contact() {
   const [form, setForm] = useState<FormState>({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+    name: "", email: "", subject: "", message: "",
   });
   const [focused, setFocused] = useState<FocusedState>({
-    name: false,
-    email: false,
-    subject: false,
-    message: false,
+    name: false, email: false, subject: false, message: false,
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleFocus = (field: keyof FocusedState) => {
-    setFocused((prev) => ({ ...prev, [field]: true }));
-  };
-
-  const handleBlur = (field: keyof FocusedState) => {
-    setFocused((prev) => ({ ...prev, [field]: false }));
-  };
+  const handleFocus = (f: keyof FocusedState) =>
+    setFocused((p) => ({ ...p, [f]: true }));
+  const handleBlur = (f: keyof FocusedState) =>
+    setFocused((p) => ({ ...p, [f]: false }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    // Simulate async send
     await new Promise((r) => setTimeout(r, 1800));
     setStatus("sent");
     setForm({ name: "", email: "", subject: "", message: "" });
@@ -159,192 +149,335 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-40 px-6">
-      {/* Background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-radial from-[#8b5cf6]/5 to-transparent rounded-full pointer-events-none" />
+    <section
+      id="contact"
+      className="relative overflow-hidden"
+      style={{
+        background:    "var(--surface-0)",
+        paddingTop:    "clamp(5rem, 12vw, 9rem)",
+        paddingBottom: "clamp(5rem, 12vw, 9rem)",
+      }}
+    >
+      {/* Top divider */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(255,45,45,0.2), transparent)",
+        }}
+      />
 
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-20">
+      {/* Background glows */}
+      <div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse, rgba(255,45,45,0.06) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute top-0 right-0 w-[400px] h-[400px] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at top right, rgba(200,255,0,0.04) 0%, transparent 65%)",
+        }}
+      />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-8 lg:px-12">
+
+        {/* ── Header ── */}
+        <div className="mb-14 md:mb-20">
           <ScrollReveal>
-            <span className="font-mono text-xs tracking-[0.3em] text-[#00f5ff]/60 uppercase mb-4 block">
-              03 / Contact
-            </span>
+            <span className="section-tag block mb-5">03 / Contact</span>
           </ScrollReveal>
+
           <ScrollReveal delay={0.1}>
-            <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-none tracking-tight mb-6">
-              <span className="text-white">LET'S </span>
-              <span className="gradient-text">BUILD</span>
+            <h2
+              className="font-display leading-none tracking-tight"
+              style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
+            >
+              <span style={{ color: "#F0F0F0" }}>LET'S </span>
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, #FF2D2D 0%, #FF6B35 50%, #C8FF00 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                BUILD
+              </span>
               <br />
-              <span className="text-white/20 [-webkit-text-stroke:1px_rgba(255,255,255,0.15)]">
+              <span
+                style={{
+                  color: "transparent",
+                  WebkitTextStroke: "1px rgba(255,255,255,0.12)",
+                }}
+              >
                 SOMETHING
               </span>
             </h2>
           </ScrollReveal>
+
           <ScrollReveal delay={0.2}>
-            <p className="font-body text-white/40 text-lg max-w-md mx-auto">
-              Have a project in mind? Let's talk. I'm always open to discussing new ideas and
-              opportunities.
+            <p
+              className="font-body text-base md:text-lg max-w-md mt-6 leading-relaxed"
+              style={{ color: "#A0A0A0" }}
+            >
+              Have a project in mind? Let's talk. I'm always open to discussing{" "}
+              <span style={{ color: "#F0F0F0" }}>
+                new ideas and opportunities.
+              </span>
             </p>
           </ScrollReveal>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-          {/* Form */}
+        {/* ── Grid ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
+
+          {/* Form — 3 cols */}
           <div className="lg:col-span-3">
-            <ScrollReveal delay={0.2}>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <ScrollReveal delay={0.15}>
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <AnimatedInput
-                    label="Your Name"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
+                    label="Your Name" name="name"
+                    value={form.name} onChange={handleChange}
                     focused={focused.name}
                     onFocus={() => handleFocus("name")}
                     onBlur={() => handleBlur("name")}
                     required
                   />
                   <AnimatedInput
-                    label="Email Address"
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
+                    label="Email Address" name="email" type="email"
+                    value={form.email} onChange={handleChange}
                     focused={focused.email}
                     onFocus={() => handleFocus("email")}
                     onBlur={() => handleBlur("email")}
                     required
                   />
                 </div>
+
                 <AnimatedInput
-                  label="Subject"
-                  name="subject"
-                  value={form.subject}
-                  onChange={handleChange}
+                  label="Subject" name="subject"
+                  value={form.subject} onChange={handleChange}
                   focused={focused.subject}
                   onFocus={() => handleFocus("subject")}
                   onBlur={() => handleBlur("subject")}
                 />
+
                 <AnimatedInput
                   label="Tell me about your project..."
-                  name="message"
-                  value={form.message}
+                  name="message" value={form.message}
                   onChange={handleChange}
                   focused={focused.message}
                   onFocus={() => handleFocus("message")}
                   onBlur={() => handleBlur("message")}
-                  multiline
-                  rows={6}
-                  required
+                  multiline rows={6} required
                 />
 
                 {/* Submit button */}
                 <motion.button
                   type="submit"
                   disabled={status === "sending" || status === "sent"}
-                  className="relative w-full py-4 rounded-xl font-mono text-sm tracking-widest uppercase overflow-hidden group"
-                  whileHover={{ scale: status === "idle" ? 1.02 : 1 }}
+                  className="relative w-full py-4 rounded-sm font-mono
+                             text-[0.72rem] tracking-[0.22em] uppercase overflow-hidden"
+                  whileHover={{ scale: status === "idle" ? 1.01 : 1 }}
                   whileTap={{ scale: status === "idle" ? 0.98 : 1 }}
                 >
-                  {/* Background */}
                   <div
-                    className={`absolute inset-0 transition-all duration-500 ${
-                      status === "sent"
-                        ? "bg-green-500"
-                        : status === "sending"
-                        ? "bg-white/10"
-                        : "bg-[#00f5ff]"
-                    }`}
+                    className="absolute inset-0 transition-all duration-400"
+                    style={{
+                      background:
+                        status === "sent"
+                          ? "#22c55e"
+                          : status === "sending"
+                          ? "rgba(255,255,255,0.06)"
+                          : "#FF2D2D",
+                    }}
                   />
 
-                  {/* Hover shimmer */}
-                  <motion.div
-                    className="absolute inset-0 bg-white/30 skew-x-12"
-                    initial={{ x: "-200%" }}
-                    whileHover={{ x: "200%" }}
-                    transition={{ duration: 0.6 }}
-                  />
+                  {status === "idle" && (
+                    <motion.div
+                      className="absolute inset-0 skew-x-12"
+                      style={{ background: "rgba(255,255,255,0.15)" }}
+                      initial={{ x: "-200%" }}
+                      whileHover={{ x: "200%" }}
+                      transition={{ duration: 0.55 }}
+                    />
+                  )}
+
+                  {status === "idle" && (
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{ boxShadow: "0 0 30px rgba(255,45,45,0.4)" }}
+                    />
+                  )}
 
                   <span
-                    className={`relative z-10 ${
-                      status === "sent" ? "text-white" : "text-[#03040a]"
-                    }`}
+                    className="relative z-10"
+                    style={{
+                      color: status === "sending" ? "#A0A0A0" : "#fff",
+                    }}
                   >
-                    {status === "idle" && "Send Message →"}
-                    {status === "sending" && (
-                      <span className="flex items-center justify-center gap-2">
+                    <AnimatePresence mode="wait">
+                      {status === "idle" && (
                         <motion.span
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          className="inline-block w-4 h-4 border-2 border-[#03040a]/30 border-t-[#03040a] rounded-full"
-                        />
-                        Sending...
-                      </span>
-                    )}
-                    {status === "sent" && "Message Sent ✓"}
-                    {status === "error" && "Error — Try Again"}
+                          key="idle"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          className="flex items-center justify-center gap-2"
+                        >
+                          Send Message →
+                        </motion.span>
+                      )}
+                      {status === "sending" && (
+                        <motion.span
+                          key="sending"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          className="flex items-center justify-center gap-2"
+                        >
+                          <motion.span
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            className="inline-block w-4 h-4 border-2 rounded-full"
+                            style={{
+                              borderColor: "rgba(160,160,160,0.3)",
+                              borderTopColor: "#A0A0A0",
+                            }}
+                          />
+                          Sending...
+                        </motion.span>
+                      )}
+                      {status === "sent" && (
+                        <motion.span
+                          key="sent"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="flex items-center justify-center gap-2"
+                        >
+                          Message Sent ✓
+                        </motion.span>
+                      )}
+                      {status === "error" && (
+                        <motion.span key="error">
+                          Error — Try Again
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </span>
                 </motion.button>
               </form>
             </ScrollReveal>
           </div>
 
-          {/* Sidebar info */}
+          {/* Sidebar — 2 cols */}
           <div className="lg:col-span-2 space-y-8">
-            <ScrollReveal direction="left" delay={0.3}>
+            <ScrollReveal direction="left" delay={0.25}>
               <div className="space-y-6">
-                <div>
-                  <p className="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase mb-2">
-                    Email
-                  </p>
-                  <a
-                    href="mailto:hello@alexdev.io"
-                    className="font-body text-white/60 hover:text-[#00f5ff] transition-colors duration-300 text-sm"
-                  >
-                    hello@alexdev.io
-                  </a>
-                </div>
-                <div>
-                  <p className="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase mb-2">
-                    Location
-                  </p>
-                  <p className="font-body text-white/60 text-sm">San Francisco, CA · Remote OK</p>
-                </div>
-                <div>
-                  <p className="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase mb-2">
-                    Response time
-                  </p>
-                  <p className="font-body text-white/60 text-sm">Within 24 hours</p>
-                </div>
+                {[
+                  { lbl: "Email",         val: "hello@anish.dev",       href: "mailto:hello@anish.dev" },
+                  { lbl: "Location",      val: "Hyderabad · Remote OK", href: null },
+                  { lbl: "Response Time", val: "Within 24 hours",       href: null },
+                ].map((item) => (
+                  <div key={item.lbl}>
+                    <p
+                      className="font-mono text-[0.58rem] tracking-[0.32em] uppercase mb-1.5"
+                      style={{ color: "#FF2D2D" }}
+                    >
+                      {item.lbl}
+                    </p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        className="font-body text-sm transition-colors duration-200"
+                        style={{ color: "#A0A0A0" }}
+                        onMouseEnter={(e) =>
+                          ((e.target as HTMLElement).style.color = "#F0F0F0")
+                        }
+                        onMouseLeave={(e) =>
+                          ((e.target as HTMLElement).style.color = "#A0A0A0")
+                        }
+                      >
+                        {item.val}
+                      </a>
+                    ) : (
+                      <p className="font-body text-sm" style={{ color: "#A0A0A0" }}>
+                        {item.val}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="left" delay={0.4}>
-              <div className="h-px bg-white/[0.05]" />
-              <div className="pt-6">
-                <p className="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase mb-4">
-                  Follow Me
-                </p>
-                <div className="grid grid-cols-2 gap-3">
-                  {socials.map((social) => (
-                    <motion.a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="glass border border-white/[0.04] rounded-xl px-4 py-3 flex items-center gap-3 hover:border-white/10 transition-all duration-300 group"
-                      whileHover={{ y: -2 }}
+            <div className="h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
+
+            <ScrollReveal direction="left" delay={0.35}>
+              <p
+                className="font-mono text-[0.58rem] tracking-[0.32em] uppercase mb-4"
+                style={{ color: "#FF2D2D" }}
+              >
+                Follow Me
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                {socials.map((s) => (
+                  <motion.a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-sm border transition-all duration-300"
+                    style={{
+                      background:  "var(--surface-1)",
+                      borderColor: "rgba(255,255,255,0.06)",
+                    }}
+                    whileHover={{
+                      y: -2,
+                      borderColor: "rgba(255,45,45,0.3)",
+                      background:  "var(--surface-2)",
+                    }}
+                  >
+                    <span
+                      className="font-mono text-[0.62rem]"
+                      style={{ color: "#FF2D2D" }}
                     >
-                      <span className="font-mono text-xs text-white/30 group-hover:text-[#00f5ff] transition-colors duration-300">
-                        {social.icon}
-                      </span>
-                      <span className="font-body text-xs text-white/40 group-hover:text-white/70 transition-colors duration-300">
-                        {social.label}
-                      </span>
-                    </motion.a>
-                  ))}
-                </div>
+                      {s.icon}
+                    </span>
+                    <span className="font-body text-xs" style={{ color: "#A0A0A0" }}>
+                      {s.label}
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.4}>
+              <div
+                className="flex items-center gap-3 px-4 py-3 rounded-sm"
+                style={{
+                  background: "rgba(255,45,45,0.06)",
+                  border:     "1px solid rgba(255,45,45,0.2)",
+                }}
+              >
+                <span
+                  className="w-2 h-2 rounded-full shrink-0 animate-pulse"
+                  style={{
+                    background: "#FF2D2D",
+                    boxShadow:  "0 0 8px rgba(255,45,45,0.6)",
+                  }}
+                />
+                <span
+                  className="font-mono text-[0.62rem] tracking-[0.15em] uppercase"
+                  style={{ color: "#FF2D2D" }}
+                >
+                  Available for new projects
+                </span>
               </div>
             </ScrollReveal>
           </div>
