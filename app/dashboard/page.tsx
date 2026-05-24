@@ -56,6 +56,18 @@ interface UserActivity {
   created_at: string;
 }
 
+interface PipelineRun {
+  id: string;
+  run_number: number;
+  status: string;
+  trigger: string;
+  old_accuracy: number;
+  new_accuracy: number;
+  deployed: boolean;
+  reason: string;
+  created_at: string;
+}
+
 // ─── Constants ────────────────────────────────────────────────
 const SENTIMENT_COLORS = {
   Positive: "#C8FF00",
@@ -134,9 +146,10 @@ export default function Dashboard() {
   const [modelVersions,  setModelVersions]  = useState<ModelVersion[]>([]);
   const [driftReports,   setDriftReports]   = useState<DriftReport[]>([]);
   const [userActivity,   setUserActivity]   = useState<UserActivity[]>([]);
+  const [pipelineRuns,   setPipelineRuns]   = useState<PipelineRun[]>([]);
   const [total,          setTotal]          = useState(0);
   const [loading,        setLoading]        = useState(true);
-  const [activeTab,      setActiveTab]      = useState<"live" | "analytics" | "monitoring" | "visitors">("live");
+  const [activeTab,      setActiveTab]      = useState<"live" | "analytics" | "monitoring" | "visitors" | "pipeline">("live");
   const [page,           setPage]           = useState(1);
 
   // ── Derived stats ──────────────────────────────────────────
@@ -271,6 +284,14 @@ export default function Dashboard() {
         .limit(200);
       setUserActivity(activityData || []);
 
+      // Pipeline runs
+      const { data: pipelineData } = await supabase
+        .from("pipeline_runs")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(20);
+      setPipelineRuns(pipelineData || []);
+
     } catch (e) {
       console.error("Fetch failed:", e);
     } finally {
@@ -319,21 +340,32 @@ export default function Dashboard() {
       })
       .subscribe();
 
+    const pipelineChannel = supabase
+      .channel("pipeline_live")
+      .on("postgres_changes", {
+        event: "INSERT", schema: "public", table: "pipeline_runs",
+      }, (payload) => {
+        setPipelineRuns(prev => [payload.new as PipelineRun, ...prev.slice(0, 19)]);
+      })
+      .subscribe();
+
     return () => {
       supabase.removeChannel(predChannel);
       supabase.removeChannel(driftChannel);
       supabase.removeChannel(versionChannel);
       supabase.removeChannel(activityChannel);
+      supabase.removeChannel(pipelineChannel);
     };
   }, [page]);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
   const tabs = [
-    { id: "live",       label: "🔴 Live Feed"    },
-    { id: "analytics",  label: "📊 ML Analytics" },
-    { id: "monitoring", label: "🔬 Monitoring"   },
-    { id: "visitors",   label: "👥 Visitors"     },
+    { id: "live",       label: "🔴 Live Feed"      },
+    { id: "analytics",  label: "📊 ML Analytics"   },
+    { id: "monitoring", label: "🔬 Monitoring"      },
+    { id: "visitors",   label: "👥 Visitors"        },
+    { id: "pipeline",   label: "⚙️ CI/CD Pipeline" },
   ] as const;
 
   return (
@@ -951,8 +983,102 @@ export default function Dashboard() {
             </motion.div>
           )}
 
+          {/* ══════════ CI/CD PIPELINE ══════════ */}
+          {activeTab === "pipeline" && (
+            <motion.div key="pipeline"
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }} className="space-y-4">
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <StatCard
+                  label="Total Runs"
+                  value={pipelineRuns.length}
+                  color="#FF2D2D" />
+                <StatCard
+                  label="Successful"
+                  value={pipelineRuns.filter(r => r.status === "success").length}
+                  color="#C8FF00" />
+                <StatCard
+                  label="Failed"
+                  value={pipelineRuns.filter(r => r.status === "failed").length}
+                  color="#FF2D2D" />
+                <StatCard
+                  label="Success Rate"
+                  value={`${pipelineRuns.length ? Math.round((pipelineRuns.filter(r => r.status === "success").length / pipelineRuns.length) * 100) : 0}%`}
+                  color="#C8FF00" />
+              </div>
+
+              <div className="rounded-sm overflow-hidden"
+                style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="flex items-center justify-between px-5 py-3"
+                  style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#FF2D2D" }} />
+                    <span className="font-mono text-[0.6rem] tracking-[0.25em] uppercase"
+                      style={{ color: "#FF2D2D" }}>Pipeline Run History</span>
+                  </div>
+                  <span className="font-mono text-[0.58rem]" style={{ color: "#606060" }}>
+                    GitHub Actions · auto-deploy on push
+                  </span>
+                </div>
+
+                <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                  {pipelineRuns.length === 0 ? (
+                    <div className="px-5 py-8 text-center">
+                      <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>
+                        No runs yet — push to main to trigger
+                      </p>
+                    </div>
+                  ) : pipelineRuns.map((r, i) => (
+                    <motion.div key={r.id}
+                      initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.02 }}
+                      className="px-5 py-4 flex items-center justify-between gap-4"
+                      onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "var(--surface-2)")}
+                      onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
+                      style={{ transition: "background 0.2s ease" }}
+                    >
+                      <div className="flex items-center gap-4">
+                        <span className="text-xl">
+                          {r.status === "success" ? "✅" : "❌"}
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <span className="font-mono text-[0.6rem] uppercase tracking-wider"
+                              style={{ color: r.status === "success" ? "#C8FF00" : "#FF2D2D" }}>
+                              Run #{r.run_number}
+                            </span>
+                            <span className="font-mono text-[0.55rem] px-1.5 py-0.5 rounded-sm"
+                              style={{
+                                background: r.deployed ? "rgba(200,255,0,0.1)" : "rgba(255,255,255,0.04)",
+                                color: r.deployed ? "#C8FF00" : "#606060",
+                              }}>
+                              {r.deployed ? "deployed" : "not deployed"}
+                            </span>
+                          </div>
+                          <p className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>
+                            {r.trigger}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className="font-mono text-[0.6rem] uppercase"
+                          style={{ color: r.status === "success" ? "#C8FF00" : "#FF2D2D" }}>
+                          {r.status}
+                        </p>
+                        <p className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>
+                          {timeAgo(r.created_at)}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
         </AnimatePresence>
       </div>
     </div>
   );
-}
+}git add .
