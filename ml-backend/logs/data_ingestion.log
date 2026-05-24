@@ -36563,3 +36563,148 @@
 2026-05-25 02:41:01 | INFO | data_ingestion | Fetching Wired
 2026-05-25 02:41:02 | INFO | data_ingestion | Wired → 10 new headlines
 2026-05-25 02:41:02 | INFO | data_ingestion | Fetching Ars Technica
+2026-05-25 02:41:04 | INFO | data_ingestion | Ars Technica → 10 new headlines
+2026-05-25 02:41:04 | INFO | data_ingestion | Collected 40 headlines
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Xreal, Google’s smartglasses partner, thinks it has finally 
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: 6 kitchen gadgets that make adulting feel easier
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: TechCrunch Mobility: Robotaxi reality check
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: I tried Amazon’s Bee wearable and am both intrigued and slig
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: The Dreamie alarm clock got me to stop using my phone in bed
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: SolarSquare in talks to raise up to $60M as India’s rooftop 
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: These special phone and app features can help protect you fr
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Ferrari is using IBM’s AI to create F1 superfans
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Nuclear startup Deep Fission says it’s going public, again, 
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Elon Musk has given up on solar power (on Earth)
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: The best Memorial Day sales you can shop this weekend
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: On Trails is a wandering tale that blends hiking, science, a
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Apple’s latest MacBook Air is $200 off in both sizes for Mem
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Hackers are learning to exploit chatbot &#8216;personalities
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Why Nuro thinks being a robotaxi ‘second mover’ gives it an 
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Record Club is trying to be Letterboxd for music nerds
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: The man behind the legendary MPC, Roger Linn, stays focused 
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Here are 38 Memorial Day deals we recommend for $50 or less
+2026-05-25 02:41:04 | INFO | data_ingestion | Published headline: Hanging out in my favorite virtual coffee shop in Tokyo
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: I have a new go-to browser
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Memorial Day Tech Deals: Sony, Anker, Beats (2026)
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Best Memorial Day Mattress Deals: Helix, Saatva (2026)
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Topo Designs Rover Trail Pack Is the Best Backpack I’ve Ever
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: The Best Browser Extensions to Get More Out of YouTube
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: These Robots Are Making Meals for a Nonprofit in San Francis
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: 14 New Tools for Taking on the Great Outdoors Properly
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Why Garlic Repels Mosquitoes and Keeps Them From Breeding
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: A Fundamental Principle of Aeronautical Engineering Has Been
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: The Universe Is Full of ‘Impossible’ Black Holes. Now Scient
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Best Power Banks (2026): My Picks After Testing Over 100
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Whatever the mirror test tells us, beluga whales pass it
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: SpaceX's Starship V3—still a work in progress—mostly success
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Two space shuttle-era spacewalkers enter Astronaut Hall of F
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: China’s shark finning could lead to US seafood sanctions
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Four Russian satellites are now within striking distance of 
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Ebola outbreak now third largest recorded and "spreading rap
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: First-generation Chromecast users stressed by devices sudden
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: Trump FCC asks public to comment on whether ABC's The View i
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: US scrambles to stop Internet users re-creating dead pilots’
+2026-05-25 02:41:05 | INFO | data_ingestion | Published headline: The Boys is dead. Long live Vought Rising.
+2026-05-25 02:41:05 | INFO | data_ingestion | Sleeping 60s
+2026-05-25 02:42:05 | INFO | data_ingestion | Starting ingestion cycle
+2026-05-25 02:42:05 | INFO | data_ingestion | Fetching TechCrunch
+2026-05-25 02:42:06 | INFO | data_ingestion | TechCrunch → 10 new headlines
+2026-05-25 02:42:06 | INFO | data_ingestion | Fetching The Verge
+2026-05-25 02:42:06 | INFO | data_ingestion | The Verge → 10 new headlines
+2026-05-25 02:42:06 | INFO | data_ingestion | Fetching Wired
+2026-05-25 02:42:07 | INFO | data_ingestion | Wired → 10 new headlines
+2026-05-25 02:42:07 | INFO | data_ingestion | Fetching Ars Technica
+2026-05-25 02:42:09 | INFO | data_ingestion | Ars Technica → 10 new headlines
+2026-05-25 02:42:09 | INFO | data_ingestion | Collected 40 headlines
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Xreal, Google’s smartglasses partner, thinks it has finally 
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: 6 kitchen gadgets that make adulting feel easier
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: TechCrunch Mobility: Robotaxi reality check
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: I tried Amazon’s Bee wearable and am both intrigued and slig
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: The Dreamie alarm clock got me to stop using my phone in bed
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: SolarSquare in talks to raise up to $60M as India’s rooftop 
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: These special phone and app features can help protect you fr
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Ferrari is using IBM’s AI to create F1 superfans
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Nuclear startup Deep Fission says it’s going public, again, 
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Elon Musk has given up on solar power (on Earth)
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: The best Memorial Day sales you can shop this weekend
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: On Trails is a wandering tale that blends hiking, science, a
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Apple’s latest MacBook Air is $200 off in both sizes for Mem
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Hackers are learning to exploit chatbot &#8216;personalities
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Why Nuro thinks being a robotaxi ‘second mover’ gives it an 
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Record Club is trying to be Letterboxd for music nerds
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: The man behind the legendary MPC, Roger Linn, stays focused 
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Here are 38 Memorial Day deals we recommend for $50 or less
+2026-05-25 02:42:09 | INFO | data_ingestion | Published headline: Hanging out in my favorite virtual coffee shop in Tokyo
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: I have a new go-to browser
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Memorial Day Tech Deals: Sony, Anker, Beats (2026)
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Best Memorial Day Mattress Deals: Helix, Saatva (2026)
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Topo Designs Rover Trail Pack Is the Best Backpack I’ve Ever
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: The Best Browser Extensions to Get More Out of YouTube
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: These Robots Are Making Meals for a Nonprofit in San Francis
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: 14 New Tools for Taking on the Great Outdoors Properly
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Why Garlic Repels Mosquitoes and Keeps Them From Breeding
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: A Fundamental Principle of Aeronautical Engineering Has Been
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: The Universe Is Full of ‘Impossible’ Black Holes. Now Scient
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Best Power Banks (2026): My Picks After Testing Over 100
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Whatever the mirror test tells us, beluga whales pass it
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: SpaceX's Starship V3—still a work in progress—mostly success
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Two space shuttle-era spacewalkers enter Astronaut Hall of F
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: China’s shark finning could lead to US seafood sanctions
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Four Russian satellites are now within striking distance of 
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Ebola outbreak now third largest recorded and "spreading rap
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: First-generation Chromecast users stressed by devices sudden
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: Trump FCC asks public to comment on whether ABC's The View i
+2026-05-25 02:42:10 | INFO | data_ingestion | Published headline: US scrambles to stop Internet users re-creating dead pilots’
+2026-05-25 02:42:11 | INFO | data_ingestion | Published headline: The Boys is dead. Long live Vought Rising.
+2026-05-25 02:42:11 | INFO | data_ingestion | Sleeping 60s
+2026-05-25 02:43:11 | INFO | data_ingestion | Starting ingestion cycle
+2026-05-25 02:43:11 | INFO | data_ingestion | Fetching TechCrunch
+2026-05-25 02:43:11 | INFO | data_ingestion | TechCrunch → 10 new headlines
+2026-05-25 02:43:11 | INFO | data_ingestion | Fetching The Verge
+2026-05-25 02:43:11 | INFO | data_ingestion | The Verge → 10 new headlines
+2026-05-25 02:43:11 | INFO | data_ingestion | Fetching Wired
+2026-05-25 02:43:12 | INFO | data_ingestion | Wired → 10 new headlines
+2026-05-25 02:43:12 | INFO | data_ingestion | Fetching Ars Technica
+2026-05-25 02:43:13 | INFO | data_ingestion | Ars Technica → 10 new headlines
+2026-05-25 02:43:13 | INFO | data_ingestion | Collected 40 headlines
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Xreal, Google’s smartglasses partner, thinks it has finally 
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: 6 kitchen gadgets that make adulting feel easier
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: TechCrunch Mobility: Robotaxi reality check
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: I tried Amazon’s Bee wearable and am both intrigued and slig
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: The Dreamie alarm clock got me to stop using my phone in bed
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: SolarSquare in talks to raise up to $60M as India’s rooftop 
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: These special phone and app features can help protect you fr
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Ferrari is using IBM’s AI to create F1 superfans
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Nuclear startup Deep Fission says it’s going public, again, 
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Elon Musk has given up on solar power (on Earth)
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: The best Memorial Day sales you can shop this weekend
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: On Trails is a wandering tale that blends hiking, science, a
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Apple’s latest MacBook Air is $200 off in both sizes for Mem
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Hackers are learning to exploit chatbot &#8216;personalities
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Why Nuro thinks being a robotaxi ‘second mover’ gives it an 
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Record Club is trying to be Letterboxd for music nerds
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: The man behind the legendary MPC, Roger Linn, stays focused 
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Here are 38 Memorial Day deals we recommend for $50 or less
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: Hanging out in my favorite virtual coffee shop in Tokyo
+2026-05-25 02:43:13 | INFO | data_ingestion | Published headline: I have a new go-to browser
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Memorial Day Tech Deals: Sony, Anker, Beats (2026)
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Best Memorial Day Mattress Deals: Helix, Saatva (2026)
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Topo Designs Rover Trail Pack Is the Best Backpack I’ve Ever
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: The Best Browser Extensions to Get More Out of YouTube
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: These Robots Are Making Meals for a Nonprofit in San Francis
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: 14 New Tools for Taking on the Great Outdoors Properly
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Why Garlic Repels Mosquitoes and Keeps Them From Breeding
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: A Fundamental Principle of Aeronautical Engineering Has Been
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: The Universe Is Full of ‘Impossible’ Black Holes. Now Scient
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Best Power Banks (2026): My Picks After Testing Over 100
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Whatever the mirror test tells us, beluga whales pass it
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: SpaceX's Starship V3—still a work in progress—mostly success
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Two space shuttle-era spacewalkers enter Astronaut Hall of F
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: China’s shark finning could lead to US seafood sanctions
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Four Russian satellites are now within striking distance of 
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Ebola outbreak now third largest recorded and "spreading rap
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: First-generation Chromecast users stressed by devices sudden
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: Trump FCC asks public to comment on whether ABC's The View i
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: US scrambles to stop Internet users re-creating dead pilots’
+2026-05-25 02:43:14 | INFO | data_ingestion | Published headline: The Boys is dead. Long live Vought Rising.
+2026-05-25 02:43:14 | INFO | data_ingestion | Sleeping 60s

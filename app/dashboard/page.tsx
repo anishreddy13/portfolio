@@ -26,7 +26,7 @@ interface Prediction {
 interface ModelVersion {
   id: string;
   version: string;
-  accuracy: float;
+  accuracy: number;
   f1_score: number;
   stage: string;
   retrain_reason: string;
