@@ -31,7 +31,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* lock body scroll when mobile menu open */
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -67,7 +66,7 @@ export default function Navbar() {
           }}
         />
 
-        {/* content row — single line, never wraps */}
+        {/* content row */}
         <div className="relative h-full flex items-center justify-between px-4 md:px-8 lg:px-12">
 
           {/* ── Logo ── */}
@@ -78,17 +77,13 @@ export default function Navbar() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {/* red accent bar */}
             <span
               className="hidden sm:block w-1 h-5 rounded-full mr-1"
               style={{ background: "linear-gradient(to bottom, #FF2D2D, #FF6B35)" }}
             />
             <span
               className="font-display tracking-[0.16em] leading-none select-none"
-              style={{
-                fontSize: "clamp(1.1rem, 3vw, 1.4rem)",
-                color: "#F0F0F0",
-              }}
+              style={{ fontSize: "clamp(1.1rem, 3vw, 1.4rem)", color: "#F0F0F0" }}
             >
               ANISH
               <span style={{ color: "#FF2D2D" }}>.</span>
@@ -108,7 +103,6 @@ export default function Navbar() {
                   style={{ color: isActive ? "#FF2D2D" : "#A0A0A0" }}
                 >
                   {link.label}
-                  {/* animated underline */}
                   <span
                     className="absolute -bottom-1 left-0 h-px transition-all duration-300 group-hover:w-full"
                     style={{
@@ -120,7 +114,31 @@ export default function Navbar() {
               );
             })}
 
-            {/* ML Lab button */}
+            {/* ── Dashboard button ── */}
+            <Link href="/dashboard">
+              <motion.span
+                className="inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300"
+                style={{
+                  background:  "rgba(200,255,0,0.08)",
+                  borderColor: "rgba(200,255,0,0.3)",
+                  color:       "#C8FF00",
+                }}
+                whileHover={{
+                  background:  "rgba(200,255,0,0.16)",
+                  borderColor: "rgba(200,255,0,0.6)",
+                  scale: 1.03,
+                }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full animate-pulse"
+                  style={{ background: "#C8FF00", boxShadow: "0 0 6px #C8FF00" }}
+                />
+                Dashboard
+              </motion.span>
+            </Link>
+
+            {/* ── ML Lab button ── */}
             <Link href="/ml">
               <motion.span
                 className="inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300"
@@ -145,8 +163,22 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* ── Mobile: ML Lab + hamburger ── */}
-          <div className="flex md:hidden items-center gap-3">
+          {/* ── Mobile: buttons + hamburger ── */}
+          <div className="flex md:hidden items-center gap-2">
+            <Link href="/dashboard">
+              <span
+                className="inline-flex items-center gap-1.5 font-mono text-[0.6rem] tracking-[0.15em] uppercase px-2.5 py-1 rounded-sm border"
+                style={{
+                  background:  "rgba(200,255,0,0.08)",
+                  borderColor: "rgba(200,255,0,0.3)",
+                  color:       "#C8FF00",
+                }}
+              >
+                <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: "#C8FF00" }} />
+                DB
+              </span>
+            </Link>
+
             <Link href="/ml">
               <span
                 className="inline-flex items-center gap-1.5 font-mono text-[0.6rem] tracking-[0.15em] uppercase px-2.5 py-1 rounded-sm border"
@@ -189,7 +221,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ── Red accent line at bottom of scrolled nav ── */}
+        {/* ── Red accent line ── */}
         <AnimatePresence>
           {scrolled && (
             <motion.div
@@ -215,7 +247,6 @@ export default function Navbar() {
             className="fixed inset-0 z-40 flex flex-col"
             style={{ background: "rgba(10,10,10,0.98)", backdropFilter: "blur(24px)" }}
           >
-            {/* decorative red corner accent */}
             <div
               className="absolute top-0 right-0 w-48 h-48 pointer-events-none"
               style={{
@@ -229,10 +260,7 @@ export default function Navbar() {
               }}
             />
 
-            {/* nav items — centered */}
             <div className="flex flex-col items-start justify-center h-full px-8 gap-2">
-
-              {/* section label */}
               <motion.p
                 className="font-mono text-[0.6rem] tracking-[0.3em] uppercase mb-6"
                 style={{ color: "#FF2D2D" }}
@@ -255,15 +283,12 @@ export default function Navbar() {
                     transition={{ delay: 0.15 + i * 0.07, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                     className="group flex items-center gap-4 py-3 w-full"
                   >
-                    {/* index number */}
                     <span
                       className="font-mono text-[0.6rem] tracking-widest w-6 shrink-0"
                       style={{ color: "#FF2D2D" }}
                     >
                       0{i + 1}
                     </span>
-
-                    {/* label */}
                     <span
                       className="font-display tracking-[0.1em] transition-colors duration-200"
                       style={{
@@ -274,8 +299,6 @@ export default function Navbar() {
                     >
                       {link.label}
                     </span>
-
-                    {/* arrow — appears on hover */}
                     <motion.span
                       className="ml-auto font-mono text-sm opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{ color: "#FF2D2D" }}
@@ -286,7 +309,7 @@ export default function Navbar() {
                 );
               })}
 
-              {/* ML Lab — mobile full menu */}
+              {/* ── ML Lab mobile ── */}
               <motion.div
                 initial={{ opacity: 0, x: -32 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -312,9 +335,35 @@ export default function Navbar() {
                   </span>
                 </Link>
               </motion.div>
+
+              {/* ── Dashboard mobile ── */}
+              <motion.div
+                initial={{ opacity: 0, x: -32 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.44, duration: 0.45 }}
+                className="mt-2"
+              >
+                <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
+                  <span
+                    className="inline-flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.2em] uppercase px-4 py-2.5 rounded-sm border"
+                    style={{
+                      background:  "rgba(200,255,0,0.08)",
+                      borderColor: "rgba(200,255,0,0.25)",
+                      color:       "#C8FF00",
+                    }}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full animate-pulse"
+                      style={{ background: "#C8FF00", boxShadow: "0 0 8px #C8FF00" }}
+                    />
+                    Dashboard
+                    <span className="opacity-50">↗</span>
+                  </span>
+                </Link>
+              </motion.div>
             </div>
 
-            {/* bottom strip */}
             <motion.div
               className="absolute bottom-0 left-0 right-0 h-px"
               style={{ background: "linear-gradient(to right, #FF2D2D, transparent)" }}

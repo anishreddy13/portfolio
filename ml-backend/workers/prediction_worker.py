@@ -145,8 +145,6 @@ async def start_worker():
         "🚀 Prediction worker started"
     )
 
-    initialize_model()
-
     await redis_service.connect()
 
     async for headline in redis_service.subscribe(

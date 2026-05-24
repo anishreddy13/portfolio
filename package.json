@@ -13,11 +13,12 @@
     "@react-three/fiber": "^8.16.8",
     "@supabase/supabase-js": "^2.106.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.1.9",
+    "framer-motion": "^11.18.2",
     "lenis": "^1.0.45",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "recharts": "^3.8.1",
     "three": "^0.164.1",
     "uuid": "^14.0.0"
   },
