@@ -1,0 +1,84 @@
+name: ML Pipeline CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ml-backend/**'
+      - '.github/workflows/**'
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Checkout ──────────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ── Python setup ──────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ── Install dependencies ───────────────────────────────
+      - name: Install dependencies
+        working-directory: ml-backend
+        run: |
+          pip install --upgrade pip
+          pip install pytest scikit-learn==1.5.2 numpy==1.26.4 joblib==1.4.2 nltk==3.9.1
+
+      # ── Download NLTK data ─────────────────────────────────
+      - name: Download NLTK data
+        run: |
+          python -c "import nltk; nltk.download('stopwords'); nltk.download('wordnet'); nltk.download('omw-1.4')"
+
+      # ── Run tests ──────────────────────────────────────────
+      - name: Run ML model tests
+        working-directory: ml-backend
+        run: |
+          pytest tests/ -v --tb=short
+        continue-on-error: true
+        id: run_tests
+
+      # ── Log result to Supabase ─────────────────────────────
+      - name: Log pipeline run to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          TEST_STATUS: ${{ steps.run_tests.outcome }}
+          RUN_NUMBER: ${{ github.run_number }}
+          COMMIT_SHA: ${{ github.sha }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          pip install supabase python-dotenv
+          python - <<'EOF'
+          import os
+          from supabase import create_client
+
+          client = create_client(
+              os.environ["SUPABASE_URL"],
+              os.environ["SUPABASE_SERVICE_ROLE_KEY"]
+          )
+
+          status  = "success" if os.environ["TEST_STATUS"] == "success" else "failed"
+          run_num = int(os.environ["RUN_NUMBER"])
+          commit  = os.environ["COMMIT_SHA"][:7]
+          message = os.environ["COMMIT_MSG"][:100]
+
+          client.table("pipeline_runs").insert({
+              "run_number": run_num,
+              "status":     status,
+              "trigger":    f"push — {commit}: {message}",
+              "deployed":   status == "success",
+              "reason":     message,
+          }).execute()
+
+          print(f"Pipeline run #{run_num} logged: {status}")
+          EOF
+
+      # ── Fail job if tests failed ───────────────────────────
+      - name: Check test results
+        if: steps.run_tests.outcome == 'failure'
+        run: exit 1
