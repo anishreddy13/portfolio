@@ -1,7 +1,15 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { supabase } from "../../lib/supabase";
+import { useDashboardData } from "@/hooks/useDashboardData";
+import type {
+  DriftReport,
+  ModelVersion,
+  PipelineRun,
+  Prediction,
+  Toast,
+  UserActivity,
+} from "@/types/dashboard";
 import {
   AreaChart, Area, BarChart, Bar,
   PieChart, Pie, Cell, LineChart, Line,
@@ -10,34 +18,6 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 // ─── Types ────────────────────────────────────────────────────
-interface Prediction {
-  id: string; title: string; summary: string; source: string;
-  category: string; link: string; sentiment: string; confidence: number;
-  scores: Record<string, number>; processed_at: string;
-}
-interface ModelVersion {
-  id: string; version: string; accuracy: number; f1_score: number;
-  stage: string; retrain_reason: string; deployed_at: string;
-}
-interface DriftReport {
-  id: string; drift_detected: boolean; accuracy: number; drift_score: number;
-  action_taken: string; sample_size: number; created_at: string;
-}
-interface UserActivity {
-  id: string; session_id: string; page: string; event_type: string;
-  browser: string; os: string; device: string; country: string;
-  city: string; created_at: string;
-}
-interface PipelineRun {
-  id: string; run_number: number; status: string; trigger: string;
-  old_accuracy: number; new_accuracy: number; deployed: boolean;
-  reason: string; created_at: string;
-}
-interface Toast {
-  id: string; type: "drift" | "pipeline" | "prediction";
-  title: string; message: string; color: string;
-}
-
 // ─── Constants ────────────────────────────────────────────────
 const SENTIMENT_COLORS = {
   Positive: "#C8FF00", Neutral: "#A855F7", Negative: "#FF2D2D",
@@ -621,13 +601,6 @@ const axisTickDim = { fill: "#606060", fontSize: 8, fontFamily: "DM Mono" };
 
 // ─── Main Dashboard ───────────────────────────────────────────
 export default function Dashboard() {
-  const [predictions,   setPredictions]  = useState<Prediction[]>([]);
-  const [modelVersions, setModelVersions]= useState<ModelVersion[]>([]);
-  const [driftReports,  setDriftReports] = useState<DriftReport[]>([]);
-  const [userActivity,  setUserActivity] = useState<UserActivity[]>([]);
-  const [pipelineRuns,  setPipelineRuns] = useState<PipelineRun[]>([]);
-  const [total,         setTotal]        = useState(0);
-  const [loading,       setLoading]      = useState(true);
   const [activeTab,     setActiveTab]    = useState<
     "live" | "analytics" | "monitoring" | "visitors" | "pipeline"
   >("live");
@@ -647,6 +620,16 @@ export default function Dashboard() {
   }, []);
 
   // ── Derived ───────────────────────────────────────────────
+  const {
+    predictions,
+    modelVersions,
+    driftReports,
+    userActivity,
+    pipelineRuns,
+    total,
+    loading,
+  } = useDashboardData(page, PAGE_SIZE, addToast);
+
   const sentimentCounts = predictions.reduce((acc, p) => {
     acc[p.sentiment] = (acc[p.sentiment] || 0) + 1; return acc;
   }, {} as Record<string, number>);
@@ -710,80 +693,6 @@ export default function Dashboard() {
   const driftDetected = !!latestDrift?.drift_detected;
   const driftStatus   = driftDetected ? "⚠️ Drift" : "✅ Stable";
   const driftColor    = driftDetected ? "#FF2D2D" : "#C8FF00";
-
-  // ── Fetch ─────────────────────────────────────────────────
-  const fetchData = async (pageNum = 1) => {
-    setLoading(true);
-    try {
-      const { count } = await supabase
-        .from("news_predictions")
-        .select("*", { count: "exact", head: true });
-      setTotal(count || 0);
-
-      const from = (pageNum - 1) * PAGE_SIZE;
-      const { data: predData }     = await supabase.from("news_predictions").select("*").order("processed_at", { ascending: false }).range(from, from + PAGE_SIZE - 1);
-      const { data: versionsData } = await supabase.from("model_versions").select("*").order("created_at", { ascending: false }).limit(10);
-      const { data: driftData }    = await supabase.from("drift_reports").select("*").order("created_at", { ascending: false }).limit(20);
-      const { data: activityData } = await supabase.from("user_activity").select("*").order("created_at", { ascending: false }).limit(200);
-      const { data: pipelineData } = await supabase.from("pipeline_runs").select("*").order("created_at", { ascending: false }).limit(20);
-
-      setPredictions(predData     || []);
-      setModelVersions(versionsData || []);
-      setDriftReports(driftData   || []);
-      setUserActivity(activityData || []);
-      setPipelineRuns(pipelineData || []);
-    } catch (e) { console.error("Fetch failed:", e); }
-    finally { setLoading(false); }
-  };
-
-  // ── Realtime ──────────────────────────────────────────────
-  useEffect(() => {
-    fetchData(page);
-
-    const predChannel = supabase.channel("pred_live")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "news_predictions" }, (payload) => {
-        setPredictions((prev) => [payload.new as Prediction, ...prev.slice(0, PAGE_SIZE - 1)]);
-        setTotal((prev) => prev + 1);
-      }).subscribe();
-
-    const driftChannel = supabase.channel("drift_live")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "drift_reports" }, (payload) => {
-        const r = payload.new as DriftReport;
-        setDriftReports((prev) => [r, ...prev.slice(0, 19)]);
-        if (r.drift_detected)
-          addToast({ type: "drift", title: "⚠️ Drift Detected", message: `${r.action_taken} · ${r.sample_size} samples`, color: "#FF2D2D" });
-      }).subscribe();
-
-    const versionChannel = supabase.channel("version_live")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "model_versions" }, (payload) => {
-        setModelVersions((prev) => [payload.new as ModelVersion, ...prev.slice(0, 9)]);
-      }).subscribe();
-
-    const activityChannel = supabase.channel("activity_live")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "user_activity" }, (payload) => {
-        setUserActivity((prev) => [payload.new as UserActivity, ...prev.slice(0, 199)]);
-      }).subscribe();
-
-    const pipelineChannel = supabase.channel("pipeline_live")
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "pipeline_runs" }, (payload) => {
-        const r = payload.new as PipelineRun;
-        setPipelineRuns((prev) => [r, ...prev.slice(0, 19)]);
-        addToast({
-          type:    "pipeline",
-          title:   r.status === "success" ? "✅ Pipeline Passed" : "❌ Pipeline Failed",
-          message: `Run #${r.run_number} · ${r.trigger}`,
-          color:   r.status === "success" ? "#C8FF00" : "#FF2D2D",
-        });
-      }).subscribe();
-
-    return () => {
-      supabase.removeChannel(predChannel);
-      supabase.removeChannel(driftChannel);
-      supabase.removeChannel(versionChannel);
-      supabase.removeChannel(activityChannel);
-      supabase.removeChannel(pipelineChannel);
-    };
-  }, [page]);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
