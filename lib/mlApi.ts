@@ -47,3 +47,7 @@ export function fetchSkinJson<T>(path: string, body: Record<string, unknown>) {
 export function fetchMlHealth() {
   return fetch(buildUrl(mlApiUrl, "/health"));
 }
+
+export function fetchSkinHealth() {
+  return fetch(buildUrl(skinApiUrl, "/"));
+}

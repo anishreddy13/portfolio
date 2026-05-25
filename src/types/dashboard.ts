@@ -63,3 +63,15 @@ export interface Toast {
   message: string;
   color: string;
 }
+
+export type ServiceState = "online" | "offline" | "checking" | "stale";
+
+export interface ServiceHealth {
+  renderApi: ServiceState;
+  skinApi: ServiceState;
+  worker: ServiceState;
+  supabase: ServiceState;
+  lastPredictionAt?: string;
+  lastActivityAt?: string;
+  checkedAt?: string;
+}

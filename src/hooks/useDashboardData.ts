@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
+import { fetchMlHealth, fetchSkinHealth } from "../../lib/mlApi";
 import type {
   DriftReport,
   ModelVersion,
   PipelineRun,
   Prediction,
+  ServiceHealth,
   Toast,
   UserActivity,
 } from "@/types/dashboard";
@@ -23,6 +25,12 @@ export function useDashboardData(
   const [pipelineRuns, setPipelineRuns] = useState<PipelineRun[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [serviceHealth, setServiceHealth] = useState<ServiceHealth>({
+    renderApi: "checking",
+    skinApi: "checking",
+    worker: "checking",
+    supabase: "checking",
+  });
 
   const fetchData = useCallback(async (pageNum = 1) => {
     setLoading(true);
@@ -64,20 +72,67 @@ export function useDashboardData(
       setDriftReports(driftData || []);
       setUserActivity(activityData || []);
       setPipelineRuns(pipelineData || []);
+
+      const lastPredictionAt = predData?.[0]?.processed_at;
+      const lastActivityAt = activityData?.[0]?.created_at;
+      const predictionAgeMinutes = lastPredictionAt
+        ? (Date.now() - new Date(lastPredictionAt).getTime()) / 60000
+        : Number.POSITIVE_INFINITY;
+
+      setServiceHealth((prev) => ({
+        ...prev,
+        worker: predictionAgeMinutes <= 15 ? "online" : (count || 0) > 0 ? "stale" : "offline",
+        supabase: (count || 0) > 0 || !!lastActivityAt ? "online" : "stale",
+        lastPredictionAt,
+        lastActivityAt,
+      }));
     } catch (e) {
       console.error("Fetch failed:", e);
+      setServiceHealth((prev) => ({
+        ...prev,
+        supabase: "offline",
+        worker: "offline",
+      }));
     } finally {
       setLoading(false);
     }
   }, [pageSize]);
 
+  const checkServices = useCallback(async () => {
+    setServiceHealth((prev) => ({
+      ...prev,
+      renderApi: "checking",
+      skinApi: "checking",
+    }));
+
+    const [renderResult, skinResult] = await Promise.allSettled([
+      fetchMlHealth(),
+      fetchSkinHealth(),
+    ]);
+
+    setServiceHealth((prev) => ({
+      ...prev,
+      renderApi: renderResult.status === "fulfilled" && renderResult.value.ok ? "online" : "offline",
+      skinApi: skinResult.status === "fulfilled" && skinResult.value.ok ? "online" : "offline",
+      checkedAt: new Date().toISOString(),
+    }));
+  }, []);
+
   useEffect(() => {
     fetchData(page);
+    checkServices();
 
     const predChannel = supabase.channel("pred_live")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "news_predictions" }, (payload) => {
-        setPredictions((prev) => [payload.new as Prediction, ...prev.slice(0, pageSize - 1)]);
+        const prediction = payload.new as Prediction;
+        setPredictions((prev) => [prediction, ...prev.slice(0, pageSize - 1)]);
         setTotal((prev) => prev + 1);
+        setServiceHealth((prev) => ({
+          ...prev,
+          worker: "online",
+          supabase: "online",
+          lastPredictionAt: prediction.processed_at,
+        }));
       }).subscribe();
 
     const driftChannel = supabase.channel("drift_live")
@@ -118,7 +173,7 @@ export function useDashboardData(
       supabase.removeChannel(activityChannel);
       supabase.removeChannel(pipelineChannel);
     };
-  }, [addToast, fetchData, page, pageSize]);
+  }, [addToast, checkServices, fetchData, page, pageSize]);
 
   return {
     predictions,
@@ -128,5 +183,7 @@ export function useDashboardData(
     pipelineRuns,
     total,
     loading,
+    serviceHealth,
+    refreshServices: checkServices,
   };
 }

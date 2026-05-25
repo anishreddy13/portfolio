@@ -7,6 +7,7 @@ import type {
   ModelVersion,
   PipelineRun,
   Prediction,
+  ServiceHealth,
   Toast,
   UserActivity,
 } from "@/types/dashboard";
@@ -24,6 +25,7 @@ const SENTIMENT_COLORS = {
 };
 const SOURCE_COLORS = ["#FF2D2D", "#FF6B35", "#C8FF00", "#A855F7", "#ffffff"];
 const PAGE_SIZE = 20;
+const DRIFT_THRESHOLD = 0.3;
 
 const COUNTRY_COORDS: Record<string, [number, number]> = {
   "Afghanistan": [33.93, 67.71], "Albania": [41.15, 20.17],
@@ -72,6 +74,33 @@ function sentimentEmoji(s: string) {
   if (s === "Positive") return "😊";
   if (s === "Negative") return "😔";
   return "😐";
+}
+function minutesSince(dateStr?: string): number | null {
+  if (!dateStr) return null;
+  return Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000);
+}
+function healthColor(status: string) {
+  if (status === "online") return "#C8FF00";
+  if (status === "checking") return "#FF6B35";
+  return "#FF2D2D";
+}
+function healthLabel(status: string) {
+  if (status === "online") return "Online";
+  if (status === "checking") return "Checking";
+  if (status === "stale") return "Stale";
+  return "Offline";
+}
+function driftRecommendation(report?: DriftReport) {
+  if (!report) return { label: "Waiting for checks", color: "#606060", detail: "Drift starts after enough prediction samples." };
+  if (report.drift_detected) return { label: "Retrain suggested", color: "#FF2D2D", detail: report.action_taken || "Review drift source and retrain if accuracy drops." };
+  if (report.drift_score >= 0.2) return { label: "Monitor closely", color: "#FF6B35", detail: "Signal is elevated but below the drift threshold." };
+  return { label: "Stable", color: "#C8FF00", detail: "No drift action needed." };
+}
+function pipelineMeaning(run?: PipelineRun) {
+  if (!run) return { label: "No CI signal", color: "#606060", detail: "Push to main to log the next pipeline run." };
+  if (run.status === "success" && run.deployed) return { label: "Deploy passed", color: "#C8FF00", detail: "Latest checked run deployed successfully." };
+  if (run.status === "success") return { label: "Checks passed", color: "#FF6B35", detail: "Run passed but deployment was skipped." };
+  return { label: "Action needed", color: "#FF2D2D", detail: run.reason || "Review the pipeline logs before deploying." };
 }
 
 // ─── useIsMobile ──────────────────────────────────────────────
@@ -151,12 +180,13 @@ function ToastContainer({
 
 // ─── System Health Bar ────────────────────────────────────────
 function SystemHealthBar({
-  driftDetected, pipelineRuns, total, modelVersions,
+  driftDetected, pipelineRuns, total, modelVersions, serviceHealth,
 }: {
   driftDetected: boolean;
   pipelineRuns: PipelineRun[];
   total: number;
   modelVersions: ModelVersion[];
+  serviceHealth: ServiceHealth;
 }) {
   const isMobile    = useIsMobile();
   const lastPipeline = pipelineRuns[0];
@@ -165,10 +195,22 @@ function SystemHealthBar({
   // FIX: on mobile show only 3 most important systems
   const allSystems = [
     {
-      label:  "ML Worker",
-      status: total > 0 ? "Running" : "Idle",
-      ok:     total > 0,
-      detail: `${total.toLocaleString()}`,
+      label:  "Render API",
+      status: healthLabel(serviceHealth.renderApi),
+      ok:     serviceHealth.renderApi === "online",
+      detail: serviceHealth.checkedAt ? timeAgo(serviceHealth.checkedAt) : "checking",
+    },
+    {
+      label:  "Skin API",
+      status: healthLabel(serviceHealth.skinApi),
+      ok:     serviceHealth.skinApi === "online",
+      detail: "HF Space",
+    },
+    {
+      label:  "Worker",
+      status: healthLabel(serviceHealth.worker),
+      ok:     serviceHealth.worker === "online",
+      detail: serviceHealth.lastPredictionAt ? timeAgo(serviceHealth.lastPredictionAt) : `${total.toLocaleString()}`,
     },
     {
       label:  "Drift",
@@ -190,9 +232,9 @@ function SystemHealthBar({
     },
     {
       label:  "Supabase",
-      status: "Healthy",
-      ok:     true,
-      detail: "Live",
+      status: healthLabel(serviceHealth.supabase),
+      ok:     serviceHealth.supabase === "online",
+      detail: serviceHealth.lastActivityAt ? timeAgo(serviceHealth.lastActivityAt) : "data",
     },
   ];
 
@@ -501,6 +543,21 @@ function WorldMap({
 }
 
 // ─── Stat Card ────────────────────────────────────────────────
+function ConfidenceLine({ label, value, color }: { label: string; value: number; color: string }) {
+  const percent = Math.max(0, Math.min(100, value));
+  return (
+    <div>
+      <div className="flex justify-between mb-1">
+        <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "#606060" }}>{label}</span>
+        <span className="font-mono text-[0.52rem]" style={{ color }}>{percent.toFixed(1)}%</span>
+      </div>
+      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+        <div className="h-full rounded-full" style={{ width: `${percent}%`, background: color }} />
+      </div>
+    </div>
+  );
+}
+
 function StatCard({
   label, value, sub, color = "#FF2D2D",
 }: {
@@ -542,6 +599,116 @@ function StatCard({
 }
 
 // ─── Custom Tooltip ───────────────────────────────────────────
+function ServiceHealthGrid({
+  serviceHealth,
+  freshnessLabel,
+  onRefresh,
+}: {
+  serviceHealth: ServiceHealth;
+  freshnessLabel: string;
+  onRefresh: () => void;
+}) {
+  const services = [
+    { label: "Render ML API", status: serviceHealth.renderApi, detail: "text + cancer models" },
+    { label: "Skin API", status: serviceHealth.skinApi, detail: "Hugging Face Space" },
+    { label: "Prediction Worker", status: serviceHealth.worker, detail: `last prediction ${freshnessLabel}` },
+    { label: "Supabase", status: serviceHealth.supabase, detail: serviceHealth.lastActivityAt ? `last activity ${timeAgo(serviceHealth.lastActivityAt)}` : "data store" },
+  ];
+
+  return (
+    <div className="rounded-sm p-4 sm:p-5" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase" style={{ color: "#FF2D2D" }}>
+          Service Health
+        </p>
+        <button
+          onClick={onRefresh}
+          className="font-mono text-[0.55rem] uppercase tracking-widest px-2.5 py-1.5 rounded-sm"
+          style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}
+        >
+          Refresh
+        </button>
+      </div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+        {services.map((service) => (
+          <div key={service.label} className="p-2" style={{ borderLeft: `1px solid ${healthColor(service.status)}40` }}>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: healthColor(service.status), boxShadow: service.status === "online" ? `0 0 6px ${healthColor(service.status)}` : "none" }} />
+              <span className="font-mono text-[0.52rem] uppercase tracking-widest truncate" style={{ color: healthColor(service.status) }}>
+                {healthLabel(service.status)}
+              </span>
+            </div>
+            <p className="font-body text-xs sm:text-sm truncate" style={{ color: "#F0F0F0" }}>{service.label}</p>
+            <p className="font-mono text-[0.5rem] sm:text-[0.55rem] truncate" style={{ color: "#606060" }}>{service.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ArchitecturePanel() {
+  const steps = [
+    { label: "RSS", detail: "news feeds" },
+    { label: "Redis", detail: "queue" },
+    { label: "Worker", detail: "predict" },
+    { label: "Model", detail: "sentiment" },
+    { label: "Supabase", detail: "store" },
+    { label: "Dashboard", detail: "observe" },
+  ];
+
+  return (
+    <div className="rounded-sm p-4 sm:p-5" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
+      <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "#FF2D2D" }}>
+        System Flow
+      </p>
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
+        {steps.map((step, i) => (
+          <div key={step.label} className="relative p-2" style={{ borderLeft: `1px solid ${i === steps.length - 1 ? "#C8FF0040" : "rgba(255,45,45,0.25)"}` }}>
+            <p className="font-display text-lg leading-none mb-1" style={{ color: i === steps.length - 1 ? "#C8FF00" : "#FF2D2D" }}>{step.label}</p>
+            <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "#606060" }}>{step.detail}</p>
+            {i < steps.length - 1 && (
+              <span className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 font-mono text-xs" style={{ color: "#404040" }}>
+                →
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FilterSelect({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="block min-w-0">
+      <span className="font-mono text-[0.5rem] uppercase tracking-widest block mb-1" style={{ color: "#606060" }}>
+        {label}
+      </span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-sm px-2.5 py-2 font-mono text-[0.58rem] uppercase"
+        style={{ background: "var(--surface-2)", color: "#A0A0A0", border: "1px solid rgba(255,255,255,0.06)" }}
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>{option}</option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
@@ -606,6 +773,10 @@ export default function Dashboard() {
   >("live");
   const [page,   setPage]   = useState(1);
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [sentimentFilter, setSentimentFilter] = useState("All");
+  const [sourceFilter, setSourceFilter] = useState("All");
+  const [confidenceFilter, setConfidenceFilter] = useState("All");
+  const [timeFilter, setTimeFilter] = useState("All");
   const isMobile = useIsMobile();
 
   // ── Toasts ────────────────────────────────────────────────
@@ -628,6 +799,8 @@ export default function Dashboard() {
     pipelineRuns,
     total,
     loading,
+    serviceHealth,
+    refreshServices,
   } = useDashboardData(page, PAGE_SIZE, addToast);
 
   const sentimentCounts = predictions.reduce((acc, p) => {
@@ -646,6 +819,26 @@ export default function Dashboard() {
   const sourceData = Object.entries(sourceCounts)
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value);
+  const sourceOptions = ["All", ...Object.keys(sourceCounts).sort()];
+  const filteredPredictions = predictions.filter((p) => {
+    const confidenceOk =
+      confidenceFilter === "All" ||
+      (confidenceFilter === "90+" && p.confidence >= 90) ||
+      (confidenceFilter === "80-90" && p.confidence >= 80 && p.confidence < 90) ||
+      (confidenceFilter === "<80" && p.confidence < 80);
+    const ageMinutes = minutesSince(p.processed_at);
+    const timeOk =
+      timeFilter === "All" ||
+      (timeFilter === "1h" && ageMinutes !== null && ageMinutes <= 60) ||
+      (timeFilter === "24h" && ageMinutes !== null && ageMinutes <= 1440);
+
+    return (
+      (sentimentFilter === "All" || p.sentiment === sentimentFilter) &&
+      (sourceFilter === "All" || p.source === sourceFilter) &&
+      confidenceOk &&
+      timeOk
+    );
+  });
 
   const timelineData = (() => {
     const grouped: Record<string, any> = {};
@@ -689,12 +882,22 @@ export default function Dashboard() {
   const browserData = Object.entries(browserCounts).map(([name, value]) => ({ name, value }));
 
   const accuracyTrend = modelVersions.slice().reverse().map((v) => ({ version: v.version, accuracy: v.accuracy }));
+  const latestModel   = modelVersions[0];
   const latestDrift   = driftReports[0];
+  const latestPipeline = pipelineRuns[0];
   const driftDetected = !!latestDrift?.drift_detected;
   const driftStatus   = driftDetected ? "⚠️ Drift" : "✅ Stable";
   const driftColor    = driftDetected ? "#FF2D2D" : "#C8FF00";
+  const driftInsight   = driftRecommendation(latestDrift);
+  const pipelineInsight = pipelineMeaning(latestPipeline);
+  const lastPredictionAge = minutesSince(serviceHealth.lastPredictionAt);
+  const freshnessLabel = lastPredictionAge === null
+    ? "No predictions"
+    : lastPredictionAge < 60
+      ? `${lastPredictionAge}m ago`
+      : timeAgo(serviceHealth.lastPredictionAt || "");
 
-  const totalPages = Math.ceil(total / PAGE_SIZE);
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   const tabs = [
     { id: "live",       label: isMobile ? "🔴 Live"    : "🔴 Live Feed"      },
@@ -788,6 +991,7 @@ export default function Dashboard() {
           pipelineRuns={pipelineRuns}
           total={total}
           modelVersions={modelVersions}
+          serviceHealth={serviceHealth}
         />
       </div>
 
@@ -830,17 +1034,19 @@ export default function Dashboard() {
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }} className="space-y-3 sm:space-y-4">
 
+              <ServiceHealthGrid
+                serviceHealth={serviceHealth}
+                freshnessLabel={freshnessLabel}
+                onRefresh={refreshServices}
+              />
+
+              <ArchitecturePanel />
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
-                <StatCard label="Total Predictions" value={total.toLocaleString()} sub="all time" color="#FF2D2D" />
-                <StatCard label="Avg Confidence"    value={`${avgConfidence}%`}    sub="this page" color="#C8FF00" />
-                <StatCard label="Positive"
-                  value={sentimentCounts["Positive"] || 0}
-                  sub={`${predictions.length ? Math.round(((sentimentCounts["Positive"] || 0) / predictions.length) * 100) : 0}%`}
-                  color="#C8FF00" />
-                <StatCard label="Negative"
-                  value={sentimentCounts["Negative"] || 0}
-                  sub={`${predictions.length ? Math.round(((sentimentCounts["Negative"] || 0) / predictions.length) * 100) : 0}%`}
-                  color="#FF2D2D" />
+                <StatCard label="System Health" value={serviceHealth.renderApi === "online" && serviceHealth.worker === "online" ? "Healthy" : "Check"} sub={`worker ${healthLabel(serviceHealth.worker).toLowerCase()}`} color={serviceHealth.renderApi === "online" && serviceHealth.worker === "online" ? "#C8FF00" : "#FF6B35"} />
+                <StatCard label="Predictions" value={total.toLocaleString()} sub={`last ${freshnessLabel}`} color="#FF2D2D" />
+                <StatCard label="Model" value={latestModel?.version || "None"} sub={latestModel ? `${latestModel.accuracy?.toFixed(1)}% accuracy` : "waiting"} color="#C8FF00" />
+                <StatCard label="Pipeline" value={pipelineInsight.label} sub={latestPipeline ? timeAgo(latestPipeline.created_at) : "no run"} color={pipelineInsight.color} />
               </div>
 
               <div className="rounded-sm overflow-hidden"
@@ -853,8 +1059,23 @@ export default function Dashboard() {
                       style={{ color: "#FF2D2D" }}>Live Predictions</span>
                   </div>
                   <span className="font-mono text-[0.55rem] sm:text-[0.58rem]" style={{ color: "#606060" }}>
-                    {page}/{totalPages}
+                    {filteredPredictions.length} shown · page {page}/{totalPages}
                   </span>
+                </div>
+
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 px-4 sm:px-5 py-3"
+                  style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                  <FilterSelect label="Sentiment" value={sentimentFilter} options={["All", "Positive", "Neutral", "Negative"]} onChange={setSentimentFilter} />
+                  <FilterSelect label="Source" value={sourceFilter} options={sourceOptions} onChange={setSourceFilter} />
+                  <FilterSelect label="Confidence" value={confidenceFilter} options={["All", "90+", "80-90", "<80"]} onChange={setConfidenceFilter} />
+                  <FilterSelect label="Window" value={timeFilter} options={["All", "1h", "24h"]} onChange={setTimeFilter} />
+                  <button
+                    onClick={() => { setSentimentFilter("All"); setSourceFilter("All"); setConfidenceFilter("All"); setTimeFilter("All"); }}
+                    className="self-end rounded-sm px-2.5 py-2 font-mono text-[0.58rem] uppercase tracking-widest"
+                    style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}
+                  >
+                    Reset
+                  </button>
                 </div>
 
                 {loading ? (
@@ -866,7 +1087,13 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                    {predictions.map((p, i) => (
+                    {filteredPredictions.length === 0 ? (
+                      <div className="px-5 py-12 text-center">
+                        <p className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "#606060" }}>
+                          No predictions match these filters
+                        </p>
+                      </div>
+                    ) : filteredPredictions.map((p, i) => (
                       <motion.div key={p.id}
                         initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.02 }}
@@ -1067,6 +1294,49 @@ export default function Dashboard() {
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }} className="space-y-3 sm:space-y-4">
 
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+                <div className="rounded-sm p-4 sm:p-5 lg:col-span-2"
+                  style={{ background: "var(--surface-1)", border: `1px solid ${driftInsight.color}33` }}>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: driftInsight.color }}>
+                    Drift Recommendation
+                  </p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                    {[
+                      { label: "Decision", value: driftInsight.label, sub: driftInsight.detail, color: driftInsight.color },
+                      { label: "Drift Score", value: latestDrift ? latestDrift.drift_score.toFixed(2) : "—", sub: `threshold ${DRIFT_THRESHOLD}`, color: driftInsight.color },
+                      { label: "Sample Size", value: latestDrift?.sample_size || 0, sub: latestDrift ? timeAgo(latestDrift.created_at) : "waiting", color: "#FF6B35" },
+                      { label: "Accuracy", value: latestDrift ? `${latestDrift.accuracy?.toFixed(1)}%` : "—", sub: "latest check", color: "#C8FF00" },
+                    ].map((item) => (
+                      <div key={item.label} className="min-w-0" style={{ borderLeft: `1px solid ${item.color}40`, paddingLeft: "0.75rem" }}>
+                        <p className="font-mono text-[0.5rem] uppercase tracking-widest mb-1" style={{ color: "#606060" }}>{item.label}</p>
+                        <p className="font-display text-xl sm:text-2xl leading-none truncate" style={{ color: item.color }}>{item.value}</p>
+                        <p className="font-mono text-[0.5rem] mt-1 truncate" style={{ color: "#606060" }}>{item.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="font-body text-xs sm:text-sm leading-relaxed" style={{ color: "#A0A0A0" }}>
+                    Drift compares recent predictions against expected behavior. When the score crosses the threshold, retraining or closer inspection is recommended.
+                  </p>
+                </div>
+
+                <div className="rounded-sm p-4 sm:p-5"
+                  style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "#FF2D2D" }}>
+                    Current Model
+                  </p>
+                  <p className="font-display text-3xl leading-none mb-2" style={{ color: latestModel ? "#C8FF00" : "#606060" }}>
+                    {latestModel?.version || "None"}
+                  </p>
+                  <p className="font-mono text-[0.58rem] uppercase tracking-widest mb-3" style={{ color: "#606060" }}>
+                    {latestModel?.stage || "No deployment"}
+                  </p>
+                  <div className="space-y-2">
+                    <ConfidenceLine label="Accuracy" value={latestModel?.accuracy || 0} color="#C8FF00" />
+                    <ConfidenceLine label="F1 Score" value={latestModel?.f1_score || 0} color="#FF6B35" />
+                  </div>
+                </div>
+              </div>
+
               <div className="rounded-sm overflow-hidden"
                 style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <div className="px-4 sm:px-5 py-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
@@ -1149,14 +1419,14 @@ export default function Dashboard() {
                           {/* FIX: truncate long action text */}
                           <p className="font-mono text-[0.5rem] sm:text-[0.55rem] truncate"
                             style={{ color: "#606060" }}>
-                            {r.action_taken} · {r.sample_size} samples
+                            score {r.drift_score.toFixed(2)} / {DRIFT_THRESHOLD} · {r.sample_size} samples
                           </p>
                         </div>
                       </div>
                       <div className="text-right shrink-0">
                         <p className="font-display text-lg sm:text-xl"
                           style={{ color: r.drift_detected ? "#FF2D2D" : "#C8FF00" }}>
-                          {r.accuracy?.toFixed(1)}%
+                          {r.drift_detected ? "Review" : "Stable"}
                         </p>
                         <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "#606060" }}>
                           {timeAgo(r.created_at)}
@@ -1347,6 +1617,36 @@ export default function Dashboard() {
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }} className="space-y-3 sm:space-y-4">
 
+              <div className="rounded-sm p-4 sm:p-5"
+                style={{ background: "var(--surface-1)", border: `1px solid ${pipelineInsight.color}33` }}>
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: pipelineInsight.color }}>
+                      Latest Delivery Signal
+                    </p>
+                    <h3 className="font-display text-3xl leading-none mb-2" style={{ color: pipelineInsight.color }}>
+                      {pipelineInsight.label}
+                    </h3>
+                    <p className="font-body text-xs sm:text-sm leading-relaxed max-w-2xl" style={{ color: "#A0A0A0" }}>
+                      {pipelineInsight.detail}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 min-w-0 lg:min-w-[360px]">
+                    {[
+                      { label: "Run", value: latestPipeline ? `#${latestPipeline.run_number}` : "—", sub: latestPipeline ? timeAgo(latestPipeline.created_at) : "waiting", color: pipelineInsight.color },
+                      { label: "Old Acc", value: latestPipeline?.old_accuracy ? `${latestPipeline.old_accuracy.toFixed(1)}%` : "—", sub: "previous", color: "#606060" },
+                      { label: "New Acc", value: latestPipeline?.new_accuracy ? `${latestPipeline.new_accuracy.toFixed(1)}%` : "—", sub: "candidate", color: "#C8FF00" },
+                    ].map((item) => (
+                      <div key={item.label} className="p-2" style={{ borderLeft: `1px solid ${item.color}40` }}>
+                        <p className="font-mono text-[0.5rem] uppercase tracking-widest mb-1" style={{ color: "#606060" }}>{item.label}</p>
+                        <p className="font-display text-xl leading-none truncate" style={{ color: item.color }}>{item.value}</p>
+                        <p className="font-mono text-[0.5rem] mt-1 truncate" style={{ color: "#606060" }}>{item.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
                 <StatCard label="Total Runs"   value={pipelineRuns.length} color="#FF2D2D" />
                 <StatCard label="Successful"   value={pipelineRuns.filter((r) => r.status === "success").length} color="#C8FF00" />
@@ -1375,7 +1675,7 @@ export default function Dashboard() {
                   {pipelineRuns.length === 0 ? (
                     <div className="px-5 py-8 text-center">
                       <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>
-                        No runs yet — push to main to trigger
+                        No pipeline runs logged yet — push to main or check GitHub Actions secrets
                       </p>
                     </div>
                   ) : pipelineRuns.map((r, i) => (
