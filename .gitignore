@@ -3,11 +3,19 @@
 
 .env
 .env.local
+!.env.example
 
 venv/
 .venv/
 __pycache__/
 *.pyc
+
+*.log
+logs/
+ml-backend/logs/
+
+*.pkl
+*.pth
 
 ml-backend/skin_data/
 

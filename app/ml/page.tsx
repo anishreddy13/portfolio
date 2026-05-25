@@ -1,6 +1,7 @@
 "use client";
 
 import { trackActivity } from "../../lib/trackActivity";
+import { fetchMlHealth, fetchMlJson, fetchSkinJson } from "../../lib/mlApi";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -388,12 +389,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
     if (!text.trim()) { setError("Please enter some text."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res  = await fetch("https://portfolio-pkdj.onrender.com/predict", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-      if (!res.ok) throw new Error((await res.json()).detail || "Failed");
-      const data: SentimentResult = await res.json();
+      const data = await fetchMlJson<SentimentResult>("/predict", { text });
       setResult(data);
       setHistory((p) => [{ ...data, id: Date.now() }, ...p.slice(0, 4)]);
     } catch (e) { setError(e instanceof Error ? e.message : "Cannot connect."); }
@@ -564,12 +560,7 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
     if (!text.trim()) { setError("Please enter a message."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("https://portfolio-pkdj.onrender.com/predict/spam", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-      if (!res.ok) throw new Error((await res.json()).detail || "Failed");
-      const data: SpamResult = await res.json();
+      const data = await fetchMlJson<SpamResult>("/predict/spam", { text });
       setResult(data);
       setHistory((p) => [{ ...data, id: Date.now() }, ...p.slice(0, 4)]);
     } catch (e) { setError(e instanceof Error ? e.message : "Cannot connect."); }
@@ -710,12 +701,7 @@ function EmotionTab({ serverStatus }: { serverStatus: string }) {
     if (!text.trim()) { setError("Please enter some text."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("https://portfolio-pkdj.onrender.com/predict/emotion", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-      if (!res.ok) throw new Error((await res.json()).detail || "Failed");
-      setResult(await res.json());
+      setResult(await fetchMlJson<EmotionResult>("/predict/emotion", { text }));
     } catch (e) { setError(e instanceof Error ? e.message : "Cannot connect."); }
     finally { setLoading(false); }
   };
@@ -860,12 +846,7 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
   const handlePredict = async () => {
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("https://portfolio-pkdj.onrender.com/predict/cancer", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ features }),
-      });
-      if (!res.ok) throw new Error((await res.json()).detail || "Failed");
-      setResult(await res.json());
+      setResult(await fetchMlJson<CancerResult>("/predict/cancer", { features }));
     } catch (e) { setError(e instanceof Error ? e.message : "Cannot connect."); }
     finally { setLoading(false); }
   };
@@ -1035,12 +1016,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
     if (!imageBase64) { setError("Please upload an image first."); return; }
     setLoading(true); setError(null); setResult(null);
     try {
-      const res = await fetch("https://anishreddy13-skin-cancer-api.hf.space/predict/skin", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: imageBase64 }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || "Prediction failed");
+      const data = await fetchSkinJson<SkinResult>("/predict/skin", { image: imageBase64 });
       setResult(data);
     } catch (e) { setError(e instanceof Error ? e.message : "Cannot connect to ML server."); }
     finally { setLoading(false); }
@@ -1215,7 +1191,7 @@ export default function MLPage() {
   useEffect(() => {
     const check = async () => {
       try {
-        const r = await fetch("https://portfolio-pkdj.onrender.com/health");
+        const r = await fetchMlHealth();
         setServerStatus(r.ok ? "online" : "offline");
       } catch { setServerStatus("offline"); }
     };

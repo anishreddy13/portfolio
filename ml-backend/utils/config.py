@@ -25,6 +25,7 @@ class Settings:
     # ─────────────────────────────────────────────────────────
     API_HOST: str = os.getenv("API_HOST", "0.0.0.0")
     API_PORT: int = int(os.getenv("API_PORT", 8000))
+    ALLOWED_ORIGINS: str = os.getenv("ALLOWED_ORIGINS", "*")
 
     # ─────────────────────────────────────────────────────────
     # SUPABASE
@@ -112,6 +113,14 @@ class Settings:
             )
 
         return True
+
+    def cors_origins(self):
+        origins = [
+            origin.strip()
+            for origin in self.ALLOWED_ORIGINS.split(",")
+            if origin.strip()
+        ]
+        return origins or ["*"]
 
 
 # ✅ Singleton — never raises, so importing config is always safe

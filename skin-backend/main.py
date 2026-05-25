@@ -7,6 +7,11 @@ import os
 from skin_model import predict_skin_cancer, load_skin_model
 
 MODEL_PATH = "skin_model.pth"
+ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",")
+    if origin.strip()
+] or ["*"]
 
 app = FastAPI(
     title="Skin Cancer Detection API",
@@ -15,7 +20,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
