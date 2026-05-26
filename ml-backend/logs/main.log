@@ -68,3 +68,458 @@ ValueError: <class 'numpy.random._mt19937.MT19937'> is not a known BitGenerator 
 2026-05-24 01:22:45 | INFO | main | ✅ Supabase status: {'status': 'healthy', 'connected': True}
 2026-05-24 01:22:45 | INFO | main | ✅ API startup complete
 2026-05-24 01:30:14 | INFO | main | 🛑 Shutting down API
+2026-05-25 22:03:47 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-25 22:03:47 | INFO | main | ✅ Core ML models loaded
+2026-05-25 22:03:48 | INFO | main | Sentiment model loaded
+2026-05-25 22:03:48 | ERROR | main | Spam model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 196, in lifespan
+    spam_pipeline = load_spam_model(SPAM_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\spam_model.py", line 50, in load_spam_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-25 22:03:48 | ERROR | main | Emotion model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 211, in lifespan
+    ) = load_emotion_models()
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\emotion_model.py", line 124, in load_emotion_models
+    emotion_pipeline = joblib.load('emotion_model.pkl')
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-25 22:03:48 | ERROR | main | Cancer model loading failed: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 231, in lifespan
+    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 402, in load_build
+    Unpickler.load_build(self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1718, in load_build
+    setstate(state)
+  File "sklearn\tree\_tree.pyx", line 692, in sklearn.tree._tree.Tree.__setstate__
+  File "sklearn\tree\_tree.pyx", line 1379, in sklearn.tree._tree._check_node_ndarray
+ValueError: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+2026-05-25 22:03:49 | INFO | main | ✅ Plant disease model loaded
+2026-05-25 22:03:49 | WARNING | main | ⚠️  Redis unavailable (non-fatal): Redis service is not installed or not configured
+2026-05-25 22:03:49 | INFO | main | ✅ Supabase status: {'status': 'unavailable', 'connected': False, 'error': 'Supabase service is not installed or not configured'}
+2026-05-25 22:03:49 | INFO | main | ✅ API startup complete
+2026-05-26 10:32:17 | INFO | main | 🛑 Shutting down API
+2026-05-26 10:32:35 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-26 10:32:35 | INFO | main | ✅ Core ML models loaded
+2026-05-26 10:32:36 | INFO | main | Sentiment model loaded
+2026-05-26 10:32:36 | ERROR | main | Spam model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 196, in lifespan
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\spam_model.py", line 50, in load_spam_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:32:36 | ERROR | main | Emotion model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 211, in lifespan
+    predict_emotion = _predict_emotion
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\emotion_model.py", line 124, in load_emotion_models
+    emotion_pipeline = joblib.load('emotion_model.pkl')
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:32:37 | ERROR | main | Cancer model loading failed: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 231, in lifespan
+    )
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 402, in load_build
+    Unpickler.load_build(self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1718, in load_build
+    setstate(state)
+  File "sklearn\tree\_tree.pyx", line 692, in sklearn.tree._tree.Tree.__setstate__
+  File "sklearn\tree\_tree.pyx", line 1379, in sklearn.tree._tree._check_node_ndarray
+ValueError: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+2026-05-26 10:32:39 | INFO | main | ✅ Plant disease model loaded
+2026-05-26 10:32:39 | WARNING | main | ⚠️  Redis unavailable (non-fatal): Redis service is not installed or not configured
+2026-05-26 10:32:39 | INFO | main | ✅ Supabase status: {'status': 'unavailable', 'connected': False, 'error': 'Supabase service is not installed or not configured'}
+2026-05-26 10:32:39 | INFO | main | ✅ API startup complete
+2026-05-26 10:32:39 | INFO | main | 🛑 Shutting down API
+2026-05-26 10:32:52 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-26 10:32:52 | INFO | main | ✅ Core ML models loaded
+2026-05-26 10:32:54 | INFO | main | Sentiment model loaded
+2026-05-26 10:32:54 | ERROR | main | Spam model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 201, in lifespan
+    spam_pipeline = load_spam_model(SPAM_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\spam_model.py", line 50, in load_spam_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:32:54 | ERROR | main | Emotion model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 216, in lifespan
+    ) = load_emotion_models()
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\emotion_model.py", line 124, in load_emotion_models
+    emotion_pipeline = joblib.load('emotion_model.pkl')
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:32:54 | ERROR | main | Cancer model loading failed: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 236, in lifespan
+    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 402, in load_build
+    Unpickler.load_build(self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1718, in load_build
+    setstate(state)
+  File "sklearn\tree\_tree.pyx", line 692, in sklearn.tree._tree.Tree.__setstate__
+  File "sklearn\tree\_tree.pyx", line 1379, in sklearn.tree._tree._check_node_ndarray
+ValueError: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+2026-05-26 10:32:55 | INFO | main | ✅ Plant disease model loaded
+2026-05-26 10:32:55 | WARNING | main | ⚠️  Redis unavailable (non-fatal): Redis service is not installed or not configured
+2026-05-26 10:32:55 | INFO | main | ✅ Supabase status: {'status': 'unavailable', 'connected': False, 'error': 'Supabase service is not installed or not configured'}
+2026-05-26 10:32:55 | INFO | main | ✅ API startup complete
+2026-05-26 10:32:56 | INFO | main | 🛑 Shutting down API
+2026-05-26 10:33:09 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-26 10:33:09 | INFO | main | ✅ Core ML models loaded
+2026-05-26 10:33:10 | INFO | main | Sentiment model loaded
+2026-05-26 10:33:10 | ERROR | main | Spam model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 201, in lifespan
+    spam_pipeline = load_spam_model(SPAM_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\spam_model.py", line 50, in load_spam_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:33:10 | ERROR | main | Emotion model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 216, in lifespan
+    ) = load_emotion_models()
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\emotion_model.py", line 124, in load_emotion_models
+    emotion_pipeline = joblib.load('emotion_model.pkl')
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:33:10 | ERROR | main | Cancer model loading failed: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 236, in lifespan
+    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 402, in load_build
+    Unpickler.load_build(self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1718, in load_build
+    setstate(state)
+  File "sklearn\tree\_tree.pyx", line 692, in sklearn.tree._tree.Tree.__setstate__
+  File "sklearn\tree\_tree.pyx", line 1379, in sklearn.tree._tree._check_node_ndarray
+ValueError: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+2026-05-26 10:33:12 | INFO | main | ✅ Plant disease model loaded
+2026-05-26 10:33:12 | WARNING | main | ⚠️  Redis unavailable (non-fatal): Redis service is not installed or not configured
+2026-05-26 10:33:12 | INFO | main | ✅ Supabase status: {'status': 'unavailable', 'connected': False, 'error': 'Supabase service is not installed or not configured'}
+2026-05-26 10:33:12 | INFO | main | ✅ API startup complete
+2026-05-26 10:33:34 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-26 10:33:34 | INFO | main | ✅ Core ML models loaded
+2026-05-26 10:33:35 | INFO | main | Sentiment model loaded
+2026-05-26 10:33:35 | ERROR | main | Spam model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 201, in lifespan
+    spam_pipeline = load_spam_model(SPAM_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\spam_model.py", line 50, in load_spam_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:33:35 | ERROR | main | Emotion model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 216, in lifespan
+    ) = load_emotion_models()
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\emotion_model.py", line 124, in load_emotion_models
+    emotion_pipeline = joblib.load('emotion_model.pkl')
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:33:35 | ERROR | main | Cancer model loading failed: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 236, in lifespan
+    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 402, in load_build
+    Unpickler.load_build(self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1718, in load_build
+    setstate(state)
+  File "sklearn\tree\_tree.pyx", line 692, in sklearn.tree._tree.Tree.__setstate__
+  File "sklearn\tree\_tree.pyx", line 1379, in sklearn.tree._tree._check_node_ndarray
+ValueError: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+2026-05-26 10:33:36 | INFO | main | ✅ Plant disease model loaded
+2026-05-26 10:33:36 | WARNING | main | ⚠️  Redis unavailable (non-fatal): Redis service is not installed or not configured
+2026-05-26 10:33:36 | INFO | main | ✅ Supabase status: {'status': 'unavailable', 'connected': False, 'error': 'Supabase service is not installed or not configured'}
+2026-05-26 10:33:36 | INFO | main | ✅ API startup complete
+2026-05-26 10:33:36 | INFO | main | 🛑 Shutting down API
+2026-05-26 10:33:56 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-26 10:33:56 | INFO | main | ✅ Core ML models loaded
+2026-05-26 10:33:57 | INFO | main | Sentiment model loaded
+2026-05-26 10:33:58 | ERROR | main | Spam model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 201, in lifespan
+    spam_pipeline = load_spam_model(SPAM_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\spam_model.py", line 50, in load_spam_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:33:58 | ERROR | main | Emotion model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 216, in lifespan
+    ) = load_emotion_models()
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\emotion_model.py", line 124, in load_emotion_models
+    emotion_pipeline = joblib.load('emotion_model.pkl')
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:33:58 | ERROR | main | Cancer model loading failed: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 236, in lifespan
+    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 402, in load_build
+    Unpickler.load_build(self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1718, in load_build
+    setstate(state)
+  File "sklearn\tree\_tree.pyx", line 692, in sklearn.tree._tree.Tree.__setstate__
+  File "sklearn\tree\_tree.pyx", line 1379, in sklearn.tree._tree._check_node_ndarray
+ValueError: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+2026-05-26 10:33:59 | INFO | main | ✅ Plant disease model loaded
+2026-05-26 10:33:59 | WARNING | main | ⚠️  Redis unavailable (non-fatal): Redis service is not installed or not configured
+2026-05-26 10:33:59 | INFO | main | ✅ Supabase status: {'status': 'unavailable', 'connected': False, 'error': 'Supabase service is not installed or not configured'}
+2026-05-26 10:33:59 | INFO | main | ✅ API startup complete
+2026-05-26 10:34:00 | INFO | main | Plant disease prediction generated
+2026-05-26 10:34:00 | INFO | main | 🛑 Shutting down API
+2026-05-26 10:54:46 | INFO | main | 🛑 Shutting down API
+2026-05-26 10:54:59 | INFO | main | 🚀 Starting ML Portfolio API
+2026-05-26 10:54:59 | INFO | main | ✅ Core ML models loaded
+2026-05-26 10:55:00 | INFO | main | Sentiment model loaded
+2026-05-26 10:55:00 | ERROR | main | Spam model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 201, in lifespan
+    spam_pipeline = load_spam_model(SPAM_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\spam_model.py", line 50, in load_spam_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:55:00 | ERROR | main | Emotion model loading failed: No module named 'numpy._core'
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 216, in lifespan
+    ) = load_emotion_models()
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\emotion_model.py", line 124, in load_emotion_models
+    emotion_pipeline = joblib.load('emotion_model.pkl')
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1538, in load_stack_global
+    self.append(self.find_class(module, name))
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1580, in find_class
+    __import__(module, level=0)
+ModuleNotFoundError: No module named 'numpy._core'
+2026-05-26 10:55:00 | ERROR | main | Cancer model loading failed: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+Traceback (most recent call last):
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\main.py", line 236, in lifespan
+    cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+  File "C:\Users\sucha\Downloads\portfolio\portfolio\ml-backend\cancer_model.py", line 103, in load_cancer_model
+    return joblib.load(path)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 658, in load
+    obj = _unpickle(fobj, filename, mmap_mode)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 577, in _unpickle
+    obj = unpickler.load()
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1213, in load
+    dispatch[key[0]](self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\site-packages\joblib\numpy_pickle.py", line 402, in load_build
+    Unpickler.load_build(self)
+  File "C:\Users\sucha\AppData\Local\Programs\Python\Python310\lib\pickle.py", line 1718, in load_build
+    setstate(state)
+  File "sklearn\tree\_tree.pyx", line 692, in sklearn.tree._tree.Tree.__setstate__
+  File "sklearn\tree\_tree.pyx", line 1379, in sklearn.tree._tree._check_node_ndarray
+ValueError: node array from the pickle has an incompatible dtype:
+- expected: [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+- got     : {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+2026-05-26 10:55:01 | INFO | main | ✅ Plant disease model loaded
+2026-05-26 10:55:01 | WARNING | main | ⚠️  Redis unavailable (non-fatal): Redis service is not installed or not configured
+2026-05-26 10:55:01 | INFO | main | ✅ Supabase status: {'status': 'unavailable', 'connected': False, 'error': 'Supabase service is not installed or not configured'}
+2026-05-26 10:55:01 | INFO | main | ✅ API startup complete
+2026-05-26 10:55:02 | INFO | main | 🛑 Shutting down API

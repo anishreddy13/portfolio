@@ -3,26 +3,43 @@ load_dotenv()  # FIRST — must be before all other imports
 
 from contextlib import asynccontextmanager
 from datetime import datetime
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 import os
 import uvicorn
+from pathlib import Path
 
 
 # ─────────────────────────────────────────────────────────────
 # EXISTING MODELS
 # ─────────────────────────────────────────────────────────────
-from model import predict_sentiment, load_model
-from spam_model import predict_spam, load_spam_model
-from emotion_model import predict_emotion, load_emotion_models
-from cancer_model import (
-    predict_cancer,
-    load_cancer_model,
-    FEATURE_RANGES,
-    MALIGNANT_SAMPLE,
-    BENIGN_SAMPLE,
+OPTIONAL_IMPORT_ERRORS = {}
+
+def _optional_loader_unavailable(*args, **kwargs):
+    return None
+
+
+def _optional_emotion_loader_unavailable(*args, **kwargs):
+    return None, None, None
+
+
+predict_sentiment = None
+load_model = _optional_loader_unavailable
+predict_spam = None
+load_spam_model = _optional_loader_unavailable
+predict_emotion = None
+load_emotion_models = _optional_emotion_loader_unavailable
+predict_cancer = None
+load_cancer_model = _optional_loader_unavailable
+FEATURE_RANGES = {}
+MALIGNANT_SAMPLE = {}
+BENIGN_SAMPLE = {}
+from plant_inference import (
+    PlantInferenceError,
+    load_plant_predictor,
+    predict_plant_disease_from_bytes,
 )
 
 # ─────────────────────────────────────────────────────────────
@@ -31,8 +48,49 @@ from cancer_model import (
 from utils.config import settings
 from utils.logger import get_logger
 
-from services.redis_service import redis_service
-from services.supabase_service import supabase_service
+class OptionalRedisService:
+    async def connect(self):
+        raise RuntimeError("Redis service is not installed or not configured")
+
+    async def close(self):
+        return None
+
+    async def health_check(self):
+        return {
+            "status": "unavailable",
+            "connected": False,
+            "error": "Redis service is not installed or not configured",
+        }
+
+
+class OptionalSupabaseService:
+    def health_check(self):
+        return {
+            "status": "unavailable",
+            "connected": False,
+            "error": "Supabase service is not installed or not configured",
+        }
+
+
+if settings.REDIS_URL:
+    try:
+        from services.redis_service import redis_service
+    except Exception as e:
+        redis_service = OptionalRedisService()
+        OPTIONAL_IMPORT_ERRORS["redis_service"] = str(e)
+else:
+    redis_service = OptionalRedisService()
+
+if settings.SUPABASE_URL and (
+    settings.SUPABASE_SERVICE_ROLE_KEY or settings.SUPABASE_ANON_KEY
+):
+    try:
+        from services.supabase_service import supabase_service
+    except Exception as e:
+        supabase_service = OptionalSupabaseService()
+        OPTIONAL_IMPORT_ERRORS["supabase_service"] = str(e)
+else:
+    supabase_service = OptionalSupabaseService()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -48,6 +106,14 @@ SENTIMENT_MODEL_PATH = "sentiment_model.pkl"
 SPAM_MODEL_PATH      = "spam_model.pkl"
 EMOTION_MODEL_PATH   = "emotion_model.pkl"
 CANCER_MODEL_PATH    = "cancer_model.pkl"
+ML_BACKEND_DIR       = Path(__file__).resolve().parent
+PLANT_MODEL_PATH     = ML_BACKEND_DIR / "models" / "plant_disease" / "best_model.pt"
+PLANT_MAPPING_PATH   = ML_BACKEND_DIR / "models" / "plant_disease" / "plant_class_to_idx.json"
+SUPPORTED_PLANT_IMAGE_MIME_TYPES = {
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+}
 
 
 # ─────────────────────────────────────────────────────────────
@@ -59,6 +125,7 @@ emotion_pipeline   = None
 gender_pipeline    = None
 age_pipeline       = None
 cancer_pipeline    = None
+plant_predictor    = None
 
 
 # ─────────────────────────────────────────────────────────────
@@ -75,6 +142,12 @@ async def lifespan(app: FastAPI):
     global sentiment_pipeline, spam_pipeline
     global emotion_pipeline, gender_pipeline, age_pipeline
     global cancer_pipeline
+    global plant_predictor
+    global predict_sentiment, load_model
+    global predict_spam, load_spam_model
+    global predict_emotion, load_emotion_models
+    global predict_cancer, load_cancer_model
+    global FEATURE_RANGES, MALIGNANT_SAMPLE, BENIGN_SAMPLE
 
     logger.info("🚀 Starting ML Portfolio API")
 
@@ -87,7 +160,8 @@ async def lifespan(app: FastAPI):
     ]:
         if not os.path.exists(path):
             logger.error(f"❌ {name} model missing at {path}")
-            raise RuntimeError(f"{name} model not found at {path}")
+            logger.warning(f"{name} model not found at {path}; endpoint will return 503")
+            continue
 
     # ── Load ML models ────────────────────────────────────────
     try:
@@ -102,11 +176,87 @@ async def lifespan(app: FastAPI):
 
         cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
 
-        logger.info("✅ All ML models loaded")
+        logger.info("✅ Core ML models loaded")
 
     except Exception as e:
         logger.exception(f"❌ Model loading failed: {e}")
-        raise
+        logger.warning("Core model loading skipped or partially unavailable; endpoints will return 503")
+
+    if os.path.exists(SENTIMENT_MODEL_PATH):
+        try:
+            from model import predict_sentiment as _predict_sentiment, load_model as _load_model
+            predict_sentiment = _predict_sentiment
+            load_model = _load_model
+            sentiment_pipeline = load_model(SENTIMENT_MODEL_PATH)
+            logger.info("Sentiment model loaded")
+        except Exception as e:
+            OPTIONAL_IMPORT_ERRORS["sentiment"] = str(e)
+            logger.exception(f"Sentiment model loading failed: {e}")
+
+    if os.path.exists(SPAM_MODEL_PATH):
+        try:
+            from spam_model import predict_spam as _predict_spam, load_spam_model as _load_spam_model
+            predict_spam = _predict_spam
+            load_spam_model = _load_spam_model
+            spam_pipeline = load_spam_model(SPAM_MODEL_PATH)
+            logger.info("Spam model loaded")
+        except Exception as e:
+            OPTIONAL_IMPORT_ERRORS["spam"] = str(e)
+            logger.exception(f"Spam model loading failed: {e}")
+
+    if os.path.exists(EMOTION_MODEL_PATH):
+        try:
+            from emotion_model import predict_emotion as _predict_emotion, load_emotion_models as _load_emotion_models
+            predict_emotion = _predict_emotion
+            load_emotion_models = _load_emotion_models
+            (
+                emotion_pipeline,
+                gender_pipeline,
+                age_pipeline,
+            ) = load_emotion_models()
+            logger.info("Emotion models loaded")
+        except Exception as e:
+            OPTIONAL_IMPORT_ERRORS["emotion"] = str(e)
+            logger.exception(f"Emotion model loading failed: {e}")
+
+    if os.path.exists(CANCER_MODEL_PATH):
+        try:
+            from cancer_model import (
+                predict_cancer as _predict_cancer,
+                load_cancer_model as _load_cancer_model,
+                FEATURE_RANGES as _FEATURE_RANGES,
+                MALIGNANT_SAMPLE as _MALIGNANT_SAMPLE,
+                BENIGN_SAMPLE as _BENIGN_SAMPLE,
+            )
+            predict_cancer = _predict_cancer
+            load_cancer_model = _load_cancer_model
+            FEATURE_RANGES = _FEATURE_RANGES
+            MALIGNANT_SAMPLE = _MALIGNANT_SAMPLE
+            BENIGN_SAMPLE = _BENIGN_SAMPLE
+            cancer_pipeline = load_cancer_model(CANCER_MODEL_PATH)
+            logger.info("Cancer model loaded")
+        except Exception as e:
+            OPTIONAL_IMPORT_ERRORS["cancer"] = str(e)
+            logger.exception(f"Cancer model loading failed: {e}")
+
+    # Plant disease inference is optional so existing endpoints keep working
+    # if the image checkpoint is not present on a deployment yet.
+    try:
+        if os.path.exists(PLANT_MODEL_PATH) and os.path.exists(PLANT_MAPPING_PATH):
+            plant_predictor = load_plant_predictor(
+                checkpoint_path=PLANT_MODEL_PATH,
+                mapping_path=PLANT_MAPPING_PATH,
+            )
+            logger.info("✅ Plant disease model loaded")
+        else:
+            logger.warning(
+                "⚠️ Plant disease model unavailable "
+                f"(checkpoint={PLANT_MODEL_PATH}, mapping={PLANT_MAPPING_PATH})"
+            )
+
+    except Exception as e:
+        plant_predictor = None
+        logger.exception(f"⚠️ Plant disease model loading failed: {e}")
 
     # ── Connect Redis (non-fatal) ─────────────────────────────
     try:
@@ -237,6 +387,22 @@ class CancerResponse(BaseModel):
     is_malignant:           bool
 
 
+class PlantPredictionItem(BaseModel):
+    class_name:   str
+    display_name: str
+    confidence:   float
+    status:       str
+
+
+class PlantPredictionResponse(BaseModel):
+    predicted_class:        str
+    predicted_display_name: str
+    confidence_score:       float
+    status:                 str
+    is_healthy:             bool
+    top_5_predictions:      List[PlantPredictionItem]
+
+
 # ─────────────────────────────────────────────────────────────
 # ROOT
 # ─────────────────────────────────────────────────────────────
@@ -251,6 +417,7 @@ def root():
             "spam-detector",
             "emotion-gender-age",
             "breast-cancer-detection",
+            "plant-disease-detection",
         ],
         "status": "healthy",
     }
@@ -281,6 +448,7 @@ async def health():
             "spam_model":      spam_pipeline      is not None,
             "emotion_model":   emotion_pipeline   is not None,
             "cancer_model":    cancer_pipeline     is not None,
+            "plant_model":     plant_predictor     is not None,
         },
 
         "services": {
@@ -421,6 +589,39 @@ def predict_cancer_route(input: CancerInput):
 # ─────────────────────────────────────────────────────────────
 # MAIN
 # ─────────────────────────────────────────────────────────────
+# PLANT DISEASE
+@app.post("/predict/plant", response_model=PlantPredictionResponse)
+async def predict_plant_route(
+    image: UploadFile = File(..., description="Plant leaf image file"),
+):
+    content_type = (image.content_type or "").split(";", 1)[0].strip().lower()
+    if content_type not in SUPPORTED_PLANT_IMAGE_MIME_TYPES:
+        supported_types = ", ".join(sorted(SUPPORTED_PLANT_IMAGE_MIME_TYPES))
+        raise HTTPException(
+            400,
+            f"Unsupported image MIME type. Supported types: {supported_types}",
+        )
+
+    image_bytes = await image.read()
+    if not image_bytes:
+        raise HTTPException(400, "Image file cannot be empty")
+
+    if plant_predictor is None:
+        raise HTTPException(503, "Plant disease model not loaded")
+
+    try:
+        result = predict_plant_disease_from_bytes(image_bytes, plant_predictor)
+        logger.info("Plant disease prediction generated")
+        return PlantPredictionResponse(**result)
+
+    except PlantInferenceError as e:
+        raise HTTPException(400, str(e))
+
+    except Exception as e:
+        logger.exception(f"Plant disease prediction failed: {e}")
+        raise HTTPException(500, "Plant disease prediction failed")
+
+
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",

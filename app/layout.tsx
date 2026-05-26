@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import CursorEffect from "@/components/CursorEffect";
+import PlantAnnouncement from "@/components/PlantAnnouncement";
 
 export const metadata: Metadata = {
   title: "Anish.Dev — Full Stack Developer",
@@ -36,6 +37,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <CursorEffect />
+        <PlantAnnouncement />
         {children}
       </body>
     </html>

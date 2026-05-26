@@ -1,22 +1,51 @@
-﻿node_modules/
+﻿# Node
+node_modules/
 .next/
+*.tsbuildinfo
 
+# Environment
 .env
 .env.local
 !.env.example
 
-venv/
-.venv/
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
 
+# Logs
 *.log
 logs/
 ml-backend/logs/
 
-*.pkl
+# ML model artifacts
+*.pt
 *.pth
+*.pkl
+*.h5
 
+# Data files
+*.csv
+
+# Datasets
+datasets/
+datasets/**
+
+# ML backend large files
+ml-backend/models/
 ml-backend/skin_data/
 
-*.csv
+# ML workers compiled
+mlworkers/
+mlworkers/**
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Codex
+CODEX_INSTRUCTIONS.md

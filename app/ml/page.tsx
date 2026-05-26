@@ -6,10 +6,11 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import InterviewAnalyzer from "../../src/components/InterviewAnalyzer";
+import PlantDiseaseDetector from "../../src/components/PlantDiseaseDetector";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type TabType = "sentiment" | "spam" | "emotion" | "cancer" | "skin" | "interview";
+type TabType = "sentiment" | "spam" | "emotion" | "cancer" | "skin" | "plant" | "interview";
 
 interface SentimentResult {
   sentiment: string;
@@ -1189,6 +1190,26 @@ export default function MLPage() {
   }, []);
 
   useEffect(() => {
+    const validTabs: TabType[] = ["sentiment", "spam", "emotion", "cancer", "skin", "plant", "interview"];
+    const activateFromUrl = () => {
+      const tab = new URLSearchParams(window.location.search).get("tab") as TabType | null;
+      if (tab && validTabs.includes(tab)) setActiveTab(tab);
+    };
+    const handleTabChange = (event: Event) => {
+      const tab = (event as CustomEvent<TabType>).detail;
+      if (validTabs.includes(tab)) setActiveTab(tab);
+    };
+
+    activateFromUrl();
+    window.addEventListener("popstate", activateFromUrl);
+    window.addEventListener("ml-tab-change", handleTabChange);
+    return () => {
+      window.removeEventListener("popstate", activateFromUrl);
+      window.removeEventListener("ml-tab-change", handleTabChange);
+    };
+  }, []);
+
+  useEffect(() => {
     const check = async () => {
       try {
         const r = await fetchMlHealth();
@@ -1201,6 +1222,7 @@ export default function MLPage() {
   }, []);
 
   const tabs = [
+    { id: "plant"     as TabType, label: "Plant AI",       icon: "🌿", color: "#C8FF00", desc: "New · Leaf CNN", featured: true },
     { id: "sentiment" as TabType, label: "Sentiment",      icon: "🧠", color: "#FF2D2D", desc: "Pos · Neg · Neutral"    },
     { id: "spam"      as TabType, label: "Spam",           icon: "🔍", color: "#FF6B35", desc: "Spam · Ham"             },
     { id: "emotion"   as TabType, label: "Emotion",        icon: "🎭", color: "#A855F7", desc: "28 Emotions · Demo"     },
@@ -1294,8 +1316,8 @@ export default function MLPage() {
             </span>
           </h1>
           <p className="font-body text-base max-w-xl leading-relaxed" style={{ color: "#A0A0A0" }}>
-            Six real ML models — no external APIs, no cloud inference.{" "}
-            <span style={{ color: "#F0F0F0" }}>Pure Python, scikit-learn & PyTorch.</span>
+            Seven real ML models across text, speech, tabular, and vision workflows.{" "}
+            <span style={{ color: "#F0F0F0" }}>Python, scikit-learn, PyTorch & FastAPI.</span>
           </p>
         </motion.div>
 
@@ -1303,7 +1325,7 @@ export default function MLPage() {
         <motion.div
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="grid grid-cols-3 md:grid-cols-6 gap-2 mb-8"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-2 mb-8"
         >
           {tabs.map((tab) => {
             const active = activeTab === tab.id;
@@ -1315,12 +1337,20 @@ export default function MLPage() {
                 whileTap={{ scale: 0.97 }}
                 className="relative rounded-sm p-3 text-left transition-all duration-200"
                 style={{
-                  background:   active ? `${tab.color}10` : "var(--surface-1)",
-                  border:       `1px solid ${active ? `${tab.color}40` : "rgba(255,255,255,0.06)"}`,
+                  background:   active ? `${tab.color}10` : tab.featured ? "rgba(200,255,0,0.045)" : "var(--surface-1)",
+                  border:       `1px solid ${active ? `${tab.color}40` : tab.featured ? "rgba(200,255,0,0.18)" : "rgba(255,255,255,0.06)"}`,
                 }}
               >
                 <div className="flex items-center gap-1.5 mb-1">
                   <span className="text-base">{tab.icon}</span>
+                  {tab.featured && (
+                    <span
+                      className="font-mono text-[0.42rem] uppercase tracking-widest px-1.5 py-0.5 rounded-sm"
+                      style={{ background: "rgba(200,255,0,0.1)", color: "#C8FF00", border: "1px solid rgba(200,255,0,0.2)" }}
+                    >
+                      New
+                    </span>
+                  )}
                 </div>
                 <p className="font-mono text-[0.58rem] tracking-wider uppercase leading-tight"
                   style={{ color: active ? tab.color : "#606060" }}>
@@ -1353,6 +1383,7 @@ export default function MLPage() {
              activeTab === "emotion"   ? <EmotionTab   serverStatus={serverStatus} /> :
              activeTab === "cancer"    ? <CancerTab    serverStatus={serverStatus} /> :
              activeTab === "skin"      ? <SkinCancerTab serverStatus={serverStatus} /> :
+             activeTab === "plant"     ? <PlantDiseaseDetector /> :
              <InterviewAnalyzer />}
           </motion.div>
         </AnimatePresence>
@@ -1369,10 +1400,10 @@ export default function MLPage() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {[
-              { step: "01", title: "Data",    desc: "Tweets, SMS, Reddit, Wisconsin clinical, HAM10000 dermoscopy" },
-              { step: "02", title: "Train",   desc: "scikit-learn pipelines + PyTorch ResNet18 transfer learning" },
-              { step: "03", title: "Serve",   desc: "FastAPI serves all models simultaneously on port 8000" },
-              { step: "04", title: "Predict", desc: "Text analysis in milliseconds · Image CNN under 1 second" },
+              { step: "01", title: "Data",    desc: "Tweets, SMS, Reddit, clinical, HAM10000, and PlantVillage datasets" },
+              { step: "02", title: "Train",   desc: "scikit-learn pipelines plus PyTorch transfer learning for vision" },
+              { step: "03", title: "Serve",   desc: "FastAPI services with isolated Hugging Face Spaces deployments" },
+              { step: "04", title: "Predict", desc: "Text, speech, tabular, skin, and plant inference demos" },
             ].map((item) => (
               <div key={item.step}>
                 <div className="font-display text-2xl mb-2"
