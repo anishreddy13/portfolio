@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
   { label: "About",   href: "#about" },
@@ -14,10 +15,18 @@ export default function Navbar() {
   const [scrolled,       setScrolled]       = useState(false);
   const [mobileOpen,     setMobileOpen]     = useState(false);
   const [activeSection,  setActiveSection]  = useState("");
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
+      if (!isHome) {
+        setActiveSection("");
+        return;
+      }
+
       const sections = ["about", "projects", "contact"];
       for (const sec of [...sections].reverse()) {
         const el = document.getElementById(sec);
@@ -27,18 +36,24 @@ export default function Navbar() {
         }
       }
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHome]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  const scrollTo = (href: string) => {
+  const navigateTo = (href: string) => {
     setMobileOpen(false);
     if (href.startsWith("#")) {
+      if (!isHome) {
+        router.push(`/${href}`);
+        return;
+      }
+
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -70,9 +85,16 @@ export default function Navbar() {
         <div className="relative h-full flex items-center justify-between px-4 md:px-8 lg:px-12">
 
           {/* ── Logo ── */}
-          <motion.a
-            href="#"
-            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          <motion.button
+            type="button"
+            onClick={() => {
+              setMobileOpen(false);
+              if (isHome) {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              } else {
+                router.push("/");
+              }
+            }}
             className="flex items-center gap-1 shrink-0"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -89,7 +111,7 @@ export default function Navbar() {
               <span style={{ color: "#FF2D2D" }}>.</span>
               DEV
             </span>
-          </motion.a>
+          </motion.button>
 
           {/* ── Desktop nav links ── */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8">
@@ -98,7 +120,7 @@ export default function Navbar() {
               return (
                 <button
                   key={link.href}
-                  onClick={() => scrollTo(link.href)}
+                  onClick={() => navigateTo(link.href)}
                   className="relative group font-mono text-[0.65rem] tracking-[0.2em] uppercase transition-colors duration-300"
                   style={{ color: isActive ? "#FF2D2D" : "#A0A0A0" }}
                 >
@@ -276,7 +298,7 @@ export default function Navbar() {
                 return (
                   <motion.button
                     key={link.href}
-                    onClick={() => scrollTo(link.href)}
+                    onClick={() => navigateTo(link.href)}
                     initial={{ opacity: 0, x: -32 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}

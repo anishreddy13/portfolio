@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.9.1",
     "@react-three/drei": "^9.105.4",
     "@react-three/fiber": "^8.16.8",
     "@supabase/supabase-js": "^2.106.1",

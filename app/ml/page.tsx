@@ -1246,10 +1246,10 @@ export default function MLPage() {
 
       {/* Back button */}
       <motion.div initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
-        className="fixed top-5 left-5 z-20">
+        className="fixed top-20 left-4 sm:left-5 z-30">
         <Link href="/"
-          className="flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.2em] uppercase
-                     px-3 py-2 rounded-sm transition-all duration-200"
+          className="flex items-center gap-2 font-mono text-[0.58rem] sm:text-[0.62rem] tracking-[0.18em] sm:tracking-[0.2em] uppercase
+                     px-2.5 sm:px-3 py-2 rounded-sm transition-all duration-200"
           style={{
             background:  "rgba(10,10,10,0.8)",
             border:      "1px solid rgba(255,255,255,0.08)",
@@ -1270,7 +1270,7 @@ export default function MLPage() {
 
       {/* Server status */}
       <motion.div initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
-        className="fixed top-5 right-5 z-20 flex items-center gap-2 px-3 py-2 rounded-sm"
+        className="fixed top-20 right-4 sm:right-5 z-30 flex items-center gap-2 px-2.5 sm:px-3 py-2 rounded-sm"
         style={{ background: "rgba(10,10,10,0.8)", border: "1px solid rgba(255,255,255,0.08)" }}>
         <span className="w-1.5 h-1.5 rounded-full"
           style={{
@@ -1278,12 +1278,12 @@ export default function MLPage() {
             boxShadow:  serverStatus === "online" ? "0 0 6px #C8FF00" : "none",
             animation:  serverStatus !== "offline" ? "pulse 2s infinite" : "none",
           }} />
-        <span className="font-mono text-[0.58rem] tracking-[0.2em] uppercase" style={{ color: "#606060" }}>
+        <span className="font-mono text-[0.52rem] sm:text-[0.58rem] tracking-[0.16em] sm:tracking-[0.2em] uppercase" style={{ color: "#606060" }}>
           {serverStatus === "online" ? "Server Online" : serverStatus === "offline" ? "Server Offline" : "Checking..."}
         </span>
       </motion.div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 py-24">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-36 sm:pt-40 pb-24">
 
         {/* Header */}
         <motion.div

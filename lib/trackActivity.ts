@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { isSupabaseConfigured, supabase } from "./supabase";
 import { v4 as uuidv4 } from "uuid";
 
 export async function trackActivity(
@@ -6,6 +6,10 @@ export async function trackActivity(
   eventType: string
 ) {
   try {
+    if (!isSupabaseConfigured || !supabase) {
+      return;
+    }
+
     let sessionId = localStorage.getItem("session_id");
 
     if (!sessionId) {

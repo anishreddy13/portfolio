@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
 import ScrollReveal from "./ScrollReveal";
 
 const footerLinks = {
@@ -23,9 +24,17 @@ const footerLinks = {
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHome = pathname === "/";
 
-  const scrollTo = (href: string) => {
+  const navigateTo = (href: string) => {
     if (href.startsWith("#")) {
+      if (!isHome) {
+        router.push(`/${href}`);
+        return;
+      }
+
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -92,7 +101,13 @@ export default function Footer() {
           <div className="md:col-span-1">
             <ScrollReveal>
               <motion.button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                onClick={() => {
+                  if (isHome) {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  } else {
+                    router.push("/");
+                  }
+                }}
                 className="flex items-center gap-2 mb-4 group"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -157,7 +172,7 @@ export default function Footer() {
                         href={link.href}
                         onClick={
                           link.href.startsWith("#")
-                            ? (e) => { e.preventDefault(); scrollTo(link.href); }
+                            ? (e) => { e.preventDefault(); navigateTo(link.href); }
                             : undefined
                         }
                         target={

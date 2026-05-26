@@ -9,6 +9,7 @@ interface FormState {
   email: string;
   subject: string;
   message: string;
+  company: string;
 }
 
 interface FocusedState {
@@ -123,16 +124,23 @@ function AnimatedInput({
 
 export default function Contact() {
   const [form, setForm] = useState<FormState>({
-    name: "", email: "", subject: "", message: "",
+    name: "", email: "", subject: "", message: "", company: "",
   });
   const [focused, setFocused] = useState<FocusedState>({
     name: false, email: false, subject: false, message: false,
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  ) => {
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+    if (status === "error") {
+      setStatus("idle");
+      setStatusMessage("");
+    }
+  };
 
   const handleFocus = (f: keyof FocusedState) =>
     setFocused((p) => ({ ...p, [f]: true }));
@@ -142,10 +150,33 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    await new Promise((r) => setTimeout(r, 1800));
-    setStatus("sent");
-    setForm({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setStatus("idle"), 4000);
+    setStatusMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.message || "Message could not be sent.");
+      }
+
+      setStatus("sent");
+      setStatusMessage("Message sent. I will get back to you soon.");
+      setForm({ name: "", email: "", subject: "", message: "", company: "" });
+      setTimeout(() => {
+        setStatus("idle");
+        setStatusMessage("");
+      }, 5000);
+    } catch (error) {
+      setStatus("error");
+      setStatusMessage(
+        error instanceof Error ? error.message : "Something went wrong. Please try again."
+      );
+    }
   };
 
   return (
@@ -240,6 +271,17 @@ export default function Contact() {
           <div className="lg:col-span-3">
             <ScrollReveal delay={0.15}>
               <form onSubmit={handleSubmit} className="space-y-3">
+                <input
+                  type="text"
+                  name="company"
+                  value={form.company}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <AnimatedInput
                     label="Your Name" name="name"
@@ -281,6 +323,7 @@ export default function Contact() {
                 <motion.button
                   type="submit"
                   disabled={status === "sending" || status === "sent"}
+                  aria-busy={status === "sending"}
                   className="relative w-full py-4 rounded-sm font-mono
                              text-[0.72rem] tracking-[0.22em] uppercase overflow-hidden"
                   whileHover={{ scale: status === "idle" ? 1.01 : 1 }}
@@ -292,6 +335,8 @@ export default function Contact() {
                       background:
                         status === "sent"
                           ? "#22c55e"
+                          : status === "error"
+                          ? "#CC1A1A"
                           : status === "sending"
                           ? "rgba(255,255,255,0.06)"
                           : "#FF2D2D",
@@ -365,13 +410,48 @@ export default function Contact() {
                         </motion.span>
                       )}
                       {status === "error" && (
-                        <motion.span key="error">
-                          Error — Try Again
+                        <motion.span
+                          key="error"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          className="flex items-center justify-center gap-2"
+                        >
+                          Error - Try Again
                         </motion.span>
                       )}
                     </AnimatePresence>
                   </span>
                 </motion.button>
+
+                <AnimatePresence>
+                  {statusMessage && (
+                    <motion.div
+                      role={status === "error" ? "alert" : "status"}
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      className="rounded-sm px-4 py-3"
+                      style={{
+                        background:
+                          status === "error"
+                            ? "rgba(255,45,45,0.08)"
+                            : "rgba(34,197,94,0.08)",
+                        border:
+                          status === "error"
+                            ? "1px solid rgba(255,45,45,0.25)"
+                            : "1px solid rgba(34,197,94,0.22)",
+                      }}
+                    >
+                      <p
+                        className="font-mono text-[0.62rem] leading-relaxed"
+                        style={{ color: status === "error" ? "#FF2D2D" : "#22c55e" }}
+                      >
+                        {statusMessage}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </form>
             </ScrollReveal>
           </div>

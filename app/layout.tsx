@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import CursorEffect from "@/components/CursorEffect";
-import PlantAnnouncement from "@/components/PlantAnnouncement";
+import PlatformShell from "@/components/PlatformShell";
 
 export const metadata: Metadata = {
   title: "Anish.Dev — Full Stack Developer",
@@ -36,9 +35,7 @@ export default function RootLayout({
         <meta name="color-scheme" content="dark" />
       </head>
       <body className="antialiased">
-        <CursorEffect />
-        <PlantAnnouncement />
-        {children}
+        <PlatformShell>{children}</PlatformShell>
       </body>
     </html>
   );

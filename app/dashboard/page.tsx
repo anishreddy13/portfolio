@@ -26,6 +26,7 @@ const SENTIMENT_COLORS = {
 const SOURCE_COLORS = ["#FF2D2D", "#FF6B35", "#C8FF00", "#A855F7", "#ffffff"];
 const PAGE_SIZE = 20;
 const DRIFT_THRESHOLD = 0.3;
+type DashboardTab = "live" | "analytics" | "monitoring" | "visitors" | "pipeline";
 
 const COUNTRY_COORDS: Record<string, [number, number]> = {
   "Afghanistan": [33.93, 67.71], "Albania": [41.15, 20.17],
@@ -768,9 +769,7 @@ const axisTickDim = { fill: "#606060", fontSize: 8, fontFamily: "DM Mono" };
 
 // ─── Main Dashboard ───────────────────────────────────────────
 export default function Dashboard() {
-  const [activeTab,     setActiveTab]    = useState<
-    "live" | "analytics" | "monitoring" | "visitors" | "pipeline"
-  >("live");
+  const [activeTab,     setActiveTab]    = useState<DashboardTab>("live");
   const [page,   setPage]   = useState(1);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [sentimentFilter, setSentimentFilter] = useState("All");
@@ -778,6 +777,18 @@ export default function Dashboard() {
   const [confidenceFilter, setConfidenceFilter] = useState("All");
   const [timeFilter, setTimeFilter] = useState("All");
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    const validTabs: DashboardTab[] = ["live", "analytics", "monitoring", "visitors", "pipeline"];
+    const activateFromUrl = () => {
+      const tab = new URLSearchParams(window.location.search).get("tab") as DashboardTab | null;
+      if (tab && validTabs.includes(tab)) setActiveTab(tab);
+    };
+
+    activateFromUrl();
+    window.addEventListener("popstate", activateFromUrl);
+    return () => window.removeEventListener("popstate", activateFromUrl);
+  }, []);
 
   // ── Toasts ────────────────────────────────────────────────
   const addToast = useCallback((toast: Omit<Toast, "id">) => {
@@ -908,11 +919,11 @@ export default function Dashboard() {
   ] as const;
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--surface-0)" }}>
+    <div className="min-h-screen pt-16" style={{ background: "var(--surface-0)" }}>
 
       {/* ── Header ── */}
       <div
-        className="sticky top-0 z-50"
+        className="sticky top-14 z-40"
         style={{
           background:     "rgba(10,10,10,0.95)",
           backdropFilter: "blur(20px)",
@@ -976,12 +987,12 @@ export default function Dashboard() {
 
             <a
               href="/"
-              className="font-mono text-[0.58rem] sm:text-[0.6rem] tracking-widest uppercase hidden sm:block"
+              className="font-mono text-[0.52rem] sm:text-[0.6rem] tracking-widest uppercase rounded-sm px-2 py-1.5 sm:px-0 sm:py-0"
               style={{ color: "#606060" }}
               onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#F0F0F0")}
               onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#606060")}
             >
-              ← Portfolio
+              {isMobile ? "Home" : "← Portfolio"}
             </a>
           </div>
         </div>
