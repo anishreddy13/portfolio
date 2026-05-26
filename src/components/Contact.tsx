@@ -20,9 +20,9 @@ interface FocusedState {
 }
 
 const socials = [
-  { label: "GitHub",   href: "https://github.com",  icon: "GH" },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: "LI" },
-  { label: "Twitter",  href: "https://twitter.com",  icon: "TW" },
+  { label: "GitHub",   href: "https://github.com/anishreddy13",  icon: "GH" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/anishreddy5676", icon: "LI" },
+  { label: "Twitter",  href: "https://x.com/anishreddy1373",  icon: "TW" },
   { label: "Dribbble", href: "https://dribbble.com", icon: "DR" },
 ];
 
@@ -461,7 +461,7 @@ export default function Contact() {
             <ScrollReveal direction="left" delay={0.25}>
               <div className="space-y-6">
                 {[
-                  { lbl: "Email",         val: "hello@anish.dev",       href: "mailto:hello@anish.dev" },
+                  { lbl: "Email",         val: "anishreddy1373@gmail.com",       href: "mailto:hello@anish.dev" },
                   { lbl: "Location",      val: "Hyderabad · Remote OK", href: null },
                   { lbl: "Response Time", val: "Within 24 hours",       href: null },
                 ].map((item) => (
