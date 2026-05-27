@@ -3,7 +3,10 @@ import "./globals.css";
 import PlatformShell from "@/components/PlatformShell";
 
 export const metadata: Metadata = {
-  title: "Anish.Dev — Full Stack Developer",
+  icons: {
+    icon: "/favicon.svg",
+  },
+  title: "Anish.Dev – Full Stack Developer",
   description:
     "Full-stack developer crafting bold, electric digital experiences at the intersection of design and engineering.",
   keywords: [
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
     "typescript",
   ],
   openGraph: {
-    title: "Anish.Dev — Full Stack Developer",
+    title: "Anish.Dev – Full Stack Developer",
     description:
       "Full-stack developer crafting bold, electric digital experiences.",
     type: "website",

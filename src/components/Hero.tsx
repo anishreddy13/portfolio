@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
-const words = ["DEVELOPER", "DESIGNER", "ENGINEER", "CREATOR"];
+const words = ["BUILDER", "ENGINEER", "RESEARCHER", "CREATOR"];
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   return (
@@ -101,11 +101,8 @@ export default function Hero() {
       <motion.div
         style={{ y, opacity }}
         className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12
-                   pt-28 pb-16 md:pt-32"
+                   pt-24 pb-24 md:pt-28 md:pb-28"
       >
-        {/* ════════════════════════════════════
-            LAYOUT: two-col on lg+, stacked on mobile
-            ════════════════════════════════════ */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:gap-12 xl:gap-20">
 
           {/* ── LEFT: text block ── */}
@@ -116,17 +113,14 @@ export default function Hero() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center gap-3 mb-6 md:mb-8"
+              className="flex items-center gap-3 mb-4 md:mb-5"
             >
-              <span
-                className="w-8 h-px"
-                style={{ background: "#FF2D2D" }}
-              />
+              <span className="w-8 h-px" style={{ background: "#FF2D2D" }} />
               <span
                 className="font-mono text-[0.62rem] tracking-[0.35em] uppercase"
                 style={{ color: "#FF2D2D" }}
               >
-                Available for work · 2025
+                Available for work · 2026
               </span>
               <span
                 className="w-1.5 h-1.5 rounded-full animate-pulse"
@@ -134,17 +128,17 @@ export default function Hero() {
               />
             </motion.div>
 
-            {/* FULL STACK — character stagger */}
-            <div className="overflow-visible mb-0 lg:mb-1">
+            {/* ML & AI — character stagger */}
+            <div className="overflow-visible mb-0">
               <div className="flex flex-wrap">
-                {"FULL STACK".split("").map((char, i) => (
+                {"ML & AI".split("").map((char, i) => (
                   <motion.span
                     key={i}
                     custom={i}
                     variants={charVariants}
                     initial="hidden"
                     animate="visible"
-                    className="font-display leading-[0.9] tracking-tight"
+                    className="font-display leading-[0.88] tracking-tight"
                     style={{
                       fontSize: "clamp(3.2rem, 10vw, 8.5rem)",
                       color: "#F0F0F0",
@@ -159,12 +153,12 @@ export default function Hero() {
             </div>
 
             {/* Cycling word — red gradient */}
-            <div className="overflow-hidden mb-4 md:mb-6">
+            <div className="overflow-hidden mb-3 md:mb-4">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                className="font-display leading-[0.9] tracking-tight"
+                className="font-display leading-[0.88] tracking-tight"
                 style={{
                   fontSize: "clamp(3.2rem, 10vw, 8.5rem)",
                   background:
@@ -183,7 +177,7 @@ export default function Hero() {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="origin-left mb-6 md:mb-8"
+              className="origin-left mb-4 md:mb-5"
               style={{
                 width: "56px",
                 height: "2px",
@@ -196,12 +190,12 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="font-body text-base md:text-lg max-w-lg mb-8 md:mb-10 leading-relaxed"
+              className="font-body text-base md:text-lg max-w-lg mb-6 md:mb-7 leading-relaxed"
               style={{ color: "#A0A0A0" }}
             >
-              Crafting bold digital experiences where{" "}
-              <span style={{ color: "#F0F0F0" }}>design meets engineering</span>{" "}
-              — precise, electric, alive.
+              Building intelligent systems where{" "}
+              <span style={{ color: "#F0F0F0" }}>machine learning meets real products</span>{" "}
+              — from model training to production deployment.
             </motion.p>
 
             {/* CTA buttons */}
@@ -209,7 +203,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-12 lg:mb-0"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-8 lg:mb-0"
             >
               {/* Primary */}
               <motion.button
@@ -231,11 +225,6 @@ export default function Hero() {
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 />
                 <span className="relative z-10">View My Work</span>
-                {/* glow */}
-                <motion.div
-                  className="absolute inset-0 opacity-0 hover:opacity-100"
-                  style={{ boxShadow: "0 0 30px rgba(255,45,45,0.6)" }}
-                />
               </motion.button>
 
               {/* Secondary */}
@@ -265,18 +254,18 @@ export default function Hero() {
               </motion.button>
             </motion.div>
 
-            {/* Stats — desktop inline, mobile below photo */}
+            {/* Stats — desktop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.9, duration: 0.8 }}
-              className="hidden lg:flex items-center gap-10 mt-10 pt-10"
+              className="hidden lg:flex items-center gap-10 mt-7 pt-7"
               style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
             >
               {[
-                { value: 5,  suffix: "+", label: "Years Exp." },
-                { value: 40, suffix: "+", label: "Projects" },
-                { value: 99, suffix: "%", label: "Satisfaction" },
+                { value: 50, suffix: "+", label: "Students Mentored",   sub: "mentorship · ml"         },
+                { value: 2,  suffix: "+", label: "Yrs Dev & ML",        sub: "3mo industry · frontend" },
+                { value: 4,  suffix: "y", label: "Teaching B.Tech Era", sub: "academia · labs"         },
               ].map((stat, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <div>
@@ -291,6 +280,16 @@ export default function Hero() {
                       style={{ color: "#606060" }}
                     >
                       {stat.label}
+                    </div>
+                    <div
+                      className="font-mono text-[0.62rem] tracking-widest uppercase mt-1"
+                      style={{
+                        color: "#FF6B35",
+                        textShadow: "0 0 8px rgba(255,107,53,0.5)",
+                        letterSpacing: "0.2em",
+                      }}
+                    >
+                      {stat.sub}
                     </div>
                   </div>
                   {i < 2 && (
@@ -311,7 +310,7 @@ export default function Hero() {
             transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="relative shrink-0 mx-auto lg:mx-0
                        w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96
-                       mt-10 lg:mt-0"
+                       mt-8 lg:mt-0"
           >
             {/* Rotating border ring */}
             <motion.div
@@ -338,12 +337,11 @@ export default function Hero() {
             >
               <Image
                 src="/profile.jpeg"
-                alt="Anish — Full Stack Developer"
+                alt="Anish — ML & AI Developer"
                 fill
                 className="object-cover object-top"
                 priority
               />
-              {/* Color overlay — subtle red tint at bottom */}
               <div
                 className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
                 style={{
@@ -363,10 +361,10 @@ export default function Hero() {
                 className="font-mono text-[0.58rem] tracking-[0.15em] uppercase
                            px-2.5 py-1.5 rounded-sm"
                 style={{
-                  background:  "rgba(10,10,10,0.95)",
-                  border:      "1px solid rgba(255,45,45,0.4)",
-                  color:       "#FF2D2D",
-                  boxShadow:   "0 0 16px rgba(255,45,45,0.25)",
+                  background: "rgba(10,10,10,0.95)",
+                  border:     "1px solid rgba(255,45,45,0.4)",
+                  color:      "#FF2D2D",
+                  boxShadow:  "0 0 16px rgba(255,45,45,0.25)",
                 }}
               >
                 Open to work
@@ -383,13 +381,13 @@ export default function Hero() {
                 className="font-mono text-[0.58rem] tracking-[0.15em] uppercase
                            px-2.5 py-1.5 rounded-sm"
                 style={{
-                  background:  "rgba(10,10,10,0.95)",
-                  border:      "1px solid rgba(200,255,0,0.35)",
-                  color:       "#C8FF00",
-                  boxShadow:   "0 0 16px rgba(200,255,0,0.15)",
+                  background: "rgba(10,10,10,0.95)",
+                  border:     "1px solid rgba(200,255,0,0.35)",
+                  color:      "#C8FF00",
+                  boxShadow:  "0 0 16px rgba(200,255,0,0.15)",
                 }}
               >
-                Full Stack
+                ML & AI
               </div>
             </motion.div>
 
@@ -410,13 +408,13 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.9, duration: 0.8 }}
-          className="flex lg:hidden items-center justify-center gap-8 mt-12 pt-8"
+          className="flex lg:hidden items-center justify-center gap-8 mt-8 pt-8"
           style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
         >
           {[
-            { value: 5,  suffix: "+", label: "Years" },
-            { value: 40, suffix: "+", label: "Projects" },
-            { value: 99, suffix: "%", label: "Satisfaction" },
+            { value: 50, suffix: "+", label: "Students Mentored",   sub: "mentorship · ml"         },
+            { value: 2,  suffix: "+", label: "Yrs Dev & ML",        sub: "3mo industry · frontend" },
+            { value: 4,  suffix: "y", label: "Teaching B.Tech Era", sub: "academia · labs"         },
           ].map((stat, i) => (
             <div key={i} className="text-center">
               <div
@@ -435,18 +433,28 @@ export default function Hero() {
               >
                 {stat.label}
               </div>
+              <div
+                className="font-mono text-[0.62rem] tracking-widest uppercase mt-1"
+                style={{
+                  color: "#FF6B35",
+                  textShadow: "0 0 8px rgba(255,107,53,0.5)",
+                  letterSpacing: "0.2em",
+                }}
+              >
+                {stat.sub}
+              </div>
             </div>
           ))}
         </motion.div>
       </motion.div>
 
-      {/* ── Scroll indicator ── */}
+      {/* ── Scroll indicator — pushed further down to avoid overlap ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.4 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2
-                   flex flex-col items-center gap-2"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2
+                   flex flex-col items-center gap-1"
       >
         <span
           className="font-mono text-[0.55rem] tracking-[0.4em] uppercase"
@@ -459,7 +467,7 @@ export default function Hero() {
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
           style={{
             width: "1px",
-            height: "40px",
+            height: "28px",
             background: "linear-gradient(to bottom, #FF2D2D, transparent)",
           }}
         />

@@ -20,41 +20,37 @@ export async function trackActivity(
     const userAgent = navigator.userAgent;
 
     let browser = "Unknown";
-
     if (userAgent.includes("Chrome")) browser = "Chrome";
     else if (userAgent.includes("Firefox")) browser = "Firefox";
     else if (userAgent.includes("Safari")) browser = "Safari";
     else if (userAgent.includes("Edge")) browser = "Edge";
 
     let os = "Unknown";
-
     if (userAgent.includes("Windows")) os = "Windows";
     else if (userAgent.includes("Mac")) os = "MacOS";
     else if (userAgent.includes("Linux")) os = "Linux";
     else if (userAgent.includes("Android")) os = "Android";
     else if (userAgent.includes("iPhone")) os = "iOS";
 
-    const device = /Mobi|Android/i.test(userAgent)
-      ? "Mobile"
-      : "Desktop";
+    const device = /Mobi|Android/i.test(userAgent) ? "Mobile" : "Desktop";
 
-    // ─── Location Tracking ─────────────────────────────
-
-    let country = "Unknown";
-    let city = "Unknown";
+    // ─── Location + IP Tracking ────────────────────────
+    let country    = "Unknown";
+    let city       = "Unknown";
+    let ip_address = "Unknown";
 
     try {
-      const locationRes = await fetch("https://ipapi.co/json/");
+      const locationRes  = await fetch("https://ipapi.co/json/");
       const locationData = await locationRes.json();
 
-      country = locationData.country_name || "Unknown";
-      city = locationData.city || "Unknown";
+      country    = locationData.country_name || "Unknown";
+      city       = locationData.city         || "Unknown";
+      ip_address = locationData.ip           || "Unknown";
     } catch (err) {
       console.log("Location fetch failed");
     }
 
-    // ─── Insert Into Supabase ─────────────────────────
-
+    // ─── Insert Into Supabase ──────────────────────────
     const { data, error } = await supabase
       .from("user_activity")
       .insert([
@@ -67,16 +63,14 @@ export async function trackActivity(
           device,
           country,
           city,
+          ip_address,
         },
       ]);
 
     console.log("SUPABASE DATA:", data);
 
     if (error) {
-      console.error(
-        "SUPABASE ERROR FULL:",
-        JSON.stringify(error, null, 2)
-      );
+      console.error("SUPABASE ERROR FULL:", JSON.stringify(error, null, 2));
     } else {
       console.log("Activity tracked successfully");
     }
