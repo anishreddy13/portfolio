@@ -160,6 +160,35 @@ export default function Navbar() {
               </motion.span>
             </Link>
 
+            <Link href="/career">
+              <motion.span
+                className="inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300"
+                style={{
+                  background:  "rgba(200,255,0,0.08)",
+                  borderColor: "rgba(200,255,0,0.3)",
+                  color:       "#C8FF00",
+                }}
+                whileHover={{
+                  background:  "rgba(200,255,0,0.16)",
+                  borderColor: "rgba(200,255,0,0.6)",
+                  scale: 1.03,
+                }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full animate-pulse"
+                  style={{ background: "#C8FF00", boxShadow: "0 0 6px #C8FF00" }}
+                />
+                Career AI
+                <span
+                  className="rounded-sm px-1.5 py-0.5 text-[0.48rem] tracking-widest"
+                  style={{ background: "rgba(200,255,0,0.12)", border: "1px solid rgba(200,255,0,0.24)" }}
+                >
+                  New
+                </span>
+              </motion.span>
+            </Link>
+
             {/* ── ML Lab button ── */}
             <Link href="/ml">
               <motion.span
@@ -212,6 +241,20 @@ export default function Navbar() {
               >
                 <span className="w-1 h-1 rounded-full bg-[#FF2D2D] animate-pulse" />
                 ML
+              </span>
+            </Link>
+
+            <Link href="/career">
+              <span
+                className="inline-flex items-center gap-1.5 font-mono text-[0.6rem] tracking-[0.15em] uppercase px-2.5 py-1 rounded-sm border"
+                style={{
+                  background:  "rgba(200,255,0,0.08)",
+                  borderColor: "rgba(200,255,0,0.3)",
+                  color:       "#C8FF00",
+                }}
+              >
+                <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: "#C8FF00" }} />
+                AI
               </span>
             </Link>
 
@@ -354,6 +397,37 @@ export default function Navbar() {
                     />
                     ML Lab
                     <span className="opacity-50">↗</span>
+                  </span>
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -32 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.41, duration: 0.45 }}
+                className="mt-2"
+              >
+                <Link href="/career" onClick={() => setMobileOpen(false)}>
+                  <span
+                    className="inline-flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.2em] uppercase px-4 py-2.5 rounded-sm border"
+                    style={{
+                      background:  "rgba(200,255,0,0.08)",
+                      borderColor: "rgba(200,255,0,0.25)",
+                      color:       "#C8FF00",
+                    }}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full animate-pulse"
+                      style={{ background: "#C8FF00", boxShadow: "0 0 8px #C8FF00" }}
+                    />
+                    Career AI
+                    <span
+                      className="rounded-sm px-1.5 py-0.5 text-[0.48rem] tracking-widest"
+                      style={{ background: "rgba(200,255,0,0.12)", border: "1px solid rgba(200,255,0,0.24)" }}
+                    >
+                      New
+                    </span>
                   </span>
                 </Link>
               </motion.div>
