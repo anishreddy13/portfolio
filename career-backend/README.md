@@ -1,3 +1,13 @@
+---
+title: Career Intelligence API
+emoji: 🤖
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
+
 # Career Intelligence API
 
 FastAPI backend for the portfolio Career Intelligence system. It scrapes job-market signals, extracts skill trends, stores intelligence in Supabase, queues scrape work with Upstash Redis, and uses Groq for AI career mentoring.

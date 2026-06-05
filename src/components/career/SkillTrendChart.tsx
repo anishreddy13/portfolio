@@ -16,8 +16,8 @@ function Bar({ value, color }: { value: number; color: string }) {
 function LoadingGrid() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-      {Array.from({ length: 8 }).map((_, index) => (
-        <motion.div key={index} className="h-28 rounded-sm" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }} animate={{ opacity: [0.35, 0.75, 0.35] }} transition={{ repeat: Infinity, duration: 1.4, delay: index * 0.05 }} />
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div key={index} className="h-28 rounded-sm animate-pulse" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)" }} />
       ))}
     </div>
   );
@@ -72,6 +72,18 @@ export default function SkillTrendChart() {
     return (
       <div className="rounded-sm p-5" style={{ background: "rgba(255,45,45,0.08)", border: "1px solid rgba(255,45,45,0.25)" }}>
         <p className="font-mono text-[0.62rem]" style={{ color: "#FF2D2D" }}>{error}</p>
+      </div>
+    );
+  }
+
+  if (!skills.length) {
+    return (
+      <div className="rounded-sm p-8 text-center" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="text-4xl opacity-30 mb-4">📊</div>
+        <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em]" style={{ color: "#C8FF00" }}>No market data yet.</p>
+        <p className="font-body text-xs mt-2 max-w-md mx-auto" style={{ color: "#A0A0A0" }}>
+          Go to Market tab and click Trigger Scrape to populate skill trends.
+        </p>
       </div>
     );
   }

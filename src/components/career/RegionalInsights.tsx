@@ -1,21 +1,32 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { predictSalary } from "../../../lib/careerApi";
-import type { SalaryPrediction } from "@/types/career";
+import type { SalaryPrediction, StudentAnalysisResult } from "@/types/career";
 
-const commonSkills = ["python", "react", "typescript", "fastapi", "pytorch", "docker", "kubernetes", "aws", "postgresql", "langchain"];
+const commonSkills = ["python", "react", "typescript", "fastapi", "pytorch", "docker", "kubernetes", "aws", "postgresql", "langchain", "javascript", "mlops"];
 const roles = ["ML Engineer", "Frontend Dev", "DevOps", "Data Scientist"];
 const locations = ["Hyderabad", "Bangalore", "Remote India", "US Remote"];
 
-export default function RegionalInsights() {
+export default function RegionalInsights({ analysisResult }: { analysisResult?: StudentAnalysisResult | null }) {
   const [selectedSkills, setSelectedSkills] = useState<string[]>(["python", "react"]);
   const [experience, setExperience] = useState("mid");
   const [location, setLocation] = useState("india");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<SalaryPrediction | null>(null);
+  const parsedSkills = analysisResult?.data.parsed_resume.skills ?? [];
+  const analysisSalary = analysisResult?.data.salary_prediction || analysisResult?.data.employability?.salary_prediction || null;
+
+  useEffect(() => {
+    if (!analysisResult) return;
+    const resumeSkills = Array.from(new Set(parsedSkills.map((skill) => skill.toLowerCase()))).slice(0, 10);
+    if (resumeSkills.length) setSelectedSkills(resumeSkills);
+    const level = analysisResult.data.parsed_resume.experience_level?.toLowerCase();
+    if (level === "junior" || level === "mid" || level === "senior") setExperience(level);
+    if (analysisSalary) setResult(analysisSalary);
+  }, [analysisResult, analysisSalary, parsedSkills]);
 
   const toggleSkill = (skill: string) => {
     setSelectedSkills((value) => value.includes(skill) ? value.filter((item) => item !== skill) : [...value, skill]);
@@ -37,11 +48,17 @@ export default function RegionalInsights() {
     <div className="space-y-4">
       <div className="rounded-sm p-5" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
         <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em] mb-4" style={{ color: "#C8FF00" }}>Salary Calculator</p>
+        {parsedSkills.length ? (
+          <div className="rounded-sm p-3 mb-4" style={{ background: "rgba(200,255,0,0.05)", border: "1px solid rgba(200,255,0,0.14)" }}>
+            <p className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "#C8FF00" }}>Using resume skills from the latest analysis</p>
+            <p className="font-body text-xs mt-1" style={{ color: "#606060" }}>{selectedSkills.slice(0, 8).join(", ")}</p>
+          </div>
+        ) : null}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2">
             <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-2" style={{ color: "#606060" }}>Skills</p>
             <div className="flex flex-wrap gap-2">
-              {commonSkills.map((skill) => {
+              {Array.from(new Set([...commonSkills, ...parsedSkills.map((skill) => skill.toLowerCase()).slice(0, 10)])).map((skill) => {
                 const active = selectedSkills.includes(skill);
                 return (
                   <button key={skill} onClick={() => toggleSkill(skill)} className="rounded-sm px-3 py-2 font-mono text-[0.55rem] uppercase tracking-wider" style={{ background: active ? "rgba(200,255,0,0.12)" : "var(--surface-2)", border: `1px solid ${active ? "rgba(200,255,0,0.28)" : "rgba(255,255,255,0.06)"}`, color: active ? "#C8FF00" : "#606060" }}>{skill}</button>

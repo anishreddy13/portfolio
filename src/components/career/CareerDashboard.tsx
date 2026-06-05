@@ -14,6 +14,7 @@ import EmployabilityScore from "./EmployabilityScore";
 import MarketIntelligence from "./MarketIntelligence";
 import MentorChat from "./MentorChat";
 import RegionalInsights from "./RegionalInsights";
+import ProjectOverview from "./ProjectOverview";
 
 type CareerTab = "analyze" | "market" | "roadmap" | "mentor" | "salary";
 
@@ -128,7 +129,7 @@ export default function CareerDashboard() {
 
   const marketSkills = (analysisResult?.data.market_snapshot.top_skills || []) as SkillTrend[];
   const content = {
-    analyze: <ResumeAnalyzer onAnalysisComplete={setAnalysisResult} />,
+    analyze: <ResumeAnalyzer onAnalysisComplete={setAnalysisResult} onOpenMarketTab={() => selectTab("market")} />,
     market: (
       <div className="space-y-4">
         <MarketIntelligence />
@@ -140,7 +141,7 @@ export default function CareerDashboard() {
     salary: (
       <div className="space-y-4">
         <EmployabilityScore employability={analysisResult?.data.employability || null} skillGaps={analysisResult?.data.skill_gaps || []} />
-        <RegionalInsights />
+        <RegionalInsights analysisResult={analysisResult} />
       </div>
     ),
   };
@@ -198,6 +199,8 @@ export default function CareerDashboard() {
         <div className="mb-6">
           <CareerHero />
         </div>
+
+        <ProjectOverview />
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mb-8">
           {tabs.map((tab) => {

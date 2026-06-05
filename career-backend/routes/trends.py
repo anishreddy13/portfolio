@@ -3,9 +3,10 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any
 
-from fastapi import APIRouter, BackgroundTasks, Query
+from fastapi import APIRouter, Query
 
 from db.supabase_client import get_job_postings, get_skill_trends, supabase
+from services.skill_extractor import extract_skills_from_jobs
 from services.trend_engine import compute_and_store_trends
 from utils.logger import get_logger
 
@@ -91,19 +92,17 @@ async def github_trends():
         return api_response("error", {"repos": [], "languages": []}, str(exc))
 
 
-async def _recompute_from_existing_jobs():
-    try:
-        jobs = await get_job_postings(1000)
-        await compute_and_store_trends(jobs)
-    except Exception as exc:
-        logger.exception("Background trend recomputation failed: %s", exc)
-
-
 @router.post("/recompute")
-async def recompute(background_tasks: BackgroundTasks):
+async def recompute():
     try:
-        background_tasks.add_task(_recompute_from_existing_jobs)
-        return api_response("success", None, "Trend recomputation started")
+        jobs = await get_job_postings(5000)
+        jobs_with_skills = extract_skills_from_jobs(jobs)
+        trends = await compute_and_store_trends(jobs_with_skills)
+        return api_response(
+            "success",
+            {"jobs_processed": len(jobs), "trends_computed": len(trends), "trends": trends[:50]},
+            f"Trend recomputation completed with {len(trends)} skill trends",
+        )
     except Exception as exc:
         logger.exception("Failed to start trend recomputation: %s", exc)
         return api_response("error", None, str(exc))

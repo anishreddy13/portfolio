@@ -34,7 +34,7 @@ export interface EmployabilityScore {
   market_alignment: number;
   future_readiness: number;
   github_bonus: number;
-  salary_prediction: SalaryPrediction;
+  salary_prediction: SalaryPrediction | null;
   score_breakdown: {
     current_skills: number;
     trending_skills: number;
@@ -114,6 +114,7 @@ export interface StudentAnalysisResult {
     quick_wins: QuickWin[];
     salary_prediction: SalaryPrediction;
     market_snapshot: MarketSnapshot;
+    market_data_source?: "live" | "fallback";
     errors?: Record<string, string>;
   };
   message: string;

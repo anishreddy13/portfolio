@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from db.supabase_client import insert_skill_trend
-from services.skill_extractor import SKILLS_TAXONOMY, compute_skill_frequency
+from services.skill_extractor import compute_skill_frequency, extract_skills_from_jobs
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -79,14 +79,6 @@ def compute_salary_momentum(skill: str) -> float:
         return 0.5
 
 
-def _skill_category(skill: str) -> str:
-    normalized = skill.lower().strip()
-    for category, skills in SKILLS_TAXONOMY.items():
-        if normalized in {item.lower() for item in skills}:
-            return category
-    return "other"
-
-
 async def compute_and_store_trends(jobs: list[dict]) -> list[dict]:
     try:
         total_jobs = len(jobs)
@@ -94,7 +86,8 @@ async def compute_and_store_trends(jobs: list[dict]) -> list[dict]:
             logger.info("No jobs supplied for trend computation")
             return []
 
-        frequencies = compute_skill_frequency(jobs)
+        enriched_jobs = extract_skills_from_jobs(jobs)
+        frequencies = compute_skill_frequency(enriched_jobs)
         trends: list[dict] = []
         now = datetime.now(timezone.utc).isoformat()
 
@@ -102,14 +95,12 @@ async def compute_and_store_trends(jobs: list[dict]) -> list[dict]:
             demand_score = round((count / total_jobs) * 100, 2)
             trend = {
                 "skill": skill,
-                "category": _skill_category(skill),
                 "demand_score": demand_score,
                 "velocity": compute_skill_velocity(skill, count, total_jobs),
                 "decay_score": compute_decay_score(skill),
                 "ai_risk": compute_ai_risk(skill),
                 "salary_momentum": compute_salary_momentum(skill),
                 "saturation": 0.5,
-                "job_count": count,
                 "updated_at": now,
             }
             await insert_skill_trend(trend)

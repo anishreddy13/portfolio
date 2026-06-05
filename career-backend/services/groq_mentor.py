@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 from groq import AsyncGroq
@@ -19,14 +20,72 @@ def _extract_json_object(text: str, fallback: dict[str, Any]) -> dict[str, Any]:
     try:
         return json.loads(text)
     except Exception:
-        try:
-            start = text.find("{")
-            end = text.rfind("}") + 1
-            if start >= 0 and end > start:
-                return json.loads(text[start:end])
-        except Exception as exc:
-            logger.warning("Failed to parse JSON from Groq response: %s", exc)
+        pass
+
+    try:
+        block = re.search(r"```json\s*([\s\S]*?)```", text, flags=re.IGNORECASE)
+        if block:
+            return json.loads(block.group(1).strip())
+    except Exception as exc:
+        logger.warning("Failed to parse fenced JSON from Groq response: %s", exc)
+
+    try:
+        match = re.search(r"\{[\s\S]*\}", text)
+        if match:
+            return json.loads(match.group(0))
+    except Exception as exc:
+        logger.warning("Failed to parse JSON object from Groq response: %s", exc)
+
     return fallback
+
+
+def _fallback_roadmap(skill_gaps: list[str], target_role: str) -> dict[str, Any]:
+    skills = [str(skill) for skill in skill_gaps if str(skill).strip()] or [
+        "python",
+        "docker",
+        "fastapi",
+        "cloud deployment",
+        "system design",
+    ]
+    focuses = ["Foundation", "Core Stack", "Applied Project", "Deployment", "Market Proof", "Interview Readiness"]
+    monthly_plan = []
+    for index in range(6):
+        start = index % len(skills)
+        month_skills = [skills[start], skills[(start + 1) % len(skills)]]
+        monthly_plan.append(
+            {
+                "month": index + 1,
+                "focus": focuses[index],
+                "skills_to_learn": month_skills,
+                "resources": ["freeCodeCamp", "official docs"],
+                "milestone": "Complete basics" if index == 0 else f"Ship a {focuses[index].lower()} portfolio artifact",
+            }
+        )
+    return {
+        "target_role": target_role,
+        "total_months": 6,
+        "monthly_plan": monthly_plan,
+        "key_projects": ["Build portfolio project", "Contribute to open source"],
+        "estimated_salary_range": "Market competitive",
+        "skill_priority_order": skills[:5],
+        "market_context": "Focus on high-demand skills",
+    }
+
+
+def _normalize_roadmap(data: dict[str, Any], skill_gaps: list[str], target_role: str) -> dict[str, Any]:
+    fallback = _fallback_roadmap(skill_gaps, target_role)
+    normalized = {**fallback, **(data or {})}
+    if not isinstance(normalized.get("monthly_plan"), list) or not normalized["monthly_plan"]:
+        normalized["monthly_plan"] = fallback["monthly_plan"]
+    if not isinstance(normalized.get("key_projects"), list) or not normalized["key_projects"]:
+        normalized["key_projects"] = fallback["key_projects"]
+    if not isinstance(normalized.get("skill_priority_order"), list) or not normalized["skill_priority_order"]:
+        normalized["skill_priority_order"] = fallback["skill_priority_order"]
+    normalized["target_role"] = normalized.get("target_role") or target_role
+    normalized["total_months"] = int(normalized.get("total_months") or 6)
+    normalized["estimated_salary_range"] = normalized.get("estimated_salary_range") or "Market competitive"
+    normalized["market_context"] = normalized.get("market_context") or "Focus on high-demand skills"
+    return normalized
 
 
 async def get_career_advice(
@@ -68,13 +127,7 @@ async def generate_career_roadmap(
     skill_gaps: list[str],
     target_role: str,
 ) -> dict:
-    fallback = {
-        "target_role": target_role,
-        "total_months": 6,
-        "monthly_plan": [],
-        "key_projects": [],
-        "estimated_salary_range": "Unavailable",
-    }
+    fallback = _fallback_roadmap(skill_gaps, target_role)
 
     try:
         prompt = f"""
@@ -110,7 +163,7 @@ Return this schema:
             temperature=0.7,
         )
         content = response.choices[0].message.content or "{}"
-        return _extract_json_object(content, fallback)
+        return _normalize_roadmap(_extract_json_object(content, fallback), skill_gaps, target_role)
     except Exception as exc:
         logger.exception("Groq roadmap generation failed: %s", exc)
         return fallback

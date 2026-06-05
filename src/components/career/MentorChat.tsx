@@ -14,60 +14,109 @@ type Message = {
 
 const suggestions = [
   "What skills should I learn in 2026?",
-  "Should I learn Kubernetes or LangChain first?",
-  "How do I transition from frontend to ML?",
-  "What salary can I expect as a Python dev in India?",
+  "How do I become an ML Engineer?",
+  "What salary can I expect in Hyderabad?",
+  "Should I learn Docker or Kubernetes first?",
 ];
 
 function getUserId() {
   if (typeof window === "undefined") return "career-session";
   const existing = window.localStorage.getItem("career_user_id");
   if (existing) return existing;
-  const id = crypto.randomUUID();
+  const id = typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `career-${Date.now()}`;
   window.localStorage.setItem("career_user_id", id);
   return id;
 }
 
-export default function MentorChat({ studentSkills = [], hasProfile = false }: { studentSkills?: string[]; hasProfile?: boolean }) {
+function isColdStartError(error: unknown) {
+  return error instanceof Error && /warming|try again|fetch|network|timeout/i.test(error.message);
+}
+
+export default function MentorChat({
+  studentSkills = [],
+  hasProfile = false,
+}: {
+  studentSkills?: string[];
+  hasProfile?: boolean;
+}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [warming, setWarming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const userId = useRef("career-session");
   const scroller = useRef<HTMLDivElement>(null);
 
   useEffect(() => { userId.current = getUserId(); }, []);
-  useEffect(() => { scroller.current?.scrollTo({ top: scroller.current.scrollHeight, behavior: "smooth" }); }, [messages, loading]);
+  useEffect(() => { scroller.current?.scrollTo({ top: scroller.current.scrollHeight, behavior: "smooth" }); }, [messages, loading, warming]);
+
+  const callMentor = async (message: string) => {
+    if (hasProfile) {
+      const response = await contextualChat({ user_id: userId.current, message });
+      return {
+        response: response.response,
+        followUps: response.follow_up_questions || [],
+        relevantSkills: response.relevant_skills || [],
+      };
+    }
+
+    const response = await chatWithMentor({
+      user_id: userId.current,
+      message,
+      student_skills: studentSkills,
+      employability_score: 0,
+    });
+    return {
+      response: response.response,
+      followUps: [],
+      relevantSkills: studentSkills.slice(0, 6),
+    };
+  };
+
+  const appendAssistant = (content: string, followUps: string[] = [], relevantSkills: string[] = []) => {
+    setMessages((items) => [
+      ...items,
+      {
+        role: "assistant",
+        content,
+        timestamp: new Date().toISOString(),
+        followUps,
+        relevantSkills,
+      },
+    ]);
+  };
 
   const send = async (value = input) => {
     const content = value.trim();
     if (!content || loading) return;
     setInput("");
     setError(null);
-    const userMessage: Message = { role: "user", content, timestamp: new Date().toISOString() };
-    setMessages((items) => [...items, userMessage]);
+    setWarming(false);
+    setMessages((items) => [...items, { role: "user", content, timestamp: new Date().toISOString() }]);
     setLoading(true);
+
     try {
-      const response = hasProfile
-        ? await contextualChat({ user_id: userId.current, message: content })
-        : await chatWithMentor({
-            user_id: userId.current,
-            message: content,
-            student_skills: studentSkills,
-            employability_score: 0,
-          });
-      setMessages((items) => [
-        ...items,
-        {
-          role: "assistant",
-          content: response.response,
-          timestamp: new Date().toISOString(),
-          followUps: "follow_up_questions" in response ? response.follow_up_questions : [],
-          relevantSkills: "relevant_skills" in response ? response.relevant_skills : [],
-        },
-      ]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Mentor is unavailable.");
+      const response = await callMentor(content);
+      appendAssistant(response.response || "I could not generate a response.", response.followUps, response.relevantSkills);
+    } catch (firstError) {
+      if (!isColdStartError(firstError)) {
+        setError(firstError instanceof Error ? firstError.message : "Mentor is unavailable.");
+        setLoading(false);
+        return;
+      }
+
+      setWarming(true);
+      appendAssistant("Career API warming up... retrying in 15 seconds");
+      await new Promise((resolve) => window.setTimeout(resolve, 15000));
+
+      try {
+        const retryResponse = await callMentor(content);
+        setWarming(false);
+        appendAssistant(retryResponse.response || "I could not generate a response.", retryResponse.followUps, retryResponse.relevantSkills);
+      } catch (secondError) {
+        setWarming(false);
+        setError(secondError instanceof Error ? secondError.message : "Mentor is unavailable after retry.");
+      }
     } finally {
       setLoading(false);
     }
@@ -83,8 +132,8 @@ export default function MentorChat({ studentSkills = [], hasProfile = false }: {
           </div>
           <p className="font-body text-xs" style={{ color: "#606060" }}>Powered by Groq Llama3-70b · Real market data</p>
         </div>
-        <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: hasProfile ? "#C8FF00" : "#606060" }}>
-          {hasProfile ? "Profile Context" : "Basic Context"}
+        <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: warming ? "#FF6B35" : "#C8FF00" }}>
+          {warming ? "Warming" : "Online"}
         </span>
       </div>
 
@@ -102,9 +151,11 @@ export default function MentorChat({ studentSkills = [], hasProfile = false }: {
 
         {messages.map((message, index) => (
           <motion.div key={`${message.timestamp}-${index}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-            <div className="max-w-[86%] rounded-sm p-3" style={{ background: message.role === "user" ? "#C8FF00" : "var(--surface-2)", color: message.role === "user" ? "#0A0A0A" : "#A0A0A0", border: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="max-w-[86%] rounded-sm p-3" style={{ background: message.role === "user" ? "#C8FF00" : "var(--surface-2)", color: message.role === "user" ? "#0A0A0A" : "#F0F0F0", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <p className="font-mono text-[0.48rem] uppercase tracking-widest mb-2" style={{ color: message.role === "user" ? "rgba(10,10,10,0.6)" : "#606060" }}>
+                {message.role === "user" ? "You" : "Mentor"} · {new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+              </p>
               <p className="font-body text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
-              <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-2 opacity-60">{new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
               {message.relevantSkills?.length ? (
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {message.relevantSkills.map((skill) => <span key={skill} className="rounded-sm px-2 py-1 font-mono text-[0.48rem] uppercase" style={{ background: "rgba(168,85,247,0.12)", color: "#A855F7" }}>{skill}</span>)}
@@ -133,12 +184,12 @@ export default function MentorChat({ studentSkills = [], hasProfile = false }: {
         <input
           value={input}
           onChange={(event) => setInput(event.target.value)}
-          onKeyDown={(event) => { if (event.key === "Enter") send(); }}
+          onKeyDown={(event) => { if (event.key === "Enter") void send(); }}
           placeholder="Ask your career mentor..."
           className="flex-1 rounded-sm px-3 py-3 bg-transparent font-body text-sm focus:outline-none"
           style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "#F0F0F0" }}
         />
-        <button onClick={() => send()} disabled={loading || !input.trim()} className="rounded-sm px-5 font-mono text-[0.62rem] uppercase tracking-[0.2em] disabled:opacity-40" style={{ background: "#C8FF00", color: "#0A0A0A" }}>Send</button>
+        <button onClick={() => void send()} disabled={loading || !input.trim()} className="rounded-sm px-5 font-mono text-[0.62rem] uppercase tracking-[0.2em] disabled:opacity-40" style={{ background: "#C8FF00", color: "#0A0A0A" }}>Send</button>
       </div>
     </div>
   );

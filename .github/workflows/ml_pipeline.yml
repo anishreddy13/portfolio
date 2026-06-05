@@ -45,7 +45,8 @@ jobs:
       # ── Log result to Supabase ─────────────────────────────
       - name: Log pipeline run to Supabase
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_URL: ${{ secrets.
+           }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           TEST_STATUS: ${{ steps.run_tests.outcome }}
           RUN_NUMBER: ${{ github.run_number }}

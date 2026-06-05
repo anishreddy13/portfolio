@@ -61,7 +61,10 @@ def compute_full_employability(
         market_demand = float(base.get("market_alignment", 0))
         future_readiness = max(float(base.get("future_readiness", 0)), trending_skills)
         overall = (current_skills * 0.3) + (trending_skills * 0.25) + (market_demand * 0.3) + github_bonus
-        overall = round(max(0, min(overall, 100)), 2)
+        overall = max(0, min(overall, 100))
+        if overall < 5 and skills:
+            overall = 30
+        overall = round(overall, 2)
 
         return {
             "overall_score": overall,

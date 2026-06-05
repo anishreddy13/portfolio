@@ -93,6 +93,14 @@ export async function triggerScrapeAll(): Promise<{
   return { status: response.status, message: response.message };
 }
 
+export async function recomputeTrends(): Promise<{
+  status: string;
+  message: string;
+}> {
+  const response = await careerPost<CareerApiResponse<unknown>>("/trends/recompute", {});
+  return { status: response.status, message: response.message };
+}
+
 export async function getScrapeStatus(): Promise<{
   queue_length: number;
   last_run: string;

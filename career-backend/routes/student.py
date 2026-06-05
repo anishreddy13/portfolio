@@ -22,6 +22,21 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 router = APIRouter(prefix="/student", tags=["student"])
 
+FALLBACK_MARKET_SKILLS = [
+    "python",
+    "javascript",
+    "typescript",
+    "react",
+    "docker",
+    "kubernetes",
+    "aws",
+    "fastapi",
+    "pytorch",
+    "mlops",
+    "langchain",
+    "postgresql",
+]
+
 
 class StudentProfile(BaseModel):
     user_id: str
@@ -67,6 +82,22 @@ def api_response(status: str, data: Any, message: str) -> dict:
 
 def _normalize_skills(skills: list[str]) -> list[str]:
     return sorted({skill.lower().strip() for skill in skills if skill and skill.strip()})
+
+
+def _fallback_market_trends() -> list[dict]:
+    return [
+        {
+            "skill": skill,
+            "demand_score": max(35, 92 - index * 4),
+            "velocity": max(35, 92 - index * 4),
+            "decay_score": 0.08 if skill in {"kubernetes", "mlops", "langchain"} else 0.3,
+            "saturation": 0.5,
+            "salary_momentum": 0.9 if skill in {"kubernetes", "mlops", "pytorch", "aws"} else 0.5,
+            "ai_risk": 0.1 if skill in {"mlops", "pytorch"} else 0.5,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        }
+        for index, skill in enumerate(FALLBACK_MARKET_SKILLS)
+    ]
 
 
 def _github_username(github_url: str) -> str:
@@ -255,6 +286,10 @@ async def analyze_student_full(request: FullStudentAnalysisRequest, background_t
         logger.exception("Full analysis market trend fetch failed: %s", exc)
         errors["market_trends"] = str(exc)
         market_trends = []
+    market_data_source = "live"
+    if not market_trends:
+        market_trends = _fallback_market_trends()
+        market_data_source = "fallback"
 
     try:
         if request.github_url:
@@ -348,10 +383,12 @@ async def analyze_student_full(request: FullStudentAnalysisRequest, background_t
 
     try:
         market_snapshot = await _student_market_snapshot()
+        if market_data_source == "fallback" and not market_snapshot.get("top_skills"):
+            market_snapshot["top_skills"] = market_trends
     except Exception as exc:
         logger.exception("Market snapshot step failed: %s", exc)
         errors["market_snapshot"] = str(exc)
-        market_snapshot = {}
+        market_snapshot = {"top_skills": market_trends if market_data_source == "fallback" else []}
 
     try:
         background_tasks.add_task(run_drift_check)
@@ -369,6 +406,7 @@ async def analyze_student_full(request: FullStudentAnalysisRequest, background_t
         "quick_wins": quick_wins,
         "salary_prediction": salary_prediction,
         "market_snapshot": market_snapshot,
+        "market_data_source": market_data_source,
         "errors": errors,
     }
     message = "Full student analysis completed" if not errors else "Full student analysis completed with partial results"
