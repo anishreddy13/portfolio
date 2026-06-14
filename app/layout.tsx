@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import PlatformShell from "@/components/PlatformShell";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
   icons: {
@@ -32,13 +33,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#0A0A0A" />
         <meta name="color-scheme" content="dark" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            try {
+              var theme = localStorage.getItem('anish-theme');
+              if (!theme) {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches
+                  ? 'dark' : 'light';
+              }
+              document.documentElement.classList.add(theme);
+            } catch(e) {
+              document.documentElement.classList.add('dark');
+            }
+          })();
+        `}} />
       </head>
       <body className="antialiased">
-        <PlatformShell>{children}</PlatformShell>
+        <ThemeProvider>
+          <PlatformShell>{children}</PlatformShell>
+        </ThemeProvider>
       </body>
     </html>
   );

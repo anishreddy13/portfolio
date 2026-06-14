@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "@/context/ThemeContext";
+import { ThemeToggle, MobileThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { labelDesktop: "About",   labelMobile: "About",        href: "#about" },
@@ -19,6 +21,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHome = pathname === "/";
+  const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,8 +108,8 @@ export default function Navbar() {
               style={{ background: "linear-gradient(to bottom, #FF2D2D, #FF6B35)" }}
             />
             <span
-              className="font-display tracking-[0.16em] leading-none select-none"
-              style={{ fontSize: "clamp(1.1rem, 3vw, 1.4rem)", color: "#F0F0F0" }}
+              className="font-display tracking-[0.16em] leading-none select-none transition-colors"
+              style={{ fontSize: "clamp(1.1rem, 3vw, 1.4rem)", color: isDark ? "#F0F0F0" : "#0A0A0A" }}
             >
               ANISH
               <span style={{ color: "#FF2D2D" }}>.</span>
@@ -122,8 +125,8 @@ export default function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => navigateTo(link.href)}
-                  className="relative group font-mono text-[0.65rem] tracking-[0.2em] uppercase transition-colors duration-300"
-                  style={{ color: isActive ? "#FF2D2D" : "#A0A0A0" }}
+                  className={`relative group font-mono text-[0.65rem] tracking-[0.2em] uppercase transition-colors duration-300 ${isActive ? "" : "hover:text-[#0A0A0A] dark:hover:text-[#F0F0F0]"}`}
+                  style={{ color: isActive ? "#FF2D2D" : (isDark ? "#606060" : "#404040") }}
                 >
                   {link.labelDesktop}
                   <span
@@ -136,6 +139,15 @@ export default function Navbar() {
                 </button>
               );
             })}
+
+            {/* ── Theme Toggle Desktop ── */}
+            <span style={{
+              width: "1px",
+              height: "16px",
+              background: "rgba(255,255,255,0.1)",
+              margin: "0 12px"
+            }} />
+            <ThemeToggle />
 
             {/* ── Dashboard button ── */}
             <Link href="/dashboard">
@@ -259,6 +271,18 @@ export default function Navbar() {
               </span>
             </Link>
 
+            <button
+              onClick={toggleTheme}
+              className="w-12 h-12 flex items-center justify-center p-2"
+              aria-label="Toggle theme"
+            >
+              {isDark ? (
+                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F0F0F0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
+              ) : (
+                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></svg>
+              )}
+            </button>
+
             {/* Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -266,14 +290,14 @@ export default function Navbar() {
               className="relative flex flex-col justify-center items-center w-10 h-10 gap-[5px]"
             >
               <motion.span
-                className="block h-[1.5px] rounded-full origin-center"
-                style={{ background: "#F0F0F0", width: "22px" }}
+                className="block h-[1.5px] rounded-full origin-center transition-colors"
+                style={{ background: isDark ? "#F0F0F0" : "#0A0A0A", width: "22px" }}
                 animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 6.5 : 0 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               />
               <motion.span
-                className="block h-[1.5px] rounded-full"
-                style={{ background: "#F0F0F0", width: "22px" }}
+                className="block h-[1.5px] rounded-full transition-colors"
+                style={{ background: isDark ? "#F0F0F0" : "#0A0A0A", width: "22px" }}
                 animate={{ opacity: mobileOpen ? 0 : 1, scaleX: mobileOpen ? 0 : 1 }}
                 transition={{ duration: 0.2 }}
               />
@@ -311,7 +335,7 @@ export default function Navbar() {
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-40 flex flex-col"
-            style={{ background: "rgba(10,10,10,0.98)", backdropFilter: "blur(24px)" }}
+            style={{ background: isDark ? "rgba(10,10,10,0.98)" : "rgba(248,248,248,0.98)", backdropFilter: "blur(24px)" }}
           >
             <div
               className="absolute top-0 right-0 w-48 h-48 pointer-events-none"
@@ -350,8 +374,8 @@ export default function Navbar() {
                     className="group flex items-center gap-4 py-3 w-full"
                   >
                     <span
-                      className="font-mono text-[0.6rem] tracking-widest w-6 shrink-0"
-                      style={{ color: "#FF2D2D" }}
+                      className="font-mono text-[0.6rem] tracking-widest w-6 shrink-0 transition-colors"
+                      style={{ color: isDark ? "#606060" : "#A0A0A0" }}
                     >
                       0{i + 1}
                     </span>
@@ -359,7 +383,7 @@ export default function Navbar() {
                       className="font-display tracking-[0.1em] transition-colors duration-200"
                       style={{
                         fontSize: "clamp(2.4rem, 10vw, 3.5rem)",
-                        color: isActive ? "#FF2D2D" : "#F0F0F0",
+                        color: isActive ? "#FF2D2D" : (isDark ? "#F0F0F0" : "#0A0A0A"),
                         lineHeight: 1,
                       }}
                     >
@@ -374,6 +398,20 @@ export default function Navbar() {
                   </motion.button>
                 );
               })}
+
+              {/* ── Appearance mobile ── */}
+              <motion.div
+                initial={{ opacity: 0, x: -32 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.35, duration: 0.45 }}
+                className="mt-4 w-full"
+              >
+                <div className="font-mono text-[0.6rem] tracking-[0.3em] uppercase mb-3" style={{ color: "#FF2D2D" }}>
+                  — Appearance
+                </div>
+                <MobileThemeToggle />
+              </motion.div>
 
               {/* ── ML Lab mobile ── */}
               <motion.div

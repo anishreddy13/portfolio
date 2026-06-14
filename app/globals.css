@@ -70,11 +70,31 @@
   --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+html.light {
+  --surface-0: #F8F8F8;
+  --surface-1: #FFFFFF;
+  --surface-2: #F0F0F0;
+}
+
 /* ═══ RESET ═══ */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition-property: background-color,
+                       border-color,
+                       color;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+
+[data-no-transition],
+.framer-motion-element,
+svg,
+canvas,
+video,
+img {
+  transition: none !important;
 }
 
 html {
