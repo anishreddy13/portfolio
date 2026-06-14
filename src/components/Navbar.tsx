@@ -6,9 +6,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
-  { label: "About",   href: "#about" },
-  { label: "Work",    href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { labelDesktop: "About",   labelMobile: "About",        href: "#about" },
+  { labelDesktop: "Work",    labelMobile: "Work",         href: "#projects" },
+  { labelDesktop: "Contact", labelMobile: "Contact",      href: "#contact" },
+  { labelDesktop: "Certs",   labelMobile: "Certificates", href: "#certificates" },
 ];
 
 export default function Navbar() {
@@ -27,7 +28,7 @@ export default function Navbar() {
         return;
       }
 
-      const sections = ["about", "projects", "contact"];
+      const sections = ["about", "projects", "certificates", "contact"];
       for (const sec of [...sections].reverse()) {
         const el = document.getElementById(sec);
         if (el && window.scrollY >= el.offsetTop - 200) {
@@ -124,7 +125,7 @@ export default function Navbar() {
                   className="relative group font-mono text-[0.65rem] tracking-[0.2em] uppercase transition-colors duration-300"
                   style={{ color: isActive ? "#FF2D2D" : "#A0A0A0" }}
                 >
-                  {link.label}
+                  {link.labelDesktop}
                   <span
                     className="absolute -bottom-1 left-0 h-px transition-all duration-300 group-hover:w-full"
                     style={{
@@ -362,7 +363,7 @@ export default function Navbar() {
                         lineHeight: 1,
                       }}
                     >
-                      {link.label}
+                      {link.labelMobile}
                     </span>
                     <motion.span
                       className="ml-auto font-mono text-sm opacity-0 group-hover:opacity-100 transition-opacity"

@@ -55,7 +55,7 @@ function CertificateCard({
       }}
       onClick={onClick}
     >
-      <div className="relative h-[200px] w-full overflow-hidden bg-black shrink-0">
+      <div className="relative h-[160px] sm:h-[200px] w-full overflow-hidden bg-black shrink-0">
         {!imgError ? (
           <Image
             src={cert.image}
@@ -98,8 +98,8 @@ function CertificateCard({
         </div>
       </div>
 
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-mono text-[#F0F0F0] text-sm leading-tight mb-2 line-clamp-2" style={{ minHeight: "2.5rem" }}>
+      <div className="p-3 sm:p-4 flex flex-col flex-1">
+        <h3 className="font-mono text-[#F0F0F0] text-xs sm:text-sm leading-tight mb-2 line-clamp-2" style={{ minHeight: "2.5rem" }}>
           {cert.title}
         </h3>
         <p className="font-body text-[#A0A0A0] text-xs mb-1 truncate">{cert.issuer}</p>
@@ -156,14 +156,12 @@ export default function Certificates() {
   return (
     <section
       id="certificates"
-      className="relative overflow-hidden"
+      className="relative overflow-hidden py-16 md:py-24"
       style={{
         background: "var(--surface-0)",
-        paddingTop: "clamp(5rem, 12vw, 9rem)",
-        paddingBottom: "clamp(5rem, 12vw, 9rem)",
       }}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 md:mb-16">
           <div>
@@ -177,8 +175,8 @@ export default function Certificates() {
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <h2
-                className="font-display leading-none tracking-tight"
-                style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)", color: "#F0F0F0" }}
+                className="font-display leading-none tracking-tight break-words"
+                style={{ fontSize: "clamp(2.25rem, 8vw, 6.5rem)", color: "#F0F0F0" }}
               >
                 Certificates &<br />
                 <span
@@ -201,12 +199,12 @@ export default function Certificates() {
           </div>
 
           <ScrollReveal direction="left" delay={0.2}>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex overflow-x-auto pb-4 -mb-4 scrollbar-hide gap-2 sm:flex-wrap">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setFilter(cat)}
-                  className="relative font-mono text-[0.6rem] tracking-widest uppercase rounded-sm px-3 py-1.5 transition-colors duration-200"
+                  className="relative font-mono text-[0.6rem] tracking-widest uppercase rounded-sm px-3 py-1.5 transition-colors duration-200 min-h-[40px] flex items-center justify-center whitespace-nowrap"
                   style={{
                     background: filter === cat ? "#C8FF00" : "var(--surface-2)",
                     color: filter === cat ? "#0A0A0A" : "#606060",
@@ -228,7 +226,7 @@ export default function Certificates() {
           </ScrollReveal>
         </div>
 
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           <AnimatePresence mode="popLayout">
             {filtered.map((cert, index) => (
               <CertificateCard key={cert.id} cert={cert} index={index} onClick={() => setSelectedCert(cert)} />
@@ -237,7 +235,7 @@ export default function Certificates() {
         </motion.div>
 
         <ScrollReveal delay={0.3}>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mt-20 pt-10" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
             {[
               { value: 6, suffix: "", label: "Certificates Earned", color: "#C8FF00" },
               { value: 3, suffix: "+", label: "Platforms", color: "#FF6B35" },
@@ -263,7 +261,7 @@ export default function Certificates() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-0 sm:p-8"
             style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(4px)" }}
             onClick={() => setSelectedCert(null)}
           >
@@ -272,16 +270,16 @@ export default function Certificates() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-[700px] rounded-sm overflow-hidden flex flex-col"
+              className="relative w-full max-w-full sm:max-w-[700px] rounded-none sm:rounded-sm overflow-hidden flex flex-col"
               style={{
                 background: "var(--surface-1)",
                 border: `1px solid ${selectedCert.color}59`,
-                maxHeight: "90vh",
+                maxHeight: "100dvh",
               }}
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-sm bg-black/50 hover:bg-black/80 transition-colors"
+                className="absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center rounded-sm bg-black/50 hover:bg-black/80 transition-colors"
                 onClick={() => setSelectedCert(null)}
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#F0F0F0" strokeWidth="1.5">
@@ -289,7 +287,7 @@ export default function Certificates() {
                 </svg>
               </button>
 
-              <div className="w-full h-[250px] sm:h-[350px] relative shrink-0 bg-black">
+              <div className="w-full h-[200px] sm:h-[350px] relative shrink-0 bg-black">
                 <Image
                   src={selectedCert.image}
                   alt={selectedCert.title}
@@ -361,7 +359,7 @@ export default function Certificates() {
 
               <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2 sm:-mx-16 pointer-events-none">
                 <button
-                  className="w-10 h-10 rounded-sm flex items-center justify-center bg-black/80 hover:bg-black border transition-colors pointer-events-auto backdrop-blur-sm disabled:opacity-30"
+                  className="w-12 h-12 rounded-sm flex items-center justify-center bg-black/80 hover:bg-black border transition-colors pointer-events-auto backdrop-blur-sm disabled:opacity-30"
                   style={{ borderColor: "rgba(255,255,255,0.1)" }}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -373,7 +371,7 @@ export default function Certificates() {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F0F0F0" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
                 </button>
                 <button
-                  className="w-10 h-10 rounded-sm flex items-center justify-center bg-black/80 hover:bg-black border transition-colors pointer-events-auto backdrop-blur-sm disabled:opacity-30"
+                  className="w-12 h-12 rounded-sm flex items-center justify-center bg-black/80 hover:bg-black border transition-colors pointer-events-auto backdrop-blur-sm disabled:opacity-30"
                   style={{ borderColor: "rgba(255,255,255,0.1)" }}
                   onClick={(e) => {
                     e.stopPropagation();
