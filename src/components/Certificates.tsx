@@ -6,7 +6,7 @@ import Image from "next/image";
 import { certificates, Certificate } from "@/data/certificates";
 import ScrollReveal from "./ScrollReveal";
 
-const categories = ["All", "ML", "Cloud", "Data", "Web", "DevOps"];
+const categories = ["All", "AI", "ML", "Data", "Cloud"];
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   return (
@@ -89,12 +89,16 @@ function CertificateCard({
           background: "linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 100%)"
         }} />
 
-        <div className="absolute top-3 right-3 font-mono text-[0.6rem] uppercase tracking-widest px-2 py-1 rounded-sm border" style={{
-          background: `${cert.color}15`,
-          color: cert.color,
-          borderColor: `${cert.color}40`,
-        }}>
-          {cert.category}
+        <div className="absolute top-3 right-3 flex flex-col gap-1 items-end">
+          {cert.category.map(cat => (
+            <div key={cat} className="font-mono text-[0.6rem] uppercase tracking-widest px-2 py-1 rounded-sm border backdrop-blur-sm" style={{
+              background: `${cert.color}15`,
+              color: cert.color,
+              borderColor: `${cert.color}40`,
+            }}>
+              {cat}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -119,9 +123,15 @@ function CertificateCard({
         </div>
 
         <div className="mt-auto pt-4 border-t flex items-center justify-between" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-          <span className="font-mono text-[0.55rem] text-[#606060] uppercase tracking-wider truncate mr-2">
-            ID: {cert.credentialId}
-          </span>
+          {cert.credentialId !== "N/A" ? (
+            <span className="font-mono text-[0.55rem] text-[#606060] uppercase tracking-wider truncate mr-2">
+              ID: {cert.credentialId}
+            </span>
+          ) : (
+            <span className="font-mono text-[0.55rem] text-[#606060] uppercase tracking-wider truncate mr-2">
+              VERIFIED
+            </span>
+          )}
           <span className="font-mono text-[0.6rem] tracking-widest uppercase transition-colors" style={{ color: cert.color }}>
             Verify ↗
           </span>
@@ -135,7 +145,7 @@ export default function Certificates() {
   const [filter, setFilter] = useState("All");
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
 
-  const filtered = filter === "All" ? certificates : certificates.filter((c) => c.category === filter);
+  const filtered = filter === "All" ? certificates : certificates.filter((c) => c.category.includes(filter));
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -237,9 +247,9 @@ export default function Certificates() {
         <ScrollReveal delay={0.3}>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
             {[
-              { value: 6, suffix: "", label: "Certificates Earned", color: "#C8FF00" },
-              { value: 3, suffix: "+", label: "Platforms", color: "#FF6B35" },
-              { value: 2024, suffix: "", label: "Active Learning", color: "#A855F7", static: "2023-2024" },
+              { value: 7, suffix: "", label: "Certificates Earned", color: "#C8FF00" },
+              { value: 4, suffix: "+", label: "Platforms", color: "#FF6B35" },
+              { value: 2025, suffix: "", label: "Active Learning", color: "#A855F7", static: "2023-2025" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="font-display text-4xl sm:text-5xl leading-none mb-2" style={{ color: stat.color }}>
@@ -317,14 +327,21 @@ export default function Certificates() {
               </div>
 
               <div className="p-6 sm:p-8 overflow-y-auto">
-                <div className="flex items-center gap-2 mb-3">
-                   <span className="font-mono text-[0.6rem] uppercase tracking-widest px-2 py-1 rounded-sm border" style={{ background: `${selectedCert.color}15`, color: selectedCert.color, borderColor: `${selectedCert.color}40` }}>
-                     {selectedCert.category}
-                   </span>
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                   {selectedCert.category.map(cat => (
+                     <span key={cat} className="font-mono text-[0.6rem] uppercase tracking-widest px-2 py-1 rounded-sm border" style={{ background: `${selectedCert.color}15`, color: selectedCert.color, borderColor: `${selectedCert.color}40` }}>
+                       {cat}
+                     </span>
+                   ))}
                    <span className="font-mono text-[0.6rem] text-[#606060] uppercase tracking-widest">{selectedCert.date}</span>
                 </div>
-                <h2 className="font-display text-3xl sm:text-4xl text-[#F0F0F0] leading-none mb-2">{selectedCert.title}</h2>
-                <p className="font-body text-[#A0A0A0] mb-6">{selectedCert.issuer}</p>
+                <h2 className="font-display text-3xl sm:text-4xl text-[#F0F0F0] leading-none mb-3">{selectedCert.title}</h2>
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="w-6 h-6 rounded-sm flex items-center justify-center font-display text-xs" style={{ background: "var(--surface-2)", color: "#F0F0F0", border: "1px solid rgba(255,255,255,0.06)" }}>
+                    {selectedCert.issuer.charAt(0)}
+                  </div>
+                  <p className="font-body text-[#A0A0A0]">{selectedCert.issuer}</p>
+                </div>
                 
                 <p className="font-body text-sm text-[#D0D0D0] mb-6 leading-relaxed">
                   {selectedCert.description}
@@ -343,7 +360,7 @@ export default function Certificates() {
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
                   <div className="font-mono text-[0.6rem] text-[#606060] uppercase tracking-widest">
-                    ID: {selectedCert.credentialId}
+                    {selectedCert.credentialId !== "N/A" ? `ID: ${selectedCert.credentialId}` : 'VERIFIED'}
                   </div>
                   <a
                     href={selectedCert.verifyUrl}
