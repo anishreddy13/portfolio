@@ -50,44 +50,42 @@ export default function StatsPage() {
   const activityData = generateMockActivity();
 
   return (
-    <PlatformShell>
-      <main className="relative z-10 pt-24 sm:pt-32 pb-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Header Section */}
-          <div className="mb-10 sm:mb-16">
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl mb-4 sm:mb-6" style={{ color: "#F0F0F0" }}>
-              Developer <span style={{ color: "#A855F7" }}>Metrics</span>
-            </h1>
-            <p className="font-mono text-[0.65rem] sm:text-[0.75rem] max-w-2xl leading-relaxed uppercase tracking-wider" style={{ color: "#A0A0A0" }}>
-              Real-time insights into my coding activity, language distribution, and open-source contributions. Powered by GitHub & WakaTime data.
-            </p>
-          </div>
-
-          {/* Top Stat Cards */}
-          <div className="mb-6 sm:mb-8">
-            <StatCards stats={MOCK_STATS} />
-          </div>
-
-          {/* Charts Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
-            <div className="lg:col-span-2">
-              <ActivityGraph data={activityData} />
-            </div>
-            <div className="lg:col-span-1">
-              <LanguagePieChart data={MOCK_LANGUAGES} />
-            </div>
-          </div>
-          
-          {/* Footer note for V1 */}
-          <div className="flex justify-center mb-10">
-            <p className="font-mono text-[0.55rem] sm:text-[0.6rem] tracking-widest uppercase" style={{ color: "#606060" }}>
-              Note: displaying realistic mock data for V1 demonstration purposes.
-            </p>
-          </div>
-
+    <main className="relative z-10 pt-24 sm:pt-32 pb-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header Section */}
+        <div className="mb-10 sm:mb-16">
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl mb-4 sm:mb-6" style={{ color: "#F0F0F0" }}>
+            Developer <span style={{ color: "#A855F7" }}>Metrics</span>
+          </h1>
+          <p className="font-mono text-[0.65rem] sm:text-[0.75rem] max-w-2xl leading-relaxed uppercase tracking-wider" style={{ color: "#A0A0A0" }}>
+            Real-time insights into my coding activity, language distribution, and open-source contributions. Powered by GitHub & WakaTime data.
+          </p>
         </div>
-      </main>
-    </PlatformShell>
+
+        {/* Top Stat Cards */}
+        <div className="mb-6 sm:mb-8">
+          <StatCards stats={MOCK_STATS} />
+        </div>
+
+        {/* Charts Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
+          <div className="lg:col-span-2">
+            <ActivityGraph data={activityData} />
+          </div>
+          <div className="lg:col-span-1">
+            <LanguagePieChart data={MOCK_LANGUAGES} />
+          </div>
+        </div>
+        
+        {/* Footer note for V1 */}
+        <div className="flex justify-center mb-10">
+          <p className="font-mono text-[0.55rem] sm:text-[0.6rem] tracking-widest uppercase" style={{ color: "#606060" }}>
+            Note: displaying realistic mock data for V1 demonstration purposes.
+          </p>
+        </div>
+
+      </div>
+    </main>
   );
 }
