@@ -153,18 +153,18 @@ export default function CareerDashboard() {
       <div className="absolute bottom-0 right-0 w-[420px] h-[420px] pointer-events-none" style={{ background: "radial-gradient(circle at bottom right, rgba(168,85,247,0.05) 0%, transparent 65%)" }} />
 
       <motion.div initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} className="fixed top-20 left-4 sm:left-5 z-30">
-        <Link href="/" className="flex items-center gap-2 font-mono text-[0.58rem] sm:text-[0.62rem] tracking-[0.18em] sm:tracking-[0.2em] uppercase px-2.5 sm:px-3 py-2 rounded-sm transition-all" style={{ background: "rgba(10,10,10,0.8)", border: "1px solid rgba(255,255,255,0.08)", color: "#606060" }}>
+        <Link href="/" className="flex items-center gap-2 font-mono text-[0.58rem] sm:text-[0.62rem] tracking-[0.18em] sm:tracking-[0.2em] uppercase px-2.5 sm:px-3 py-2 rounded-sm transition-all" style={{ background: "rgba(var(--color-overlay-base), 0.8)", border: "1px solid rgba(255,255,255,0.08)", color: "var(--text-tertiary)" }}>
           BACK
         </Link>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} className="fixed top-20 right-4 sm:right-5 z-30 flex items-center gap-2 px-2.5 sm:px-3 py-2 rounded-sm" style={{ background: "rgba(10,10,10,0.8)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <motion.div initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} className="fixed top-20 right-4 sm:right-5 z-30 flex items-center gap-2 px-2.5 sm:px-3 py-2 rounded-sm" style={{ background: "rgba(var(--color-overlay-base), 0.8)", border: "1px solid rgba(255,255,255,0.08)" }}>
         <span className="w-1.5 h-1.5 rounded-full" style={{ background: apiStatus === "online" ? "#C8FF00" : apiStatus === "offline" ? "#FF2D2D" : "#FF6B35", boxShadow: apiStatus === "online" ? "0 0 6px #C8FF00" : "none", animation: apiStatus !== "offline" ? "pulse 2s infinite" : "none" }} />
-        <span className="font-mono text-[0.52rem] sm:text-[0.58rem] tracking-[0.16em] sm:tracking-[0.2em] uppercase" style={{ color: "#606060" }}>
+        <span className="font-mono text-[0.52rem] sm:text-[0.58rem] tracking-[0.16em] sm:tracking-[0.2em] uppercase" style={{ color: "var(--text-tertiary)" }}>
           {apiStatus === "online" ? "Career API Online" : apiStatus === "offline" ? "Career API Offline" : "Career AI is warming up... (30s)"}
         </span>
         {apiStatus === "checking" && (
-          <span className="hidden sm:block w-16 h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+          <span className="hidden sm:block w-16 h-1 rounded-full overflow-hidden" style={{ background: "var(--border)" }}>
             <motion.span
               className="block h-full rounded-full"
               style={{ background: "#FF6B35" }}
@@ -191,7 +191,7 @@ export default function CareerDashboard() {
             <br />
             <span style={{ color: "transparent", WebkitTextStroke: "1px rgba(255,255,255,0.1)" }}>INTELLIGENCE</span>
           </h1>
-          <p className="font-body text-base max-w-xl leading-relaxed" style={{ color: "#A0A0A0" }}>
+          <p className="font-body text-base max-w-xl leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             Resume parsing, market trends, salary modeling, and AI mentoring through one production career dashboard.
           </p>
         </motion.div>
@@ -206,9 +206,9 @@ export default function CareerDashboard() {
           {tabs.map((tab) => {
             const active = activeTab === tab.id;
             return (
-              <motion.button key={tab.id} onClick={() => selectTab(tab.id)} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="relative rounded-sm p-3 text-left transition-all" style={{ background: active ? `${tab.color}10` : "var(--surface-1)", border: `1px solid ${active ? `${tab.color}40` : "rgba(255,255,255,0.06)"}` }}>
+              <motion.button key={tab.id} onClick={() => selectTab(tab.id)} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="relative rounded-sm p-3 text-left transition-all" style={{ background: active ? `${tab.color}10` : "var(--surface-1)", border: `1px solid ${active ? `${tab.color}40` : "var(--border)"}` }}>
                 <div className="text-base mb-2" style={{ color: active ? tab.color : "#404040" }}>{tab.icon}</div>
-                <p className="font-mono text-[0.58rem] tracking-wider uppercase leading-tight" style={{ color: active ? tab.color : "#606060" }}>{tab.label}</p>
+                <p className="font-mono text-[0.58rem] tracking-wider uppercase leading-tight" style={{ color: active ? tab.color : "var(--text-tertiary)" }}>{tab.label}</p>
                 <p className="font-body text-[0.55rem] mt-0.5 hidden sm:block" style={{ color: "#404040" }}>{tab.desc}</p>
                 {active && <motion.div layoutId="career-active-tab" className="absolute bottom-0 left-0 right-0 h-px" style={{ background: tab.color }} />}
               </motion.button>
@@ -233,8 +233,8 @@ export default function CareerDashboard() {
             ].map((item) => (
               <div key={item.step}>
                 <div className="font-display text-2xl mb-2" style={{ background: "linear-gradient(135deg, #C8FF00, #FF6B35)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{item.step}</div>
-                <h4 className="font-mono text-[0.62rem] uppercase tracking-wider mb-1" style={{ color: "#A0A0A0" }}>{item.title}</h4>
-                <p className="font-body text-xs leading-relaxed" style={{ color: "#606060" }}>{item.desc}</p>
+                <h4 className="font-mono text-[0.62rem] uppercase tracking-wider mb-1" style={{ color: "var(--text-secondary)" }}>{item.title}</h4>
+                <p className="font-body text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>{item.desc}</p>
               </div>
             ))}
           </div>

@@ -55,7 +55,7 @@ function AnimatedInput({
         style={{
           background: "var(--surface-1)",
           border: `1px solid ${
-            focused ? "rgba(255,45,45,0.45)" : "rgba(255,255,255,0.06)"
+            focused ? "rgba(255,45,45,0.45)" : "var(--border)"
           }`,
           boxShadow: focused ? "0 0 20px rgba(255,45,45,0.08)" : "none",
         }}
@@ -66,7 +66,7 @@ function AnimatedInput({
           animate={{
             y:     isActive ? 8 : multiline ? 18 : 16,
             scale: isActive ? 0.85 : 1,
-            color: focused ? "#FF2D2D" : "#606060",
+            color: focused ? "#FF2D2D" : "var(--text-tertiary)",
           }}
           style={{ originX: 0, originY: 0, top: 0 }}
           transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
@@ -77,7 +77,7 @@ function AnimatedInput({
           )}
         </motion.label>
 
-        <div className="px-4" style={{ color: "#F0F0F0" }}>
+        <div className="px-4" style={{ color: "var(--text-primary)" }}>
           {multiline ? (
             <textarea
               name={name}
@@ -88,7 +88,7 @@ function AnimatedInput({
               rows={rows}
               required={required}
               className={inputClass}
-              style={{ color: "#F0F0F0" }}
+              style={{ color: "var(--text-primary)" }}
             />
           ) : (
             <input
@@ -100,7 +100,7 @@ function AnimatedInput({
               onBlur={onBlur}
               required={required}
               className={inputClass}
-              style={{ color: "#F0F0F0" }}
+              style={{ color: "var(--text-primary)" }}
             />
           )}
         </div>
@@ -227,7 +227,7 @@ export default function Contact() {
               className="font-display leading-none tracking-tight"
               style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
             >
-              <span style={{ color: "#F0F0F0" }}>LET'S </span>
+              <span style={{ color: "var(--text-primary)" }}>LET'S </span>
               <span
                 style={{
                   background:
@@ -254,10 +254,10 @@ export default function Contact() {
           <ScrollReveal delay={0.2}>
             <p
               className="font-body text-base md:text-lg max-w-md mt-6 leading-relaxed"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               Have a project in mind? Let's talk. I'm always open to discussing{" "}
-              <span style={{ color: "#F0F0F0" }}>
+              <span style={{ color: "var(--text-primary)" }}>
                 new ideas and opportunities.
               </span>
             </p>
@@ -338,7 +338,7 @@ export default function Contact() {
                           : status === "error"
                           ? "#CC1A1A"
                           : status === "sending"
-                          ? "rgba(255,255,255,0.06)"
+                          ? "var(--border)"
                           : "#FF2D2D",
                     }}
                   />
@@ -363,7 +363,7 @@ export default function Contact() {
                   <span
                     className="relative z-10"
                     style={{
-                      color: status === "sending" ? "#A0A0A0" : "#fff",
+                      color: status === "sending" ? "var(--text-secondary)" : "#fff",
                     }}
                   >
                     <AnimatePresence mode="wait">
@@ -392,7 +392,7 @@ export default function Contact() {
                             className="inline-block w-4 h-4 border-2 rounded-full"
                             style={{
                               borderColor: "rgba(160,160,160,0.3)",
-                              borderTopColor: "#A0A0A0",
+                              borderTopColor: "var(--text-secondary)",
                             }}
                           />
                           Sending...
@@ -476,18 +476,18 @@ export default function Contact() {
                       <a
                         href={item.href}
                         className="font-body text-sm transition-colors duration-200"
-                        style={{ color: "#A0A0A0" }}
+                        style={{ color: "var(--text-secondary)" }}
                         onMouseEnter={(e) =>
-                          ((e.target as HTMLElement).style.color = "#F0F0F0")
+                          ((e.target as HTMLElement).style.color = "var(--text-primary)")
                         }
                         onMouseLeave={(e) =>
-                          ((e.target as HTMLElement).style.color = "#A0A0A0")
+                          ((e.target as HTMLElement).style.color = "var(--text-secondary)")
                         }
                       >
                         {item.val}
                       </a>
                     ) : (
-                      <p className="font-body text-sm" style={{ color: "#A0A0A0" }}>
+                      <p className="font-body text-sm" style={{ color: "var(--text-secondary)" }}>
                         {item.val}
                       </p>
                     )}
@@ -515,7 +515,7 @@ export default function Contact() {
                     className="flex items-center gap-2.5 px-3 py-2.5 rounded-sm border transition-all duration-300"
                     style={{
                       background:  "var(--surface-1)",
-                      borderColor: "rgba(255,255,255,0.06)",
+                      borderColor: "var(--border)",
                     }}
                     whileHover={{
                       y: -2,
@@ -529,7 +529,7 @@ export default function Contact() {
                     >
                       {s.icon}
                     </span>
-                    <span className="font-body text-xs" style={{ color: "#A0A0A0" }}>
+                    <span className="font-body text-xs" style={{ color: "var(--text-secondary)" }}>
                       {s.label}
                     </span>
                   </motion.a>

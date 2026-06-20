@@ -92,13 +92,13 @@ function healthLabel(status: string) {
   return "Offline";
 }
 function driftRecommendation(report?: DriftReport) {
-  if (!report) return { label: "Waiting for checks", color: "#606060", detail: "Drift starts after enough prediction samples." };
+  if (!report) return { label: "Waiting for checks", color: "var(--text-tertiary)", detail: "Drift starts after enough prediction samples." };
   if (report.drift_detected) return { label: "Retrain suggested", color: "#FF2D2D", detail: report.action_taken || "Review drift source and retrain if accuracy drops." };
   if (report.drift_score >= 0.2) return { label: "Monitor closely", color: "#FF6B35", detail: "Signal is elevated but below the drift threshold." };
   return { label: "Stable", color: "#C8FF00", detail: "No drift action needed." };
 }
 function pipelineMeaning(run?: PipelineRun) {
-  if (!run) return { label: "No CI signal", color: "#606060", detail: "Push to main to log the next pipeline run." };
+  if (!run) return { label: "No CI signal", color: "var(--text-tertiary)", detail: "Push to main to log the next pipeline run." };
   if (run.status === "success" && run.deployed) return { label: "Deploy passed", color: "#C8FF00", detail: "Latest checked run deployed successfully." };
   if (run.status === "success") return { label: "Checks passed", color: "#FF6B35", detail: "Run passed but deployment was skipped." };
   return { label: "Action needed", color: "#FF2D2D", detail: run.reason || "Review the pipeline logs before deploying." };
@@ -160,7 +160,7 @@ function ToastContainer({
               </p>
               <p
                 className="font-mono text-[0.58rem] leading-snug truncate"
-                style={{ color: "#A0A0A0" }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 {t.message}
               </p>
@@ -245,7 +245,7 @@ function SystemHealthBar({
     <div
       className="flex items-center overflow-x-auto"
       style={{
-        background:   "rgba(10,10,10,0.85)",
+        background:   "rgba(var(--color-overlay-base), 0.85)",
         borderBottom: "1px solid rgba(255,255,255,0.04)",
         scrollbarWidth: "none",
       }}
@@ -260,13 +260,13 @@ function SystemHealthBar({
             <div>
               <p
                 className="font-mono text-[0.46rem] sm:text-[0.52rem] uppercase tracking-widest"
-                style={{ color: s.ok ? "#606060" : "#FF2D2D" }}
+                style={{ color: s.ok ? "var(--text-tertiary)" : "#FF2D2D" }}
               >
                 {s.label}
               </p>
               <p
                 className="font-mono text-[0.52rem] sm:text-[0.58rem]"
-                style={{ color: s.ok ? "#A0A0A0" : "#FF2D2D" }}
+                style={{ color: s.ok ? "var(--text-secondary)" : "#FF2D2D" }}
               >
                 {s.status}
               </p>
@@ -275,7 +275,7 @@ function SystemHealthBar({
           {i < systems.length - 1 && (
             <div
               className="w-px h-5 shrink-0"
-              style={{ background: "rgba(255,255,255,0.06)" }}
+              style={{ background: "var(--border)" }}
             />
           )}
         </div>
@@ -324,7 +324,7 @@ function DriftAlertBanner({
           {/* FIX: truncate long text on mobile */}
           <p
             className="font-mono text-[0.52rem] sm:text-[0.55rem] truncate"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
             {driftReport.action_taken} · {driftReport.sample_size} samples ·{" "}
             {timeAgo(driftReport.created_at)}
@@ -420,7 +420,7 @@ function WorldMap({
         </div>
         <span
           className="font-mono text-[0.55rem] sm:text-[0.58rem]"
-          style={{ color: "#606060" }}
+          style={{ color: "var(--text-tertiary)" }}
         >
           {Object.keys(countryCounts).length} countries
         </span>
@@ -439,7 +439,7 @@ function WorldMap({
             const [, y] = project(lat, 0);
             return (
               <line key={`lat-${lat}`} x1={0} y1={y} x2={W} y2={y}
-                stroke={lat === 0 ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.03)"}
+                stroke={lat === 0 ? "var(--border)" : "rgba(255,255,255,0.03)"}
                 strokeWidth={lat === 0 ? 1.5 : 1}
                 strokeDasharray={lat === 0 ? "6,4" : "none"} />
             );
@@ -508,7 +508,7 @@ function WorldMap({
               style={{ color: "#FF2D2D" }}>
               {tooltip.country}
             </p>
-            <p className="font-mono text-[0.62rem]" style={{ color: "#F0F0F0" }}>
+            <p className="font-mono text-[0.62rem]" style={{ color: "var(--text-primary)" }}>
               {tooltip.count} visit{tooltip.count !== 1 ? "s" : ""}
             </p>
           </div>
@@ -522,7 +522,7 @@ function WorldMap({
           <div className="w-2.5 h-2.5 rounded-full"
             style={{ background: "rgba(255,45,45,0.4)", border: "1.5px solid #FF2D2D" }} />
           <span className="font-mono text-[0.52rem] sm:text-[0.55rem]"
-            style={{ color: "#606060" }}>
+            style={{ color: "var(--text-tertiary)" }}>
             Top countries
           </span>
         </div>
@@ -530,7 +530,7 @@ function WorldMap({
           <div className="w-2 h-2 rounded-full"
             style={{ background: "rgba(255,45,45,0.18)", border: "1px solid rgba(255,45,45,0.35)" }} />
           <span className="font-mono text-[0.52rem] sm:text-[0.55rem]"
-            style={{ color: "#606060" }}>
+            style={{ color: "var(--text-tertiary)" }}>
             Other
           </span>
         </div>
@@ -549,7 +549,7 @@ function ConfidenceLine({ label, value, color }: { label: string; value: number;
   return (
     <div>
       <div className="flex justify-between mb-1">
-        <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "#606060" }}>{label}</span>
+        <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{label}</span>
         <span className="font-mono text-[0.52rem]" style={{ color }}>{percent.toFixed(1)}%</span>
       </div>
       <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
@@ -576,7 +576,7 @@ function StatCard({
     >
       <p
         className="font-mono text-[0.5rem] sm:text-[0.58rem] tracking-[0.2em] uppercase mb-1.5 sm:mb-2"
-        style={{ color: "#606060" }}
+        style={{ color: "var(--text-tertiary)" }}
       >
         {label}
       </p>
@@ -590,7 +590,7 @@ function StatCard({
       {sub && (
         <p
           className="font-mono text-[0.5rem] sm:text-[0.58rem] mt-1 sm:mt-1.5 truncate"
-          style={{ color: "#606060" }}
+          style={{ color: "var(--text-tertiary)" }}
         >
           {sub}
         </p>
@@ -625,7 +625,7 @@ function ServiceHealthGrid({
         <button
           onClick={onRefresh}
           className="font-mono text-[0.55rem] uppercase tracking-widest px-2.5 py-1.5 rounded-sm"
-          style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}
+          style={{ background: "var(--surface-2)", color: "var(--text-tertiary)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
           Refresh
         </button>
@@ -639,8 +639,8 @@ function ServiceHealthGrid({
                 {healthLabel(service.status)}
               </span>
             </div>
-            <p className="font-body text-xs sm:text-sm truncate" style={{ color: "#F0F0F0" }}>{service.label}</p>
-            <p className="font-mono text-[0.5rem] sm:text-[0.55rem] truncate" style={{ color: "#606060" }}>{service.detail}</p>
+            <p className="font-body text-xs sm:text-sm truncate" style={{ color: "var(--text-primary)" }}>{service.label}</p>
+            <p className="font-mono text-[0.5rem] sm:text-[0.55rem] truncate" style={{ color: "var(--text-tertiary)" }}>{service.detail}</p>
           </div>
         ))}
       </div>
@@ -667,7 +667,7 @@ function ArchitecturePanel() {
         {steps.map((step, i) => (
           <div key={step.label} className="relative p-2" style={{ borderLeft: `1px solid ${i === steps.length - 1 ? "#C8FF0040" : "rgba(255,45,45,0.25)"}` }}>
             <p className="font-display text-lg leading-none mb-1" style={{ color: i === steps.length - 1 ? "#C8FF00" : "#FF2D2D" }}>{step.label}</p>
-            <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "#606060" }}>{step.detail}</p>
+            <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{step.detail}</p>
             {i < steps.length - 1 && (
               <span className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 font-mono text-xs" style={{ color: "#404040" }}>
                 →
@@ -693,14 +693,14 @@ function FilterSelect({
 }) {
   return (
     <label className="block min-w-0">
-      <span className="font-mono text-[0.5rem] uppercase tracking-widest block mb-1" style={{ color: "#606060" }}>
+      <span className="font-mono text-[0.5rem] uppercase tracking-widest block mb-1" style={{ color: "var(--text-tertiary)" }}>
         {label}
       </span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="w-full rounded-sm px-2.5 py-2 font-mono text-[0.58rem] uppercase"
-        style={{ background: "var(--surface-2)", color: "#A0A0A0", border: "1px solid rgba(255,255,255,0.06)" }}
+        style={{ background: "var(--surface-2)", color: "var(--text-secondary)", border: "1px solid rgba(255,255,255,0.06)" }}
       >
         {options.map((option) => (
           <option key={option} value={option}>{option}</option>
@@ -720,7 +720,7 @@ function CustomTooltip({ active, payload, label }: any) {
         border:     "1px solid rgba(255,255,255,0.1)",
       }}
     >
-      <p className="font-mono text-[0.58rem] mb-1" style={{ color: "#606060" }}>
+      <p className="font-mono text-[0.58rem] mb-1" style={{ color: "var(--text-tertiary)" }}>
         {label}
       </p>
       {payload.map((p: any) => (
@@ -765,7 +765,7 @@ function ChartBox({
 
 // ─── Shared axis tick styles ───────────────────────────────────
 const axisTick    = { fill: "#404040", fontSize: 8, fontFamily: "DM Mono" };
-const axisTickDim = { fill: "#606060", fontSize: 8, fontFamily: "DM Mono" };
+const axisTickDim = { fill: "var(--text-tertiary)", fontSize: 8, fontFamily: "DM Mono" };
 
 // ─── Main Dashboard ───────────────────────────────────────────
 export default function Dashboard() {
@@ -925,7 +925,7 @@ export default function Dashboard() {
       <div
         className="sticky top-14 z-40"
         style={{
-          background:     "rgba(10,10,10,0.95)",
+          background:     "rgba(var(--color-overlay-base), 0.95)",
           backdropFilter: "blur(20px)",
           borderBottom:   "1px solid rgba(255,45,45,0.15)",
         }}
@@ -940,7 +940,7 @@ export default function Dashboard() {
             <span
               className="font-display tracking-[0.12em] sm:tracking-[0.15em] leading-none"
               style={{
-                color:    "#F0F0F0",
+                color:    "var(--text-primary)",
                 fontSize: isMobile ? "0.75rem" : "1.25rem",
               }}
             >
@@ -988,9 +988,9 @@ export default function Dashboard() {
             <a
               href="/"
               className="font-mono text-[0.52rem] sm:text-[0.6rem] tracking-widest uppercase rounded-sm px-2 py-1.5 sm:px-0 sm:py-0"
-              style={{ color: "#606060" }}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#F0F0F0")}
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#606060")}
+              style={{ color: "var(--text-tertiary)" }}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--text-primary)")}
+              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-tertiary)")}
             >
               {isMobile ? "Home" : "← Portfolio"}
             </a>
@@ -1027,8 +1027,8 @@ export default function Dashboard() {
               style={{
                 fontSize:   isMobile ? "0.55rem" : "0.62rem",
                 background: activeTab === tab.id ? "#FF2D2D" : "var(--surface-1)",
-                color:      activeTab === tab.id ? "#fff"    : "#606060",
-                border:     `1px solid ${activeTab === tab.id ? "#FF2D2D" : "rgba(255,255,255,0.06)"}`,
+                color:      activeTab === tab.id ? "#fff"    : "var(--text-tertiary)",
+                border:     `1px solid ${activeTab === tab.id ? "#FF2D2D" : "var(--border)"}`,
                 boxShadow:  activeTab === tab.id ? "0 0 16px rgba(255,45,45,0.3)" : "none",
               }}
             >
@@ -1069,7 +1069,7 @@ export default function Dashboard() {
                     <span className="font-mono text-[0.58rem] sm:text-[0.6rem] tracking-[0.25em] uppercase"
                       style={{ color: "#FF2D2D" }}>Live Predictions</span>
                   </div>
-                  <span className="font-mono text-[0.55rem] sm:text-[0.58rem]" style={{ color: "#606060" }}>
+                  <span className="font-mono text-[0.55rem] sm:text-[0.58rem]" style={{ color: "var(--text-tertiary)" }}>
                     {filteredPredictions.length} shown · page {page}/{totalPages}
                   </span>
                 </div>
@@ -1083,7 +1083,7 @@ export default function Dashboard() {
                   <button
                     onClick={() => { setSentimentFilter("All"); setSourceFilter("All"); setConfidenceFilter("All"); setTimeFilter("All"); }}
                     className="self-end rounded-sm px-2.5 py-2 font-mono text-[0.58rem] uppercase tracking-widest"
-                    style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}
+                    style={{ background: "var(--surface-2)", color: "var(--text-tertiary)", border: "1px solid rgba(255,255,255,0.06)" }}
                   >
                     Reset
                   </button>
@@ -1097,10 +1097,10 @@ export default function Dashboard() {
                       style={{ borderColor: "rgba(255,45,45,0.2)", borderTopColor: "#FF2D2D" }} />
                   </div>
                 ) : (
-                  <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                  <div className="divide-y" style={{ borderColor: "var(--border-soft)" }}>
                     {filteredPredictions.length === 0 ? (
                       <div className="px-5 py-12 text-center">
-                        <p className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "#606060" }}>
+                        <p className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
                           No predictions match these filters
                         </p>
                       </div>
@@ -1115,7 +1115,7 @@ export default function Dashboard() {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                             <span className="font-mono text-[0.5rem] sm:text-[0.55rem] uppercase tracking-wider px-1.5 py-0.5 rounded-sm"
-                              style={{ background: "var(--surface-3)", color: "#606060" }}>
+                              style={{ background: "var(--surface-3)", color: "var(--text-tertiary)" }}>
                               {p.source}
                             </span>
                             <span className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "#404040" }}>
@@ -1124,7 +1124,7 @@ export default function Dashboard() {
                           </div>
                           <a href={p.link} target="_blank" rel="noopener noreferrer"
                             className="font-body text-xs sm:text-sm leading-snug line-clamp-2"
-                            style={{ color: "#A0A0A0" }}>
+                            style={{ color: "var(--text-secondary)" }}>
                             {p.title}
                           </a>
                         </div>
@@ -1134,11 +1134,11 @@ export default function Dashboard() {
                             {/* FIX: hide text label on mobile, keep emoji */}
                             <span
                               className="font-mono text-[0.55rem] sm:text-[0.62rem] uppercase tracking-wider hidden sm:inline"
-                              style={{ color: SENTIMENT_COLORS[p.sentiment as keyof typeof SENTIMENT_COLORS] || "#A0A0A0" }}>
+                              style={{ color: SENTIMENT_COLORS[p.sentiment as keyof typeof SENTIMENT_COLORS] || "var(--text-secondary)" }}>
                               {p.sentiment}
                             </span>
                           </div>
-                          <span className="font-mono text-[0.5rem] sm:text-[0.58rem]" style={{ color: "#606060" }}>
+                          <span className="font-mono text-[0.5rem] sm:text-[0.58rem]" style={{ color: "var(--text-tertiary)" }}>
                             {p.confidence.toFixed(1)}%
                           </span>
                         </div>
@@ -1152,10 +1152,10 @@ export default function Dashboard() {
                   <motion.button onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page === 1} whileTap={{ scale: 0.97 }}
                     className="font-mono text-[0.56rem] sm:text-[0.6rem] uppercase tracking-widest px-3 sm:px-4 py-2 rounded-sm disabled:opacity-30"
-                    style={{ background: "var(--surface-2)", color: "#A0A0A0", border: "1px solid rgba(255,255,255,0.06)" }}>
+                    style={{ background: "var(--surface-2)", color: "var(--text-secondary)", border: "1px solid rgba(255,255,255,0.06)" }}>
                     ← Prev
                   </motion.button>
-                  <span className="font-mono text-[0.52rem] sm:text-[0.58rem]" style={{ color: "#606060" }}>
+                  <span className="font-mono text-[0.52rem] sm:text-[0.58rem]" style={{ color: "var(--text-tertiary)" }}>
                     {((page - 1) * PAGE_SIZE) + 1}–{Math.min(page * PAGE_SIZE, total)} / {total.toLocaleString()}
                   </span>
                   <motion.button onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
@@ -1210,7 +1210,7 @@ export default function Dashboard() {
                             paddingAngle={3} dataKey="value">
                             {pieData.map((entry, i) => (
                               <Cell key={i}
-                                fill={SENTIMENT_COLORS[entry.name as keyof typeof SENTIMENT_COLORS] || "#606060"} />
+                                fill={SENTIMENT_COLORS[entry.name as keyof typeof SENTIMENT_COLORS] || "var(--text-tertiary)"} />
                             ))}
                           </Pie>
                           <Tooltip content={<CustomTooltip />} />
@@ -1221,12 +1221,12 @@ export default function Dashboard() {
                       {pieData.map((entry) => (
                         <div key={entry.name} className="flex items-center gap-2">
                           <span className="w-2 h-2 rounded-full shrink-0"
-                            style={{ background: SENTIMENT_COLORS[entry.name as keyof typeof SENTIMENT_COLORS] || "#606060" }} />
+                            style={{ background: SENTIMENT_COLORS[entry.name as keyof typeof SENTIMENT_COLORS] || "var(--text-tertiary)" }} />
                           <div className="min-w-0">
                             <p className="font-mono text-[0.52rem] sm:text-[0.6rem] uppercase truncate"
-                              style={{ color: "#A0A0A0" }}>{entry.name}</p>
+                              style={{ color: "var(--text-secondary)" }}>{entry.name}</p>
                             <p className="font-display text-base sm:text-lg leading-none"
-                              style={{ color: SENTIMENT_COLORS[entry.name as keyof typeof SENTIMENT_COLORS] || "#606060" }}>
+                              style={{ color: SENTIMENT_COLORS[entry.name as keyof typeof SENTIMENT_COLORS] || "var(--text-tertiary)" }}>
                               {entry.value}
                             </p>
                           </div>
@@ -1289,9 +1289,9 @@ export default function Dashboard() {
                           style={{ color: item.color }}>{item.status}</span>
                       </div>
                       <p className="font-body text-xs sm:text-sm font-medium mb-0.5 truncate"
-                        style={{ color: "#F0F0F0" }}>{item.label}</p>
+                        style={{ color: "var(--text-primary)" }}>{item.label}</p>
                       <p className="font-mono text-[0.48rem] sm:text-[0.55rem] truncate"
-                        style={{ color: "#606060" }}>{item.detail}</p>
+                        style={{ color: "var(--text-tertiary)" }}>{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1319,13 +1319,13 @@ export default function Dashboard() {
                       { label: "Accuracy", value: latestDrift ? `${latestDrift.accuracy?.toFixed(1)}%` : "—", sub: "latest check", color: "#C8FF00" },
                     ].map((item) => (
                       <div key={item.label} className="min-w-0" style={{ borderLeft: `1px solid ${item.color}40`, paddingLeft: "0.75rem" }}>
-                        <p className="font-mono text-[0.5rem] uppercase tracking-widest mb-1" style={{ color: "#606060" }}>{item.label}</p>
+                        <p className="font-mono text-[0.5rem] uppercase tracking-widest mb-1" style={{ color: "var(--text-tertiary)" }}>{item.label}</p>
                         <p className="font-display text-xl sm:text-2xl leading-none truncate" style={{ color: item.color }}>{item.value}</p>
-                        <p className="font-mono text-[0.5rem] mt-1 truncate" style={{ color: "#606060" }}>{item.sub}</p>
+                        <p className="font-mono text-[0.5rem] mt-1 truncate" style={{ color: "var(--text-tertiary)" }}>{item.sub}</p>
                       </div>
                     ))}
                   </div>
-                  <p className="font-body text-xs sm:text-sm leading-relaxed" style={{ color: "#A0A0A0" }}>
+                  <p className="font-body text-xs sm:text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     Drift compares recent predictions against expected behavior. When the score crosses the threshold, retraining or closer inspection is recommended.
                   </p>
                 </div>
@@ -1335,10 +1335,10 @@ export default function Dashboard() {
                   <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "#FF2D2D" }}>
                     Current Model
                   </p>
-                  <p className="font-display text-3xl leading-none mb-2" style={{ color: latestModel ? "#C8FF00" : "#606060" }}>
+                  <p className="font-display text-3xl leading-none mb-2" style={{ color: latestModel ? "#C8FF00" : "var(--text-tertiary)" }}>
                     {latestModel?.version || "None"}
                   </p>
-                  <p className="font-mono text-[0.58rem] uppercase tracking-widest mb-3" style={{ color: "#606060" }}>
+                  <p className="font-mono text-[0.58rem] uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>
                     {latestModel?.stage || "No deployment"}
                   </p>
                   <div className="space-y-2">
@@ -1355,10 +1355,10 @@ export default function Dashboard() {
                     Model Version History
                   </p>
                 </div>
-                <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                <div className="divide-y" style={{ borderColor: "var(--border-soft)" }}>
                   {modelVersions.length === 0 ? (
                     <div className="px-5 py-8 text-center">
-                      <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>
+                      <p className="font-mono text-[0.6rem]" style={{ color: "var(--text-tertiary)" }}>
                         No versions yet — will appear after first retrain
                       </p>
                     </div>
@@ -1366,13 +1366,13 @@ export default function Dashboard() {
                     <div key={v.id} className="px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between gap-2">
                       <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                         <span className="font-display text-xl sm:text-2xl shrink-0"
-                          style={{ color: i === 0 ? "#C8FF00" : "#606060" }}>{v.version}</span>
+                          style={{ color: i === 0 ? "#C8FF00" : "var(--text-tertiary)" }}>{v.version}</span>
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5">
                             <span className="w-1.5 h-1.5 rounded-full shrink-0"
-                              style={{ background: v.stage === "Production" ? "#C8FF00" : "#606060" }} />
+                              style={{ background: v.stage === "Production" ? "#C8FF00" : "var(--text-tertiary)" }} />
                             <span className="font-mono text-[0.55rem] sm:text-[0.58rem] uppercase tracking-wider"
-                              style={{ color: v.stage === "Production" ? "#C8FF00" : "#606060" }}>{v.stage}</span>
+                              style={{ color: v.stage === "Production" ? "#C8FF00" : "var(--text-tertiary)" }}>{v.stage}</span>
                           </div>
                           {/* FIX: truncate long retrain reason */}
                           <p className="font-mono text-[0.5rem] sm:text-[0.55rem] truncate"
@@ -1381,9 +1381,9 @@ export default function Dashboard() {
                       </div>
                       <div className="text-right shrink-0">
                         <p className="font-display text-lg sm:text-xl"
-                          style={{ color: i === 0 ? "#C8FF00" : "#A0A0A0" }}>{v.accuracy?.toFixed(1)}%</p>
+                          style={{ color: i === 0 ? "#C8FF00" : "var(--text-secondary)" }}>{v.accuracy?.toFixed(1)}%</p>
                         <p className="font-mono text-[0.5rem] sm:text-[0.55rem]"
-                          style={{ color: "#606060" }}>{timeAgo(v.deployed_at)}</p>
+                          style={{ color: "var(--text-tertiary)" }}>{timeAgo(v.deployed_at)}</p>
                       </div>
                     </div>
                   ))}
@@ -1409,10 +1409,10 @@ export default function Dashboard() {
                     Drift Detection History
                   </p>
                 </div>
-                <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                <div className="divide-y" style={{ borderColor: "var(--border-soft)" }}>
                   {driftReports.length === 0 ? (
                     <div className="px-5 py-8 text-center">
-                      <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>
+                      <p className="font-mono text-[0.6rem]" style={{ color: "var(--text-tertiary)" }}>
                         No drift checks yet — runs hourly after 50+ predictions
                       </p>
                     </div>
@@ -1429,7 +1429,7 @@ export default function Dashboard() {
                           </p>
                           {/* FIX: truncate long action text */}
                           <p className="font-mono text-[0.5rem] sm:text-[0.55rem] truncate"
-                            style={{ color: "#606060" }}>
+                            style={{ color: "var(--text-tertiary)" }}>
                             score {r.drift_score.toFixed(2)} / {DRIFT_THRESHOLD} · {r.sample_size} samples
                           </p>
                         </div>
@@ -1439,7 +1439,7 @@ export default function Dashboard() {
                           style={{ color: r.drift_detected ? "#FF2D2D" : "#C8FF00" }}>
                           {r.drift_detected ? "Review" : "Stable"}
                         </p>
-                        <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "#606060" }}>
+                        <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>
                           {timeAgo(r.created_at)}
                         </p>
                       </div>
@@ -1486,10 +1486,10 @@ export default function Dashboard() {
                       Top Cities
                     </p>
                   </div>
-                  <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                  <div className="divide-y" style={{ borderColor: "var(--border-soft)" }}>
                     {cityData.length === 0 ? (
                       <div className="px-5 py-8 text-center">
-                        <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>No city data yet</p>
+                        <p className="font-mono text-[0.6rem]" style={{ color: "var(--text-tertiary)" }}>No city data yet</p>
                       </div>
                     ) : cityData.map((c, i) => (
                       <div key={c.name} className="px-4 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-2">
@@ -1498,14 +1498,14 @@ export default function Dashboard() {
                             style={{ color: "#404040" }}>{i + 1}</span>
                           <div className="min-w-0">
                             <p className="font-mono text-[0.58rem] sm:text-[0.6rem] truncate"
-                              style={{ color: "#A0A0A0" }}>{c.name.split(",")[0]}</p>
+                              style={{ color: "var(--text-secondary)" }}>{c.name.split(",")[0]}</p>
                             <p className="font-mono text-[0.5rem] sm:text-[0.55rem]"
-                              style={{ color: "#606060" }}>{c.name.split(",")[1]?.trim()}</p>
+                              style={{ color: "var(--text-tertiary)" }}>{c.name.split(",")[1]?.trim()}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                           <div className="w-12 sm:w-20 h-1 rounded-full overflow-hidden"
-                            style={{ background: "rgba(255,255,255,0.06)" }}>
+                            style={{ background: "var(--border)" }}>
                             <div className="h-full rounded-full"
                               style={{ background: "#FF2D2D", width: `${(c.value / (cityData[0]?.value || 1)) * 100}%` }} />
                           </div>
@@ -1552,7 +1552,7 @@ export default function Dashboard() {
                           <span className="w-2 h-2 rounded-full shrink-0" style={{ background: SOURCE_COLORS[i] }} />
                           <div className="min-w-0">
                             <p className="font-mono text-[0.52rem] sm:text-[0.6rem] uppercase truncate"
-                              style={{ color: "#A0A0A0" }}>{d.name}</p>
+                              style={{ color: "var(--text-secondary)" }}>{d.name}</p>
                             <p className="font-display text-base sm:text-lg leading-none"
                               style={{ color: SOURCE_COLORS[i] }}>{d.value}</p>
                           </div>
@@ -1586,11 +1586,11 @@ export default function Dashboard() {
                     <span className="font-mono text-[0.58rem] sm:text-[0.6rem] tracking-[0.25em] uppercase"
                       style={{ color: "#FF2D2D" }}>Live Visitor Activity</span>
                   </div>
-                  <span className="font-mono text-[0.55rem] sm:text-[0.58rem]" style={{ color: "#606060" }}>
+                  <span className="font-mono text-[0.55rem] sm:text-[0.58rem]" style={{ color: "var(--text-tertiary)" }}>
                     Last {Math.min(userActivity.length, 20)}
                   </span>
                 </div>
-                <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                <div className="divide-y" style={{ borderColor: "var(--border-soft)" }}>
                   {userActivity.slice(0, 20).map((a, i) => (
                     <motion.div key={a.id}
                       initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
@@ -1603,10 +1603,10 @@ export default function Dashboard() {
                         <div className="min-w-0">
                           {/* FIX: truncate browser/location line */}
                           <p className="font-mono text-[0.52rem] sm:text-[0.6rem] truncate"
-                            style={{ color: "#A0A0A0" }}>
+                            style={{ color: "var(--text-secondary)" }}>
                             {a.browser} · {a.city && a.city !== "Unknown" ? `${a.city}, ` : ""}{a.country}
                           </p>
-                          <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "#606060" }}>
+                          <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>
                             visited <span style={{ color: "#FF2D2D" }}>{a.page}</span>
                           </p>
                         </div>
@@ -1638,20 +1638,20 @@ export default function Dashboard() {
                     <h3 className="font-display text-3xl leading-none mb-2" style={{ color: pipelineInsight.color }}>
                       {pipelineInsight.label}
                     </h3>
-                    <p className="font-body text-xs sm:text-sm leading-relaxed max-w-2xl" style={{ color: "#A0A0A0" }}>
+                    <p className="font-body text-xs sm:text-sm leading-relaxed max-w-2xl" style={{ color: "var(--text-secondary)" }}>
                       {pipelineInsight.detail}
                     </p>
                   </div>
                   <div className="grid grid-cols-3 gap-2 min-w-0 lg:min-w-[360px]">
                     {[
                       { label: "Run", value: latestPipeline ? `#${latestPipeline.run_number}` : "—", sub: latestPipeline ? timeAgo(latestPipeline.created_at) : "waiting", color: pipelineInsight.color },
-                      { label: "Old Acc", value: latestPipeline?.old_accuracy ? `${latestPipeline.old_accuracy.toFixed(1)}%` : "—", sub: "previous", color: "#606060" },
+                      { label: "Old Acc", value: latestPipeline?.old_accuracy ? `${latestPipeline.old_accuracy.toFixed(1)}%` : "—", sub: "previous", color: "var(--text-tertiary)" },
                       { label: "New Acc", value: latestPipeline?.new_accuracy ? `${latestPipeline.new_accuracy.toFixed(1)}%` : "—", sub: "candidate", color: "#C8FF00" },
                     ].map((item) => (
                       <div key={item.label} className="p-2" style={{ borderLeft: `1px solid ${item.color}40` }}>
-                        <p className="font-mono text-[0.5rem] uppercase tracking-widest mb-1" style={{ color: "#606060" }}>{item.label}</p>
+                        <p className="font-mono text-[0.5rem] uppercase tracking-widest mb-1" style={{ color: "var(--text-tertiary)" }}>{item.label}</p>
                         <p className="font-display text-xl leading-none truncate" style={{ color: item.color }}>{item.value}</p>
-                        <p className="font-mono text-[0.5rem] mt-1 truncate" style={{ color: "#606060" }}>{item.sub}</p>
+                        <p className="font-mono text-[0.5rem] mt-1 truncate" style={{ color: "var(--text-tertiary)" }}>{item.sub}</p>
                       </div>
                     ))}
                   </div>
@@ -1678,14 +1678,14 @@ export default function Dashboard() {
                   </div>
                   {/* FIX: hide long subtitle on mobile */}
                   <span className="font-mono text-[0.55rem] sm:text-[0.58rem] hidden sm:block"
-                    style={{ color: "#606060" }}>
+                    style={{ color: "var(--text-tertiary)" }}>
                     GitHub Actions · auto-deploy on push
                   </span>
                 </div>
-                <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                <div className="divide-y" style={{ borderColor: "var(--border-soft)" }}>
                   {pipelineRuns.length === 0 ? (
                     <div className="px-5 py-8 text-center">
-                      <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>
+                      <p className="font-mono text-[0.6rem]" style={{ color: "var(--text-tertiary)" }}>
                         No pipeline runs logged yet — push to main or check GitHub Actions secrets
                       </p>
                     </div>
@@ -1709,15 +1709,15 @@ export default function Dashboard() {
                             </span>
                             <span className="font-mono text-[0.5rem] sm:text-[0.55rem] px-1.5 py-0.5 rounded-sm"
                               style={{
-                                background: r.deployed ? "rgba(200,255,0,0.1)" : "rgba(255,255,255,0.04)",
-                                color:      r.deployed ? "#C8FF00" : "#606060",
+                                background: r.deployed ? "rgba(200,255,0,0.1)" : "var(--border-soft)",
+                                color:      r.deployed ? "#C8FF00" : "var(--text-tertiary)",
                               }}>
                               {r.deployed ? "deployed" : "skipped"}
                             </span>
                           </div>
                           {/* FIX: truncate long trigger text */}
                           <p className="font-mono text-[0.5rem] sm:text-[0.55rem] truncate"
-                            style={{ color: "#606060" }}>
+                            style={{ color: "var(--text-tertiary)" }}>
                             {r.trigger}
                           </p>
                         </div>
@@ -1727,7 +1727,7 @@ export default function Dashboard() {
                           style={{ color: r.status === "success" ? "#C8FF00" : "#FF2D2D" }}>
                           {r.status}
                         </p>
-                        <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "#606060" }}>
+                        <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>
                           {timeAgo(r.created_at)}
                         </p>
                       </div>

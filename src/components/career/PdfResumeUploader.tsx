@@ -152,7 +152,7 @@ export default function PdfResumeUploader({ onTextExtracted, value, onChange }: 
               type="button"
               onClick={() => setMode(item.id)}
               className="relative rounded-sm py-2.5 font-mono text-[0.58rem] uppercase tracking-[0.2em]"
-              style={{ color: active ? "#0A0A0A" : "#606060" }}
+              style={{ color: active ? "#0A0A0A" : "var(--text-tertiary)" }}
             >
               {active && <motion.span layoutId="resume-input-mode" className="absolute inset-0 rounded-sm" style={{ background: "#C8FF00" }} />}
               <span className="relative z-10">{item.label}</span>
@@ -178,7 +178,7 @@ export default function PdfResumeUploader({ onTextExtracted, value, onChange }: 
           style={{
             minHeight: "260px",
             background: "var(--surface-1)",
-            border: `1px dashed ${dragging ? "rgba(200,255,0,0.7)" : "rgba(255,255,255,0.08)"}`,
+            border: `1px dashed ${dragging ? "rgba(200,255,0,0.7)" : "var(--border)"}`,
             transition: "border-color 0.3s ease",
           }}
           whileHover={{ borderColor: "rgba(200,255,0,0.35)" }}
@@ -210,7 +210,7 @@ export default function PdfResumeUploader({ onTextExtracted, value, onChange }: 
                     <p className="font-mono text-[0.58rem] uppercase tracking-[0.22em]" style={{ color: "#C8FF00" }}>
                       {fileName}
                     </p>
-                    <p className="font-body text-xs mt-1" style={{ color: "#606060" }}>
+                    <p className="font-body text-xs mt-1" style={{ color: "var(--text-tertiary)" }}>
                       {pageCount} page{pageCount === 1 ? "" : "s"} extracted
                     </p>
                   </div>
@@ -218,7 +218,7 @@ export default function PdfResumeUploader({ onTextExtracted, value, onChange }: 
                     Click to replace
                   </span>
                 </div>
-                <p className="rounded-sm p-3 font-body text-xs leading-relaxed" style={{ color: "#A0A0A0", background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                <p className="rounded-sm p-3 font-body text-xs leading-relaxed" style={{ color: "var(--text-secondary)", background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
                   {preview}{value.length > 500 ? "..." : ""}
                 </p>
               </div>
@@ -231,7 +231,7 @@ export default function PdfResumeUploader({ onTextExtracted, value, onChange }: 
                 >
                   📄
                 </motion.div>
-                <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: dragging ? "#C8FF00" : "#606060" }}>
+                <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: dragging ? "#C8FF00" : "var(--text-tertiary)" }}>
                   {dragging ? "Drop PDF resume here" : "Upload PDF Resume"}
                 </p>
                 <p className="font-body text-xs" style={{ color: "#404040" }}>
@@ -244,8 +244,8 @@ export default function PdfResumeUploader({ onTextExtracted, value, onChange }: 
       ) : (
         <div className="rounded-sm overflow-hidden" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)" }}>
           <div className="flex justify-between px-3 py-2" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-            <span className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "#606060" }}>Resume Text</span>
-            <span className="font-mono text-[0.55rem]" style={{ color: value.length > 4500 ? "#FF2D2D" : "#606060" }}>{value.length}/5000</span>
+            <span className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Resume Text</span>
+            <span className="font-mono text-[0.55rem]" style={{ color: value.length > 4500 ? "#FF2D2D" : "var(--text-tertiary)" }}>{value.length}/5000</span>
           </div>
           <textarea
             value={value}
@@ -257,7 +257,7 @@ export default function PdfResumeUploader({ onTextExtracted, value, onChange }: 
             rows={12}
             placeholder={"Paste your resume text here...\nInclude skills, experience, projects, education."}
             className="w-full bg-transparent px-3 py-3 font-body text-sm resize-none focus:outline-none leading-relaxed"
-            style={{ color: "#F0F0F0" }}
+            style={{ color: "var(--text-primary)" }}
           />
         </div>
       )}

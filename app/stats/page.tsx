@@ -36,7 +36,7 @@ const MOCK_LANGUAGES = [
   { name: "Python", value: 30.5, color: "#3572A5" },
   { name: "Rust", value: 12.8, color: "#dea584" },
   { name: "CSS", value: 6.5, color: "#563d7c" },
-  { name: "Other", value: 5.0, color: "#A0A0A0" },
+  { name: "Other", value: 5.0, color: "var(--text-secondary)" },
 ];
 
 const MOCK_STATS = [
@@ -55,10 +55,10 @@ export default function StatsPage() {
         
         {/* Header Section */}
         <div className="mb-10 sm:mb-16">
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl mb-4 sm:mb-6" style={{ color: "#F0F0F0" }}>
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl mb-4 sm:mb-6" style={{ color: "var(--text-primary)" }}>
             Developer <span style={{ color: "#A855F7" }}>Metrics</span>
           </h1>
-          <p className="font-mono text-[0.65rem] sm:text-[0.75rem] max-w-2xl leading-relaxed uppercase tracking-wider" style={{ color: "#A0A0A0" }}>
+          <p className="font-mono text-[0.65rem] sm:text-[0.75rem] max-w-2xl leading-relaxed uppercase tracking-wider" style={{ color: "var(--text-secondary)" }}>
             Real-time insights into my coding activity, language distribution, and open-source contributions. Powered by GitHub & WakaTime data.
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function StatsPage() {
         
         {/* Footer note for V1 */}
         <div className="flex justify-center mb-10">
-          <p className="font-mono text-[0.55rem] sm:text-[0.6rem] tracking-widest uppercase" style={{ color: "#606060" }}>
+          <p className="font-mono text-[0.55rem] sm:text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>
             Note: displaying realistic mock data for V1 demonstration purposes.
           </p>
         </div>

@@ -120,7 +120,7 @@ export default function Footer() {
                 />
                 <span
                   className="font-display text-xl tracking-[0.16em]"
-                  style={{ color: "#F0F0F0" }}
+                  style={{ color: "var(--text-primary)" }}
                 >
                   ANISH
                   <span style={{ color: "#FF2D2D" }}>.</span>
@@ -130,10 +130,10 @@ export default function Footer() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <p className="font-body text-sm leading-relaxed" style={{ color: "#606060" }}>
+              <p className="font-body text-sm leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
                 Full-stack developer crafting bold digital experiences at the
                 intersection of{" "}
-                <span style={{ color: "#A0A0A0" }}>design and engineering.</span>
+                <span style={{ color: "var(--text-secondary)" }}>design and engineering.</span>
               </p>
             </ScrollReveal>
 
@@ -173,8 +173,8 @@ export default function Footer() {
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                         rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                         className="group flex items-center gap-2 font-body text-sm transition-colors duration-200"
-                        style={{ color: "#606060" }}
-                        whileHover={{ x: 4, color: "#F0F0F0" }}
+                        style={{ color: "var(--text-tertiary)" }}
+                        whileHover={{ x: 4, color: "var(--text-primary)" }}
                         transition={{ type: "spring", stiffness: 400 }}
                       >
                         <span
@@ -201,7 +201,7 @@ export default function Footer() {
             {/* Copyright */}
             <p
               className="font-mono text-[0.58rem] tracking-[0.22em] uppercase order-2 sm:order-1"
-              style={{ color: "#606060" }}
+              style={{ color: "var(--text-tertiary)" }}
             >
               © {currentYear} Anish.Dev — All rights reserved
             </p>
@@ -227,12 +227,12 @@ export default function Footer() {
             {/* Stack */}
             <p
               className="font-mono text-[0.58rem] tracking-[0.22em] uppercase order-3"
-              style={{ color: "#606060" }}
+              style={{ color: "var(--text-tertiary)" }}
             >
               Built with{" "}
-              <span style={{ color: "#A0A0A0" }}>Next.js</span>
+              <span style={{ color: "var(--text-secondary)" }}>Next.js</span>
               {" + "}
-              <span style={{ color: "#A0A0A0" }}>Framer Motion</span>
+              <span style={{ color: "var(--text-secondary)" }}>Framer Motion</span>
             </p>
           </div>
         </ScrollReveal>

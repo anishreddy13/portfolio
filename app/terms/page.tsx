@@ -83,17 +83,17 @@ export default function TermsPage() {
 
       {/* Header */}
       <div className="sticky top-0 z-50 px-4 sm:px-8 py-4 flex items-center justify-between"
-        style={{ background: "rgba(10,10,10,0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,45,45,0.12)" }}>
+        style={{ background: "rgba(var(--color-overlay-base), 0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,45,45,0.12)" }}>
         <button onClick={() => router.push("/")}
           className="font-display text-lg tracking-[0.15em]"
-          style={{ color: "#F0F0F0" }}>
+          style={{ color: "var(--text-primary)" }}>
           ANISH<span style={{ color: "#FF2D2D" }}>.</span>DEV
         </button>
         <button onClick={() => router.back()}
           className="font-mono text-[0.6rem] tracking-widest uppercase"
-          style={{ color: "#606060" }}
-          onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#F0F0F0")}
-          onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#606060")}>
+          style={{ color: "var(--text-tertiary)" }}
+          onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--text-primary)")}
+          onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-tertiary)")}>
           ← Back
         </button>
       </div>
@@ -105,7 +105,7 @@ export default function TermsPage() {
           <p className="font-mono text-[0.58rem] tracking-[0.32em] uppercase mb-4"
             style={{ color: "#FF2D2D" }}>Legal</p>
           <h1 className="font-display text-4xl sm:text-5xl tracking-[0.1em] mb-4"
-            style={{ color: "#F0F0F0" }}>
+            style={{ color: "var(--text-primary)" }}>
             Terms of Service
           </h1>
           <p className="font-mono text-[0.6rem] tracking-widest" style={{ color: "#404040" }}>
@@ -118,7 +118,7 @@ export default function TermsPage() {
         {/* Intro */}
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
           className="font-body text-sm leading-relaxed mb-12"
-          style={{ color: "#606060" }}>
+          style={{ color: "var(--text-tertiary)" }}>
           These Terms of Service govern your use of the Anish.Dev portfolio website.
           Please read them carefully before using the site.
         </motion.p>

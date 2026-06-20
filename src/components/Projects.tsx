@@ -71,7 +71,7 @@ function ProjectCard({
           style={{
             background: hovered ? "var(--surface-2)" : "var(--surface-1)",
             border: `1px solid ${
-              hovered ? project.accentColor + "40" : "rgba(255,255,255,0.06)"
+              hovered ? project.accentColor + "40" : "var(--border)"
             }`,
             transition: "background 0.3s ease, border-color 0.3s ease",
           }}
@@ -89,7 +89,7 @@ function ProjectCard({
               <div className="space-y-2">
                 <span
                   className="font-mono text-[0.58rem] tracking-[0.3em] uppercase block"
-                  style={{ color: "#606060" }}
+                  style={{ color: "var(--text-tertiary)" }}
                 >
                   {project.id}
                 </span>
@@ -118,7 +118,7 @@ function ProjectCard({
                 </span>
                 <span
                   className="font-mono text-[0.5rem] tracking-[0.18em] uppercase"
-                  style={{ color: "#606060" }}
+                  style={{ color: "var(--text-tertiary)" }}
                 >
                   {project.section}
                 </span>
@@ -130,7 +130,7 @@ function ProjectCard({
               style={{
                 fontSize: "clamp(1.65rem, 3.2vw, 2.25rem)",
                 minHeight: "4.5rem",
-                color: hovered ? "#F0F0F0" : "#D0D0D0",
+                color: hovered ? "var(--text-primary)" : "#D0D0D0",
                 transition: "color 0.2s ease",
               }}
             >
@@ -147,7 +147,7 @@ function ProjectCard({
               transition={{ duration: 0.3 }}
             />
 
-            <p className="font-body text-sm leading-relaxed mb-5 flex-1 min-h-[9.5rem]" style={{ color: "#A0A0A0" }}>
+            <p className="font-body text-sm leading-relaxed mb-5 flex-1 min-h-[9.5rem]" style={{ color: "var(--text-secondary)" }}>
               {project.description}
             </p>
 
@@ -170,7 +170,7 @@ function ProjectCard({
                   </p>
                   <p
                     className="font-mono text-[0.48rem] tracking-widest uppercase truncate mt-1"
-                    style={{ color: "#606060" }}
+                    style={{ color: "var(--text-tertiary)" }}
                     title={metric.label}
                   >
                     {metric.label}
@@ -201,7 +201,7 @@ function ProjectCard({
                   key={`${project.id}-${technology}`}
                   className="font-mono text-[0.58rem] tracking-wider rounded-sm px-2 py-0.5"
                   style={{
-                    color: "#A0A0A0",
+                    color: "var(--text-secondary)",
                     border: "1px solid rgba(255,255,255,0.08)",
                     background: "var(--surface-3)",
                   }}
@@ -212,7 +212,7 @@ function ProjectCard({
             </div>
 
             <div className="flex items-center justify-between gap-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-              <span className="font-mono text-[0.58rem] tracking-widest uppercase" style={{ color: "#606060" }}>
+              <span className="font-mono text-[0.58rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>
                 Priority {project.priority.toString().padStart(2, "0")}
               </span>
               <motion.span
@@ -273,7 +273,7 @@ export default function Projects() {
             <ScrollReveal delay={0.1}>
               <h2
                 className="font-display leading-none tracking-tight"
-                style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)", color: "#F0F0F0" }}
+                style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)", color: "var(--text-primary)" }}
               >
                 REAL AI
                 <br />
@@ -309,8 +309,8 @@ export default function Projects() {
                         }
                       : {
                           background: "transparent",
-                          color: "#606060",
-                          borderColor: "rgba(255,255,255,0.08)",
+                          color: "var(--text-tertiary)",
+                          borderColor: "var(--border)",
                         }
                   }
                 >
@@ -345,12 +345,12 @@ export default function Projects() {
               href="/ml?tab=plant"
               className="group inline-flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.22em] uppercase px-6 py-3 rounded-sm border transition-all duration-300"
               style={{
-                color: "#A0A0A0",
-                borderColor: "rgba(255,255,255,0.08)",
+                color: "var(--text-secondary)",
+                borderColor: "var(--border)",
                 background: "transparent",
               }}
               whileHover={{
-                color: "#F0F0F0",
+                color: "var(--text-primary)",
                 borderColor: "rgba(255,45,45,0.35)",
                 x: 0,
               }}

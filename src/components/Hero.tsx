@@ -141,7 +141,7 @@ export default function Hero() {
                     className="font-display leading-[0.88] tracking-tight"
                     style={{
                       fontSize: "clamp(3.2rem, 10vw, 8.5rem)",
-                      color: "#F0F0F0",
+                      color: "var(--text-primary)",
                       display: "inline-block",
                       width: char === " " ? "0.22em" : "auto",
                     }}
@@ -191,10 +191,10 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="font-body text-base md:text-lg max-w-lg mb-6 md:mb-7 leading-relaxed"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               Building intelligent systems where{" "}
-              <span style={{ color: "#F0F0F0" }}>machine learning meets real products</span>{" "}
+              <span style={{ color: "var(--text-primary)" }}>machine learning meets real products</span>{" "}
               — from model training to production deployment.
             </motion.p>
 
@@ -236,12 +236,12 @@ export default function Hero() {
                            font-mono text-[0.7rem] tracking-[0.2em] uppercase
                            transition-all duration-300 min-w-[160px] text-center justify-center"
                 style={{
-                  color: "#A0A0A0",
+                  color: "var(--text-secondary)",
                   border: "1px solid rgba(255,255,255,0.1)",
                   background: "transparent",
                 }}
                 whileHover={{
-                  color: "#F0F0F0",
+                  color: "var(--text-primary)",
                   borderColor: "rgba(255,45,45,0.4)",
                   scale: 1.03,
                 }}
@@ -271,13 +271,13 @@ export default function Hero() {
                   <div>
                     <div
                       className="font-display text-3xl leading-none"
-                      style={{ color: "#F0F0F0" }}
+                      style={{ color: "var(--text-primary)" }}
                     >
                       <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                     </div>
                     <div
                       className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mt-1"
-                      style={{ color: "#606060" }}
+                      style={{ color: "var(--text-tertiary)" }}
                     >
                       {stat.label}
                     </div>
@@ -295,7 +295,7 @@ export default function Hero() {
                   {i < 2 && (
                     <div
                       className="w-px h-10 mt-1 ml-3"
-                      style={{ background: "rgba(255,255,255,0.06)" }}
+                      style={{ background: "var(--border)" }}
                     />
                   )}
                 </div>
@@ -361,7 +361,7 @@ export default function Hero() {
                 className="font-mono text-[0.58rem] tracking-[0.15em] uppercase
                            px-2.5 py-1.5 rounded-sm"
                 style={{
-                  background: "rgba(10,10,10,0.95)",
+                  background: "rgba(var(--color-overlay-base), 0.95)",
                   border:     "1px solid rgba(255,45,45,0.4)",
                   color:      "#FF2D2D",
                   boxShadow:  "0 0 16px rgba(255,45,45,0.25)",
@@ -381,7 +381,7 @@ export default function Hero() {
                 className="font-mono text-[0.58rem] tracking-[0.15em] uppercase
                            px-2.5 py-1.5 rounded-sm"
                 style={{
-                  background: "rgba(10,10,10,0.95)",
+                  background: "rgba(var(--color-overlay-base), 0.95)",
                   border:     "1px solid rgba(200,255,0,0.35)",
                   color:      "#C8FF00",
                   boxShadow:  "0 0 16px rgba(200,255,0,0.15)",
@@ -419,7 +419,7 @@ export default function Hero() {
             <div key={i} className="text-center">
               <div
                 className="font-display text-2xl sm:text-3xl leading-none"
-                style={{ color: "#F0F0F0" }}
+                style={{ color: "var(--text-primary)" }}
               >
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </div>
@@ -429,7 +429,7 @@ export default function Hero() {
               />
               <div
                 className="font-mono text-[0.58rem] tracking-[0.22em] uppercase"
-                style={{ color: "#606060" }}
+                style={{ color: "var(--text-tertiary)" }}
               >
                 {stat.label}
               </div>
@@ -458,7 +458,7 @@ export default function Hero() {
       >
         <span
           className="font-mono text-[0.55rem] tracking-[0.4em] uppercase"
-          style={{ color: "#606060" }}
+          style={{ color: "var(--text-tertiary)" }}
         >
           Scroll
         </span>

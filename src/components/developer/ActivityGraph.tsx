@@ -58,7 +58,7 @@ export function ActivityGraph({ data }: ActivityGraphProps) {
         >
           Activity Pulse
         </p>
-        <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "#606060" }}>
+        <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>
           Last 30 Days
         </p>
       </div>
@@ -76,7 +76,7 @@ export function ActivityGraph({ data }: ActivityGraphProps) {
               dataKey="date"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#606060", fontSize: 9, fontFamily: "DM Mono" }}
+              tick={{ fill: "var(--text-tertiary)", fontSize: 9, fontFamily: "DM Mono" }}
               tickFormatter={(val) => {
                 const date = new Date(val);
                 return `${date.getDate()} ${date.toLocaleString("default", { month: "short" })}`;
@@ -86,7 +86,7 @@ export function ActivityGraph({ data }: ActivityGraphProps) {
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#606060", fontSize: 9, fontFamily: "DM Mono" }}
+              tick={{ fill: "var(--text-tertiary)", fontSize: 9, fontFamily: "DM Mono" }}
               domain={[0, maxCommits + 2]}
             />
             <Tooltip
@@ -102,7 +102,7 @@ export function ActivityGraph({ data }: ActivityGraphProps) {
                         border: "1px solid rgba(255,255,255,0.1)",
                       }}
                     >
-                      <p className="font-mono text-[0.65rem] mb-1" style={{ color: "#A0A0A0" }}>
+                      <p className="font-mono text-[0.65rem] mb-1" style={{ color: "var(--text-secondary)" }}>
                         {new Date(data.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
                       </p>
                       <p className="font-mono text-[0.7rem]" style={{ color: "#FF6B35" }}>

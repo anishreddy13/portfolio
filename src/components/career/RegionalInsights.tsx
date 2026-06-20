@@ -51,28 +51,28 @@ export default function RegionalInsights({ analysisResult }: { analysisResult?: 
         {parsedSkills.length ? (
           <div className="rounded-sm p-3 mb-4" style={{ background: "rgba(200,255,0,0.05)", border: "1px solid rgba(200,255,0,0.14)" }}>
             <p className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "#C8FF00" }}>Using resume skills from the latest analysis</p>
-            <p className="font-body text-xs mt-1" style={{ color: "#606060" }}>{selectedSkills.slice(0, 8).join(", ")}</p>
+            <p className="font-body text-xs mt-1" style={{ color: "var(--text-tertiary)" }}>{selectedSkills.slice(0, 8).join(", ")}</p>
           </div>
         ) : null}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2">
-            <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-2" style={{ color: "#606060" }}>Skills</p>
+            <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Skills</p>
             <div className="flex flex-wrap gap-2">
               {Array.from(new Set([...commonSkills, ...parsedSkills.map((skill) => skill.toLowerCase()).slice(0, 10)])).map((skill) => {
                 const active = selectedSkills.includes(skill);
                 return (
-                  <button key={skill} onClick={() => toggleSkill(skill)} className="rounded-sm px-3 py-2 font-mono text-[0.55rem] uppercase tracking-wider" style={{ background: active ? "rgba(200,255,0,0.12)" : "var(--surface-2)", border: `1px solid ${active ? "rgba(200,255,0,0.28)" : "rgba(255,255,255,0.06)"}`, color: active ? "#C8FF00" : "#606060" }}>{skill}</button>
+                  <button key={skill} onClick={() => toggleSkill(skill)} className="rounded-sm px-3 py-2 font-mono text-[0.55rem] uppercase tracking-wider" style={{ background: active ? "rgba(200,255,0,0.12)" : "var(--surface-2)", border: `1px solid ${active ? "rgba(200,255,0,0.28)" : "var(--border)"}`, color: active ? "#C8FF00" : "var(--text-tertiary)" }}>{skill}</button>
                 );
               })}
             </div>
           </div>
           <div className="space-y-3">
-            <select value={experience} onChange={(event) => setExperience(event.target.value)} className="w-full rounded-sm px-3 py-3 font-mono text-[0.62rem] uppercase bg-transparent" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "#A0A0A0" }}>
+            <select value={experience} onChange={(event) => setExperience(event.target.value)} className="w-full rounded-sm px-3 py-3 font-mono text-[0.62rem] uppercase bg-transparent" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-secondary)" }}>
               <option value="junior">Junior</option>
               <option value="mid">Mid</option>
               <option value="senior">Senior</option>
             </select>
-            <select value={location} onChange={(event) => setLocation(event.target.value)} className="w-full rounded-sm px-3 py-3 font-mono text-[0.62rem] uppercase bg-transparent" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "#A0A0A0" }}>
+            <select value={location} onChange={(event) => setLocation(event.target.value)} className="w-full rounded-sm px-3 py-3 font-mono text-[0.62rem] uppercase bg-transparent" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-secondary)" }}>
               <option value="india">India</option>
               <option value="us">US</option>
               <option value="europe">Europe</option>
@@ -85,7 +85,7 @@ export default function RegionalInsights({ analysisResult }: { analysisResult?: 
         {result && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-5 rounded-sm p-4" style={{ background: "rgba(200,255,0,0.06)", border: "1px solid rgba(200,255,0,0.18)" }}>
             <p className="font-display text-4xl leading-none" style={{ color: "#C8FF00" }}>{result.formatted}</p>
-            <p className="font-mono text-[0.55rem] uppercase tracking-widest mt-2" style={{ color: "#606060" }}>{result.currency} · median {Math.round(result.median_salary).toLocaleString()} · {(result.confidence * 100).toFixed(0)}% confidence</p>
+            <p className="font-mono text-[0.55rem] uppercase tracking-widest mt-2" style={{ color: "var(--text-tertiary)" }}>{result.currency} · median {Math.round(result.median_salary).toLocaleString()} · {(result.confidence * 100).toFixed(0)}% confidence</p>
           </motion.div>
         )}
       </div>
@@ -94,10 +94,10 @@ export default function RegionalInsights({ analysisResult }: { analysisResult?: 
         <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em] mb-4" style={{ color: "#FF6B35" }}>Regional Comparison</p>
         <div className="min-w-[640px] grid grid-cols-5 gap-2">
           <div />
-          {locations.map((loc) => <div key={loc} className="font-mono text-[0.55rem] uppercase tracking-wider" style={{ color: "#606060" }}>{loc}</div>)}
+          {locations.map((loc) => <div key={loc} className="font-mono text-[0.55rem] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>{loc}</div>)}
           {roles.map((role, row) => (
             <Fragment key={role}>
-              <div key={`${role}-label`} className="font-mono text-[0.58rem] uppercase" style={{ color: "#A0A0A0" }}>{role}</div>
+              <div key={`${role}-label`} className="font-mono text-[0.58rem] uppercase" style={{ color: "var(--text-secondary)" }}>{role}</div>
               {locations.map((loc, col) => (
                 <div key={`${role}-${loc}`} className="rounded-sm p-2 font-mono text-[0.55rem]" style={{ background: col === 3 ? "rgba(168,85,247,0.1)" : "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)", color: row < 2 ? "#C8FF00" : "#FF6B35" }}>
                   {col === 3 ? "$110k-210k" : `₹${8 + row * 3 + col * 2}L-${16 + row * 4 + col * 3}L`}
@@ -112,14 +112,14 @@ export default function RegionalInsights({ analysisResult }: { analysisResult?: 
         <div className="rounded-sm p-5" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
           <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em] mb-4" style={{ color: "#A855F7" }}>Experience Multiplier</p>
           {[
-            { label: "Junior", value: 38, color: "#606060" },
+            { label: "Junior", value: 38, color: "var(--text-tertiary)" },
             { label: "Mid", value: 68, color: "#FF6B35" },
             { label: "Senior", value: 100, color: "#C8FF00" },
           ].map((item) => (
             <div key={item.label} className="mb-4">
               <div className="flex justify-between mb-1">
-                <span className="font-mono text-[0.58rem] uppercase" style={{ color: "#A0A0A0" }}>{item.label}</span>
-                <span className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>{item.value}%</span>
+                <span className="font-mono text-[0.58rem] uppercase" style={{ color: "var(--text-secondary)" }}>{item.label}</span>
+                <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>{item.value}%</span>
               </div>
               <div className="h-3 rounded-sm overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
                 <motion.div initial={{ width: 0 }} animate={{ width: `${item.value}%` }} className="h-full" style={{ background: item.color }} />
@@ -137,7 +137,7 @@ export default function RegionalInsights({ analysisResult }: { analysisResult?: 
           ].map(([text, color]) => (
             <div key={text} className="rounded-sm p-4" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
               <span className="block w-1.5 h-1.5 rounded-full mb-3" style={{ background: color }} />
-              <p className="font-body text-xs leading-relaxed" style={{ color: "#A0A0A0" }}>{text}</p>
+              <p className="font-body text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{text}</p>
             </div>
           ))}
         </div>

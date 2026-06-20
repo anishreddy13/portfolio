@@ -51,7 +51,7 @@ function CertificateCard({
         (e.currentTarget as HTMLElement).style.borderColor = cert.color + "59";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
+        (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
       }}
       onClick={onClick}
     >
@@ -86,7 +86,7 @@ function CertificateCard({
         )}
         
         <div className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none" style={{
-          background: "linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 100%)"
+          background: "linear-gradient(to top, rgba(var(--color-overlay-base), 0.8) 0%, transparent 100%)"
         }} />
 
         <div className="absolute top-3 right-3 flex flex-col gap-1 items-end">
@@ -103,32 +103,32 @@ function CertificateCard({
       </div>
 
       <div className="p-3 sm:p-4 flex flex-col flex-1">
-        <h3 className="font-mono text-[#F0F0F0] text-xs sm:text-sm leading-tight mb-2 line-clamp-2" style={{ minHeight: "2.5rem" }}>
+        <h3 className="font-mono text-[var(--text-primary)] text-xs sm:text-sm leading-tight mb-2 line-clamp-2" style={{ minHeight: "2.5rem" }}>
           {cert.title}
         </h3>
-        <p className="font-body text-[#A0A0A0] text-xs mb-1 truncate">{cert.issuer}</p>
-        <p className="font-mono text-[0.6rem] text-[#606060] mb-4 uppercase tracking-widest">{cert.date}</p>
+        <p className="font-body text-[var(--text-secondary)] text-xs mb-1 truncate">{cert.issuer}</p>
+        <p className="font-mono text-[0.6rem] text-[var(--text-tertiary)] mb-4 uppercase tracking-widest">{cert.date}</p>
         
         <div className="flex flex-wrap gap-1.5 mb-4">
           {cert.skills.slice(0, 3).map((skill) => (
-            <span key={skill} className="font-mono text-[0.6rem] rounded-sm px-2 py-0.5" style={{ background: "var(--surface-2)", color: "#606060" }}>
+            <span key={skill} className="font-mono text-[0.6rem] rounded-sm px-2 py-0.5" style={{ background: "var(--surface-2)", color: "var(--text-tertiary)" }}>
               {skill}
             </span>
           ))}
           {cert.skills.length > 3 && (
-            <span className="font-mono text-[0.6rem] rounded-sm px-2 py-0.5" style={{ background: "var(--surface-2)", color: "#606060" }}>
+            <span className="font-mono text-[0.6rem] rounded-sm px-2 py-0.5" style={{ background: "var(--surface-2)", color: "var(--text-tertiary)" }}>
               +{cert.skills.length - 3}
             </span>
           )}
         </div>
 
-        <div className="mt-auto pt-4 border-t flex items-center justify-between" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <div className="mt-auto pt-4 border-t flex items-center justify-between" style={{ borderColor: "var(--border)" }}>
           {cert.credentialId !== "N/A" ? (
-            <span className="font-mono text-[0.55rem] text-[#606060] uppercase tracking-wider truncate mr-2">
+            <span className="font-mono text-[0.55rem] text-[var(--text-tertiary)] uppercase tracking-wider truncate mr-2">
               ID: {cert.credentialId}
             </span>
           ) : (
-            <span className="font-mono text-[0.55rem] text-[#606060] uppercase tracking-wider truncate mr-2">
+            <span className="font-mono text-[0.55rem] text-[var(--text-tertiary)] uppercase tracking-wider truncate mr-2">
               VERIFIED
             </span>
           )}
@@ -178,7 +178,7 @@ export default function Certificates() {
             <ScrollReveal>
               <div className="flex items-center gap-2 mb-5">
                 <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#C8FF00", boxShadow: "0 0 8px #C8FF00" }} />
-                <span className="font-mono text-[0.6rem] tracking-[0.3em] uppercase" style={{ color: "#606060" }}>
+                <span className="font-mono text-[0.6rem] tracking-[0.3em] uppercase" style={{ color: "var(--text-tertiary)" }}>
                   CREDENTIALS
                 </span>
               </div>
@@ -186,7 +186,7 @@ export default function Certificates() {
             <ScrollReveal delay={0.1}>
               <h2
                 className="font-display leading-none tracking-tight break-words"
-                style={{ fontSize: "clamp(2.25rem, 8vw, 6.5rem)", color: "#F0F0F0" }}
+                style={{ fontSize: "clamp(2.25rem, 8vw, 6.5rem)", color: "var(--text-primary)" }}
               >
                 Certificates &<br />
                 <span
@@ -202,7 +202,7 @@ export default function Certificates() {
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.15}>
-              <p className="font-body text-base mt-6 max-w-xl" style={{ color: "#A0A0A0" }}>
+              <p className="font-body text-base mt-6 max-w-xl" style={{ color: "var(--text-secondary)" }}>
                 Continuous learning is critical in ML and AI. Here are the professional credentials validating my technical expertise across the stack.
               </p>
             </ScrollReveal>
@@ -217,9 +217,9 @@ export default function Certificates() {
                   className="relative font-mono text-[0.6rem] tracking-widest uppercase rounded-sm px-3 py-1.5 transition-colors duration-200 min-h-[40px] flex items-center justify-center whitespace-nowrap"
                   style={{
                     background: filter === cat ? "#C8FF00" : "var(--surface-2)",
-                    color: filter === cat ? "#0A0A0A" : "#606060",
+                    color: filter === cat ? "#0A0A0A" : "var(--text-tertiary)",
                     border: "1px solid",
-                    borderColor: filter === cat ? "#C8FF00" : "rgba(255,255,255,0.08)",
+                    borderColor: filter === cat ? "#C8FF00" : "var(--border)",
                   }}
                 >
                   {cat}
@@ -255,7 +255,7 @@ export default function Certificates() {
                 <div className="font-display text-4xl sm:text-5xl leading-none mb-2" style={{ color: stat.color }}>
                   {stat.static ? stat.static : <AnimatedCounter target={stat.value} suffix={stat.suffix} />}
                 </div>
-                <div className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "#606060" }}>
+                <div className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>
                   {stat.label}
                 </div>
               </div>
@@ -292,7 +292,7 @@ export default function Certificates() {
                 className="absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center rounded-sm bg-black/50 hover:bg-black/80 transition-colors"
                 onClick={() => setSelectedCert(null)}
               >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#F0F0F0" strokeWidth="1.5">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--text-primary)" strokeWidth="1.5">
                   <path d="M1 1l12 12M13 1L1 13" />
                 </svg>
               </button>
@@ -333,14 +333,14 @@ export default function Certificates() {
                        {cat}
                      </span>
                    ))}
-                   <span className="font-mono text-[0.6rem] text-[#606060] uppercase tracking-widest">{selectedCert.date}</span>
+                   <span className="font-mono text-[0.6rem] text-[var(--text-tertiary)] uppercase tracking-widest">{selectedCert.date}</span>
                 </div>
-                <h2 className="font-display text-3xl sm:text-4xl text-[#F0F0F0] leading-none mb-3">{selectedCert.title}</h2>
+                <h2 className="font-display text-3xl sm:text-4xl text-[var(--text-primary)] leading-none mb-3">{selectedCert.title}</h2>
                 <div className="flex items-center gap-2 mb-6">
-                  <div className="w-6 h-6 rounded-sm flex items-center justify-center font-display text-xs" style={{ background: "var(--surface-2)", color: "#F0F0F0", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div className="w-6 h-6 rounded-sm flex items-center justify-center font-display text-xs" style={{ background: "var(--surface-2)", color: "var(--text-primary)", border: "1px solid rgba(255,255,255,0.06)" }}>
                     {selectedCert.issuer.charAt(0)}
                   </div>
-                  <p className="font-body text-[#A0A0A0]">{selectedCert.issuer}</p>
+                  <p className="font-body text-[var(--text-secondary)]">{selectedCert.issuer}</p>
                 </div>
                 
                 <p className="font-body text-sm text-[#D0D0D0] mb-6 leading-relaxed">
@@ -348,7 +348,7 @@ export default function Certificates() {
                 </p>
 
                 <div className="mb-8">
-                  <h4 className="font-mono text-[0.6rem] uppercase tracking-widest text-[#606060] mb-3">Skills Covered</h4>
+                  <h4 className="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)] mb-3">Skills Covered</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedCert.skills.map((skill) => (
                       <span key={skill} className="font-mono text-[0.65rem] rounded-sm px-2.5 py-1" style={{ border: `1px solid ${selectedCert.color}40`, color: selectedCert.color, background: `${selectedCert.color}10` }}>
@@ -358,8 +358,8 @@ export default function Certificates() {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                  <div className="font-mono text-[0.6rem] text-[#606060] uppercase tracking-widest">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t" style={{ borderColor: "var(--border)" }}>
+                  <div className="font-mono text-[0.6rem] text-[var(--text-tertiary)] uppercase tracking-widest">
                     {selectedCert.credentialId !== "N/A" ? `ID: ${selectedCert.credentialId}` : 'VERIFIED'}
                   </div>
                   <a
@@ -385,7 +385,7 @@ export default function Certificates() {
                   }}
                   disabled={filtered.findIndex((c) => c.id === selectedCert.id) === 0}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F0F0F0" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
                 </button>
                 <button
                   className="w-12 h-12 rounded-sm flex items-center justify-center bg-black/80 hover:bg-black border transition-colors pointer-events-auto backdrop-blur-sm disabled:opacity-30"
@@ -397,7 +397,7 @@ export default function Certificates() {
                   }}
                   disabled={filtered.findIndex((c) => c.id === selectedCert.id) === filtered.length - 1}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F0F0F0" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
                 </button>
               </div>
             </motion.div>

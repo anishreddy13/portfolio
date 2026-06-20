@@ -241,7 +241,7 @@ export default function About() {
       {/* ── Vertical side label ── */}
       <div className="absolute top-40 right-6 hidden xl:flex flex-col items-center gap-3" style={{ zIndex: 10 }}>
         <span className="font-mono text-[9px] tracking-[0.45em] uppercase"
-          style={{ color: "#606060", writingMode: "vertical-rl" }}>About Me</span>
+          style={{ color: "var(--text-tertiary)", writingMode: "vertical-rl" }}>About Me</span>
         <div className="w-px h-16" style={{
           background: "linear-gradient(to bottom, rgba(255,45,45,0.3), transparent)",
         }} />
@@ -261,7 +261,7 @@ export default function About() {
             <ScrollReveal delay={0.1}>
               <h2
                 className="font-display leading-none tracking-tight mb-8"
-                style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "#F0F0F0" }}
+                style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "var(--text-primary)" }}
               >
                 BUILT ON
                 <br />
@@ -279,14 +279,14 @@ export default function About() {
             <ScrollReveal delay={0.18}>
               <p
                 className="font-body text-base leading-relaxed mb-8"
-                style={{ color: "#A0A0A0", maxWidth: "38ch" }}
+                style={{ color: "var(--text-secondary)", maxWidth: "38ch" }}
               >
                 I'm an ML &amp; AI developer who builds end-to-end intelligent
                 systems — from training models to shipping them into real products.
                 I spent 4 years tutoring 50+ students during my B.Tech, which taught
                 me how to break down complex problems clearly. Now I apply that same
                 thinking to{" "}
-                <span style={{ color: "#F0F0F0" }}>
+                <span style={{ color: "var(--text-primary)" }}>
                   machine learning, backend systems, and whatever I'm obsessed with building next.
                 </span>
               </p>
@@ -306,11 +306,11 @@ export default function About() {
                 {stats.map((f) => (
                   <div key={f.lbl}>
                     <div className="font-display text-4xl leading-none mb-1"
-                      style={{ color: "#F0F0F0" }}>
+                      style={{ color: "var(--text-primary)" }}>
                       {f.val}
                     </div>
                     <div className="font-mono text-[0.58rem] tracking-[0.22em] uppercase leading-tight"
-                      style={{ color: "#606060", whiteSpace: "pre-line" }}>
+                      style={{ color: "var(--text-tertiary)", whiteSpace: "pre-line" }}>
                       {f.lbl}
                     </div>
                   </div>
@@ -401,7 +401,7 @@ export default function About() {
         {/* ════════ SKILLS GRID ════════ */}
         <ScrollReveal delay={0.05}>
           <div className="mb-4">
-            <span className="font-mono text-[0.6rem] tracking-[0.3em] uppercase" style={{ color: "#606060" }}>
+            <span className="font-mono text-[0.6rem] tracking-[0.3em] uppercase" style={{ color: "var(--text-tertiary)" }}>
               — Tech Stack
             </span>
           </div>
@@ -435,7 +435,7 @@ export default function About() {
                     <li key={item} className="flex items-center gap-2.5">
                       <span className="w-1 h-1 rounded-full shrink-0"
                         style={{ background: group.accent, opacity: 0.6 }} />
-                      <span className="font-body text-sm" style={{ color: "#A0A0A0" }}>{item}</span>
+                      <span className="font-body text-sm" style={{ color: "var(--text-secondary)" }}>{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -491,7 +491,7 @@ export default function About() {
                     >
                       <div className="flex items-start justify-between flex-wrap gap-2">
                         <div>
-                          <h4 className="font-body font-medium text-sm sm:text-base" style={{ color: "#F0F0F0" }}>
+                          <h4 className="font-body font-medium text-sm sm:text-base" style={{ color: "var(--text-primary)" }}>
                             {item.role}
                           </h4>
                           <p className="font-mono text-[0.62rem] tracking-wide mt-1" style={{ color: "#FF6B35" }}>
@@ -499,7 +499,7 @@ export default function About() {
                           </p>
                         </div>
                         <div className="flex items-center gap-2 shrink-0">
-                          <span className="font-mono text-[0.62rem]" style={{ color: "#606060" }}>{item.year}</span>
+                          <span className="font-mono text-[0.62rem]" style={{ color: "var(--text-tertiary)" }}>{item.year}</span>
                           {item.current && (
                             <span className="flex items-center gap-1.5 font-mono text-[0.58rem] tracking-wide rounded-sm px-2 py-0.5"
                               style={{ color: "#FF2D2D", border: "1px solid rgba(255,45,45,0.3)", background: "rgba(255,45,45,0.08)" }}>

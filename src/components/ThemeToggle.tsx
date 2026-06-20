@@ -20,7 +20,7 @@ export function ThemeToggle() {
       style={{
         width: "52px",
         height: "28px",
-        background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)",
+        background: isDark ? "var(--border)" : "rgba(0,0,0,0.08)",
         border: isDark ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.15)",
       }}
       aria-label="Toggle theme"
@@ -40,7 +40,7 @@ export function ThemeToggle() {
         </svg>
 
         {/* Moon Icon */}
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={isDark ? "#FFFFFF" : "#A0A0A0"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.3s" }}>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={isDark ? "#FFFFFF" : "var(--text-secondary)"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.3s" }}>
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       </div>
@@ -72,11 +72,11 @@ export function MobileThemeToggle() {
     >
       <div className="flex items-center gap-3">
         {isDark ? (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A0A0A0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         ) : (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A0A0A0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="5" />
             <line x1="12" y1="1" x2="12" y2="3" />
             <line x1="12" y1="21" x2="12" y2="23" />
@@ -88,7 +88,7 @@ export function MobileThemeToggle() {
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
           </svg>
         )}
-        <span className="font-mono text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: "#A0A0A0" }}>
+        <span className="font-mono text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: "var(--text-secondary)" }}>
           {isDark ? "DARK MODE" : "LIGHT MODE"}
         </span>
       </div>

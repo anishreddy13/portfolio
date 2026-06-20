@@ -60,10 +60,10 @@ function MiniConfidenceBar({ label, value, color }: { label: string; value: numb
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between gap-3">
-        <span className="font-mono text-[0.56rem] uppercase tracking-wider truncate" style={{ color: "#606060" }}>
+        <span className="font-mono text-[0.56rem] uppercase tracking-wider truncate" style={{ color: "var(--text-tertiary)" }}>
           {label}
         </span>
-        <span className="font-mono text-[0.56rem] shrink-0" style={{ color: "#A0A0A0" }}>
+        <span className="font-mono text-[0.56rem] shrink-0" style={{ color: "var(--text-secondary)" }}>
           {value.toFixed(1)}%
         </span>
       </div>
@@ -102,7 +102,7 @@ function ModeToggle({ mode, setMode }: { mode: InputMode; setMode: (mode: InputM
             type="button"
             onClick={() => setMode(item.id)}
             className="relative rounded-sm py-2.5 font-mono text-[0.58rem] uppercase tracking-[0.2em]"
-            style={{ color: active ? "#0A0A0A" : "#606060" }}
+            style={{ color: active ? "#0A0A0A" : "var(--text-tertiary)" }}
           >
             {active && (
               <motion.span
@@ -151,7 +151,7 @@ function UploadSurface({
       style={{
         minHeight: "300px",
         background: "var(--surface-1)",
-        border: `1px dashed ${isDragging ? "rgba(200,255,0,0.7)" : "rgba(255,255,255,0.08)"}`,
+        border: `1px dashed ${isDragging ? "rgba(200,255,0,0.7)" : "var(--border)"}`,
         transition: "border-color 0.3s ease",
       }}
       whileHover={{ borderColor: "rgba(200,255,0,0.35)" }}
@@ -170,12 +170,12 @@ function UploadSurface({
       {imagePreview ? (
         <div className="relative w-full h-full">
           <img src={imagePreview} alt="Plant leaf preview" className="w-full h-[300px] sm:h-80 object-cover" />
-          <div className="absolute inset-0 flex items-end p-4" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.82), transparent)" }}>
+          <div className="absolute inset-0 flex items-end p-4" style={{ background: "linear-gradient(to top, rgba(var(--color-overlay-base), 0.82), transparent)" }}>
             <div className="flex items-center justify-between gap-3 w-full">
-              <p className="font-mono text-[0.58rem] tracking-widest uppercase" style={{ color: "#A0A0A0" }}>
+              <p className="font-mono text-[0.58rem] tracking-widest uppercase" style={{ color: "var(--text-secondary)" }}>
                 Click to change image
               </p>
-              <p className="font-mono text-[0.52rem] truncate max-w-[46%]" style={{ color: "#606060" }}>
+              <p className="font-mono text-[0.52rem] truncate max-w-[46%]" style={{ color: "var(--text-tertiary)" }}>
                 {selectedFile?.name}
               </p>
             </div>
@@ -190,7 +190,7 @@ function UploadSurface({
           >
             🌿
           </motion.div>
-          <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: isDragging ? PLANT_ACCENT : "#606060" }}>
+          <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: isDragging ? PLANT_ACCENT : "var(--text-tertiary)" }}>
             {isDragging ? "Drop leaf image here" : "Upload Plant Leaf Image"}
           </p>
           <p className="font-body text-xs" style={{ color: "#404040" }}>
@@ -261,7 +261,7 @@ function WebcamScanner({ onCapture }: { onCapture: (file: File, preview: string)
         {cameraState !== "ready" && (
           <div className="p-6 text-center">
             <div className="text-4xl mb-3 opacity-30">▣</div>
-            <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>
+            <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>
               Live Webcam Scanner
             </p>
             <p className="font-body text-xs max-w-xs mx-auto" style={{ color: "#404040" }}>
@@ -329,7 +329,7 @@ function ResultDashboard({
           <h3 className="font-display text-3xl sm:text-4xl tracking-wider mb-1 leading-none" style={{ color: resultColor }}>
             {result.predicted_display_name.toUpperCase()}
           </h3>
-          <p className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "#606060" }}>
+          <p className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
             {result.status} · {result.confidence_score.toFixed(1)}% confidence
           </p>
         </div>
@@ -339,10 +339,10 @@ function ResultDashboard({
             { label: "Status", value: result.is_healthy ? "Healthy" : "Disease", color: resultColor },
             { label: "API", value: apiMs ? `${apiMs}ms` : "--", color: PLANT_VIOLET },
             { label: "Model", value: modelMs ? `${modelMs}ms` : "Pending", color: PLANT_ACCENT },
-            { label: "Upload", value: `${uploadKb.toFixed(0)}KB`, color: "#A0A0A0" },
+            { label: "Upload", value: `${uploadKb.toFixed(0)}KB`, color: "var(--text-secondary)" },
           ].map((stat) => (
             <div key={stat.label} className="rounded-sm px-3 py-2" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-              <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "#606060" }}>{stat.label}</p>
+              <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{stat.label}</p>
               <p className="font-display text-xl sm:text-2xl leading-none mt-1 truncate" style={{ color: stat.color }}>{stat.value}</p>
             </div>
           ))}
@@ -350,7 +350,7 @@ function ResultDashboard({
 
         <div className="px-4 sm:px-5 pb-4">
           <div className="rounded-sm px-3 py-2 flex items-center justify-between gap-3" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.04)" }}>
-            <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "#606060" }}>Request State</span>
+            <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Request State</span>
             <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: PLANT_ACCENT }}>
               Success · {formatTimestamp(timestamp ?? undefined)}
             </span>
@@ -359,7 +359,7 @@ function ResultDashboard({
       </div>
 
       <div className="rounded-sm p-4" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
-        <PanelTitle label="Top 5 Predictions" color="#606060" />
+        <PanelTitle label="Top 5 Predictions" color="var(--text-tertiary)" />
         <div className="space-y-3">
           {result.top_5_predictions.map((item, index) => (
             <motion.div
@@ -425,18 +425,18 @@ function ObservabilityPanel({
             <span className="font-display text-2xl leading-none" style={{ color: result?.is_healthy ? PLANT_ACCENT : PLANT_DISEASE }}>
               {confidence.toFixed(0)}
             </span>
-            <span className="font-mono text-[0.46rem] uppercase" style={{ color: "#606060" }}>Confidence</span>
+            <span className="font-mono text-[0.46rem] uppercase" style={{ color: "var(--text-tertiary)" }}>Confidence</span>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-2">
           {[
             { label: "API Response", value: apiMs ? `${apiMs}ms` : "--", color: PLANT_VIOLET },
             { label: "Model Duration", value: modelMs ? `${modelMs}ms` : "--", color: PLANT_ACCENT },
-            { label: "Upload Size", value: uploadKb > 0 ? `${uploadKb.toFixed(0)}KB` : "--", color: "#A0A0A0" },
-            { label: "State", value: success ? "Success" : "Waiting", color: success ? PLANT_ACCENT : "#606060" },
+            { label: "Upload Size", value: uploadKb > 0 ? `${uploadKb.toFixed(0)}KB` : "--", color: "var(--text-secondary)" },
+            { label: "State", value: success ? "Success" : "Waiting", color: success ? PLANT_ACCENT : "var(--text-tertiary)" },
           ].map((stat) => (
             <div key={stat.label} className="rounded-sm p-3" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-              <p className="font-mono text-[0.48rem] uppercase tracking-widest mb-1" style={{ color: "#606060" }}>{stat.label}</p>
+              <p className="font-mono text-[0.48rem] uppercase tracking-widest mb-1" style={{ color: "var(--text-tertiary)" }}>{stat.label}</p>
               <motion.p className="font-display text-xl leading-none truncate" style={{ color: stat.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 {stat.value}
               </motion.p>
@@ -470,7 +470,7 @@ function AttentionMapPanel({
       <div className="p-4 flex items-start justify-between gap-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
         <div>
           <PanelTitle label="AI Attention Map" />
-          <p className="font-body text-xs leading-relaxed" style={{ color: "#606060" }}>
+          <p className="font-body text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
             Grad-CAM highlights the image regions that most influenced the top prediction.
           </p>
         </div>
@@ -484,7 +484,7 @@ function AttentionMapPanel({
               type="button"
               onClick={() => setView(item.id)}
               className="px-2 py-1 rounded-sm font-mono text-[0.5rem] uppercase"
-              style={{ background: view === item.id ? PLANT_ACCENT : "transparent", color: view === item.id ? "#0A0A0A" : "#606060" }}
+              style={{ background: view === item.id ? PLANT_ACCENT : "transparent", color: view === item.id ? "#0A0A0A" : "var(--text-tertiary)" }}
             >
               {item.label}
             </button>
@@ -497,14 +497,14 @@ function AttentionMapPanel({
           <div className="relative rounded-sm overflow-hidden" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
             <img src={imageSrc} alt="Grad-CAM attention visualization" className="w-full h-64 sm:h-80 object-contain" />
             {loading && (
-              <div className="absolute inset-0 flex items-center justify-center" style={{ background: "rgba(10,10,10,0.72)" }}>
+              <div className="absolute inset-0 flex items-center justify-center" style={{ background: "rgba(var(--color-overlay-base), 0.72)" }}>
                 <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="w-9 h-9 border-2 rounded-full" style={{ borderColor: "rgba(200,255,0,0.18)", borderTopColor: PLANT_ACCENT }} />
               </div>
             )}
           </div>
         ) : (
           <div className="rounded-sm h-56 flex items-center justify-center text-center p-6" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-            <p className="font-mono text-[0.58rem] uppercase tracking-[0.22em]" style={{ color: "#606060" }}>Attention map appears after prediction</p>
+            <p className="font-mono text-[0.58rem] uppercase tracking-[0.22em]" style={{ color: "var(--text-tertiary)" }}>Attention map appears after prediction</p>
           </div>
         )}
 
@@ -533,13 +533,13 @@ function GuidancePanel({ result }: { result: PlantPredictionResult | null }) {
       <div className="flex items-start justify-between gap-4 mb-3">
         <div>
           <PanelTitle label="Disease Guidance" />
-          <h3 className="font-display text-3xl leading-none" style={{ color: "#F0F0F0" }}>{guidance.title}</h3>
+          <h3 className="font-display text-3xl leading-none" style={{ color: "var(--text-primary)" }}>{guidance.title}</h3>
         </div>
         <span className="rounded-sm px-2.5 py-1 font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: severityColor, background: `${severityColor}12`, border: `1px solid ${severityColor}35` }}>
           {guidance.severity}
         </span>
       </div>
-      <p className="font-body text-sm leading-relaxed mb-4" style={{ color: "#A0A0A0" }}>{guidance.description}</p>
+      <p className="font-body text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>{guidance.description}</p>
       <div className="space-y-2">
         {sections.map((section) => (
           <div key={section.id} className="rounded-sm overflow-hidden" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
@@ -548,14 +548,14 @@ function GuidancePanel({ result }: { result: PlantPredictionResult | null }) {
               onClick={() => setExpanded((current) => current === section.id ? null : section.id)}
               className="w-full flex items-center justify-between px-3 py-2.5 text-left"
             >
-              <span className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "#A0A0A0" }}>{section.label}</span>
-              <span className="font-mono text-xs" style={{ color: "#606060" }}>{expanded === section.id ? "-" : "+"}</span>
+              <span className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "var(--text-secondary)" }}>{section.label}</span>
+              <span className="font-mono text-xs" style={{ color: "var(--text-tertiary)" }}>{expanded === section.id ? "-" : "+"}</span>
             </button>
             <AnimatePresence initial={false}>
               {expanded === section.id && (
                 <motion.ul initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="px-3 pb-3 space-y-2">
                   {section.items.map((item) => (
-                    <li key={item} className="flex gap-2 font-body text-xs leading-relaxed" style={{ color: "#606060" }}>
+                    <li key={item} className="flex gap-2 font-body text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
                       <span style={{ color: severityColor }}>›</span>
                       <span>{item}</span>
                     </li>
@@ -607,18 +607,18 @@ function MediaShowcase() {
           ) : (
             <div className="absolute inset-0 opacity-30" style={{ background: `radial-gradient(circle at 35% 25%, ${item.accent}40, transparent 55%)` }} />
           )}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(10,10,10,0.92), rgba(10,10,10,0.3))" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(var(--color-overlay-base), 0.92), rgba(var(--color-overlay-base), 0.3))" }} />
           <div className="absolute inset-4 grid grid-rows-[auto_1fr_auto]">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[0.55rem] uppercase tracking-[0.25em]" style={{ color: item.accent }}>{item.eyebrow}</span>
-              <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "#606060" }}>
+              <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
                 {customAsset ? customAsset.name : "Preview"}
               </span>
             </div>
             <div className="flex items-center">
               <div>
-                <h3 className="font-display text-4xl sm:text-5xl leading-none mb-3" style={{ color: "#F0F0F0" }}>{item.title}</h3>
-                <p className="font-body text-sm max-w-md" style={{ color: "#A0A0A0" }}>{item.summary}</p>
+                <h3 className="font-display text-4xl sm:text-5xl leading-none mb-3" style={{ color: "var(--text-primary)" }}>{item.title}</h3>
+                <p className="font-body text-sm max-w-md" style={{ color: "var(--text-secondary)" }}>{item.summary}</p>
               </div>
             </div>
             <div className="grid grid-cols-5 gap-1.5">
@@ -626,7 +626,7 @@ function MediaShowcase() {
                 <motion.span
                   key={index}
                   className="h-1 rounded-full"
-                  style={{ background: index <= active * 4 ? item.accent : "rgba(255,255,255,0.08)" }}
+                  style={{ background: index <= active * 4 ? item.accent : "var(--border)" }}
                   animate={{ opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 1.4, repeat: Infinity, delay: index * 0.03 }}
                 />
@@ -657,7 +657,7 @@ function MediaShowcase() {
             style={{ background: "rgba(200,255,0,0.06)", border: "1px solid rgba(200,255,0,0.2)" }}
           >
             <p className="font-mono text-[0.5rem] uppercase tracking-widest mb-1" style={{ color: PLANT_ACCENT }}>Assets</p>
-            <p className="font-body text-xs leading-snug" style={{ color: "#A0A0A0" }}>Upload screenshot or demo video</p>
+            <p className="font-body text-xs leading-snug" style={{ color: "var(--text-secondary)" }}>Upload screenshot or demo video</p>
           </button>
           {plantShowcaseItems.map((showcase, index) => (
             <button
@@ -665,10 +665,10 @@ function MediaShowcase() {
               type="button"
               onClick={() => setActive(index)}
               className="rounded-sm p-3 text-left"
-              style={{ background: active === index ? `${showcase.accent}10` : "var(--surface-2)", border: `1px solid ${active === index ? `${showcase.accent}35` : "rgba(255,255,255,0.04)"}` }}
+              style={{ background: active === index ? `${showcase.accent}10` : "var(--surface-2)", border: `1px solid ${active === index ? `${showcase.accent}35` : "var(--border-soft)"}` }}
             >
               <p className="font-mono text-[0.5rem] uppercase tracking-widest mb-1" style={{ color: showcase.accent }}>{showcase.eyebrow}</p>
-              <p className="font-body text-xs leading-snug" style={{ color: "#A0A0A0" }}>{showcase.title}</p>
+              <p className="font-body text-xs leading-snug" style={{ color: "var(--text-secondary)" }}>{showcase.title}</p>
             </button>
           ))}
         </div>
@@ -695,9 +695,9 @@ function MediaShowcase() {
               <div className="flex justify-between gap-4 mb-5">
                 <div>
                   <p className="font-mono text-[0.55rem] uppercase tracking-[0.25em] mb-2" style={{ color: plantShowcaseItems[lightbox].accent }}>{plantShowcaseItems[lightbox].eyebrow}</p>
-                  <h3 className="font-display text-5xl leading-none" style={{ color: "#F0F0F0" }}>{plantShowcaseItems[lightbox].title}</h3>
+                  <h3 className="font-display text-5xl leading-none" style={{ color: "var(--text-primary)" }}>{plantShowcaseItems[lightbox].title}</h3>
                 </div>
-                <button className="font-mono text-lg" style={{ color: "#606060" }} onClick={() => setLightbox(null)}>x</button>
+                <button className="font-mono text-lg" style={{ color: "var(--text-tertiary)" }} onClick={() => setLightbox(null)}>x</button>
               </div>
               <div className="rounded-sm min-h-[280px] p-6 flex items-center justify-center text-center overflow-hidden" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
                 {customAsset ? (
@@ -707,7 +707,7 @@ function MediaShowcase() {
                     <img src={customAsset.url} alt={customAsset.name} className="max-h-[420px] w-full object-contain rounded-sm" />
                   )
                 ) : (
-                  <p className="font-body text-sm max-w-lg" style={{ color: "#A0A0A0" }}>{plantShowcaseItems[lightbox].summary}</p>
+                  <p className="font-body text-sm max-w-lg" style={{ color: "var(--text-secondary)" }}>{plantShowcaseItems[lightbox].summary}</p>
                 )}
               </div>
             </motion.div>
@@ -724,12 +724,12 @@ function ArchitecturePanel() {
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5">
         <div>
           <PanelTitle label="System Architecture" />
-          <p className="font-body text-sm max-w-2xl leading-relaxed" style={{ color: "#A0A0A0" }}>
+          <p className="font-body text-sm max-w-2xl leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             The plant detector is served as an isolated inference product: Next.js sends multipart images to a lightweight HF Spaces FastAPI service that loads EfficientNet-B0 once at startup.
           </p>
         </div>
         <div className="flex gap-2">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="rounded-sm px-3 py-2 font-mono text-[0.55rem] uppercase tracking-widest" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "#A0A0A0" }}>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="rounded-sm px-3 py-2 font-mono text-[0.55rem] uppercase tracking-widest" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-secondary)" }}>
             GitHub ↗
           </a>
           <a href="https://anishreddy13-plant-disease-api.hf.space/docs" target="_blank" rel="noopener noreferrer" className="rounded-sm px-3 py-2 font-mono text-[0.55rem] uppercase tracking-widest" style={{ background: "rgba(200,255,0,0.08)", border: "1px solid rgba(200,255,0,0.2)", color: PLANT_ACCENT }}>
@@ -746,11 +746,11 @@ function ArchitecturePanel() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.06 }}
             className="relative rounded-sm p-3 min-h-[124px]"
-            style={{ background: index === 3 ? `${step.color}10` : "var(--surface-2)", border: `1px solid ${index === 3 ? `${step.color}35` : "rgba(255,255,255,0.04)"}` }}
+            style={{ background: index === 3 ? `${step.color}10` : "var(--surface-2)", border: `1px solid ${index === 3 ? `${step.color}35` : "var(--border-soft)"}` }}
           >
             <p className="font-display text-2xl leading-none mb-2" style={{ color: step.color }}>0{index + 1}</p>
-            <p className="font-mono text-[0.54rem] uppercase tracking-widest mb-2" style={{ color: "#A0A0A0" }}>{step.title}</p>
-            <p className="font-body text-[0.68rem] leading-relaxed" style={{ color: "#606060" }}>{step.detail}</p>
+            <p className="font-mono text-[0.54rem] uppercase tracking-widest mb-2" style={{ color: "var(--text-secondary)" }}>{step.title}</p>
+            <p className="font-body text-[0.68rem] leading-relaxed" style={{ color: "var(--text-tertiary)" }}>{step.detail}</p>
             {index < plantArchitectureSteps.length - 1 && (
               <span className="hidden sm:block absolute -right-2 top-1/2 -translate-y-1/2 font-mono text-[0.6rem]" style={{ color: "#404040" }}>&gt;</span>
             )}
@@ -774,9 +774,9 @@ function ModelDetailsPanel() {
       >
         <div>
           <PanelTitle label="Model Intelligence" />
-          <p className="font-body text-xs" style={{ color: "#606060" }}>EfficientNet-B0 transfer learning pipeline, trained for production inference.</p>
+          <p className="font-body text-xs" style={{ color: "var(--text-tertiary)" }}>EfficientNet-B0 transfer learning pipeline, trained for production inference.</p>
         </div>
-        <motion.span animate={{ rotate: expanded ? 180 : 0 }} className="font-mono text-lg" style={{ color: "#606060" }}>v</motion.span>
+        <motion.span animate={{ rotate: expanded ? 180 : 0 }} className="font-mono text-lg" style={{ color: "var(--text-tertiary)" }}>v</motion.span>
       </button>
       <AnimatePresence initial={false}>
         {expanded && (
@@ -789,9 +789,9 @@ function ModelDetailsPanel() {
                   { title: "Deployment", lines: ["PyTorch", "FastAPI", "Hugging Face Spaces", "Docker"] },
                 ].map((card) => (
                   <div key={card.title} className="rounded-sm p-4" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                    <p className="font-mono text-[0.55rem] uppercase tracking-[0.22em] mb-3" style={{ color: "#606060" }}>{card.title}</p>
+                    <p className="font-mono text-[0.55rem] uppercase tracking-[0.22em] mb-3" style={{ color: "var(--text-tertiary)" }}>{card.title}</p>
                     <div className="space-y-1.5">
-                      {card.lines.map((line) => <p key={line} className="font-body text-xs" style={{ color: "#A0A0A0" }}>{line}</p>)}
+                      {card.lines.map((line) => <p key={line} className="font-body text-xs" style={{ color: "var(--text-secondary)" }}>{line}</p>)}
                     </div>
                   </div>
                 ))}
@@ -800,7 +800,7 @@ function ModelDetailsPanel() {
                 {plantProductStats.map((metric) => (
                   <div key={metric.label} className="rounded-sm p-3 text-center" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
                     <p className="font-display text-2xl leading-none" style={{ color: metric.color }}>{metric.value}</p>
-                    <p className="font-mono text-[0.5rem] uppercase tracking-widest mt-2" style={{ color: "#606060" }}>{metric.label}</p>
+                    <p className="font-mono text-[0.5rem] uppercase tracking-widest mt-2" style={{ color: "var(--text-tertiary)" }}>{metric.label}</p>
                   </div>
                 ))}
               </div>
@@ -833,9 +833,9 @@ function AnalyticsDashboard({
       <div className="flex items-start justify-between gap-4 mb-4">
         <div>
           <PanelTitle label="Local Usage Analytics" />
-          <p className="font-body text-xs" style={{ color: "#606060" }}>Stored in this browser only. No backend dependency.</p>
+          <p className="font-body text-xs" style={{ color: "var(--text-tertiary)" }}>Stored in this browser only. No backend dependency.</p>
         </div>
-        <button type="button" onClick={clearAnalytics} className="rounded-sm px-2.5 py-1.5 font-mono text-[0.52rem] uppercase tracking-widest" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "#606060" }}>
+        <button type="button" onClick={clearAnalytics} className="rounded-sm px-2.5 py-1.5 font-mono text-[0.52rem] uppercase tracking-widest" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-tertiary)" }}>
           Clear
         </button>
       </div>
@@ -845,24 +845,24 @@ function AnalyticsDashboard({
           { label: "Total Scans", value: analytics.totalScans, color: PLANT_ACCENT },
           { label: "Successful", value: analytics.successfulPredictions, color: PLANT_VIOLET },
           { label: "Avg Conf.", value: `${analytics.averageConfidence.toFixed(1)}%`, color: PLANT_DISEASE },
-          { label: "Classes", value: analytics.distribution.length, color: "#A0A0A0" },
+          { label: "Classes", value: analytics.distribution.length, color: "var(--text-secondary)" },
         ].map((stat) => (
           <div key={stat.label} className="rounded-sm p-3" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
             <p className="font-display text-2xl leading-none" style={{ color: stat.color }}>{stat.value}</p>
-            <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-1" style={{ color: "#606060" }}>{stat.label}</p>
+            <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-1" style={{ color: "var(--text-tertiary)" }}>{stat.label}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div>
-          <p className="font-mono text-[0.55rem] uppercase tracking-[0.22em] mb-3" style={{ color: "#606060" }}>Disease Distribution</p>
+          <p className="font-mono text-[0.55rem] uppercase tracking-[0.22em] mb-3" style={{ color: "var(--text-tertiary)" }}>Disease Distribution</p>
           <div className="space-y-2">
             {analytics.distribution.length > 0 ? analytics.distribution.map((item) => (
               <div key={item.label} className="space-y-1">
                 <div className="flex justify-between gap-3">
-                  <span className="font-body text-xs truncate" style={{ color: "#A0A0A0" }}>{item.label}</span>
-                  <span className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>{item.count}</span>
+                  <span className="font-body text-xs truncate" style={{ color: "var(--text-secondary)" }}>{item.label}</span>
+                  <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>{item.count}</span>
                 </div>
                 <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
                   <motion.div className="h-full rounded-full" initial={{ width: 0 }} animate={{ width: `${(item.count / maxCount) * 100}%` }} style={{ background: PLANT_ACCENT }} />
@@ -874,12 +874,12 @@ function AnalyticsDashboard({
           </div>
         </div>
         <div>
-          <p className="font-mono text-[0.55rem] uppercase tracking-[0.22em] mb-3" style={{ color: "#606060" }}>Recent Scans</p>
+          <p className="font-mono text-[0.55rem] uppercase tracking-[0.22em] mb-3" style={{ color: "var(--text-tertiary)" }}>Recent Scans</p>
           <div className="space-y-2 max-h-52 overflow-y-auto">
             {analytics.recentScans.length > 0 ? analytics.recentScans.map((scan) => (
               <div key={scan.id} className="rounded-sm p-2.5 flex items-center justify-between gap-3" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
                 <div className="min-w-0">
-                  <p className="font-body text-xs truncate" style={{ color: "#A0A0A0" }}>{scan.displayName}</p>
+                  <p className="font-body text-xs truncate" style={{ color: "var(--text-secondary)" }}>{scan.displayName}</p>
                   <p className="font-mono text-[0.48rem] uppercase tracking-widest" style={{ color: "#404040" }}>{formatTimestamp(scan.timestamp)}</p>
                 </div>
                 <span className="font-mono text-[0.55rem]" style={{ color: scan.isHealthy ? PLANT_ACCENT : PLANT_DISEASE }}>{scan.confidence.toFixed(1)}%</span>
@@ -1023,18 +1023,18 @@ export default function PlantDiseaseDetector() {
                 Flagship Vision Product
               </span>
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl leading-none tracking-wider" style={{ color: "#F0F0F0" }}>
+            <h2 className="font-display text-4xl sm:text-5xl leading-none tracking-wider" style={{ color: "var(--text-primary)" }}>
               Plant Disease Detection
             </h2>
-            <p className="font-body text-sm mt-2 max-w-2xl leading-relaxed" style={{ color: "#A0A0A0" }}>
+            <p className="font-body text-sm mt-2 max-w-2xl leading-relaxed" style={{ color: "var(--text-secondary)" }}>
               Upload or capture a plant leaf image, inspect model confidence, review care guidance, and analyze local scan trends.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-2 min-w-full md:min-w-[300px]">
             {plantProductStats.map((metric) => (
-              <div key={metric.label} className="rounded-sm px-3 py-2 text-center" style={{ background: "rgba(10,10,10,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div key={metric.label} className="rounded-sm px-3 py-2 text-center" style={{ background: "rgba(var(--color-overlay-base), 0.35)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <p className="font-display text-xl leading-none" style={{ color: metric.color }}>{metric.value}</p>
-                <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-1" style={{ color: "#606060" }}>{metric.label}</p>
+                <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-1" style={{ color: "var(--text-tertiary)" }}>{metric.label}</p>
               </div>
             ))}
           </div>
@@ -1059,7 +1059,7 @@ export default function PlantDiseaseDetector() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {["Pepper", "Potato", "Tomato", "15 Classes"].map((item, index) => (
               <div key={item} className="rounded-sm p-3" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <p className="font-display text-xl leading-none" style={{ color: index === 3 ? PLANT_ACCENT : "#A0A0A0" }}>{item}</p>
+                <p className="font-display text-xl leading-none" style={{ color: index === 3 ? PLANT_ACCENT : "var(--text-secondary)" }}>{item}</p>
                 <p className="font-mono text-[0.5rem] uppercase tracking-widest mt-1" style={{ color: "#404040" }}>Supported</p>
               </div>
             ))}
@@ -1076,7 +1076,7 @@ export default function PlantDiseaseDetector() {
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <motion.span animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="inline-block w-4 h-4 border-2 rounded-full" style={{ borderColor: "rgba(10,10,10,0.3)", borderTopColor: "#0A0A0A" }} />
+                  <motion.span animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="inline-block w-4 h-4 border-2 rounded-full" style={{ borderColor: "rgba(var(--color-overlay-base), 0.3)", borderTopColor: "#0A0A0A" }} />
                   Analyzing...
                 </span>
               ) : "Analyze Plant ->"}
@@ -1086,7 +1086,7 @@ export default function PlantDiseaseDetector() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="px-5 py-3 rounded-sm font-mono text-[0.62rem] uppercase tracking-widest"
-              style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}
+              style={{ background: "var(--surface-2)", color: "var(--text-tertiary)", border: "1px solid rgba(255,255,255,0.06)" }}
             >
               Clear
             </motion.button>
@@ -1112,12 +1112,12 @@ export default function PlantDiseaseDetector() {
                     <motion.span key={index} className="w-2 h-8 rounded-full" style={{ background: PLANT_ACCENT }} animate={{ scaleY: [0.25, 1, 0.25], opacity: [0.25, 1, 0.25] }} transition={{ duration: 0.9, repeat: Infinity, delay: index * 0.04 }} />
                   ))}
                 </motion.div>
-                <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase" style={{ color: "#606060" }}>Running EfficientNet-B0...</p>
+                <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase" style={{ color: "var(--text-tertiary)" }}>Running EfficientNet-B0...</p>
               </motion.div>
             ) : (
               <motion.div key="plant-empty" className="rounded-sm px-6 py-16 flex flex-col items-center justify-center text-center h-full min-h-[320px]" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <div className="text-4xl mb-4 opacity-30">🌿</div>
-                <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>Upload or capture a leaf</p>
+                <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>Upload or capture a leaf</p>
                 <p className="font-body text-xs max-w-xs" style={{ color: "#404040" }}>Results include disease status, confidence, top predictions, timing, attention maps, and care guidance.</p>
               </motion.div>
             )}

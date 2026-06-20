@@ -211,7 +211,7 @@ function ScoreRing({
       </div>
       <span
         className="font-mono text-[0.58rem] uppercase tracking-widest text-center"
-        style={{ color: "#606060" }}
+        style={{ color: "var(--text-tertiary)" }}
       >
         {label}
       </span>
@@ -415,7 +415,7 @@ export default function InterviewAnalyzer() {
         <h3 className="font-display text-2xl mb-2" style={{ color: "#FF2D2D" }}>
           Not Supported
         </h3>
-        <p className="font-body text-sm" style={{ color: "#A0A0A0" }}>
+        <p className="font-body text-sm" style={{ color: "var(--text-secondary)" }}>
           Your browser does not support the Web Speech API.
           Please use Chrome or Edge for this feature.
         </p>
@@ -443,7 +443,7 @@ export default function InterviewAnalyzer() {
             >
               Question {promptIndex + 1} / {INTERVIEW_PROMPTS.length}
             </p>
-            <p className="font-body text-base leading-relaxed" style={{ color: "#F0F0F0" }}>
+            <p className="font-body text-base leading-relaxed" style={{ color: "var(--text-primary)" }}>
               {currentPrompt}
             </p>
           </div>
@@ -451,9 +451,9 @@ export default function InterviewAnalyzer() {
             <motion.button
               onClick={nextPrompt} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               className="rounded-sm px-3 py-2 font-mono text-[0.58rem] uppercase tracking-widest transition-all duration-200"
-              style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F0F0F0")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#606060")}
+              style={{ background: "var(--surface-2)", color: "var(--text-tertiary)", border: "1px solid rgba(255,255,255,0.06)" }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-primary)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-tertiary)")}
             >
               Next →
             </motion.button>
@@ -486,22 +486,22 @@ export default function InterviewAnalyzer() {
               <div>
                 <p
                   className="font-mono text-[0.55rem] tracking-[0.25em] uppercase mb-1"
-                  style={{ color: "#606060" }}
+                  style={{ color: "var(--text-tertiary)" }}
                 >
                   Session Time
                 </p>
-                <p className="font-display text-4xl" style={{ color: "#F0F0F0" }}>
+                <p className="font-display text-4xl" style={{ color: "var(--text-primary)" }}>
                   {formatTime(elapsedTime)}
                 </p>
               </div>
               <div className="text-right">
                 <p
                   className="font-mono text-[0.55rem] tracking-[0.25em] uppercase mb-1"
-                  style={{ color: "#606060" }}
+                  style={{ color: "var(--text-tertiary)" }}
                 >
                   Words
                 </p>
-                <p className="font-display text-4xl" style={{ color: "#F0F0F0" }}>
+                <p className="font-display text-4xl" style={{ color: "var(--text-primary)" }}>
                   {fullText.trim().split(/\s+/).filter((w) => w.length > 0).length || 0}
                 </p>
               </div>
@@ -518,19 +518,19 @@ export default function InterviewAnalyzer() {
                     ? "rgba(200,255,0,0.08)"
                     : isPaused
                     ? "rgba(255,107,53,0.08)"
-                    : "rgba(255,255,255,0.04)",
+                    : "var(--border-soft)",
                   border: isListening
                     ? "1px solid rgba(200,255,0,0.25)"
                     : isPaused
                     ? "1px solid rgba(255,107,53,0.25)"
                     : "1px solid rgba(255,255,255,0.06)",
-                  color: isListening ? "#C8FF00" : isPaused ? "#FF6B35" : "#606060",
+                  color: isListening ? "#C8FF00" : isPaused ? "#FF6B35" : "var(--text-tertiary)",
                 }}
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full"
                   style={{
-                    background: isListening ? "#C8FF00" : isPaused ? "#FF6B35" : "#606060",
+                    background: isListening ? "#C8FF00" : isPaused ? "#FF6B35" : "var(--text-tertiary)",
                     animation: isListening ? "pulse 1.5s infinite" : "none",
                   }}
                 />
@@ -596,11 +596,11 @@ export default function InterviewAnalyzer() {
                 className="col-span-2 py-2 rounded-sm font-mono text-[0.58rem] uppercase tracking-widest transition-all duration-200"
                 style={{
                   background:  "var(--surface-2)",
-                  color:       "#606060",
+                  color:       "var(--text-tertiary)",
                   border:      "1px solid rgba(255,255,255,0.06)",
                 }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F0F0F0")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#606060")}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-primary)")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-tertiary)")}
               >
                 ↺ Reset Session
               </motion.button>
@@ -642,7 +642,7 @@ export default function InterviewAnalyzer() {
                 ].map((tip, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span style={{ color: "#FF2D2D" }}>›</span>
-                    <span className="font-body text-xs leading-relaxed" style={{ color: "#606060" }}>
+                    <span className="font-body text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
                       {tip}
                     </span>
                   </li>
@@ -672,7 +672,7 @@ export default function InterviewAnalyzer() {
               >
                 Live Transcript
               </span>
-              <span className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>
+              <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>
                 {transcript.length} segments
               </span>
             </div>
@@ -687,7 +687,7 @@ export default function InterviewAnalyzer() {
                   <div className="text-3xl mb-3 opacity-20">🎙️</div>
                   <p
                     className="font-mono text-[0.58rem] tracking-[0.2em] uppercase"
-                    style={{ color: "#606060" }}
+                    style={{ color: "var(--text-tertiary)" }}
                   >
                     Transcript will appear here
                   </p>
@@ -708,7 +708,7 @@ export default function InterviewAnalyzer() {
                       {entry.wordCount} words
                     </span>
                   </div>
-                  <p className="font-body text-sm leading-relaxed" style={{ color: "#A0A0A0" }}>
+                  <p className="font-body text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                     {entry.text}
                   </p>
                 </motion.div>
@@ -757,7 +757,7 @@ export default function InterviewAnalyzer() {
                 >
                   <p
                     className="font-mono text-[0.52rem] uppercase tracking-widest mb-1"
-                    style={{ color: "#606060" }}
+                    style={{ color: "var(--text-tertiary)" }}
                   >
                     {stat.label}
                   </p>
@@ -819,7 +819,7 @@ export default function InterviewAnalyzer() {
                   >
                     <p
                       className="font-mono text-[0.52rem] uppercase tracking-widest mb-1.5"
-                      style={{ color: "#606060" }}
+                      style={{ color: "var(--text-tertiary)" }}
                     >
                       {stat.label}
                     </p>
@@ -863,7 +863,7 @@ export default function InterviewAnalyzer() {
                           border:      "1px solid rgba(255,107,53,0.2)",
                         }}
                       >
-                        <span className="font-body text-sm" style={{ color: "#A0A0A0" }}>
+                        <span className="font-body text-sm" style={{ color: "var(--text-secondary)" }}>
                           &quot;{word}&quot;
                         </span>
                         <span className="font-display text-sm" style={{ color: "#FF6B35" }}>
@@ -902,7 +902,7 @@ export default function InterviewAnalyzer() {
                         className="flex items-start gap-2"
                       >
                         <span style={{ color: "#C8FF00" }}>›</span>
-                        <span className="font-body text-sm leading-relaxed" style={{ color: "#A0A0A0" }}>
+                        <span className="font-body text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                           {s}
                         </span>
                       </motion.li>
@@ -936,7 +936,7 @@ export default function InterviewAnalyzer() {
                         className="flex items-start gap-2"
                       >
                         <span style={{ color: "#FF2D2D" }}>›</span>
-                        <span className="font-body text-sm leading-relaxed" style={{ color: "#A0A0A0" }}>
+                        <span className="font-body text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                           {s}
                         </span>
                       </motion.li>
@@ -961,11 +961,11 @@ export default function InterviewAnalyzer() {
                   >
                     Full Transcript
                   </p>
-                  <span className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>
+                  <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>
                     {analysis.totalWords} words · {formatTime(analysis.totalTime)}
                   </span>
                 </div>
-                <p className="font-body text-sm leading-relaxed" style={{ color: "#606060" }}>
+                <p className="font-body text-sm leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
                   {fullText}
                 </p>
               </motion.div>
@@ -987,16 +987,16 @@ export default function InterviewAnalyzer() {
                 className="flex-1 py-3 rounded-sm font-mono text-[0.7rem] tracking-[0.2em] uppercase transition-all duration-200"
                 style={{
                   background:  "var(--surface-2)",
-                  color:       "#606060",
+                  color:       "var(--text-tertiary)",
                   border:      "1px solid rgba(255,255,255,0.06)",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#F0F0F0";
+                  (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
                   (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,45,45,0.3)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.color = "#606060";
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
+                  (e.currentTarget as HTMLElement).style.color = "var(--text-tertiary)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
                 }}
               >
                 Next Question →

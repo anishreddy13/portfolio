@@ -63,7 +63,7 @@ export default function SkillTrendChart() {
   const velocityLabel = (skill: SkillTrend) => {
     if (skill.decay_score > 0.6) return { icon: "↓", label: "declining", color: "#FF2D2D" };
     if (skill.velocity > 0.5) return { icon: "↑", label: "rising", color: "#C8FF00" };
-    return { icon: "→", label: "stable", color: "#A0A0A0" };
+    return { icon: "→", label: "stable", color: "var(--text-secondary)" };
   };
 
   if (loading) return <LoadingGrid />;
@@ -81,7 +81,7 @@ export default function SkillTrendChart() {
       <div className="rounded-sm p-8 text-center" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="text-4xl opacity-30 mb-4">📊</div>
         <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em]" style={{ color: "#C8FF00" }}>No market data yet.</p>
-        <p className="font-body text-xs mt-2 max-w-md mx-auto" style={{ color: "#A0A0A0" }}>
+        <p className="font-body text-xs mt-2 max-w-md mx-auto" style={{ color: "var(--text-secondary)" }}>
           Go to Market tab and click Trigger Scrape to populate skill trends.
         </p>
       </div>
@@ -93,7 +93,7 @@ export default function SkillTrendChart() {
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em]" style={{ color: "#C8FF00" }}>Rising Skills</p>
-          <p className="font-body text-xs mt-1" style={{ color: "#606060" }}>Last updated: {updatedAt ? `${Math.max(0, Math.round((Date.now() - updatedAt.getTime()) / 60000))} minutes ago` : "--"}</p>
+          <p className="font-body text-xs mt-1" style={{ color: "var(--text-tertiary)" }}>Last updated: {updatedAt ? `${Math.max(0, Math.round((Date.now() - updatedAt.getTime()) / 60000))} minutes ago` : "--"}</p>
         </div>
         <button onClick={load} className="rounded-sm px-3 py-2 font-mono text-[0.55rem] uppercase tracking-widest" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)", color: "#C8FF00" }}>Refresh</button>
       </div>
@@ -102,7 +102,7 @@ export default function SkillTrendChart() {
         {rising.slice(0, 12).map((skill, index) => (
           <motion.div key={skill.skill} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.04 }} className="rounded-sm p-4" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
             <div className="flex items-start justify-between gap-2 mb-3">
-              <p className="font-mono text-[0.7rem] uppercase tracking-wider truncate" style={{ color: "#F0F0F0" }}>{skill.skill}</p>
+              <p className="font-mono text-[0.7rem] uppercase tracking-wider truncate" style={{ color: "var(--text-primary)" }}>{skill.skill}</p>
               <span className="font-mono text-[0.6rem] uppercase" style={{ color: velocityLabel(skill).color }}>
                 {velocityLabel(skill).icon} {velocityLabel(skill).label}
               </span>
@@ -123,13 +123,13 @@ export default function SkillTrendChart() {
             {declining.slice(0, 8).map((skill) => (
               <div key={skill.skill}>
                 <div className="flex justify-between gap-3 mb-1">
-                  <span className="font-mono text-[0.58rem] uppercase" style={{ color: "#A0A0A0" }}>DOWN {skill.skill}</span>
-                  <span className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>{(skill.decay_score * 100).toFixed(0)}%</span>
+                  <span className="font-mono text-[0.58rem] uppercase" style={{ color: "var(--text-secondary)" }}>DOWN {skill.skill}</span>
+                  <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>{(skill.decay_score * 100).toFixed(0)}%</span>
                 </div>
                 <Bar value={skill.decay_score * 100} color="#FF2D2D" />
               </div>
             ))}
-            {!declining.length && <p className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "#606060" }}>No declining skills detected</p>}
+            {!declining.length && <p className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>No declining skills detected</p>}
           </div>
         </div>
 
@@ -139,8 +139,8 @@ export default function SkillTrendChart() {
             {(repos.length ? repos.slice(0, 8) : languages.map((language, index) => ({ repo_name: language, language, stars: 0, trend_score: 90 - index * 8 }))).map((repo) => (
               <div key={`${repo.repo_name}-${repo.language}`}>
                 <div className="flex justify-between gap-3 mb-1">
-                  <span className="font-mono text-[0.58rem] uppercase" style={{ color: "#A0A0A0" }}>{repo.language || repo.repo_name}</span>
-                  <span className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>{repo.trend_score.toFixed(1)}</span>
+                  <span className="font-mono text-[0.58rem] uppercase" style={{ color: "var(--text-secondary)" }}>{repo.language || repo.repo_name}</span>
+                  <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>{repo.trend_score.toFixed(1)}</span>
                 </div>
                 <Bar value={repo.trend_score} color="#FF6B35" />
               </div>
@@ -154,11 +154,11 @@ export default function SkillTrendChart() {
           { label: "Skills Tracked", value: skills.length, color: "#C8FF00" },
           { label: "Avg Demand", value: `${avgDemand.toFixed(1)}%`, color: "#FF6B35" },
           { label: "Top Skill", value: topSkill ? `${topSkill.skill} ${topSkill.demand_score.toFixed(0)}` : "--", color: "#A855F7" },
-          { label: "Updated", value: updatedAt ? updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "--", color: "#A0A0A0" },
+          { label: "Updated", value: updatedAt ? updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "--", color: "var(--text-secondary)" },
         ].map((stat) => (
           <div key={stat.label} className="rounded-sm p-3" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
             <p className="font-display text-xl leading-none truncate" style={{ color: stat.color }}>{stat.value}</p>
-            <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-1" style={{ color: "#606060" }}>{stat.label}</p>
+            <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-1" style={{ color: "var(--text-tertiary)" }}>{stat.label}</p>
           </div>
         ))}
       </div>

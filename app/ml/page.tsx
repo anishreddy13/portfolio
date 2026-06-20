@@ -231,10 +231,10 @@ function ConfidenceBar({ label, value, color }: { label: string; value: number; 
   return (
     <div className="space-y-1 mb-3">
       <div className="flex justify-between">
-        <span className="font-mono text-[0.6rem] uppercase tracking-wider" style={{ color: "#606060" }}>
+        <span className="font-mono text-[0.6rem] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
           {label}
         </span>
-        <span className="font-mono text-[0.6rem]" style={{ color: "#A0A0A0" }}>
+        <span className="font-mono text-[0.6rem]" style={{ color: "var(--text-secondary)" }}>
           {value.toFixed(1)}%
         </span>
       </div>
@@ -283,7 +283,7 @@ function InputBox({
         </span>
         <span
           className="font-mono text-[0.58rem]"
-          style={{ color: charCount > maxLength * 0.9 ? "#FF2D2D" : "#606060" }}
+          style={{ color: charCount > maxLength * 0.9 ? "#FF2D2D" : "var(--text-tertiary)" }}
         >
           {charCount}/{maxLength}
         </span>
@@ -296,7 +296,7 @@ function InputBox({
         maxLength={maxLength}
         className="w-full bg-transparent px-4 py-3 font-body text-sm
                    placeholder:text-[#404040] resize-none focus:outline-none leading-relaxed"
-        style={{ color: "#F0F0F0" }}
+        style={{ color: "var(--text-primary)" }}
       />
     </div>
   );
@@ -330,7 +330,7 @@ function ActionButton({
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             className="inline-block w-4 h-4 border-2 rounded-full"
-            style={{ borderColor: "rgba(10,10,10,0.3)", borderTopColor: "#0A0A0A" }}
+            style={{ borderColor: "rgba(var(--color-overlay-base), 0.3)", borderTopColor: "#0A0A0A" }}
           />
           {loadingText}
         </span>
@@ -349,7 +349,7 @@ function EmptyState({ icon, text }: { icon: string; text: string }) {
       style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}
     >
       <div className="text-4xl mb-4 opacity-20">{icon}</div>
-      <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase" style={{ color: "#606060" }}>
+      <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase" style={{ color: "var(--text-tertiary)" }}>
         {text}
       </p>
     </motion.div>
@@ -369,7 +369,7 @@ function LoadingState({ color, text }: { color: string; text: string }) {
         className="w-10 h-10 border-2 rounded-full mb-4"
         style={{ borderColor: `${color}20`, borderTopColor: color }}
       />
-      <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase" style={{ color: "#606060" }}>
+      <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase" style={{ color: "var(--text-tertiary)" }}>
         {text}
       </p>
     </motion.div>
@@ -410,7 +410,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
         />
 
         <div>
-          <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>
+          <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>
             — Examples
           </p>
           <div className="flex flex-col gap-1.5">
@@ -420,9 +420,9 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
                 onClick={() => { setText(ex); setCharCount(ex.length); setResult(null); setError(null); }}
                 whileHover={{ x: 4 }}
                 className="text-left font-body text-xs truncate transition-colors duration-200"
-                style={{ color: "#606060" }}
-                onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#F0F0F0")}
-                onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#606060")}
+                style={{ color: "var(--text-tertiary)" }}
+                onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--text-primary)")}
+                onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-tertiary)")}
               >
                 → {ex}
               </motion.button>
@@ -440,7 +440,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
             onClick={() => { setText(""); setResult(null); setError(null); setCharCount(0); }}
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
             className="px-5 py-3 rounded-sm font-mono text-[0.62rem] uppercase tracking-widest transition-all duration-300"
-            style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}
+            style={{ background: "var(--surface-2)", color: "var(--text-tertiary)", border: "1px solid rgba(255,255,255,0.06)" }}
           >
             Clear
           </motion.button>
@@ -474,7 +474,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
                 style={{ background: cfg.bg, borderBottom: `1px solid ${cfg.border}` }}
               >
                 <div>
-                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>
                     Detected Sentiment
                   </p>
                   <div className="flex items-center gap-3">
@@ -485,7 +485,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>
                     Confidence
                   </p>
                   <span className="font-display text-4xl" style={{ color: cfg.color }}>
@@ -494,7 +494,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
                 </div>
               </div>
               <div className="px-5 py-4">
-                <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "#606060" }}>
+                <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "var(--text-tertiary)" }}>
                   Score Breakdown
                 </p>
                 {Object.entries(result.scores).map(([l, s]) => (
@@ -506,8 +506,8 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
               </div>
               <div className="px-5 pb-4">
                 <div className="px-3 py-2 rounded-sm" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                  <p className="font-mono text-[0.58rem] uppercase mb-0.5" style={{ color: "#606060" }}>Model</p>
-                  <p className="font-body text-xs" style={{ color: "#A0A0A0" }}>TF-IDF + Logistic Regression · Tweet Eval (45k+ samples)</p>
+                  <p className="font-mono text-[0.58rem] uppercase mb-0.5" style={{ color: "var(--text-tertiary)" }}>Model</p>
+                  <p className="font-body text-xs" style={{ color: "var(--text-secondary)" }}>TF-IDF + Logistic Regression · Tweet Eval (45k+ samples)</p>
                 </div>
               </div>
             </motion.div>
@@ -520,7 +520,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
 
         {history.length > 0 && (
           <div>
-            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>
+            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>
               — Recent
             </p>
             <div className="space-y-1.5">
@@ -531,7 +531,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
                   className="rounded-sm px-3 py-2 flex items-center justify-between gap-3"
                   style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.04)" }}
                 >
-                  <p className="font-body text-xs truncate flex-1" style={{ color: "#606060" }}>
+                  <p className="font-body text-xs truncate flex-1" style={{ color: "var(--text-tertiary)" }}>
                     {item.original_text.slice(0, 45)}...
                   </p>
                   <span className="font-mono text-[0.6rem] shrink-0" style={{ color: sentimentConfig[item.sentiment]?.color }}>
@@ -580,16 +580,16 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
           charCount={charCount} maxLength={2000}
         />
         <div>
-          <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>— Examples</p>
+          <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>— Examples</p>
           <div className="flex flex-col gap-1.5">
             {spamExamples.map((ex, i) => (
               <motion.button key={i}
                 onClick={() => { setText(ex); setCharCount(ex.length); setResult(null); setError(null); }}
                 whileHover={{ x: 4 }}
                 className="text-left font-body text-xs truncate transition-colors duration-200"
-                style={{ color: "#606060" }}
-                onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#F0F0F0")}
-                onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#606060")}
+                style={{ color: "var(--text-tertiary)" }}
+                onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--text-primary)")}
+                onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-tertiary)")}
               >→ {ex}</motion.button>
             ))}
           </div>
@@ -600,7 +600,7 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
           <motion.button onClick={() => { setText(""); setResult(null); setError(null); setCharCount(0); }}
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
             className="px-5 py-3 rounded-sm font-mono text-[0.62rem] uppercase tracking-widest"
-            style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}>
+            style={{ background: "var(--surface-2)", color: "var(--text-tertiary)", border: "1px solid rgba(255,255,255,0.06)" }}>
             Clear
           </motion.button>
         </div>
@@ -624,26 +624,26 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
               <div className="px-5 py-5 flex items-center justify-between"
                 style={{ background: result.is_spam ? "rgba(255,45,45,0.06)" : "rgba(200,255,0,0.05)", borderBottom: `1px solid ${result.is_spam ? "rgba(255,45,45,0.2)" : "rgba(200,255,0,0.2)"}` }}>
                 <div>
-                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>Detection Result</p>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>Detection Result</p>
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{result.is_spam ? "🚨" : "✅"}</span>
                     <span className="font-display text-4xl tracking-wider" style={{ color: rc }}>{result.label}</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>Confidence</p>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>Confidence</p>
                   <span className="font-display text-4xl" style={{ color: rc }}>{result.confidence.toFixed(1)}%</span>
                 </div>
               </div>
               <div className="px-5 py-4">
-                <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "#606060" }}>Scores</p>
+                <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "var(--text-tertiary)" }}>Scores</p>
                 {Object.entries(result.scores).map(([l, s]) => (
                   <ConfidenceBar key={l} label={l} value={s} color={l === "Spam" ? "#FF2D2D" : "#C8FF00"} />
                 ))}
               </div>
               {result.spam_keywords_found.length > 0 && (
                 <div className="px-5 pb-4">
-                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "#606060" }}>Spam Triggers</p>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "var(--text-tertiary)" }}>Spam Triggers</p>
                   <div className="flex flex-wrap gap-2">
                     {result.spam_keywords_found.map((kw) => (
                       <span key={kw} className="font-mono text-[0.58rem] uppercase px-2.5 py-1 rounded-sm"
@@ -656,8 +656,8 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
               )}
               <div className="px-5 pb-4">
                 <div className="px-3 py-2 rounded-sm" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                  <p className="font-mono text-[0.58rem] uppercase mb-0.5" style={{ color: "#606060" }}>Model</p>
-                  <p className="font-body text-xs" style={{ color: "#A0A0A0" }}>TF-IDF + Naive Bayes · SMS Spam Collection · ~97% accuracy</p>
+                  <p className="font-mono text-[0.58rem] uppercase mb-0.5" style={{ color: "var(--text-tertiary)" }}>Model</p>
+                  <p className="font-body text-xs" style={{ color: "var(--text-secondary)" }}>TF-IDF + Naive Bayes · SMS Spam Collection · ~97% accuracy</p>
                 </div>
               </div>
             </motion.div>
@@ -669,13 +669,13 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
         </AnimatePresence>
         {history.length > 0 && (
           <div>
-            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>— Recent</p>
+            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>— Recent</p>
             <div className="space-y-1.5">
               {history.map((item) => (
                 <motion.div key={item.id} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
                   className="rounded-sm px-3 py-2 flex items-center justify-between gap-3"
                   style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                  <p className="font-body text-xs truncate flex-1" style={{ color: "#606060" }}>{item.original_text.slice(0, 45)}...</p>
+                  <p className="font-body text-xs truncate flex-1" style={{ color: "var(--text-tertiary)" }}>{item.original_text.slice(0, 45)}...</p>
                   <span className="font-mono text-[0.6rem] shrink-0" style={{ color: item.is_spam ? "#FF2D2D" : "#C8FF00" }}>
                     {item.label} · {item.confidence.toFixed(0)}%
                   </span>
@@ -715,16 +715,16 @@ function EmotionTab({ serverStatus }: { serverStatus: string }) {
             onChange={(e) => { setText(e.target.value); setCharCount(e.target.value.length); setError(null); }}
             placeholder="Describe how you feel..." charCount={charCount} maxLength={1000} />
           <div>
-            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#606060" }}>— Examples</p>
+            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>— Examples</p>
             <div className="flex flex-col gap-1.5">
               {emotionExamples.map((ex, i) => (
                 <motion.button key={i}
                   onClick={() => { setText(ex); setCharCount(ex.length); setResult(null); setError(null); }}
                   whileHover={{ x: 4 }}
                   className="text-left font-body text-xs truncate transition-colors duration-200"
-                  style={{ color: "#606060" }}
-                  onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#F0F0F0")}
-                  onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#606060")}
+                  style={{ color: "var(--text-tertiary)" }}
+                  onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--text-primary)")}
+                  onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-tertiary)")}
                 >→ {ex}</motion.button>
               ))}
             </div>
@@ -735,7 +735,7 @@ function EmotionTab({ serverStatus }: { serverStatus: string }) {
             <motion.button onClick={() => { setText(""); setResult(null); setError(null); setCharCount(0); }}
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
               className="px-5 py-3 rounded-sm font-mono text-[0.62rem] uppercase tracking-widest"
-              style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}>
+              style={{ background: "var(--surface-2)", color: "var(--text-tertiary)", border: "1px solid rgba(255,255,255,0.06)" }}>
               Clear
             </motion.button>
           </div>
@@ -763,22 +763,22 @@ function EmotionTab({ serverStatus }: { serverStatus: string }) {
                   <h3 className="font-display text-4xl tracking-wider mb-1" style={{ color: result.emotion_color }}>
                     {result.primary_emotion.toUpperCase()}
                   </h3>
-                  <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>
+                  <p className="font-mono text-[0.6rem]" style={{ color: "var(--text-tertiary)" }}>
                     {result.emotion_confidence.toFixed(1)}% confidence
                   </p>
                 </div>
-                <div className="grid grid-cols-2 divide-x" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                <div className="grid grid-cols-2 divide-x" style={{ borderColor: "var(--border-soft)" }}>
                   <div className="px-4 py-4 text-center">
                     <div className="text-2xl mb-1">{GENDER_EMOJIS[result.gender] || "👤"}</div>
-                    <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-1" style={{ color: "#606060" }}>Gender</p>
-                    <p className="font-body text-sm font-medium" style={{ color: "#F0F0F0" }}>{result.gender}</p>
-                    <p className="font-mono text-[0.55rem] mt-0.5" style={{ color: "#606060" }}>{result.gender_confidence.toFixed(1)}%</p>
+                    <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-1" style={{ color: "var(--text-tertiary)" }}>Gender</p>
+                    <p className="font-body text-sm font-medium" style={{ color: "var(--text-primary)" }}>{result.gender}</p>
+                    <p className="font-mono text-[0.55rem] mt-0.5" style={{ color: "var(--text-tertiary)" }}>{result.gender_confidence.toFixed(1)}%</p>
                   </div>
                   <div className="px-4 py-4 text-center">
                     <div className="text-2xl mb-1">{AGE_EMOJIS[result.age_group] || "🧑"}</div>
-                    <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-1" style={{ color: "#606060" }}>Age Group</p>
-                    <p className="font-body text-sm font-medium" style={{ color: "#F0F0F0" }}>{result.age_group}</p>
-                    <p className="font-mono text-[0.55rem] mt-0.5" style={{ color: "#606060" }}>{result.age_confidence.toFixed(1)}%</p>
+                    <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-1" style={{ color: "var(--text-tertiary)" }}>Age Group</p>
+                    <p className="font-body text-sm font-medium" style={{ color: "var(--text-primary)" }}>{result.age_group}</p>
+                    <p className="font-mono text-[0.55rem] mt-0.5" style={{ color: "var(--text-tertiary)" }}>{result.age_confidence.toFixed(1)}%</p>
                   </div>
                 </div>
               </motion.div>
@@ -796,7 +796,7 @@ function EmotionTab({ serverStatus }: { serverStatus: string }) {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             className="rounded-sm p-5"
             style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
-            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-5" style={{ color: "#606060" }}>
+            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-5" style={{ color: "var(--text-tertiary)" }}>
               Top 5 Emotions
             </p>
             <div className="space-y-3 mb-5">
@@ -804,25 +804,25 @@ function EmotionTab({ serverStatus }: { serverStatus: string }) {
                 <motion.div key={item.emotion} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.07 }} className="flex items-center gap-3">
                   <span className="text-lg w-7 text-center">{item.emoji}</span>
-                  <span className="font-mono text-[0.58rem] uppercase w-24 tracking-wider" style={{ color: "#606060" }}>{item.emotion}</span>
+                  <span className="font-mono text-[0.58rem] uppercase w-24 tracking-wider" style={{ color: "var(--text-tertiary)" }}>{item.emotion}</span>
                   <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
                     <motion.div className="h-full rounded-full" style={{ backgroundColor: item.color }}
                       initial={{ width: 0 }} animate={{ width: `${item.score}%` }}
                       transition={{ duration: 0.7, delay: i * 0.08 }} />
                   </div>
-                  <span className="font-mono text-[0.58rem] w-12 text-right" style={{ color: "#A0A0A0" }}>{item.score.toFixed(1)}%</span>
+                  <span className="font-mono text-[0.58rem] w-12 text-right" style={{ color: "var(--text-secondary)" }}>{item.score.toFixed(1)}%</span>
                 </motion.div>
               ))}
             </div>
             <div className="grid grid-cols-2 gap-5 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
               <div>
-                <p className="font-mono text-[0.58rem] uppercase tracking-widest mb-3" style={{ color: "#606060" }}>Gender Scores</p>
+                <p className="font-mono text-[0.58rem] uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Gender Scores</p>
                 {Object.entries(result.gender_scores).map(([l, s]) => (
                   <ConfidenceBar key={l} label={l} value={s} color={l === "Female" || l === "female" ? "#FF6B35" : "#A855F7"} />
                 ))}
               </div>
               <div>
-                <p className="font-mono text-[0.58rem] uppercase tracking-widest mb-3" style={{ color: "#606060" }}>Age Scores</p>
+                <p className="font-mono text-[0.58rem] uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Age Scores</p>
                 {Object.entries(result.age_scores).map(([l, s]) => (
                   <ConfidenceBar key={l} label={l} value={s} color="#C8FF00" />
                 ))}
@@ -855,7 +855,7 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
-        <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase w-full" style={{ color: "#606060" }}>
+        <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase w-full" style={{ color: "var(--text-tertiary)" }}>
           — Load Sample Preset
         </p>
         {[
@@ -882,8 +882,8 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
           {CANCER_FEATURES.map((f) => (
             <div key={f.key} className="space-y-1">
               <div className="flex justify-between">
-                <span className="font-mono text-[0.58rem] uppercase tracking-wider" style={{ color: "#606060" }}>{f.label}</span>
-                <span className="font-mono text-[0.58rem]" style={{ color: "#A0A0A0" }}>
+                <span className="font-mono text-[0.58rem] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>{f.label}</span>
+                <span className="font-mono text-[0.58rem]" style={{ color: "var(--text-secondary)" }}>
                   {features[f.key]?.toFixed(4)} {f.unit}
                 </span>
               </div>
@@ -891,7 +891,7 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
                 value={features[f.key] ?? f.min}
                 onChange={(e) => { setFeatures((p) => ({ ...p, [f.key]: parseFloat(e.target.value) })); setResult(null); }}
                 className="w-full h-1 rounded-full appearance-none cursor-pointer"
-                style={{ background: "rgba(255,255,255,0.08)", accentColor: "#FF2D2D" }}
+                style={{ background: "var(--border)", accentColor: "#FF2D2D" }}
               />
               <div className="flex justify-between">
                 <span className="font-mono text-[0.5rem]" style={{ color: "#404040" }}>{f.min}</span>
@@ -927,12 +927,12 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
                       style={{ color: result.is_malignant ? "#FF2D2D" : "#C8FF00" }}>
                       {result.prediction.toUpperCase()}
                     </h3>
-                    <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>{result.confidence.toFixed(1)}% confidence</p>
+                    <p className="font-mono text-[0.6rem]" style={{ color: "var(--text-tertiary)" }}>{result.confidence.toFixed(1)}% confidence</p>
                   </div>
                   <div className="px-5 py-4 space-y-3">
                     <div className="flex items-center justify-between rounded-sm px-3 py-2"
                       style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                      <span className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "#606060" }}>Risk Level</span>
+                      <span className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Risk Level</span>
                       <span className="font-display text-xl" style={{ color: riskColors[result.risk_level] || "#C8FF00" }}>
                         {result.risk_level}
                       </span>
@@ -943,13 +943,13 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
                 </div>
                 <div className="rounded-sm p-4"
                   style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "#606060" }}>Top Features</p>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "var(--text-tertiary)" }}>Top Features</p>
                   <div className="space-y-2">
                     {result.top_features.map((f, i) => (
                       <motion.div key={f.feature} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.04 }} className="flex items-center gap-2">
                         <span className="font-mono text-[0.5rem] w-4" style={{ color: "#FF2D2D" }}>{i + 1}</span>
-                        <span className="font-mono text-[0.58rem] uppercase w-40 truncate" style={{ color: "#606060" }}>
+                        <span className="font-mono text-[0.58rem] uppercase w-40 truncate" style={{ color: "var(--text-tertiary)" }}>
                           {f.feature.replace(/_/g, " ")}
                         </span>
                         <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
@@ -957,7 +957,7 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
                             initial={{ width: 0 }} animate={{ width: `${Math.min(f.importance * 5, 100)}%` }}
                             transition={{ duration: 0.5, delay: i * 0.04 }} />
                         </div>
-                        <span className="font-mono text-[0.58rem] w-10 text-right" style={{ color: "#A0A0A0" }}>
+                        <span className="font-mono text-[0.58rem] w-10 text-right" style={{ color: "var(--text-secondary)" }}>
                           {f.importance.toFixed(1)}%
                         </span>
                       </motion.div>
@@ -1036,7 +1036,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
           style={{
             minHeight: "260px",
             background:  "var(--surface-1)",
-            border:      `1px dashed ${isDragging ? "rgba(255,45,45,0.6)" : "rgba(255,255,255,0.08)"}`,
+            border:      `1px dashed ${isDragging ? "rgba(255,45,45,0.6)" : "var(--border)"}`,
             transition:  "border-color 0.3s ease",
           }}
         >
@@ -1046,8 +1046,8 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
             <div className="relative w-full h-full">
               <img src={imagePreview} alt="Skin lesion" className="w-full h-64 object-cover" />
               <div className="absolute inset-0 flex items-end p-3"
-                style={{ background: "linear-gradient(to top, rgba(10,10,10,0.8), transparent)" }}>
-                <p className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "#A0A0A0" }}>
+                style={{ background: "linear-gradient(to top, rgba(var(--color-overlay-base), 0.8), transparent)" }}>
+                <p className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-secondary)" }}>
                   Click to change image
                 </p>
               </div>
@@ -1055,7 +1055,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
           ) : (
             <div className="flex flex-col items-center justify-center h-64 p-6 text-center">
               <motion.div animate={{ y: isDragging ? -8 : 0 }} className="text-4xl mb-3 opacity-30">🔬</motion.div>
-              <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: isDragging ? "#FF2D2D" : "#606060" }}>
+              <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: isDragging ? "#FF2D2D" : "var(--text-tertiary)" }}>
                 {isDragging ? "Drop image here" : "Upload Skin Lesion Image"}
               </p>
               <p className="font-body text-xs" style={{ color: "#404040" }}>Drag & drop or click · JPG, PNG · Max 10MB</p>
@@ -1065,7 +1065,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
 
         {/* What it detects */}
         <div className="rounded-sm p-4" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
-          <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "#606060" }}>
+          <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "var(--text-tertiary)" }}>
             Detectable Conditions
           </p>
           <div className="grid grid-cols-2 gap-1.5">
@@ -1081,7 +1081,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
               <div key={item.label} className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full shrink-0"
                   style={{ background: item.cancerous ? "#FF2D2D" : "#C8FF00" }} />
-                <span className="font-body text-[0.68rem]" style={{ color: "#606060" }}>{item.label}</span>
+                <span className="font-body text-[0.68rem]" style={{ color: "var(--text-tertiary)" }}>{item.label}</span>
               </div>
             ))}
           </div>
@@ -1093,7 +1093,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
           <motion.button onClick={() => { setImagePreview(null); setImageBase64(null); setResult(null); setError(null); }}
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
             className="px-5 py-3 rounded-sm font-mono text-[0.62rem] uppercase tracking-widest"
-            style={{ background: "var(--surface-2)", color: "#606060", border: "1px solid rgba(255,255,255,0.06)" }}>
+            style={{ background: "var(--surface-2)", color: "var(--text-tertiary)", border: "1px solid rgba(255,255,255,0.06)" }}>
             Clear
           </motion.button>
         </div>
@@ -1124,13 +1124,13 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
                     style={{ color: result.is_cancerous ? "#FF2D2D" : "#C8FF00" }}>
                     {result.prediction.toUpperCase()}
                   </h3>
-                  <p className="font-body text-sm mb-1" style={{ color: "#A0A0A0" }}>{result.predicted_type}</p>
-                  <p className="font-mono text-[0.6rem]" style={{ color: "#606060" }}>{result.confidence.toFixed(1)}% confidence</p>
+                  <p className="font-body text-sm mb-1" style={{ color: "var(--text-secondary)" }}>{result.predicted_type}</p>
+                  <p className="font-mono text-[0.6rem]" style={{ color: "var(--text-tertiary)" }}>{result.confidence.toFixed(1)}% confidence</p>
                 </div>
                 <div className="px-5 py-4 space-y-3">
                   <div className="flex items-center justify-between rounded-sm px-3 py-2"
                     style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                    <span className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "#606060" }}>Risk Level</span>
+                    <span className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Risk Level</span>
                     <span className="font-display text-xl" style={{ color: riskColors[result.risk_level] || "#C8FF00" }}>{result.risk_level}</span>
                   </div>
                   <ConfidenceBar label="Cancerous"     value={result.cancer_probability}  color="#FF2D2D" />
@@ -1139,21 +1139,21 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
               </div>
 
               <div className="rounded-sm p-4" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "#606060" }}>Top 5 Predictions</p>
+                <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "var(--text-tertiary)" }}>Top 5 Predictions</p>
                 <div className="space-y-2">
                   {result.top_5.map((item, i) => (
                     <motion.div key={item.class_code} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.07 }} className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full shrink-0"
                         style={{ background: item.is_cancerous ? "#FF2D2D" : "#C8FF00" }} />
-                      <span className="font-mono text-[0.58rem] uppercase w-32 truncate" style={{ color: "#606060" }}>{item.class_name}</span>
+                      <span className="font-mono text-[0.58rem] uppercase w-32 truncate" style={{ color: "var(--text-tertiary)" }}>{item.class_name}</span>
                       <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
                         <motion.div className="h-full rounded-full"
                           style={{ backgroundColor: item.is_cancerous ? "#FF2D2D" : "#C8FF00" }}
                           initial={{ width: 0 }} animate={{ width: `${item.probability}%` }}
                           transition={{ duration: 0.7, delay: i * 0.08 }} />
                       </div>
-                      <span className="font-mono text-[0.58rem] w-12 text-right" style={{ color: "#A0A0A0" }}>
+                      <span className="font-mono text-[0.58rem] w-12 text-right" style={{ color: "var(--text-secondary)" }}>
                         {item.probability.toFixed(1)}%
                       </span>
                     </motion.div>
@@ -1251,17 +1251,17 @@ export default function MLPage() {
           className="flex items-center gap-2 font-mono text-[0.58rem] sm:text-[0.62rem] tracking-[0.18em] sm:tracking-[0.2em] uppercase
                      px-2.5 sm:px-3 py-2 rounded-sm transition-all duration-200"
           style={{
-            background:  "rgba(10,10,10,0.8)",
+            background:  "rgba(var(--color-overlay-base), 0.8)",
             border:      "1px solid rgba(255,255,255,0.08)",
-            color:       "#606060",
+            color:       "var(--text-tertiary)",
           }}
           onMouseEnter={(e) => {
             (e.currentTarget as HTMLElement).style.color = "#FF2D2D";
             (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,45,45,0.3)";
           }}
           onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.color = "#606060";
-            (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
+            (e.currentTarget as HTMLElement).style.color = "var(--text-tertiary)";
+            (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
           }}
         >
           ← Back
@@ -1271,14 +1271,14 @@ export default function MLPage() {
       {/* Server status */}
       <motion.div initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
         className="fixed top-20 right-4 sm:right-5 z-30 flex items-center gap-2 px-2.5 sm:px-3 py-2 rounded-sm"
-        style={{ background: "rgba(10,10,10,0.8)", border: "1px solid rgba(255,255,255,0.08)" }}>
+        style={{ background: "rgba(var(--color-overlay-base), 0.8)", border: "1px solid rgba(255,255,255,0.08)" }}>
         <span className="w-1.5 h-1.5 rounded-full"
           style={{
             background: serverStatus === "online" ? "#C8FF00" : serverStatus === "offline" ? "#FF2D2D" : "#FF6B35",
             boxShadow:  serverStatus === "online" ? "0 0 6px #C8FF00" : "none",
             animation:  serverStatus !== "offline" ? "pulse 2s infinite" : "none",
           }} />
-        <span className="font-mono text-[0.52rem] sm:text-[0.58rem] tracking-[0.16em] sm:tracking-[0.2em] uppercase" style={{ color: "#606060" }}>
+        <span className="font-mono text-[0.52rem] sm:text-[0.58rem] tracking-[0.16em] sm:tracking-[0.2em] uppercase" style={{ color: "var(--text-tertiary)" }}>
           {serverStatus === "online" ? "Server Online" : serverStatus === "offline" ? "Server Offline" : "Checking..."}
         </span>
       </motion.div>
@@ -1315,9 +1315,9 @@ export default function MLPage() {
               LABORATORY
             </span>
           </h1>
-          <p className="font-body text-base max-w-xl leading-relaxed" style={{ color: "#A0A0A0" }}>
+          <p className="font-body text-base max-w-xl leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             Seven real ML models across text, speech, tabular, and vision workflows.{" "}
-            <span style={{ color: "#F0F0F0" }}>Python, scikit-learn, PyTorch & FastAPI.</span>
+            <span style={{ color: "var(--text-primary)" }}>Python, scikit-learn, PyTorch & FastAPI.</span>
           </p>
         </motion.div>
 
@@ -1338,7 +1338,7 @@ export default function MLPage() {
                 className="relative rounded-sm p-3 text-left transition-all duration-200"
                 style={{
                   background:   active ? `${tab.color}10` : tab.featured ? "rgba(200,255,0,0.045)" : "var(--surface-1)",
-                  border:       `1px solid ${active ? `${tab.color}40` : tab.featured ? "rgba(200,255,0,0.18)" : "rgba(255,255,255,0.06)"}`,
+                  border:       `1px solid ${active ? `${tab.color}40` : tab.featured ? "rgba(200,255,0,0.18)" : "var(--border)"}`,
                 }}
               >
                 <div className="flex items-center gap-1.5 mb-1">
@@ -1353,7 +1353,7 @@ export default function MLPage() {
                   )}
                 </div>
                 <p className="font-mono text-[0.58rem] tracking-wider uppercase leading-tight"
-                  style={{ color: active ? tab.color : "#606060" }}>
+                  style={{ color: active ? tab.color : "var(--text-tertiary)" }}>
                   {tab.label}
                 </p>
                 <p className="font-body text-[0.55rem] mt-0.5 hidden sm:block" style={{ color: "#404040" }}>
@@ -1415,10 +1415,10 @@ export default function MLPage() {
                   }}>
                   {item.step}
                 </div>
-                <h4 className="font-mono text-[0.62rem] uppercase tracking-wider mb-1" style={{ color: "#A0A0A0" }}>
+                <h4 className="font-mono text-[0.62rem] uppercase tracking-wider mb-1" style={{ color: "var(--text-secondary)" }}>
                   {item.title}
                 </h4>
-                <p className="font-body text-xs leading-relaxed" style={{ color: "#606060" }}>{item.desc}</p>
+                <p className="font-body text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>{item.desc}</p>
               </div>
             ))}
           </div>

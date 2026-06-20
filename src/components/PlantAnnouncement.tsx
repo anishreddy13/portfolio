@@ -68,10 +68,10 @@ export default function PlantAnnouncement() {
                 <p className="font-mono text-[0.52rem] tracking-[0.25em] uppercase mb-1" style={{ color: "#C8FF00" }}>
                   New ML Capability
                 </p>
-                <p className="font-body text-sm leading-snug" style={{ color: "#F0F0F0" }}>
+                <p className="font-body text-sm leading-snug" style={{ color: "var(--text-primary)" }}>
                   🌿 New AI Plant Disease Detection Model Added
                 </p>
-                <p className="font-body text-xs mt-1 leading-relaxed" style={{ color: "#606060" }}>
+                <p className="font-body text-xs mt-1 leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
                   Try the new EfficientNet-B0 leaf classifier inside ML Laboratory.
                 </p>
               </div>
@@ -80,7 +80,7 @@ export default function PlantAnnouncement() {
                 type="button"
                 onClick={close}
                 className="font-mono text-sm leading-none px-1"
-                style={{ color: "#606060" }}
+                style={{ color: "var(--text-tertiary)" }}
                 aria-label="Dismiss plant disease announcement"
               >
                 x
@@ -102,7 +102,7 @@ export default function PlantAnnouncement() {
                 type="button"
                 onClick={close}
                 className="px-3 py-2.5 rounded-sm font-mono text-[0.58rem] uppercase tracking-widest"
-                style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "#606060" }}
+                style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-tertiary)" }}
               >
                 Later
               </button>

@@ -130,7 +130,7 @@ export default function MentorChat({
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#C8FF00", boxShadow: "0 0 8px #C8FF00" }} />
             <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em]" style={{ color: "#C8FF00" }}>AI Mentor</p>
           </div>
-          <p className="font-body text-xs" style={{ color: "#606060" }}>Powered by Groq Llama3-70b · Real market data</p>
+          <p className="font-body text-xs" style={{ color: "var(--text-tertiary)" }}>Powered by Groq Llama3-70b · Real market data</p>
         </div>
         <span className="font-mono text-[0.52rem] uppercase tracking-widest" style={{ color: warming ? "#FF6B35" : "#C8FF00" }}>
           {warming ? "Warming" : "Online"}
@@ -140,10 +140,10 @@ export default function MentorChat({
       <div ref={scroller} className="h-[440px] overflow-y-auto p-4 space-y-4">
         {!messages.length && (
           <div className="space-y-3">
-            <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em]" style={{ color: "#606060" }}>Suggested Questions</p>
+            <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em]" style={{ color: "var(--text-tertiary)" }}>Suggested Questions</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {suggestions.map((question) => (
-                <button key={question} onClick={() => send(question)} className="rounded-sm p-3 text-left font-body text-xs leading-relaxed" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "#A0A0A0" }}>{question}</button>
+                <button key={question} onClick={() => send(question)} className="rounded-sm p-3 text-left font-body text-xs leading-relaxed" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-secondary)" }}>{question}</button>
               ))}
             </div>
           </div>
@@ -151,8 +151,8 @@ export default function MentorChat({
 
         {messages.map((message, index) => (
           <motion.div key={`${message.timestamp}-${index}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-            <div className="max-w-[86%] rounded-sm p-3" style={{ background: message.role === "user" ? "#C8FF00" : "var(--surface-2)", color: message.role === "user" ? "#0A0A0A" : "#F0F0F0", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <p className="font-mono text-[0.48rem] uppercase tracking-widest mb-2" style={{ color: message.role === "user" ? "rgba(10,10,10,0.6)" : "#606060" }}>
+            <div className="max-w-[86%] rounded-sm p-3" style={{ background: message.role === "user" ? "#C8FF00" : "var(--surface-2)", color: message.role === "user" ? "#0A0A0A" : "var(--text-primary)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <p className="font-mono text-[0.48rem] uppercase tracking-widest mb-2" style={{ color: message.role === "user" ? "rgba(var(--color-overlay-base), 0.6)" : "var(--text-tertiary)" }}>
                 {message.role === "user" ? "You" : "Mentor"} · {new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
               </p>
               <p className="font-body text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
@@ -187,7 +187,7 @@ export default function MentorChat({
           onKeyDown={(event) => { if (event.key === "Enter") void send(); }}
           placeholder="Ask your career mentor..."
           className="flex-1 rounded-sm px-3 py-3 bg-transparent font-body text-sm focus:outline-none"
-          style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "#F0F0F0" }}
+          style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-primary)" }}
         />
         <button onClick={() => void send()} disabled={loading || !input.trim()} className="rounded-sm px-5 font-mono text-[0.62rem] uppercase tracking-[0.2em] disabled:opacity-40" style={{ background: "#C8FF00", color: "#0A0A0A" }}>Send</button>
       </div>

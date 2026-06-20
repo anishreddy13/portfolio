@@ -78,8 +78,8 @@ export default function Navbar() {
           className="absolute inset-0 transition-all duration-500"
           style={{
             background: scrolled
-              ? "rgba(10,10,10,0.92)"
-              : "linear-gradient(to bottom, rgba(10,10,10,0.85), transparent)",
+              ? "rgba(var(--color-overlay-base), 0.92)"
+              : "linear-gradient(to bottom, rgba(var(--color-overlay-base), 0.85), transparent)",
             backdropFilter: scrolled ? "blur(20px)" : "none",
             borderBottom: scrolled ? "1px solid rgba(255,45,45,0.12)" : "none",
           }}
@@ -109,7 +109,7 @@ export default function Navbar() {
             />
             <span
               className="font-display tracking-[0.16em] leading-none select-none transition-colors"
-              style={{ fontSize: "clamp(1.1rem, 3vw, 1.4rem)", color: isDark ? "#F0F0F0" : "#0A0A0A" }}
+              style={{ fontSize: "clamp(1.1rem, 3vw, 1.4rem)", color: isDark ? "var(--text-primary)" : "#0A0A0A" }}
             >
               ANISH
               <span style={{ color: "#FF2D2D" }}>.</span>
@@ -125,8 +125,8 @@ export default function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => navigateTo(link.href)}
-                  className={`relative group font-mono text-[0.65rem] tracking-[0.2em] uppercase transition-colors duration-300 ${isActive ? "" : "hover:text-[#0A0A0A] dark:hover:text-[#F0F0F0]"}`}
-                  style={{ color: isActive ? "#FF2D2D" : (isDark ? "#606060" : "#404040") }}
+                  className={`relative group font-mono text-[0.65rem] tracking-[0.2em] uppercase transition-colors duration-300 ${isActive ? "" : "hover:text-[#0A0A0A] dark:hover:text-[var(--text-primary)]"}`}
+                  style={{ color: isActive ? "#FF2D2D" : (isDark ? "var(--text-tertiary)" : "#404040") }}
                 >
                   {link.labelDesktop}
                   <span
@@ -260,7 +260,7 @@ export default function Navbar() {
               aria-label="Toggle theme"
             >
               {isDark ? (
-                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F0F0F0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
+                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
               ) : (
                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></svg>
               )}
@@ -274,13 +274,13 @@ export default function Navbar() {
             >
               <motion.span
                 className="block h-[1.5px] rounded-full origin-center transition-colors"
-                style={{ background: isDark ? "#F0F0F0" : "#0A0A0A", width: "22px" }}
+                style={{ background: isDark ? "var(--text-primary)" : "#0A0A0A", width: "22px" }}
                 animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 6.5 : 0 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               />
               <motion.span
                 className="block h-[1.5px] rounded-full transition-colors"
-                style={{ background: isDark ? "#F0F0F0" : "#0A0A0A", width: "22px" }}
+                style={{ background: isDark ? "var(--text-primary)" : "#0A0A0A", width: "22px" }}
                 animate={{ opacity: mobileOpen ? 0 : 1, scaleX: mobileOpen ? 0 : 1 }}
                 transition={{ duration: 0.2 }}
               />
@@ -318,7 +318,7 @@ export default function Navbar() {
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-40 flex flex-col"
-            style={{ background: isDark ? "rgba(10,10,10,0.98)" : "rgba(248,248,248,0.98)", backdropFilter: "blur(24px)" }}
+            style={{ background: isDark ? "rgba(var(--color-overlay-base), 0.98)" : "rgba(248,248,248,0.98)", backdropFilter: "blur(24px)" }}
           >
             <div
               className="absolute top-0 right-0 w-48 h-48 pointer-events-none"
@@ -358,7 +358,7 @@ export default function Navbar() {
                   >
                     <span
                       className="font-mono text-[0.6rem] tracking-widest w-6 shrink-0 transition-colors"
-                      style={{ color: isDark ? "#606060" : "#A0A0A0" }}
+                      style={{ color: isDark ? "var(--text-tertiary)" : "var(--text-secondary)" }}
                     >
                       0{i + 1}
                     </span>
@@ -366,7 +366,7 @@ export default function Navbar() {
                       className="font-display tracking-[0.1em] transition-colors duration-200"
                       style={{
                         fontSize: "clamp(2.4rem, 10vw, 3.5rem)",
-                        color: isActive ? "#FF2D2D" : (isDark ? "#F0F0F0" : "#0A0A0A"),
+                        color: isActive ? "#FF2D2D" : (isDark ? "var(--text-primary)" : "#0A0A0A"),
                         lineHeight: 1,
                       }}
                     >

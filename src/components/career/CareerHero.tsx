@@ -46,9 +46,9 @@ export default function CareerHero() {
               Know What The
             </span>
             <br />
-            <span style={{ color: "#F0F0F0" }}>Market Wants</span>
+            <span style={{ color: "var(--text-primary)" }}>Market Wants</span>
           </h2>
-          <p className="font-body text-sm sm:text-base mt-4 max-w-2xl leading-relaxed" style={{ color: "#A0A0A0" }}>
+          <p className="font-body text-sm sm:text-base mt-4 max-w-2xl leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             Upload your resume. Get real-time skill gap analysis, salary predictions, and a personalized
             6-month career roadmap powered by live job market data.
           </p>
@@ -60,12 +60,12 @@ export default function CareerHero() {
               key={stat.label}
               whileHover={{ y: -3 }}
               className="rounded-sm px-3 py-4 text-center"
-              style={{ background: "rgba(10,10,10,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+              style={{ background: "rgba(var(--color-overlay-base), 0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
             >
               <p className="font-display text-2xl sm:text-3xl leading-none" style={{ color: stat.color }}>
                 {stat.value}
               </p>
-              <p className="font-mono text-[0.48rem] sm:text-[0.52rem] uppercase tracking-widest mt-2" style={{ color: "#606060" }}>
+              <p className="font-mono text-[0.48rem] sm:text-[0.52rem] uppercase tracking-widest mt-2" style={{ color: "var(--text-tertiary)" }}>
                 {stat.label}
               </p>
             </motion.div>

@@ -104,7 +104,7 @@ export default function MarketIntelligence() {
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <div>
           <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em]" style={{ color: "#FF6B35" }}>Market Intelligence</p>
-          <p className="font-body text-xs mt-1" style={{ color: "#606060" }}>Last updated: {updatedAt ? updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "--"}</p>
+          <p className="font-body text-xs mt-1" style={{ color: "var(--text-tertiary)" }}>Last updated: {updatedAt ? updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "--"}</p>
         </div>
         <div className="flex gap-2">
           <button onClick={load} className="rounded-sm px-3 py-2 font-mono text-[0.55rem] uppercase tracking-widest" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)", color: "#C8FF00" }}>Refresh</button>
@@ -134,7 +134,7 @@ export default function MarketIntelligence() {
         ].map((stat) => (
           <div key={stat.label} className="rounded-sm p-3" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
             <p className="font-display text-2xl leading-none truncate" style={{ color: stat.color }}>{stat.value}</p>
-            <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-1" style={{ color: "#606060" }}>{stat.label}</p>
+            <p className="font-mono text-[0.48rem] uppercase tracking-widest mt-1" style={{ color: "var(--text-tertiary)" }}>{stat.label}</p>
           </div>
         ))}
       </div>
@@ -146,11 +146,11 @@ export default function MarketIntelligence() {
             <div className="space-y-3 max-h-[520px] overflow-y-auto pr-1">
               {skills.slice(0, 20).map((skill, index) => (
                 <div key={skill.skill} className="grid grid-cols-[36px_1fr] gap-3 items-center">
-                  <span className="font-display text-xl" style={{ color: "#606060" }}>{index + 1}</span>
+                  <span className="font-display text-xl" style={{ color: "var(--text-tertiary)" }}>{index + 1}</span>
                   <div>
                     <div className="flex justify-between gap-3 mb-1">
-                      <span className="font-mono text-[0.6rem] uppercase" style={{ color: "#A0A0A0" }}>{skill.skill}</span>
-                      <span className="font-mono text-[0.55rem]" style={{ color: skill.ai_risk > 0.6 ? "#FF2D2D" : "#606060" }}>{skill.ai_risk > 0.6 ? "risk" : `${skill.demand_score.toFixed(0)}%`}</span>
+                      <span className="font-mono text-[0.6rem] uppercase" style={{ color: "var(--text-secondary)" }}>{skill.skill}</span>
+                      <span className="font-mono text-[0.55rem]" style={{ color: skill.ai_risk > 0.6 ? "#FF2D2D" : "var(--text-tertiary)" }}>{skill.ai_risk > 0.6 ? "risk" : `${skill.demand_score.toFixed(0)}%`}</span>
                     </div>
                     <MiniBar value={skill.demand_score} color="#C8FF00" />
                   </div>
@@ -159,8 +159,8 @@ export default function MarketIntelligence() {
             </div>
           ) : (
             <div className="rounded-sm p-6 text-center" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-              <p className="font-mono text-[0.6rem] uppercase tracking-[0.22em]" style={{ color: "#606060" }}>No data yet.</p>
-              <p className="font-body text-xs mt-2" style={{ color: "#A0A0A0" }}>Click Trigger Scrape to populate market data.</p>
+              <p className="font-mono text-[0.6rem] uppercase tracking-[0.22em]" style={{ color: "var(--text-tertiary)" }}>No data yet.</p>
+              <p className="font-body text-xs mt-2" style={{ color: "var(--text-secondary)" }}>Click Trigger Scrape to populate market data.</p>
             </div>
           )}
         </div>
@@ -170,11 +170,11 @@ export default function MarketIntelligence() {
             <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em] mb-4" style={{ color: "#A855F7" }}>Scraper Status</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div className="rounded-sm p-3" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "#606060" }}>Last Run</p>
-                <p className="font-body text-sm mt-1" style={{ color: "#A0A0A0" }}>{lastRun || "No scrape logged"}</p>
+                <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Last Run</p>
+                <p className="font-body text-sm mt-1" style={{ color: "var(--text-secondary)" }}>{lastRun || "No scrape logged"}</p>
               </div>
               <div className="rounded-sm p-3" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "#606060" }}>Jobs Fetched</p>
+                <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Jobs Fetched</p>
                 <p className="font-display text-2xl leading-none mt-1" style={{ color: "#FF6B35" }}>{lastLog?.jobs_fetched ?? "--"}</p>
               </div>
             </div>
@@ -187,15 +187,15 @@ export default function MarketIntelligence() {
                 {(repos.length ? repos.slice(0, 8) : languages.map((language, index) => ({ repo_name: language, language, stars: 0, trend_score: 90 - index * 8 }))).map((repo) => (
                   <div key={`${repo.repo_name}-${repo.language}`}>
                     <div className="flex justify-between gap-3 mb-1">
-                      <span className="font-mono text-[0.58rem] uppercase" style={{ color: "#A0A0A0" }}>{repo.language || repo.repo_name}</span>
-                      <span className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>{repo.trend_score.toFixed(1)}</span>
+                      <span className="font-mono text-[0.58rem] uppercase" style={{ color: "var(--text-secondary)" }}>{repo.language || repo.repo_name}</span>
+                      <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>{repo.trend_score.toFixed(1)}</span>
                     </div>
                     <MiniBar value={repo.trend_score} color="#FF6B35" />
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "#606060" }}>Scrape GitHub data to see trends.</p>
+              <p className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Scrape GitHub data to see trends.</p>
             )}
           </div>
         </div>
@@ -203,21 +203,21 @@ export default function MarketIntelligence() {
 
       <div className="rounded-sm p-5" style={{ background: "rgba(255,45,45,0.06)", border: "1px solid rgba(255,45,45,0.2)" }}>
         <p className="font-mono text-[0.58rem] uppercase tracking-[0.25em] mb-2" style={{ color: "#FF2D2D" }}>Declining Skills</p>
-        <p className="font-body text-xs mb-4" style={{ color: "#A0A0A0" }}>Consider transitioning away from these skills.</p>
+        <p className="font-body text-xs mb-4" style={{ color: "var(--text-secondary)" }}>Consider transitioning away from these skills.</p>
         {declining.length ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {declining.map((skill) => (
               <div key={skill.skill}>
                 <div className="flex justify-between mb-1">
-                  <span className="font-mono text-[0.58rem] uppercase" style={{ color: "#A0A0A0" }}>{skill.skill}</span>
-                  <span className="font-mono text-[0.55rem]" style={{ color: "#606060" }}>{(skill.decay_score * 100).toFixed(0)}%</span>
+                  <span className="font-mono text-[0.58rem] uppercase" style={{ color: "var(--text-secondary)" }}>{skill.skill}</span>
+                  <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>{(skill.decay_score * 100).toFixed(0)}%</span>
                 </div>
                 <MiniBar value={skill.decay_score * 100} color="#FF2D2D" />
               </div>
             ))}
           </div>
         ) : (
-          <p className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "#606060" }}>No declining skills detected yet.</p>
+          <p className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>No declining skills detected yet.</p>
         )}
       </div>
     </div>

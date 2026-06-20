@@ -28,7 +28,7 @@ export function StatCards({ stats }: StatCardsProps) {
         >
           <p
             className="font-mono text-[0.55rem] sm:text-[0.6rem] tracking-[0.2em] uppercase mb-2"
-            style={{ color: "#606060" }}
+            style={{ color: "var(--text-tertiary)" }}
           >
             {stat.label}
           </p>
@@ -40,7 +40,7 @@ export function StatCards({ stats }: StatCardsProps) {
           </p>
           <p
             className="font-mono text-[0.55rem] sm:text-[0.6rem] mt-1.5 truncate"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
             {stat.sub}
           </p>

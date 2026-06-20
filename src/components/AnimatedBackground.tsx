@@ -237,7 +237,7 @@ export default function AnimatedBackground() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 85% 75% at 50% 50%, transparent 30%, rgba(10,10,10,0.7) 100%)",
+            "radial-gradient(ellipse 85% 75% at 50% 50%, transparent 30%, rgba(var(--color-overlay-base), 0.7) 100%)",
         }}
       />
 
@@ -246,7 +246,7 @@ export default function AnimatedBackground() {
         className="absolute inset-x-0 top-0 h-32"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(10,10,10,0.9) 0%, transparent 100%)",
+            "linear-gradient(to bottom, rgba(var(--color-overlay-base), 0.9) 0%, transparent 100%)",
         }}
       />
 
@@ -255,7 +255,7 @@ export default function AnimatedBackground() {
         className="absolute inset-x-0 bottom-0 h-40"
         style={{
           background:
-            "linear-gradient(to top, rgba(10,10,10,0.95) 0%, transparent 100%)",
+            "linear-gradient(to top, rgba(var(--color-overlay-base), 0.95) 0%, transparent 100%)",
         }}
       />
 

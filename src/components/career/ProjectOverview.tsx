@@ -54,10 +54,10 @@ export default function ProjectOverview() {
             </p>
           </div>
 
-          <h2 className="font-display text-3xl sm:text-4xl leading-none mb-4" style={{ color: "#F0F0F0" }}>
+          <h2 className="font-display text-3xl sm:text-4xl leading-none mb-4" style={{ color: "var(--text-primary)" }}>
             A real career intelligence product, not a static demo.
           </h2>
-          <p className="font-body text-sm leading-relaxed mb-5" style={{ color: "#A0A0A0" }}>
+          <p className="font-body text-sm leading-relaxed mb-5" style={{ color: "var(--text-secondary)" }}>
             This dashboard connects a live FastAPI backend, market-data scraping, resume analysis, ML scoring,
             salary prediction, and an AI mentor into one workflow that helps students understand where they stand
             and what to learn next.
@@ -69,7 +69,7 @@ export default function ProjectOverview() {
                 <p className="font-display text-2xl leading-none" style={{ color: stat.color }}>
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="font-mono text-[0.48rem] uppercase tracking-wider mt-2 leading-relaxed" style={{ color: "#606060" }}>
+                <p className="font-mono text-[0.48rem] uppercase tracking-wider mt-2 leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
                   {stat.label}
                 </p>
               </div>
@@ -91,10 +91,10 @@ export default function ProjectOverview() {
                 <span className="font-display text-2xl" style={{ color: index === 0 ? "#C8FF00" : index === 3 ? "#A855F7" : "#FF6B35" }}>
                   {item.step}
                 </span>
-                <h3 className="font-mono text-[0.56rem] uppercase tracking-wider mt-3 mb-2" style={{ color: "#F0F0F0" }}>
+                <h3 className="font-mono text-[0.56rem] uppercase tracking-wider mt-3 mb-2" style={{ color: "var(--text-primary)" }}>
                   {item.title}
                 </h3>
-                <p className="font-body text-[0.68rem] leading-relaxed" style={{ color: "#606060" }}>
+                <p className="font-body text-[0.68rem] leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
                   {item.copy}
                 </p>
               </motion.div>
@@ -102,7 +102,7 @@ export default function ProjectOverview() {
           </div>
 
           <div>
-            <p className="font-mono text-[0.55rem] uppercase tracking-[0.22em] mb-3" style={{ color: "#606060" }}>
+            <p className="font-mono text-[0.55rem] uppercase tracking-[0.22em] mb-3" style={{ color: "var(--text-tertiary)" }}>
               Technology Stack
             </p>
             <div className="flex flex-wrap gap-2">

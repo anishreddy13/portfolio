@@ -64,7 +64,7 @@ export function LanguagePieChart({ data }: LanguagePieChartProps) {
                       </p>
                       <p
                         className="font-mono text-[0.65rem]"
-                        style={{ color: "#F0F0F0" }}
+                        style={{ color: "var(--text-primary)" }}
                       >
                         {payload[0].value}% of time
                       </p>
@@ -87,7 +87,7 @@ export function LanguagePieChart({ data }: LanguagePieChartProps) {
             />
             <span
               className="font-mono text-[0.55rem] uppercase"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               {item.name}
             </span>

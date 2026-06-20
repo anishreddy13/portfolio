@@ -67,7 +67,7 @@ export default function FeaturedPlantProduct() {
 
                 <h2
                   className="font-display leading-none tracking-tight mb-4"
-                  style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)", color: "#F0F0F0" }}
+                  style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)", color: "var(--text-primary)" }}
                 >
                   PLANT
                   <br />
@@ -83,7 +83,7 @@ export default function FeaturedPlantProduct() {
                   </span>
                 </h2>
 
-                <p className="font-body text-sm sm:text-base leading-relaxed max-w-2xl mb-6" style={{ color: "#A0A0A0" }}>
+                <p className="font-body text-sm sm:text-base leading-relaxed max-w-2xl mb-6" style={{ color: "var(--text-secondary)" }}>
                   A production-style computer vision demo that classifies plant leaf diseases using an EfficientNet-B0 model served through FastAPI on Hugging Face Spaces.
                 </p>
 
@@ -119,18 +119,18 @@ export default function FeaturedPlantProduct() {
               <div className="grid grid-cols-1 gap-3">
                 <div
                   className="rounded-sm p-4 sm:p-5"
-                  style={{ background: "rgba(10,10,10,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  style={{ background: "rgba(var(--color-overlay-base), 0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
-                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "#606060" }}>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-4" style={{ color: "var(--text-tertiary)" }}>
                     Inference Stack
                   </p>
                   {["Next.js upload", "HF Spaces API", "FastAPI model server", "EfficientNet-B0 classifier"].map((item, index) => (
                     <div key={item} className="flex items-center gap-3 py-2">
-                      <span className="font-display text-xl leading-none" style={{ color: index === 3 ? "#C8FF00" : "#606060" }}>
+                      <span className="font-display text-xl leading-none" style={{ color: index === 3 ? "#C8FF00" : "var(--text-tertiary)" }}>
                         0{index + 1}
                       </span>
-                      <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.06)" }} />
-                      <span className="font-body text-xs sm:text-sm text-right" style={{ color: "#A0A0A0" }}>
+                      <div className="h-px flex-1" style={{ background: "var(--border)" }} />
+                      <span className="font-body text-xs sm:text-sm text-right" style={{ color: "var(--text-secondary)" }}>
                         {item}
                       </span>
                     </div>
@@ -147,7 +147,7 @@ export default function FeaturedPlantProduct() {
                       <p className="font-display text-2xl sm:text-3xl leading-none" style={{ color: stat.color }}>
                         {stat.value}
                       </p>
-                      <p className="font-mono text-[0.5rem] uppercase tracking-widest mt-2" style={{ color: "#606060" }}>
+                      <p className="font-mono text-[0.5rem] uppercase tracking-widest mt-2" style={{ color: "var(--text-tertiary)" }}>
                         {stat.label}
                       </p>
                     </div>

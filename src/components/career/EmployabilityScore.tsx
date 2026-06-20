@@ -30,7 +30,7 @@ function gradeForScore(score: number) {
 function MetricCard({ label, value, color }: { label: string; value: string; color: string }) {
   return (
     <div className="rounded-sm p-3" style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-      <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "#606060" }}>{label}</p>
+      <p className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{label}</p>
       <p className="font-display text-2xl leading-none mt-2 truncate" style={{ color }}>{value}</p>
     </div>
   );
@@ -41,8 +41,8 @@ function BreakdownBar({ label, value, color }: { label: string; value: number; c
   return (
     <div>
       <div className="flex items-center justify-between gap-3 mb-1.5">
-        <span className="font-mono text-[0.55rem] uppercase tracking-wider" style={{ color: "#606060" }}>{label}</span>
-        <span className="font-mono text-[0.55rem]" style={{ color: "#A0A0A0" }}>{percent.toFixed(1)}%</span>
+        <span className="font-mono text-[0.55rem] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>{label}</span>
+        <span className="font-mono text-[0.55rem]" style={{ color: "var(--text-secondary)" }}>{percent.toFixed(1)}%</span>
       </div>
       <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
         <motion.div
@@ -67,7 +67,7 @@ export default function EmployabilityScore({
   if (!employability) {
     return (
       <div className="rounded-sm p-8 text-center" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
-        <p className="font-mono text-[0.6rem] uppercase tracking-[0.25em]" style={{ color: "#606060" }}>
+        <p className="font-mono text-[0.6rem] uppercase tracking-[0.25em]" style={{ color: "var(--text-tertiary)" }}>
           Analyze a resume to reveal the score dashboard
         </p>
       </div>
@@ -77,7 +77,7 @@ export default function EmployabilityScore({
   const score = normalizePercent(employability.overall_score);
   const invalidScore = score < 10;
   const displayScore = invalidScore ? 0 : score;
-  const color = invalidScore ? "#606060" : colorForScore(score);
+  const color = invalidScore ? "var(--text-tertiary)" : colorForScore(score);
   const grade = invalidScore ? "--" : gradeForScore(score);
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
@@ -116,7 +116,7 @@ export default function EmployabilityScore({
               >
                 {invalidScore ? "--" : score.toFixed(0)}
               </motion.span>
-              <span className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "#606060" }}>Score</span>
+              <span className="font-mono text-[0.5rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Score</span>
               <span className="mt-2 px-2 py-1 rounded-sm font-mono text-[0.55rem] uppercase" style={{ color, background: `${color}12`, border: `1px solid ${color}33` }}>
                 {grade}
               </span>
@@ -142,7 +142,7 @@ export default function EmployabilityScore({
       </div>
 
       <div className="rounded-sm p-5 space-y-4" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
-        <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase" style={{ color: "#606060" }}>Score Breakdown</p>
+        <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase" style={{ color: "var(--text-tertiary)" }}>Score Breakdown</p>
         <BreakdownBar label="Current Skills" value={employability.score_breakdown.current_skills} color="#C8FF00" />
         <BreakdownBar label="Trending Skills" value={employability.score_breakdown.trending_skills} color="#FF6B35" />
         <BreakdownBar label="Market Demand" value={employability.score_breakdown.market_demand} color="#A855F7" />
@@ -153,22 +153,22 @@ export default function EmployabilityScore({
         <p className="font-display text-2xl leading-none mb-2" style={{ color: "#C8FF00" }}>
           You could reach {invalidScore ? "--" : `${potential.toFixed(0)}%`}
         </p>
-        <p className="font-body text-xs mb-4" style={{ color: "#A0A0A0" }}>with focused improvements in the next learning cycle.</p>
+        <p className="font-body text-xs mb-4" style={{ color: "var(--text-secondary)" }}>with focused improvements in the next learning cycle.</p>
         <div className="space-y-2">
           {actions.length ? actions.map((gap) => (
-            <div key={gap.skill} className="flex items-center justify-between gap-3 rounded-sm px-3 py-2" style={{ background: "rgba(10,10,10,0.3)", border: "1px solid rgba(255,255,255,0.04)" }}>
-              <span className="font-mono text-[0.58rem] uppercase tracking-wider" style={{ color: "#A0A0A0" }}>{gap.skill}</span>
-              <span className="font-mono text-[0.52rem]" style={{ color: "#606060" }}>{gap.priority}</span>
+            <div key={gap.skill} className="flex items-center justify-between gap-3 rounded-sm px-3 py-2" style={{ background: "rgba(var(--color-overlay-base), 0.3)", border: "1px solid rgba(255,255,255,0.04)" }}>
+              <span className="font-mono text-[0.58rem] uppercase tracking-wider" style={{ color: "var(--text-secondary)" }}>{gap.skill}</span>
+              <span className="font-mono text-[0.52rem]" style={{ color: "var(--text-tertiary)" }}>{gap.priority}</span>
             </div>
           )) : (
-            <p className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "#606060" }}>No critical gaps found</p>
+            <p className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>No critical gaps found</p>
           )}
         </div>
       </div>
 
       <div className="rounded-sm p-5" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
         <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color: "#FF6B35" }}>Salary Prediction</p>
-        <p className="font-display text-3xl leading-none" style={{ color: "#F0F0F0" }}>
+        <p className="font-display text-3xl leading-none" style={{ color: "var(--text-primary)" }}>
           {salary?.formatted || "Run analysis to see salary prediction"}
         </p>
         {salary && <BreakdownBar label="Confidence" value={salary.confidence} color="#FF6B35" />}
