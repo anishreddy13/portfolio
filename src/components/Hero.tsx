@@ -46,8 +46,7 @@ function WordCycle() {
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const y       = useTransform(scrollY, [0, 600], [0, -80]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const y = useTransform(scrollY, [0, 600], [0, -80]);
 
   const charVariants = {
     hidden:  { opacity: 0, y: 60, skewY: 4 },
@@ -99,7 +98,7 @@ export default function Hero() {
       />
 
       <motion.div
-        style={{ y, opacity }}
+        style={{ y }}
         className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12
                    pt-24 pb-24 md:pt-28 md:pb-28"
       >
