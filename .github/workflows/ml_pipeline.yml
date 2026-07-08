@@ -44,6 +44,7 @@ jobs:
 
       # ── Log result to Supabase ─────────────────────────────
       - name: Log pipeline run to Supabase
+        continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -57,10 +58,14 @@ jobs:
           import os
           from supabase import create_client
 
-          client = create_client(
-              os.environ["SUPABASE_URL"],
-              os.environ["SUPABASE_SERVICE_ROLE_KEY"]
-          )
+          url = os.environ.get("SUPABASE_URL", "").strip()
+          key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+
+          if not url or not key:
+              print("WARNING: Supabase secrets not configured — skipping pipeline log.")
+              exit(0)
+
+          client = create_client(url, key)
 
           status  = "success" if os.environ["TEST_STATUS"] == "success" else "failed"
           run_num = int(os.environ["RUN_NUMBER"])
