@@ -9,9 +9,10 @@ import { ThemeToggle, MobileThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { labelDesktop: "About",   labelMobile: "About",        href: "#about" },
+  { labelDesktop: "Edu",     labelMobile: "Education",    href: "#education" },
   { labelDesktop: "Work",    labelMobile: "Work",         href: "#projects" },
-  { labelDesktop: "Contact", labelMobile: "Contact",      href: "#contact" },
   { labelDesktop: "Certs",   labelMobile: "Certificates", href: "#certificates" },
+  { labelDesktop: "Contact", labelMobile: "Contact",      href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -31,7 +32,7 @@ export default function Navbar() {
         return;
       }
 
-      const sections = ["about", "projects", "certificates", "contact"];
+      const sections = ["about", "education", "projects", "certificates", "contact"];
       for (const sec of [...sections].reverse()) {
         const el = document.getElementById(sec);
         if (el && window.scrollY >= el.offsetTop - 200) {

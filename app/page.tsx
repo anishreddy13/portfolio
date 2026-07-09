@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { trackActivity } from "../lib/trackActivity";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Education from "@/components/Education";
 import FeaturedFinancialAnalyst from "@/components/FeaturedFinancialAnalyst";
 import Projects from "@/components/Projects";
 import Certificates from "@/components/Certificates";
@@ -29,6 +30,7 @@ export default function Home() {
       <Hero />
       <FeaturedFinancialAnalyst />
       <About />
+      <Education />
       <Projects />
       <Certificates />
       <Contact />
