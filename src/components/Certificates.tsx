@@ -5,8 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { certificates, Certificate } from "@/data/certificates";
 import ScrollReveal from "./ScrollReveal";
-
-const categories = ["All", "AI", "ML", "Data", "Cloud"];
+import { useTranslations } from "next-intl";
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   return (
@@ -142,10 +141,12 @@ function CertificateCard({
 }
 
 export default function Certificates() {
-  const [filter, setFilter] = useState("All");
+  const t = useTranslations("Certificates");
+  const categories = [t('filter_all'), t('filter_ai'), t('filter_ml'), t('filter_data'), t('filter_cloud')];
+  const [filter, setFilter] = useState(categories[0]);
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
 
-  const filtered = filter === "All" ? certificates : certificates.filter((c) => c.category.includes(filter));
+  const filtered = filter === categories[0] ? certificates : certificates.filter((c) => c.category.includes(filter));
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -179,7 +180,7 @@ export default function Certificates() {
               <div className="flex items-center gap-2 mb-5">
                 <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#C8FF00", boxShadow: "0 0 8px #C8FF00" }} />
                 <span className="font-mono text-[0.6rem] tracking-[0.3em] uppercase" style={{ color: "var(--text-tertiary)" }}>
-                  CREDENTIALS
+                  {t('tag')}
                 </span>
               </div>
             </ScrollReveal>
@@ -188,7 +189,7 @@ export default function Certificates() {
                 className="font-display leading-none tracking-tight break-words"
                 style={{ fontSize: "clamp(2.25rem, 8vw, 6.5rem)", color: "var(--text-primary)" }}
               >
-                Certificates &<br />
+                {t('heading1')}<br />
                 <span
                   style={{
                     background: "linear-gradient(135deg, #FF2D2D 0%, #FF6B35 50%, #C8FF00 100%)",
@@ -197,13 +198,13 @@ export default function Certificates() {
                     backgroundClip: "text",
                   }}
                 >
-                  Achievements
+                  {t('heading_highlight')}
                 </span>
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.15}>
               <p className="font-body text-base mt-6 max-w-xl" style={{ color: "var(--text-secondary)" }}>
-                Continuous learning is critical in ML and AI. Here are the professional credentials validating my technical expertise across the stack.
+                {t('description')}
               </p>
             </ScrollReveal>
           </div>
@@ -348,7 +349,7 @@ export default function Certificates() {
                 </p>
 
                 <div className="mb-8">
-                  <h4 className="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)] mb-3">Skills Covered</h4>
+                  <h4 className="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)] mb-3">{t('skills')}</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedCert.skills.map((skill) => (
                       <span key={skill} className="font-mono text-[0.65rem] rounded-sm px-2.5 py-1" style={{ border: `1px solid ${selectedCert.color}40`, color: selectedCert.color, background: `${selectedCert.color}10` }}>
@@ -360,7 +361,7 @@ export default function Certificates() {
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t" style={{ borderColor: "var(--border)" }}>
                   <div className="font-mono text-[0.6rem] text-[var(--text-tertiary)] uppercase tracking-widest">
-                    {selectedCert.credentialId !== "N/A" ? `ID: ${selectedCert.credentialId}` : 'VERIFIED'}
+                    {selectedCert.credentialId !== "N/A" ? `${t('credential_id')}: ${selectedCert.credentialId}` : t('verified')}
                   </div>
                   <a
                     href={selectedCert.verifyUrl}
@@ -369,7 +370,7 @@ export default function Certificates() {
                     className="inline-flex items-center justify-center gap-2 font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 rounded-sm transition-transform hover:scale-[1.02]"
                     style={{ background: selectedCert.color, color: "#0A0A0A" }}
                   >
-                    Verify Certificate ↗
+                    {t('verify_full')}
                   </a>
                 </div>
               </div>

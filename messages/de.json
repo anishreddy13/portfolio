@@ -93,5 +93,85 @@
     "contact": "Kontakt",
     "privacy": "Datenschutz",
     "terms": "Bedingungen"
+  },
+  "Projects": {
+    "tag": "04 / Projekte",
+    "heading1": "PRODUKTION",
+    "heading_highlight": "SYSTEME",
+    "description": "Eine Auswahl an bereitgestellten Anwendungen für maschinelles Lernen, Dashboards und skalierbaren Full-Stack-Architekturen.",
+    "items": {
+      "01": {
+        "title": "Pflanzenkrankheitserkennung",
+        "desc": "Blattkrankheitsklassifikator im Produktionsstil, der über ein leichtgewichtiges Hugging Face Spaces FastAPI-Deployment mit Multipart-Uploads, EfficientNet-B0-Inferenz, Top-5-Konfidenzanalyse, Grad-CAM-Erklärungen, Webcam-Erfassung und lokalen Analysen bereitgestellt wird."
+      },
+      "02": {
+        "title": "ML-Überwachungs-Dashboard",
+        "desc": "Betriebliches Dashboard für Modellvorhersagen, Service-Gesundheit, Drift-Berichte, Pipeline-Läufe, Besucher-Telemetrie und Live-Analysen. Aufgebaut als Beobachtbarkeitsebene für die bereitgestellten KI-Systeme des Portfolios."
+      },
+      "03": {
+        "title": "KI-Interview-Analysator",
+        "desc": "Browser-natives Interview-Übungsmodul mit Live-Spracherfassung, Transkript-Bewertung, Antwort-Feedback und interaktiver Coaching-UI, die direkt in das ML-Lab-Erlebnis integriert ist."
+      },
+      "04": {
+        "title": "Hautkrankheitserkennung",
+        "desc": "Medizinische Bild-Demo zur Klassifizierung von Hautläsionen mit Bild-Upload, CNN-Inferenz, risikoorientierten Ergebnisfeldern, Top-5-Vorhersagen und klinischen Konfidenzaufschlüsselungen."
+      },
+      "05": {
+        "title": "Emotionserkennung",
+        "desc": "Textverständnismodul, das primäre Emotionen, Geschlechts- und Alterssignale mit bewerteten Punktzahlen, Konfidenzbalken, Beispielen und Verlauf innerhalb der gemeinsamen ML-Lab-Schnittstelle vorhersagt."
+      },
+      "06": {
+        "title": "Spam-Erkennung",
+        "desc": "Spam-Klassifikator im SMS-Stil mit Ham/Spam-Wahrscheinlichkeitsbewertung, Hervorhebung von Schlüsselwörtern, Konfidenzvisualisierungen, Beispiel-Prompts und produktiven API-Integrationsmustern."
+      },
+      "07": {
+        "title": "Stimmungsanalyse",
+        "desc": "Bereitgestelltes Stimmungsmodell für positive, negative und neutrale Textklassifizierung mit Konfidenzwerten, Klassenverteilungsbalken, Beispielen und Vorhersageverlauf."
+      }
+    }
+  },
+  "FeaturedPlant": {
+    "tag": "Hervorgehobenes KI-Produkt",
+    "live_api": "Live-API",
+    "heading1": "PFLANZEN",
+    "heading2": "KRANKHEITS-KI",
+    "description": "Produktions-Computer-Vision-Demo – Laden Sie ein Blattfoto hoch und beobachten Sie, wie ein",
+    "description_highlight1": "EfficientNet-B0-Modell",
+    "description2": "die Krankheit klassifiziert und eine Echtzeit-",
+    "description_highlight2": "Grad-CAM-Aufmerksamkeits-Heatmap",
+    "description3": "in unter einer Sekunde erstellt.",
+    "demo_loaded": "DEMO GELADEN",
+    "full_lab": "Vollständiges ML-Lab-Erlebnis ↗",
+    "loading": "Pflanzen-KI wird geladen…"
+  },
+  "FeaturedFinancial": {
+    "tag": "Hervorgehobenes KI-Produkt",
+    "live_api": "Live-Headless-API",
+    "heading1": "MULTI-AGENT",
+    "heading2": "FINANZ-KI",
+    "description": "Digitale Arbeitskräfte auf Unternehmensniveau. Eine orchestrierte Pipeline von ",
+    "description_highlight1": "3 spezialisierten KI-Agenten",
+    "description2": ", die Forschung, quantitative Analysen und redaktionelle Synthese durchführen, um Investment-Briefings im Bloomberg-Stil zu erstellen.",
+    "case_study": "Fallstudie & Live-Demo ansehen ↗"
+  },
+  "Certificates": {
+    "tag": "05 / Qualifikationen",
+    "heading1": "KONTINUIERLICHES",
+    "heading_highlight": "LERNEN",
+    "description": "Eine Sammlung von technischen Zertifizierungen und spezialisiertem Training in den Bereichen maschinelles Lernen, Cloud-Architektur und Software-Engineering.",
+    "no_cert": "Keine Zertifikate gefunden",
+    "issuer": "AUSSTELLER",
+    "date": "DATUM",
+    "credential_id": "ZERTIFIKATS-ID",
+    "skills": "ERWORBENE FÄHIGKEITEN",
+    "verified": "VERIFIZIERT",
+    "verify": "Verifizieren ↗",
+    "verify_full": "Zertifikat verifizieren ↗",
+    "close": "Schließen",
+    "filter_all": "Alle",
+    "filter_ai": "KI",
+    "filter_ml": "ML",
+    "filter_data": "Daten",
+    "filter_cloud": "Cloud"
   }
 }

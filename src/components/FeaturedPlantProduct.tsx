@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 import { plantProductStats, plantTechBadges } from "../lib/plantDiseaseContent";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 
 // Lazy-load the interactive demo so the homepage doesn't block on it
 const HomePlantDemo = dynamic(() => import("./HomePlantDemo"), {
@@ -25,6 +26,7 @@ const HomePlantDemo = dynamic(() => import("./HomePlantDemo"), {
 });
 
 export default function FeaturedPlantProduct() {
+  const t = useTranslations("FeaturedPlant");
   return (
     <section
       id="featured-plant-ai"
@@ -73,7 +75,7 @@ export default function FeaturedPlantProduct() {
                 <div>
                   <div className="flex flex-wrap items-center gap-3 mb-4">
                     <span className="section-tag" style={{ color: "#C8FF00" }}>
-                      Featured AI Product
+                      {t('tag')}
                     </span>
                     <span
                       className="inline-flex items-center gap-2 rounded-sm px-2.5 py-1 font-mono text-[0.55rem] uppercase tracking-widest"
@@ -87,7 +89,7 @@ export default function FeaturedPlantProduct() {
                         className="w-1.5 h-1.5 rounded-full animate-pulse"
                         style={{ background: "#C8FF00", boxShadow: "0 0 8px #C8FF00" }}
                       />
-                      Live API
+                      {t('live_api')}
                     </span>
                   </div>
 
@@ -95,7 +97,7 @@ export default function FeaturedPlantProduct() {
                     className="font-display leading-none tracking-tight mb-4"
                     style={{ fontSize: "clamp(2.8rem, 7vw, 5.5rem)", color: "var(--text-primary)" }}
                   >
-                    PLANT
+                    {t('heading1')}
                     <br />
                     <span
                       style={{
@@ -105,7 +107,7 @@ export default function FeaturedPlantProduct() {
                         backgroundClip: "text",
                       }}
                     >
-                      DISEASE AI
+                      {t('heading2')}
                     </span>
                   </h2>
 
@@ -113,10 +115,9 @@ export default function FeaturedPlantProduct() {
                     className="font-body text-sm sm:text-base leading-relaxed max-w-xl"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Production computer vision demo — upload a leaf photo and watch an{" "}
-                    <span style={{ color: "var(--text-primary)" }}>EfficientNet-B0 model</span> classify the disease
-                    and generate a real-time{" "}
-                    <span style={{ color: "#C8FF00" }}>Grad-CAM attention heatmap</span> in under a second.
+                    {t('description')} {" "}
+                    <span style={{ color: "var(--text-primary)" }}>{t('description_highlight1')}</span> {t('description2')} {" "}
+                    <span style={{ color: "#C8FF00" }}>{t('description_highlight2')}</span> {t('description3')}
                   </p>
                 </div>
 

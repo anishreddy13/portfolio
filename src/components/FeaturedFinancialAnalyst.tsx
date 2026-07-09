@@ -7,12 +7,14 @@ import {
   financialProductStats,
   financialTechBadges,
 } from "../lib/financialAnalystContent";
+import { useTranslations } from "next-intl";
 
 /* ═════════════════════════════════════════════
    Main Export: FeaturedFinancialAnalyst (Teaser)
    ═════════════════════════════════════════════ */
 
 export default function FeaturedFinancialAnalyst() {
+  const t = useTranslations("FeaturedFinancial");
   return (
     <section
       id="featured-financial-analyst"
@@ -62,7 +64,7 @@ export default function FeaturedFinancialAnalyst() {
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-3 mb-6">
                     <span className="section-tag" style={{ color: "#C8FF00" }}>
-                      Featured AI Product
+                      {t('tag')}
                     </span>
                     <span
                       className="inline-flex items-center gap-2 rounded-sm px-2.5 py-1 font-mono text-[0.55rem] uppercase tracking-widest"
@@ -76,7 +78,7 @@ export default function FeaturedFinancialAnalyst() {
                         className="w-1.5 h-1.5 rounded-full animate-pulse"
                         style={{ background: "#C8FF00", boxShadow: "0 0 8px #C8FF00" }}
                       />
-                      Live Headless API
+                      {t('live_api')}
                     </span>
                   </div>
 
@@ -84,7 +86,7 @@ export default function FeaturedFinancialAnalyst() {
                     className="font-display leading-none tracking-tight mb-5"
                     style={{ fontSize: "clamp(3.5rem, 8vw, 6.5rem)", color: "var(--text-primary)" }}
                   >
-                    MULTI-AGENT
+                    {t('heading1')}
                     <br />
                     <span
                       style={{
@@ -94,7 +96,7 @@ export default function FeaturedFinancialAnalyst() {
                         backgroundClip: "text",
                       }}
                     >
-                      FINANCIAL AI
+                      {t('heading2')}
                     </span>
                   </h2>
 
@@ -102,9 +104,8 @@ export default function FeaturedFinancialAnalyst() {
                     className="font-body text-base sm:text-lg leading-relaxed max-w-xl mb-8"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Enterprise-grade digital workforce. An orchestrated pipeline of 
-                    <span style={{ color: "#C8FF00" }}> 3 specialized AI agents</span> executing research,
-                    quantitative analysis, and editorial synthesis to generate Bloomberg-style investment briefs.
+                    {t('description')}
+                    <span style={{ color: "#C8FF00" }}> {t('description_highlight1')}</span>{t('description2')}
                   </p>
 
                   <div className="flex flex-wrap gap-2 mb-10">
@@ -133,7 +134,7 @@ export default function FeaturedFinancialAnalyst() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                      >
-                        View Case Study & Live Demo ↗
+                        {t('case_study')}
                      </motion.div>
                   </Link>
 

@@ -93,5 +93,85 @@
     "contact": "Contact",
     "privacy": "Privacy",
     "terms": "Terms"
+  },
+  "Projects": {
+    "tag": "04 / Showcases",
+    "heading1": "PRODUCTION",
+    "heading_highlight": "SYSTEMS",
+    "description": "A selection of deployed machine learning applications, dashboards, and scalable full-stack architectures.",
+    "items": {
+      "01": {
+        "title": "Plant Disease Detection",
+        "desc": "Production-style leaf disease classifier served through a lightweight Hugging Face Spaces FastAPI deployment with multipart uploads, EfficientNet-B0 inference, top-5 confidence analysis, Grad-CAM explanations, webcam capture, and local analytics."
+      },
+      "02": {
+        "title": "ML Monitoring Dashboard",
+        "desc": "Operational dashboard for model predictions, service health, drift reports, pipeline runs, visitor telemetry, and live analytics. Built as the observability layer for the portfolio's deployed AI systems."
+      },
+      "03": {
+        "title": "AI Interview Analyzer",
+        "desc": "Browser-native interview practice module with live speech capture, transcript scoring, answer feedback, and interactive coaching UI integrated directly into the ML Lab experience."
+      },
+      "04": {
+        "title": "Skin Disease Detection",
+        "desc": "Medical-image demo for skin lesion classification with image upload, CNN inference, risk-oriented result panels, top-5 predictions, and clinical-style confidence breakdowns."
+      },
+      "05": {
+        "title": "Emotion Detection",
+        "desc": "Text understanding module that predicts primary emotion, gender, and age signals with ranked scores, confidence bars, examples, and history inside the shared ML Lab interface."
+      },
+      "06": {
+        "title": "Spam Detection",
+        "desc": "SMS-style spam classifier with ham/spam probability scoring, keyword surfacing, confidence visualizations, sample prompts, and production API integration patterns."
+      },
+      "07": {
+        "title": "Sentiment Analysis",
+        "desc": "Deployed sentiment model for positive, negative, and neutral text classification with confidence scores, class distribution bars, examples, and prediction history."
+      }
+    }
+  },
+  "FeaturedPlant": {
+    "tag": "Featured AI Product",
+    "live_api": "Live API",
+    "heading1": "PLANT",
+    "heading2": "DISEASE AI",
+    "description": "Production computer vision demo — upload a leaf photo and watch an",
+    "description_highlight1": "EfficientNet-B0 model",
+    "description2": "classify the disease and generate a real-time",
+    "description_highlight2": "Grad-CAM attention heatmap",
+    "description3": "in under a second.",
+    "demo_loaded": "DEMO LOADED",
+    "full_lab": "Full ML Lab Experience ↗",
+    "loading": "Loading Plant AI…"
+  },
+  "FeaturedFinancial": {
+    "tag": "Featured AI Product",
+    "live_api": "Live Headless API",
+    "heading1": "MULTI-AGENT",
+    "heading2": "FINANCIAL AI",
+    "description": "Enterprise-grade digital workforce. An orchestrated pipeline of ",
+    "description_highlight1": "3 specialized AI agents",
+    "description2": " executing research, quantitative analysis, and editorial synthesis to generate Bloomberg-style investment briefs.",
+    "case_study": "View Case Study & Live Demo ↗"
+  },
+  "Certificates": {
+    "tag": "05 / Credentials",
+    "heading1": "CONTINUOUS",
+    "heading_highlight": "LEARNING",
+    "description": "A collection of technical certifications and specialized training in machine learning, cloud architecture, and software engineering.",
+    "no_cert": "No certificates found",
+    "issuer": "ISSUER",
+    "date": "DATE",
+    "credential_id": "CREDENTIAL ID",
+    "skills": "SKILLS COVERED",
+    "verified": "VERIFIED",
+    "verify": "Verify ↗",
+    "verify_full": "Verify Credential ↗",
+    "close": "Close",
+    "filter_all": "All",
+    "filter_ai": "AI",
+    "filter_ml": "ML",
+    "filter_data": "Data",
+    "filter_cloud": "Cloud"
   }
 }

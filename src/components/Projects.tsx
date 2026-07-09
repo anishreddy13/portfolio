@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useMotionValue, useTransform } from "framer-mo
 import { projectCategories, projects } from "@/data/projects";
 import type { PortfolioProject, ProjectStatus } from "@/data/projects";
 import ScrollReveal from "./ScrollReveal";
+import { useTranslations } from "next-intl";
 
 const statusConfig: Record<ProjectStatus, { label: string; color: string }> = {
   live: { label: "Live", color: "#C8FF00" },
@@ -25,6 +26,7 @@ function ProjectCard({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const status = statusConfig[project.status];
+  const t = useTranslations("Projects");
 
   const rotateX = useTransform(mouseY, [-100, 100], [5, -5]);
   const rotateY = useTransform(mouseX, [-100, 100], [-5, 5]);
@@ -134,7 +136,7 @@ function ProjectCard({
                 transition: "color 0.2s ease",
               }}
             >
-              {project.title}
+              {t(`items.${project.id}.title`)}
             </h3>
 
             <motion.div
@@ -148,7 +150,7 @@ function ProjectCard({
             />
 
             <p className="font-body text-sm leading-relaxed mb-5 flex-1 min-h-[9.5rem]" style={{ color: "var(--text-secondary)" }}>
-              {project.description}
+              {t(`items.${project.id}.desc`)}
             </p>
 
             <div className="grid grid-cols-3 gap-1.5 mb-4">
@@ -236,6 +238,7 @@ function ProjectCard({
 
 export default function Projects() {
   const [filter, setFilter] = useState("All");
+  const t = useTranslations("Projects");
 
   const filtered =
     filter === "All" ? projects : projects.filter((project) => project.category === filter);
@@ -266,16 +269,16 @@ export default function Projects() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 md:mb-16">
-          <div>
+          <div className="mb-14 md:mb-20 max-w-2xl">
             <ScrollReveal>
-              <span className="section-tag block mb-5">02 / Work</span>
+              <span className="section-tag block mb-5">{t('tag')}</span>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <h2
-                className="font-display leading-none tracking-tight"
-                style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)", color: "var(--text-primary)" }}
+                className="font-display leading-none tracking-tight mb-6"
+                style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "var(--text-primary)" }}
               >
-                REAL AI
+                {t('heading1')}
                 <br />
                 <span
                   style={{
@@ -285,9 +288,17 @@ export default function Projects() {
                     backgroundClip: "text",
                   }}
                 >
-                  SYSTEMS
+                  {t('heading_highlight')}
                 </span>
               </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.15}>
+              <p
+                className="font-body text-base md:text-lg leading-relaxed"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {t('description')}
+              </p>
             </ScrollReveal>
           </div>
 
