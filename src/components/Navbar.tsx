@@ -2,17 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import { useTheme } from "@/context/ThemeContext";
 import { ThemeToggle, MobileThemeToggle } from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const navLinks = [
-  { labelDesktop: "About",   labelMobile: "About",        href: "#about" },
-  { labelDesktop: "Edu",     labelMobile: "Education",    href: "#education" },
-  { labelDesktop: "Work",    labelMobile: "Work",         href: "#projects" },
-  { labelDesktop: "Certs",   labelMobile: "Certificates", href: "#certificates" },
-  { labelDesktop: "Contact", labelMobile: "Contact",      href: "#contact" },
+  { id: "about",   href: "#about" },
+  { id: "edu",     href: "#education" },
+  { id: "work",    href: "#projects" },
+  { id: "certs",   href: "#certificates" },
+  { id: "contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -21,8 +22,9 @@ export default function Navbar() {
   const [activeSection,  setActiveSection]  = useState("");
   const pathname = usePathname();
   const router = useRouter();
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === "/en" || pathname === "/de";
   const { isDark, toggleTheme } = useTheme();
+  const t = useTranslations("Header");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -129,7 +131,7 @@ export default function Navbar() {
                   className={`relative group font-mono text-[0.65rem] tracking-[0.2em] uppercase transition-colors duration-300 ${isActive ? "" : "hover:text-[#0A0A0A] dark:hover:text-[var(--text-primary)]"}`}
                   style={{ color: isActive ? "#FF2D2D" : (isDark ? "var(--text-tertiary)" : "#1E293B") }}
                 >
-                  {link.labelDesktop}
+                  {t(link.id)}
                   <span
                     className="absolute -bottom-1 left-0 h-px transition-all duration-300 group-hover:w-full"
                     style={{
@@ -149,6 +151,8 @@ export default function Navbar() {
               margin: "0 12px"
             }} />
             <ThemeToggle />
+            <span style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.1)", margin: "0 12px" }} />
+            <LanguageSwitcher />
 
             {/* ── Dashboard button ── */}
             <Link href="/dashboard">
@@ -170,7 +174,7 @@ export default function Navbar() {
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ background: "#C8FF00", boxShadow: "0 0 6px #C8FF00" }}
                 />
-                Dashboard
+                {t('dashboard')}
               </motion.span>
             </Link>
 
@@ -194,7 +198,7 @@ export default function Navbar() {
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ background: "#A855F7", boxShadow: "0 0 6px #A855F7" }}
                 />
-                Stats
+                {t('stats')}
               </motion.span>
             </Link>
 
@@ -220,7 +224,7 @@ export default function Navbar() {
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ background: "#FF2D2D", boxShadow: "0 0 6px #FF2D2D" }}
                 />
-                ML Lab
+                {t('mlLab')}
               </motion.span>
             </Link>
           </div>

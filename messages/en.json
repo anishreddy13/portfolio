@@ -1,0 +1,25 @@
+{
+  "Header": {
+    "about": "About",
+    "edu": "Education",
+    "work": "Work",
+    "certs": "Certs",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "stats": "Stats",
+    "mlLab": "ML Lab"
+  },
+  "Hero": {
+    "available": "Available for work · 2026",
+    "title": "ML & AI",
+    "description_1": "Building intelligent systems where ",
+    "description_highlight": "machine learning meets real products",
+    "description_2": " — from model training to production deployment.",
+    "viewWork": "View Work",
+    "github": "GitHub",
+    "stats_students": "Students Mentored",
+    "stats_years": "Yrs Building ML",
+    "stats_teaching": "Teaching B.Tech",
+    "stats_industry": "Industry Frontend"
+  }
+}

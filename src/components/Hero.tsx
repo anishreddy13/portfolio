@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const words = ["BUILDER", "ENGINEER", "RESEARCHER", "CREATOR"];
 
@@ -47,6 +48,7 @@ export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 600], [0, -80]);
+  const t = useTranslations("Hero");
 
   const charVariants = {
     hidden:  { opacity: 0, y: 60, skewY: 4 },
@@ -119,7 +121,7 @@ export default function Hero() {
                 className="font-mono text-[0.62rem] tracking-[0.35em] uppercase"
                 style={{ color: "#FF2D2D" }}
               >
-                Available for work · 2026
+                {t('available')}
               </span>
               <span
                 className="w-1.5 h-1.5 rounded-full animate-pulse"
@@ -130,7 +132,7 @@ export default function Hero() {
             {/* ML & AI — character stagger */}
             <div className="overflow-visible mb-0">
               <div className="flex flex-wrap">
-                {"ML & AI".split("").map((char, i) => (
+                {t('title').split("").map((char, i) => (
                   <motion.span
                     key={i}
                     custom={i}
@@ -192,30 +194,15 @@ export default function Hero() {
               className="font-body text-base md:text-lg max-w-lg mb-6 md:mb-7 leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
             >
-              Building intelligent systems where{" "}
-              <span style={{ color: "var(--text-primary)" }}>machine learning meets real products</span>{" "}
-              — from model training to production deployment.
+              {t('description_1')}
+              <span style={{ color: "var(--text-primary)" }}>{t('description_highlight')}</span>
+              {t('description_2')}
             </motion.p>
 
             {/* CTA buttons */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-8 lg:mb-0"
-            >
-              {/* Primary */}
-              <motion.button
-                onClick={() =>
-                  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="relative overflow-hidden px-7 py-3.5 rounded-sm
-                           font-mono text-[0.7rem] tracking-[0.2em] uppercase
-                           min-w-[160px] text-center"
-                style={{ background: "#FF2D2D", color: "#fff", border: "none" }}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-              >
                 <motion.div
                   className="absolute inset-0"
                   style={{ background: "#FF6B35" }}

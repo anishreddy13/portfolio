@@ -1,0 +1,25 @@
+{
+  "Header": {
+    "about": "Über mich",
+    "edu": "Ausbildung",
+    "work": "Projekte",
+    "certs": "Zertifikate",
+    "contact": "Kontakt",
+    "dashboard": "Dashboard",
+    "stats": "Statistiken",
+    "mlLab": "KI-Labor"
+  },
+  "Hero": {
+    "available": "Verfügbar für Arbeit · 2026",
+    "title": "ML & KI",
+    "description_1": "Aufbau intelligenter Systeme, bei denen ",
+    "description_highlight": "maschinelles Lernen auf reale Produkte trifft",
+    "description_2": " — vom Modelltraining bis zum produktiven Einsatz.",
+    "viewWork": "Projekte ansehen",
+    "github": "GitHub",
+    "stats_students": "Betreute Studenten",
+    "stats_years": "Jahre ML-Erfahrung",
+    "stats_teaching": "Lehre B.Tech",
+    "stats_industry": "Industrie-Frontend"
+  }
+}

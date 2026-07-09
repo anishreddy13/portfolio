@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { trackActivity } from "../lib/trackActivity";
+import { trackActivity } from "../../lib/trackActivity";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Education from "@/components/Education";

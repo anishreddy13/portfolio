@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import PlatformShell from "@/components/PlatformShell";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
   icons: {
@@ -27,13 +29,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+  params: {locale}
+}: {
   children: React.ReactNode;
-}>) {
+  params: {locale: string};
+}) {
+  const messages = await getMessages();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#0A0A0A" />
         <meta name="color-scheme" content="dark" />
@@ -53,9 +59,11 @@ export default function RootLayout({
         `}} />
       </head>
       <body className="antialiased">
-        <ThemeProvider>
-          <PlatformShell>{children}</PlatformShell>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
+            <PlatformShell>{children}</PlatformShell>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
