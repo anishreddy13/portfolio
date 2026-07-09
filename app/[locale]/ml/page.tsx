@@ -1,12 +1,12 @@
 "use client";
 
-import { trackActivity } from "../../lib/trackActivity";
-import { fetchMlHealth, fetchMlJson, fetchSkinJson } from "../../lib/mlApi";
+import { trackActivity } from "../../../lib/trackActivity";
+import { fetchMlHealth, fetchMlJson, fetchSkinJson } from "../../../lib/mlApi";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import InterviewAnalyzer from "../../src/components/InterviewAnalyzer";
-import PlantDiseaseDetector from "../../src/components/PlantDiseaseDetector";
+import InterviewAnalyzer from "@/components/InterviewAnalyzer";
+import PlantDiseaseDetector from "@/components/PlantDiseaseDetector";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

@@ -348,7 +348,7 @@ export default function Navbar() {
                         lineHeight: 1,
                       }}
                     >
-                      {link.labelMobile}
+                      {t(link.id)}
                     </span>
                     <motion.span
                       className="ml-auto font-mono text-sm opacity-0 group-hover:opacity-100 transition-opacity"
