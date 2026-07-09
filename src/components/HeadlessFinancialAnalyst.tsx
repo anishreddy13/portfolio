@@ -28,9 +28,9 @@ export default function HeadlessFinancialAnalyst() {
 
       // Call the primary inference function. 
       // Based on our app.py, the analyze_stock function takes one input (ticker).
-      const response = await app.predict("/predict", {
-        ticker: ticker.trim().toUpperCase()
-      });
+      const response = await app.predict("/analyze_stock", [
+        ticker.trim().toUpperCase()
+      ]);
       
       // Depending on the version and the Gradio signature, predict returns an object 
       // containing the output in the `data` array.
