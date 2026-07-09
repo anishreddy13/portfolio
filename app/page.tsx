@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { trackActivity } from "../lib/trackActivity";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import FeaturedPlantProduct from "@/components/FeaturedPlantProduct";
+import FeaturedFinancialAnalyst from "@/components/FeaturedFinancialAnalyst";
 import Projects from "@/components/Projects";
 import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
@@ -27,7 +27,7 @@ export default function Home() {
       style={{ background: "var(--surface-0)" }}
     >
       <Hero />
-      <FeaturedPlantProduct />
+      <FeaturedFinancialAnalyst />
       <About />
       <Projects />
       <Certificates />
