@@ -1321,6 +1321,58 @@ export default function MLPage() {
           </p>
         </motion.div>
 
+        {/* Flagship Feature */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-12"
+        >
+          <Link href="/projects/ai-financial-analyst" className="block relative rounded-sm overflow-hidden group"
+            style={{ 
+               background: "linear-gradient(135deg, rgba(200,255,0,0.1), rgba(255,107,53,0.05), var(--surface-1))", 
+               border: "1px solid rgba(200,255,0,0.3)",
+               boxShadow: "0 10px 40px rgba(0,0,0,0.3)"
+            }}
+          >
+            <div className="absolute top-0 left-0 w-1 h-full" style={{ background: "#C8FF00" }} />
+            <div className="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
+               <div>
+                  <div className="flex items-center gap-3 mb-3">
+                     <span className="font-mono text-[0.55rem] uppercase tracking-widest px-2 py-1 rounded-sm" style={{ background: "#C8FF00", color: "#0A0A0A" }}>
+                        Flagship Architecture
+                     </span>
+                     <span className="font-mono text-[0.55rem] uppercase tracking-widest" style={{ color: "#C8FF00" }}>
+                        Multi-Agent Pipeline
+                     </span>
+                  </div>
+                  <h3 className="font-display text-3xl sm:text-4xl tracking-wide mb-2" style={{ color: "var(--text-primary)" }}>
+                     AI Financial Analyst
+                  </h3>
+                  <p className="font-body text-sm max-w-lg" style={{ color: "var(--text-secondary)" }}>
+                     A deterministic LangGraph state machine orchestrating 3 specialized Llama-3 agents (Researcher, Quant, Editor) to generate real-time investment briefs.
+                  </p>
+               </div>
+               
+               <div className="shrink-0 flex items-center gap-4">
+                  <div className="hidden md:flex gap-2">
+                     {["LangGraph", "Groq", "Llama-3"].map(tech => (
+                        <span key={tech} className="font-mono text-[0.5rem] tracking-wider px-2 py-1 rounded-sm" style={{ border: "1px solid rgba(255,255,255,0.1)", color: "var(--text-tertiary)" }}>
+                           {tech}
+                        </span>
+                     ))}
+                  </div>
+                  <div 
+                     className="w-12 h-12 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:bg-[#C8FF00] group-hover:text-black"
+                     style={{ border: "1px solid rgba(200,255,0,0.4)", color: "#C8FF00" }}
+                  >
+                     <span className="text-lg">↗</span>
+                  </div>
+               </div>
+            </div>
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(circle at center, rgba(200,255,0,0.1) 0%, transparent 70%)" }} />
+          </Link>
+        </motion.div>
+
         {/* Tab bar */}
         <motion.div
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
