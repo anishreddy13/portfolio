@@ -3,30 +3,34 @@
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import ScrollReveal from "./ScrollReveal";
+import { useTranslations } from "next-intl";
 
-const footerLinks = {
-  Navigation: [
-    { label: "About",    href: "#about"    },
-    { label: "Projects", href: "#projects" },
-    { label: "Contact",  href: "#contact"  },
-  ],
-  Connect: [
-    { label: "GitHub",   href: "https://github.com"   },
-    { label: "LinkedIn", href: "https://linkedin.com"  },
-    { label: "Twitter",  href: "https://twitter.com"   },
-    { label: "Dribbble", href: "https://dribbble.com"  },
-  ],
-  Legal: [
-    { label: "Privacy", href: "/privacy" },
-    { label: "Terms",   href: "/terms"   },
-  ],
-};
+// Links moved inside component for translation support
 
 export default function Footer() {
+  const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
   const pathname = usePathname();
   const router = useRouter();
   const isHome = pathname === "/";
+
+  const footerLinks = {
+    [t('nav')]: [
+      { label: t('about'),    href: "#about"    },
+      { label: t('projects'), href: "#projects" },
+      { label: t('contact'),  href: "#contact"  },
+    ],
+    [t('connect')]: [
+      { label: "GitHub",   href: "https://github.com"   },
+      { label: "LinkedIn", href: "https://linkedin.com"  },
+      { label: "Twitter",  href: "https://twitter.com"   },
+      { label: "Dribbble", href: "https://dribbble.com"  },
+    ],
+    [t('legal')]: [
+      { label: t('privacy'), href: "/privacy" },
+      { label: t('terms'),   href: "/terms"   },
+    ],
+  };
 
   const navigateTo = (href: string) => {
     if (href.startsWith("/")) {
@@ -131,9 +135,8 @@ export default function Footer() {
 
             <ScrollReveal delay={0.1}>
               <p className="font-body text-sm leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
-                Full-stack developer crafting bold digital experiences at the
-                intersection of{" "}
-                <span style={{ color: "var(--text-secondary)" }}>design and engineering.</span>
+                {t('description')}
+                <span style={{ color: "var(--text-secondary)" }}>{t('description_highlight')}</span>
               </p>
             </ScrollReveal>
 

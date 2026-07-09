@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
+import { useTranslations } from "next-intl";
 
 interface FormState {
   name: string;
@@ -123,6 +124,7 @@ function AnimatedInput({
 }
 
 export default function Contact() {
+  const t = useTranslations("Contact");
   const [form, setForm] = useState<FormState>({
     name: "", email: "", subject: "", message: "", company: "",
   });
@@ -165,7 +167,7 @@ export default function Contact() {
       }
 
       setStatus("sent");
-      setStatusMessage("Message sent. I will get back to you soon.");
+      setStatusMessage(t('sent'));
       setForm({ name: "", email: "", subject: "", message: "", company: "" });
       setTimeout(() => {
         setStatus("idle");
@@ -174,7 +176,7 @@ export default function Contact() {
     } catch (error) {
       setStatus("error");
       setStatusMessage(
-        error instanceof Error ? error.message : "Something went wrong. Please try again."
+        error instanceof Error ? error.message : t('error')
       );
     }
   };
@@ -219,7 +221,7 @@ export default function Contact() {
         {/* ── Header ── */}
         <div className="mb-14 md:mb-20">
           <ScrollReveal>
-            <span className="section-tag block mb-5">03 / Contact</span>
+            <span className="section-tag block mb-5">{t('tag')}</span>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
@@ -227,7 +229,7 @@ export default function Contact() {
               className="font-display leading-none tracking-tight"
               style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
             >
-              <span style={{ color: "var(--text-primary)" }}>LET'S </span>
+              <span style={{ color: "var(--text-primary)" }}>{t('heading1')}</span>
               <span
                 style={{
                   background:
@@ -237,7 +239,7 @@ export default function Contact() {
                   backgroundClip: "text",
                 }}
               >
-                BUILD
+                {t('heading_highlight')}
               </span>
               <br />
               <span
@@ -246,7 +248,7 @@ export default function Contact() {
                   WebkitTextStroke: "1px rgba(255,255,255,0.12)",
                 }}
               >
-                SOMETHING
+                {t('heading2')}
               </span>
             </h2>
           </ScrollReveal>
@@ -256,9 +258,9 @@ export default function Contact() {
               className="font-body text-base md:text-lg max-w-md mt-6 leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
             >
-              Have a project in mind? Let's talk. I'm always open to discussing{" "}
+              {t('p1')}
               <span style={{ color: "var(--text-primary)" }}>
-                new ideas and opportunities.
+                {t('p1_highlight')}
               </span>
             </p>
           </ScrollReveal>
@@ -284,7 +286,7 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <AnimatedInput
-                    label="Your Name" name="name"
+                    label={t('name_label')} name="name"
                     value={form.name} onChange={handleChange}
                     focused={focused.name}
                     onFocus={() => handleFocus("name")}
@@ -292,7 +294,7 @@ export default function Contact() {
                     required
                   />
                   <AnimatedInput
-                    label="Email Address" name="email" type="email"
+                    label={t('email_label')} name="email" type="email"
                     value={form.email} onChange={handleChange}
                     focused={focused.email}
                     onFocus={() => handleFocus("email")}
@@ -302,7 +304,7 @@ export default function Contact() {
                 </div>
 
                 <AnimatedInput
-                  label="Subject" name="subject"
+                  label={t('subject_label')} name="subject"
                   value={form.subject} onChange={handleChange}
                   focused={focused.subject}
                   onFocus={() => handleFocus("subject")}
@@ -310,7 +312,7 @@ export default function Contact() {
                 />
 
                 <AnimatedInput
-                  label="Tell me about your project..."
+                  label={t('message_label')}
                   name="message" value={form.message}
                   onChange={handleChange}
                   focused={focused.message}
@@ -375,7 +377,7 @@ export default function Contact() {
                           exit={{ opacity: 0, y: -8 }}
                           className="flex items-center justify-center gap-2"
                         >
-                          Send Message →
+                          {t('send_btn')} →
                         </motion.span>
                       )}
                       {status === "sending" && (
@@ -395,7 +397,7 @@ export default function Contact() {
                               borderTopColor: "var(--text-secondary)",
                             }}
                           />
-                          Sending...
+                          {t('sending')}
                         </motion.span>
                       )}
                       {status === "sent" && (
@@ -406,7 +408,7 @@ export default function Contact() {
                           exit={{ opacity: 0 }}
                           className="flex items-center justify-center gap-2"
                         >
-                          Message Sent ✓
+                          {t('sent_btn_success')}
                         </motion.span>
                       )}
                       {status === "error" && (
@@ -417,7 +419,7 @@ export default function Contact() {
                           exit={{ opacity: 0, y: -8 }}
                           className="flex items-center justify-center gap-2"
                         >
-                          Error - Try Again
+                          {t('error_btn')}
                         </motion.span>
                       )}
                     </AnimatePresence>

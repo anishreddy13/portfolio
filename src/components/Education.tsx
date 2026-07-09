@@ -1,26 +1,30 @@
 "use client";
 
-import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
+import { useTranslations } from "next-intl";
 
-const educationData = [
-  {
-    institution: "Teegala Krishna Reddy Engineering College (TKREC)",
-    degree: "Bachelor of Technology - BTech, Artificial Intelligence and Machine Learning",
-    timeline: "Jan 2021 – Jun 2025",
-    focus: "Communication, Artificial Intelligence (AI)",
-    accent: "#C8FF00",
-  },
-  {
-    institution: "Narayana Junior College - India",
-    degree: "Intermediate, MPC (Mathematics, Physics, Chemistry)",
-    timeline: "Jul 2019 – Mar 2021",
-    focus: "Mathematics, Physics, Chemistry",
-    accent: "#FF2D2D",
-  },
-];
+// Data moved inside component for translation support
 
 export default function Education() {
+  const t = useTranslations("Education");
+
+  const educationData = [
+    {
+      institution: t('tkrec_inst'),
+      degree: t('tkrec_deg'),
+      timeline: t('tkrec_time'),
+      focus: t('tkrec_foc'),
+      accent: "#C8FF00",
+    },
+    {
+      institution: t('njc_inst'),
+      degree: t('njc_deg'),
+      timeline: t('njc_time'),
+      focus: t('njc_foc'),
+      accent: "#FF2D2D",
+    },
+  ];
+
   return (
     <section id="education" className="relative py-32 overflow-hidden bg-[var(--surface-0)]">
       {/* Background Decor */}
@@ -30,10 +34,10 @@ export default function Education() {
         <ScrollReveal>
           <div className="mb-16">
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4" style={{ color: "var(--text-primary)" }}>
-              Academic <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8FF00] to-[#00FF88]">Journey</span>
+              {t('heading1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8FF00] to-[#00FF88]">{t('heading_highlight')}</span>
             </h2>
             <p className="font-body text-sm sm:text-base max-w-xl" style={{ color: "var(--text-secondary)" }}>
-              Formal education laying the foundation for advanced machine learning, artificial intelligence, and software engineering.
+              {t('description')}
             </p>
           </div>
         </ScrollReveal>
@@ -84,7 +88,7 @@ export default function Education() {
                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm border"
                      style={{ background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.05)" }}
                   >
-                    <span className="font-mono text-[0.6rem] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>Core Focus:</span>
+                    <span className="font-mono text-[0.6rem] uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>{t('core_focus')}</span>
                     <span className="font-body text-sm" style={{ color: "var(--text-secondary)" }}>{edu.focus}</span>
                   </div>
                 </div>

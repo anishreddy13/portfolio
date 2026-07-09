@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const words = ["BUILDER", "ENGINEER", "RESEARCHER", "CREATOR"];
 
@@ -47,6 +48,7 @@ export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 600], [0, -80]);
+  const t = useTranslations("Hero");
 
   const charVariants = {
     hidden:  { opacity: 0, y: 60, skewY: 4 },
@@ -119,7 +121,7 @@ export default function Hero() {
                 className="font-mono text-[0.62rem] tracking-[0.35em] uppercase"
                 style={{ color: "#FF2D2D" }}
               >
-                Available for work · 2026
+                {t('available')}
               </span>
               <span
                 className="w-1.5 h-1.5 rounded-full animate-pulse"
@@ -130,7 +132,7 @@ export default function Hero() {
             {/* ML & AI — character stagger */}
             <div className="overflow-visible mb-0">
               <div className="flex flex-wrap">
-                {"ML & AI".split("").map((char, i) => (
+                {t('title').split("").map((char, i) => (
                   <motion.span
                     key={i}
                     custom={i}
@@ -192,9 +194,9 @@ export default function Hero() {
               className="font-body text-base md:text-lg max-w-lg mb-6 md:mb-7 leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
             >
-              Building intelligent systems where{" "}
-              <span style={{ color: "var(--text-primary)" }}>machine learning meets real products</span>{" "}
-              — from model training to production deployment.
+              {t('description_1')}
+              <span style={{ color: "var(--text-primary)" }}>{t('description_highlight')}</span>
+              {t('description_2')}
             </motion.p>
 
             {/* CTA buttons */}
@@ -223,7 +225,7 @@ export default function Hero() {
                   whileHover={{ x: 0 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 />
-                <span className="relative z-10">View My Work</span>
+                <span className="relative z-10">{t('viewWork')}</span>
               </motion.button>
 
               {/* Secondary */}
@@ -246,7 +248,7 @@ export default function Hero() {
                 }}
                 whileTap={{ scale: 0.97 }}
               >
-                Get in Touch
+                {t('contact')}
                 <span className="group-hover:translate-x-1 transition-transform duration-300">
                   →
                 </span>
@@ -262,9 +264,9 @@ export default function Hero() {
               style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
             >
               {[
-                { value: 50, suffix: "+", label: "Students Mentored",   sub: "mentorship · ml"         },
-                { value: 2,  suffix: "+", label: "Yrs Dev & ML",        sub: "3mo industry · frontend" },
-                { value: 4,  suffix: "y", label: "Teaching B.Tech Era", sub: "academia · labs"         },
+                { value: 50, suffix: "+", label: t('stats_students'),   sub: "mentorship · ml"         },
+                { value: 2,  suffix: "+", label: t('stats_years'),        sub: "3mo industry · frontend" },
+                { value: 4,  suffix: "y", label: t('stats_teaching'), sub: "academia · labs"         },
               ].map((stat, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <div>

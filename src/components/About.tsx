@@ -3,6 +3,7 @@
 import { useRef, useEffect, useCallback } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
+import { useTranslations } from "next-intl";
 
 /* ─────────────────────────────────────────
    DATA
@@ -14,19 +15,7 @@ const skills = [
   { category: "ML & AI",        items: ["PyTorch", "TensorFlow", "LangChain", "OpenAI", "HuggingFace"],         accent: "#A855F7" },
 ];
 
-const timeline = [
-  { year: "2024", role: "Senior Full-Stack Engineer", company: "Nexus Labs",    current: true  },
-  { year: "2022", role: "Lead Frontend Developer",    company: "Orbital Studio", current: false },
-  { year: "2020", role: "Full-Stack Developer",       company: "Pixel Foundry",  current: false },
-  { year: "2019", role: "Junior Developer",           company: "CodeVault",      current: false },
-];
-
-const stats = [
-  { val: "50+", lbl: "Students\nMentored"   },
-  { val: "2+",  lbl: "Yrs Building\nML"     },
-  { val: "4y",  lbl: "Teaching\nB.Tech"     },
-  { val: "3mo", lbl: "Industry\nFrontend"   },
-];
+// Data moved inside component for translation support
 
 /* ─────────────────────────────────────────
    NEURAL NET CANVAS
@@ -191,9 +180,24 @@ function NeuralNetCanvas() {
    MAIN SECTION
 ───────────────────────────────────────── */
 export default function About() {
+  const t = useTranslations("About");
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const lineHeight = useTransform(scrollYProgress, [0.1, 0.6], ["0%", "100%"]);
+
+  const timeline = [
+    { year: "2024", role: t('timeline_2024_role'), company: t('timeline_2024_company'),    current: true  },
+    { year: "2022", role: t('timeline_2022_role'), company: t('timeline_2022_company'), current: false },
+    { year: "2020", role: t('timeline_2020_role'), company: t('timeline_2020_company'),  current: false },
+    { year: "2019", role: t('timeline_2019_role'), company: t('timeline_2019_company'),      current: false },
+  ];
+
+  const stats = [
+    { val: "50+", lbl: t('stats_students') },
+    { val: "2+",  lbl: t('stats_years') },
+    { val: "4y",  lbl: t('stats_teaching') },
+    { val: "3mo", lbl: t('stats_industry') },
+  ];
 
   // Parallax on the visualization panel
   const mouseX = useMotionValue(0);
@@ -255,7 +259,7 @@ export default function About() {
           {/* ── LEFT: Text content ── */}
           <div className="flex flex-col justify-center">
             <ScrollReveal>
-              <span className="section-tag block mb-5">01 / About</span>
+              <span className="section-tag block mb-5">{t('tag')}</span>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
@@ -263,7 +267,7 @@ export default function About() {
                 className="font-display leading-none tracking-tight mb-8"
                 style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "var(--text-primary)" }}
               >
-                BUILT ON
+                {t('heading1')}
                 <br />
                 <span style={{
                   background: "linear-gradient(135deg, #FF2D2D 0%, #FF6B35 50%, #C8FF00 100%)",
@@ -271,7 +275,7 @@ export default function About() {
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                 }}>
-                  CURIOSITY
+                  {t('heading_highlight')}
                 </span>
               </h2>
             </ScrollReveal>
@@ -281,13 +285,9 @@ export default function About() {
                 className="font-body text-base leading-relaxed mb-8"
                 style={{ color: "var(--text-secondary)", maxWidth: "38ch" }}
               >
-                I'm an ML &amp; AI developer who builds end-to-end intelligent
-                systems — from training models to shipping them into real products.
-                I spent 4 years tutoring 50+ students during my B.Tech, which taught
-                me how to break down complex problems clearly. Now I apply that same
-                thinking to{" "}
+                {t('p1')}
                 <span style={{ color: "var(--text-primary)" }}>
-                  machine learning, backend systems, and whatever I'm obsessed with building next.
+                  {t('p1_highlight')}
                 </span>
               </p>
             </ScrollReveal>
@@ -402,8 +402,11 @@ export default function About() {
         <ScrollReveal delay={0.05}>
           <div className="mb-4">
             <span className="font-mono text-[0.6rem] tracking-[0.3em] uppercase" style={{ color: "var(--text-tertiary)" }}>
-              — Tech Stack
+              {t('tech_stack')}
             </span>
+            <p className="font-body text-sm mt-2" style={{ color: "var(--text-secondary)" }}>
+              {t('tech_subtitle')}
+            </p>
           </div>
         </ScrollReveal>
 
