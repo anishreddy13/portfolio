@@ -74,15 +74,15 @@
 }
 
 html.light {
-  --surface-0: #F8F8F8;
+  --surface-0: #F8FAFC;
   --surface-1: #FFFFFF;
-  --surface-2: #F0F0F0;
+  --surface-2: #F1F5F9;
   
   /* Text Overrides for Light Mode */
-  --text-primary:   #0A0A0A;
-  --text-secondary: #404040;
-  --text-tertiary:  #606060;
-  --text-inverse:   #F0F0F0;
+  --text-primary:   #0F172A;
+  --text-secondary: #1E293B;
+  --text-tertiary:  #334155;
+  --text-inverse:   #F8FAFC;
 
   /* Border Overrides for Light Mode */
   --border:       rgba(0, 0, 0, 0.08);

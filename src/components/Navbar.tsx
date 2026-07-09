@@ -127,7 +127,7 @@ export default function Navbar() {
                   key={link.href}
                   onClick={() => navigateTo(link.href)}
                   className={`relative group font-mono text-[0.65rem] tracking-[0.2em] uppercase transition-colors duration-300 ${isActive ? "" : "hover:text-[#0A0A0A] dark:hover:text-[var(--text-primary)]"}`}
-                  style={{ color: isActive ? "#FF2D2D" : (isDark ? "var(--text-tertiary)" : "#404040") }}
+                  style={{ color: isActive ? "#FF2D2D" : (isDark ? "var(--text-tertiary)" : "#1E293B") }}
                 >
                   {link.labelDesktop}
                   <span
@@ -157,7 +157,7 @@ export default function Navbar() {
                 style={{
                   background:  "rgba(200,255,0,0.08)",
                   borderColor: "rgba(200,255,0,0.3)",
-                  color:       "#C8FF00",
+                  color: isDark ? "#C8FF00" : "#0F172A",
                 }}
                 whileHover={{
                   background:  "rgba(200,255,0,0.16)",
@@ -181,7 +181,7 @@ export default function Navbar() {
                 style={{
                   background:   "rgba(168,85,247,0.08)",
                   borderColor:  "rgba(168,85,247,0.3)",
-                  color:        "#A855F7",
+                  color: isDark ? "#A855F7" : "#0F172A",
                 }}
                 whileHover={{
                   background:  "rgba(168,85,247,0.16)",
@@ -207,7 +207,7 @@ export default function Navbar() {
                 style={{
                   background:   "rgba(255,45,45,0.08)",
                   borderColor:  "rgba(255,45,45,0.3)",
-                  color:        "#FF2D2D",
+                  color: isDark ? "#FF2D2D" : "#0F172A",
                 }}
                 whileHover={{
                   background:  "rgba(255,45,45,0.16)",
