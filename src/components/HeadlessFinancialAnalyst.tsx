@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity, ShieldAlert } from "lucide-react";
-import { LineChart, Line, BarChart, Bar, ComposedChart, ResponsiveContainer, YAxis, XAxis, Tooltip } from "recharts";
+import { LineChart, Line, BarChart, Bar, ComposedChart, ResponsiveContainer, YAxis, XAxis, Tooltip, Area } from "recharts";
 import StructuredReport from "./StructuredReport";
 import FinancialStatements from "./FinancialStatements";
 
@@ -146,7 +146,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       // Parallel execution of all 3 endpoints
       const [analysisResponse, chartResponse, finResponse] = await Promise.all([
         app.predict("/analyze_stock", [ticker.trim().toUpperCase()]),
-        app.predict("/get_historical", [ticker.trim().toUpperCase()]),
+        app.predict("/get_forecast", [ticker.trim().toUpperCase()]),
         app.predict("/get_financials_tables", [ticker.trim().toUpperCase()]),
       ]);
       
@@ -162,8 +162,12 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       if (chartResponse && chartResponse.data) {
         try {
            const parsedChart = JSON.parse((chartResponse.data as unknown[])[0] as string);
-           if (!parsedChart.error) {
-              setChartData(parsedChart);
+           if (!parsedChart.error && Array.isArray(parsedChart)) {
+              const formattedData = parsedChart.map((d: any) => ({
+                 ...d,
+                 confidence: (d.lowerBound !== null && d.upperBound !== null) ? [d.lowerBound, d.upperBound] : undefined
+              }));
+              setChartData(formattedData);
            }
         } catch(e) { console.error("Chart parse error", e); }
       }
@@ -408,8 +412,14 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                   style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}
                >
                   <div className="flex justify-between items-center mb-4">
-                     <p className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>6-Month Price History</p>
-                     <span className="px-2 py-0.5 rounded-sm font-mono text-[0.5rem] bg-[#C8FF00] text-black uppercase">Live</span>
+                     <p className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>6-Month History & 30-Day ML Forecast</p>
+                     <div className="flex items-center gap-2">
+                        <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-sm font-mono text-[0.5rem] uppercase border border-[rgba(0,255,209,0.3)] text-[#00FFD1] bg-[rgba(0,255,209,0.05)]">
+                           <span className="w-1.5 h-1.5 rounded-full bg-[#00FFD1] animate-pulse" />
+                           ML Inference Engine: Active
+                        </span>
+                        <span className="px-2 py-0.5 rounded-sm font-mono text-[0.5rem] bg-[#C8FF00] text-black uppercase">Live</span>
+                     </div>
                   </div>
                   <div className="flex-1 w-full h-full">
                      {chartData.length > 0 ? (
@@ -417,18 +427,34 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                           <ComposedChart data={chartData}>
                              <XAxis dataKey="date" hide />
                              <YAxis yAxisId="price" domain={['auto', 'auto']} hide />
-                             <YAxis yAxisId="volume" orientation="right" hide />
                              <Tooltip 
                                contentStyle={{ background: '#0A0A0A', border: '1px solid #333', fontSize: '12px', color: '#fff' }}
                                itemStyle={{ color: '#C8FF00' }}
                              />
-                             <Bar yAxisId="volume" dataKey="volume" fill="rgba(255,255,255,0.1)" />
+                             <Area 
+                               yAxisId="price"
+                               type="monotone" 
+                               dataKey="confidence" 
+                               stroke="none" 
+                               fill="#00FFD1" 
+                               fillOpacity={0.15} 
+                             />
                              <Line 
                                 yAxisId="price"
                                 type="monotone" 
-                                dataKey="close" 
+                                dataKey="actualPrice" 
                                 stroke="#C8FF00" 
                                 strokeWidth={2} 
+                                dot={false}
+                                animationDuration={1500}
+                             />
+                             <Line 
+                                yAxisId="price"
+                                type="monotone" 
+                                dataKey="projectedPrice" 
+                                stroke="#00FFD1" 
+                                strokeWidth={2} 
+                                strokeDasharray="5 5"
                                 dot={false}
                                 animationDuration={1500}
                              />
