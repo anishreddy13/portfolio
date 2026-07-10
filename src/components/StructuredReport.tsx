@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
-import { AlertTriangle, TrendingUp, TrendingDown, Activity, Info } from "lucide-react";
+import { AlertTriangle, TrendingUp, TrendingDown, Activity, Info, ShieldAlert } from "lucide-react";
 
 interface StructuredReportProps {
   markdown: string;
@@ -16,6 +16,7 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
     // Find section indices
     const execSummaryMatch = text.match(/Executive Summary/i);
     const financialHealthMatch = text.match(/Financial Health/i);
+    const secRisksMatch = text.match(/SEC Compliance & Hidden Risks/i);
     const riskFactorsMatch = text.match(/Risk Factors/i);
     const recommendationMatch = text.match(/Recommendation/i);
     
@@ -25,8 +26,9 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
     
     const startIndex = execSummaryMatch ? execSummaryMatch.index! + execSummaryMatch[0].length : 0;
     const endIndex = financialHealthMatch ? financialHealthMatch.index : 
+                     (secRisksMatch ? secRisksMatch.index :
                      (riskFactorsMatch ? riskFactorsMatch.index : 
-                     (recommendationMatch ? recommendationMatch.index : text.length));
+                     (recommendationMatch ? recommendationMatch.index : text.length)));
                      
     if (endIndex !== undefined) {
       execSummary = text.substring(startIndex, endIndex).trim();
@@ -44,8 +46,9 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
     let financialData: { metric: string; value: string }[] = [];
     if (financialHealthMatch) {
       const fhStart = financialHealthMatch.index! + financialHealthMatch[0].length;
-      const fhEnd = riskFactorsMatch ? riskFactorsMatch.index : 
-                    (recommendationMatch ? recommendationMatch.index : text.length);
+      const fhEnd = secRisksMatch ? secRisksMatch.index :
+                    (riskFactorsMatch ? riskFactorsMatch.index : 
+                    (recommendationMatch ? recommendationMatch.index : text.length));
       
       const fhText = text.substring(fhStart, fhEnd).trim();
       const lines = fhText.split("\n").map(l => l.trim()).filter(l => l);
@@ -92,6 +95,19 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
       });
     }
 
+    // Extract SEC Risks
+    let secRisks: string[] = [];
+    if (secRisksMatch) {
+      const secStart = secRisksMatch.index! + secRisksMatch[0].length;
+      const secEnd = riskFactorsMatch ? riskFactorsMatch.index : 
+                     (recommendationMatch ? recommendationMatch.index : text.length);
+      
+      const secText = text.substring(secStart, secEnd).trim();
+      secRisks = secText.split("\n")
+        .map(l => l.replace(/^[-\*•\d\.]+\s*/, "").trim())
+        .filter(l => l.length > 5);
+    }
+
     // Extract Risk Factors
     let riskFactors: string[] = [];
     if (riskFactorsMatch) {
@@ -121,6 +137,7 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
       execSummary,
       sentiment,
       financialData,
+      secRisks,
       riskFactors,
       recommendation
     };
@@ -237,6 +254,28 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
          </div>
 
       </div>
+
+      {/* SEC Compliance Risks */}
+      {parsed.secRisks.length > 0 && (
+         <div className="rounded-md bg-[var(--surface-1)] border border-[rgba(255,255,255,0.06)] overflow-hidden">
+            <div className="p-5 border-b border-orange-900/40 bg-orange-950/20 flex items-center gap-3">
+               <ShieldAlert size={18} className="text-orange-500" />
+               <h3 className="font-display text-xl text-orange-400">SEC Compliance & Hidden Risks</h3>
+            </div>
+            <div className="p-5 bg-gradient-to-b from-orange-950/10 to-transparent">
+               <ul className="space-y-4">
+                  {parsed.secRisks.map((risk, idx) => (
+                     <li key={idx} className="flex gap-3 items-start">
+                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0" />
+                        <p className="font-body text-[0.95rem] text-[var(--text-secondary)] leading-relaxed">
+                           {risk}
+                        </p>
+                     </li>
+                  ))}
+               </ul>
+            </div>
+         </div>
+      )}
 
       {/* 4. Recommendation Callout */}
       {parsed.recommendation && (

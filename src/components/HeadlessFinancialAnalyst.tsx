@@ -5,7 +5,7 @@ import { Client } from "@gradio/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity } from "lucide-react";
+import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity, ShieldAlert } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import StructuredReport from "./StructuredReport";
 
@@ -89,8 +89,10 @@ export default function HeadlessFinancialAnalyst() {
       { time: 3500, step: 0, log: "[Researcher] Analyzing market sentiment & macroeconomic trends..." },
       { time: 6000, step: 1, log: "[Quant] Retrieving fundamental metrics via yfinance..." },
       { time: 9000, step: 1, log: "[Quant] Calculating historical volatility, P/E, and margins..." },
-      { time: 13000, step: 2, log: "[Editor] Synthesizing research and quantitative data..." },
-      { time: 17000, step: 2, log: "[Editor] Formatting final markdown investment brief..." },
+      { time: 13000, step: 2, log: "[Auditor] Fetching latest 10-K/10-Q from SEC EDGAR..." },
+      { time: 17000, step: 2, log: "[Auditor] Running RAG to extract hidden risks..." },
+      { time: 20000, step: 3, log: "[Editor] Synthesizing research and quantitative data..." },
+      { time: 23000, step: 3, log: "[Editor] Formatting final markdown investment brief..." },
     ];
 
     const timeouts = sequence.map(seq => 
@@ -154,7 +156,7 @@ export default function HeadlessFinancialAnalyst() {
       console.error("Gradio Client Error:", err);
     } finally {
       setLoading(false);
-      setAgentStep(3); // Done
+      setAgentStep(4); // Done
     }
   };
 
@@ -170,7 +172,8 @@ export default function HeadlessFinancialAnalyst() {
   const agents = [
     { id: 'researcher', name: 'Researcher', icon: <Search size={18}/>, status: agentStep > 0 ? 'done' : agentStep === 0 && loading ? 'active' : 'waiting' },
     { id: 'quant', name: 'Quant Analyst', icon: <BarChart2 size={18}/>, status: agentStep > 1 ? 'done' : agentStep === 1 && loading ? 'active' : 'waiting' },
-    { id: 'editor', name: 'Chief Editor', icon: <Edit3 size={18}/>, status: agentStep > 2 ? 'done' : agentStep === 2 && loading ? 'active' : 'waiting' },
+    { id: 'auditor', name: 'SEC Auditor', icon: <ShieldAlert size={18}/>, status: agentStep > 2 ? 'done' : agentStep === 2 && loading ? 'active' : 'waiting' },
+    { id: 'editor', name: 'Chief Editor', icon: <Edit3 size={18}/>, status: agentStep > 3 ? 'done' : agentStep === 3 && loading ? 'active' : 'waiting' },
   ];
 
   return (
@@ -249,7 +252,7 @@ export default function HeadlessFinancialAnalyst() {
             >
                <div className="rounded-sm flex flex-col lg:flex-row gap-4 pt-2">
                   {/* Agent Cards */}
-                  <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-3">
                      {agents.map((agent) => (
                         <div 
                            key={agent.id}
