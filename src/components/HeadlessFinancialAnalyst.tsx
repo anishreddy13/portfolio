@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
+import StructuredReport from "./StructuredReport";
 
 // --- Types ---
 interface KPIData {
@@ -404,47 +405,49 @@ export default function HeadlessFinancialAnalyst() {
                </motion.div>
             </div>
 
-            {/* Markdown Report Container */}
-            <div 
-               className="rounded-sm p-6 sm:p-10 relative overflow-hidden flex flex-col"
-               style={{ 
-                  background: "var(--surface-1)", 
-                  border: "1px solid rgba(200,255,0,0.2)",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.4)"
-               }}
-            >
-               {/* Decor */}
-               <div className="absolute top-0 left-0 right-0 h-1" style={{ background: "linear-gradient(90deg, #C8FF00, #FF6B35, #A855F7)" }} />
-               
-               <div className="mb-8 border-b pb-6 shrink-0" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                  <p className="font-mono text-[0.55rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#C8FF00" }}>
-                     Agent Synthesis Complete
-                  </p>
-                  <h3 className="font-display text-4xl tracking-wide" style={{ color: "var(--text-primary)" }}>
-                     Investment Brief: {ticker.toUpperCase()}
-                  </h3>
-               </div>
-
-               {/* Streaming Text Area */}
+            {/* Markdown Report Container OR Structured Dashboard */}
+            {displayedResult.length < result.length ? (
                <div 
-                  ref={scrollRef}
-                  className="max-h-[500px] overflow-y-auto pr-4 relative scroll-smooth"
+                  className="rounded-sm p-6 sm:p-10 relative overflow-hidden flex flex-col"
+                  style={{ 
+                     background: "var(--surface-1)", 
+                     border: "1px solid rgba(200,255,0,0.2)",
+                     boxShadow: "0 20px 60px rgba(0,0,0,0.4)"
+                  }}
                >
-                  <div className="prose prose-invert prose-p:text-[0.95rem] prose-p:leading-relaxed prose-h1:text-3xl prose-h1:font-display prose-h2:text-2xl prose-h2:font-display prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-[#C8FF00] prose-h3:text-xl prose-h3:text-[#E0E0E0] prose-li:text-[0.95rem] prose-strong:text-[#F0F0F0] max-w-none">
-                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {displayedResult}
-                     </ReactMarkdown>
-                  </div>
+                  {/* Decor */}
+                  <div className="absolute top-0 left-0 right-0 h-1" style={{ background: "linear-gradient(90deg, #C8FF00, #FF6B35, #A855F7)" }} />
                   
-                  {/* Streaming fade indicator */}
-                  {displayedResult.length < result.length && (
+                  <div className="mb-8 border-b pb-6 shrink-0" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                     <p className="font-mono text-[0.55rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#C8FF00" }}>
+                        Agent Synthesis Running...
+                     </p>
+                     <h3 className="font-display text-4xl tracking-wide" style={{ color: "var(--text-primary)" }}>
+                        Investment Brief: {ticker.toUpperCase()}
+                     </h3>
+                  </div>
+
+                  {/* Streaming Text Area */}
+                  <div 
+                     ref={scrollRef}
+                     className="max-h-[500px] overflow-y-auto pr-4 relative scroll-smooth"
+                  >
+                     <div className="prose prose-invert prose-p:text-[0.95rem] prose-p:leading-relaxed prose-h1:text-3xl prose-h1:font-display prose-h2:text-2xl prose-h2:font-display prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-[#C8FF00] prose-h3:text-xl prose-h3:text-[#E0E0E0] prose-li:text-[0.95rem] prose-strong:text-[#F0F0F0] max-w-none">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                           {displayedResult}
+                        </ReactMarkdown>
+                     </div>
+                     
+                     {/* Streaming fade indicator */}
                      <div className="h-10 flex items-center gap-2 mt-4">
                         <span className="w-2 h-2 rounded-full bg-[#C8FF00] animate-pulse" />
                         <span className="font-mono text-xs" style={{ color: "var(--text-tertiary)" }}>Writing...</span>
                      </div>
-                  )}
+                  </div>
                </div>
-            </div>
+            ) : (
+               <StructuredReport markdown={result} />
+            )}
           </motion.div>
         )}
       </AnimatePresence>
