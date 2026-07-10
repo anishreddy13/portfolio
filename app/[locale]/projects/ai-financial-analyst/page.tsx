@@ -274,25 +274,6 @@ export default function AIFinancialAnalystPage() {
     <main
       className="relative min-h-screen bg-[#050505]"
     >
-      <div className="absolute top-4 left-4 z-50 flex gap-4">
-          <Link href="/">
-             <motion.span 
-                whileHover={{ x: -2 }}
-                className="font-mono text-[0.55rem] uppercase tracking-widest px-3 py-1.5 rounded-sm flex items-center gap-2 transition-colors bg-[#111] text-[var(--text-secondary)] border border-[rgba(255,255,255,0.06)]"
-             >
-                ← Home
-             </motion.span>
-          </Link>
-          <Link href="/ml">
-             <motion.span 
-                whileHover={{ x: -2 }}
-                className="font-mono text-[0.55rem] uppercase tracking-widest px-3 py-1.5 rounded-sm flex items-center gap-2 transition-colors bg-[rgba(200,255,0,0.08)] text-[#C8FF00] border border-[rgba(200,255,0,0.2)]"
-             >
-                ← ML Lab
-             </motion.span>
-          </Link>
-      </div>
-
       <PortfolioDashboard />
     </main>
   );

@@ -42,7 +42,7 @@ export default function PortfolioDashboard() {
   if (!isLoaded) return null;
 
   return (
-    <div className="flex h-screen bg-[#050505] overflow-hidden text-[var(--text-primary)]">
+    <div className="flex h-screen pt-[68px] bg-[#050505] overflow-hidden text-[var(--text-primary)]">
       
       {/* Left Sidebar: Watchlist */}
       <div className="w-[320px] h-full shrink-0 hidden md:block">
