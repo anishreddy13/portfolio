@@ -9,6 +9,7 @@ import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity,
 import { LineChart, Line, BarChart, Bar, ComposedChart, ResponsiveContainer, YAxis, XAxis, Tooltip, Area } from "recharts";
 import StructuredReport from "./StructuredReport";
 import FinancialStatements from "./FinancialStatements";
+import ExplainabilityCard from "./ExplainabilityCard";
 
 // --- Types ---
 interface KPIData {
@@ -62,6 +63,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   const [result, setResult] = useState<string | null>(null);
   const [chartData, setChartData] = useState<any[]>([]);
   const [accuracy, setAccuracy] = useState<number | null>(null);
+  const [xaiData, setXaiData] = useState<any | null>(null);
   const [financialData, setFinancialData] = useState<string | null>(null);
   const [displayedResult, setDisplayedResult] = useState<string>("");
   const [kpis, setKpis] = useState<KPIData[]>([]);
@@ -141,15 +143,17 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     setResult(null);
     setKpis([]);
     setAccuracy(null);
+    setXaiData(null);
 
     try {
       const app = await Client.connect("Anishreddy13/ai-financial-analyst");
       
-      // Parallel execution of all 3 endpoints
-      const [analysisResponse, chartResponse, finResponse] = await Promise.all([
+      // Parallel execution of all 4 endpoints
+      const [analysisResponse, chartResponse, finResponse, xaiResponse] = await Promise.all([
         app.predict("/analyze_stock", [ticker.trim().toUpperCase()]),
         app.predict("/get_forecast", [ticker.trim().toUpperCase()]),
         app.predict("/get_financials_tables", [ticker.trim().toUpperCase()]),
+        app.predict("/get_xai_explanation", [ticker.trim().toUpperCase()]),
       ]);
       
       if (analysisResponse && analysisResponse.data) {
@@ -180,6 +184,15 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
 
       if (finResponse && finResponse.data) {
          setFinancialData((finResponse.data as unknown[])[0] as string);
+      }
+
+      if (xaiResponse && xaiResponse.data) {
+         try {
+            const parsedXai = JSON.parse((xaiResponse.data as unknown[])[0] as string);
+            if (!parsedXai.error) {
+               setXaiData(parsedXai);
+            }
+         } catch(e) { console.error("XAI parse error", e); }
       }
 
     } catch (err) {
@@ -513,6 +526,13 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                   </div>
                </motion.div>
             </div>
+
+             {/* XAI Explainability Card */}
+             {xaiData && (
+                <div className="mt-2">
+                   <ExplainabilityCard data={xaiData} />
+                </div>
+             )}
 
             {/* Markdown Report Container OR Structured Dashboard */}
             {displayedResult.length < result.length ? (
