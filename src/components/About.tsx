@@ -20,13 +20,13 @@ const skills = [
 /* ─────────────────────────────────────────
    NEURAL NET CANVAS
 ───────────────────────────────────────── */
+// Layers: input(4) → hidden1(6) → hidden2(6) → output(3)
+const LAYERS = [4, 6, 6, 3];
+
 function NeuralNetCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse     = useRef({ x: 0.5, y: 0.5 });
   const rafRef    = useRef<number>(0);
-
-  // Layers: input(4) → hidden1(6) → hidden2(6) → output(3)
-  const LAYERS = [4, 6, 6, 3];
 
   const buildNodes = useCallback((w: number, h: number) => {
     const nodes: { x: number; y: number; layer: number; idx: number; phase: number }[] = [];

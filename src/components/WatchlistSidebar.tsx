@@ -35,9 +35,11 @@ export default function WatchlistSidebar({ portfolio, setPortfolio, onSelectTick
   const [newTicker, setNewTicker] = useState("");
 
   const tickers = Object.keys(portfolio);
+  const numTickers = tickers.length;
+  const portfolioStr = JSON.stringify(portfolio);
 
   useEffect(() => {
-    if (tickers.length === 0) {
+    if (numTickers === 0) {
       setData(null);
       return;
     }
@@ -47,7 +49,7 @@ export default function WatchlistSidebar({ portfolio, setPortfolio, onSelectTick
       try {
         const app = await Client.connect("Anishreddy13/ai-financial-analyst");
         // We pass the portfolio dict to the backend so it can calc weighted metrics
-        const payload = JSON.stringify(portfolio);
+        const payload = portfolioStr;
         const response = await app.predict("/get_portfolio_data", [payload]);
         
         if (response && response.data) {
@@ -68,7 +70,7 @@ export default function WatchlistSidebar({ portfolio, setPortfolio, onSelectTick
     // Poll every 60 seconds
     const interval = setInterval(fetchPortfolioData, 60000);
     return () => clearInterval(interval);
-  }, [JSON.stringify(portfolio)]);
+  }, [portfolioStr, numTickers]);
 
   const handleAddTicker = (e: React.FormEvent) => {
     e.preventDefault();

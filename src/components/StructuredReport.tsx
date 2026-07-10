@@ -9,28 +9,7 @@ interface StructuredReportProps {
 }
 
 export default function StructuredReport({ markdown }: StructuredReportProps) {
-  // Check for rate limit / model errors in raw output
   const hasApiError = markdown && (markdown.includes("Error code: 429") || markdown.includes("Error code: 400"));
-
-  if (hasApiError) {
-    return (
-      <motion.div 
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full p-6 rounded-md bg-red-950/20 border border-red-900/50 flex items-start gap-4"
-      >
-        <div className="mt-0.5 text-red-500">
-          <AlertTriangle size={24} />
-        </div>
-        <div>
-          <h3 className="font-display text-xl text-red-400 mb-1">API Overloaded</h3>
-          <p className="font-body text-sm text-[var(--text-secondary)] leading-relaxed">
-            Please wait a moment and try again.
-          </p>
-        </div>
-      </motion.div>
-    );
-  }
 
   // Parse the markdown into sections
   const parsed = useMemo(() => {
@@ -214,6 +193,26 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
   } else if (sentimentLower.includes("mixed") || sentimentLower.includes("neutral")) {
     sentimentStyles = "bg-amber-950/40 text-amber-400 border-amber-800";
     SentimentIcon = Activity;
+  }
+
+  if (hasApiError) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full p-6 rounded-md bg-red-950/20 border border-red-900/50 flex items-start gap-4"
+      >
+        <div className="mt-0.5 text-red-500">
+          <AlertTriangle size={24} />
+        </div>
+        <div>
+          <h3 className="font-display text-xl text-red-400 mb-1">API Overloaded</h3>
+          <p className="font-body text-sm text-[var(--text-secondary)] leading-relaxed">
+            Please wait a moment and try again.
+          </p>
+        </div>
+      </motion.div>
+    );
   }
 
   return (
