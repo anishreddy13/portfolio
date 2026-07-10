@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Link } from "@/i18n/routing";
 import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
-import HeadlessFinancialAnalyst from "@/components/HeadlessFinancialAnalyst";
+import PortfolioDashboard from "@/components/PortfolioDashboard";
 import {
   financialProductStats,
   financialTechBadges,
@@ -272,85 +272,28 @@ export default function AIFinancialAnalystPage() {
 
   return (
     <main
-      className="relative min-h-screen pt-32 pb-24"
-      style={{ background: "var(--surface-0)" }}
+      className="relative min-h-screen bg-[#050505]"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-8">
-         {/* Top Navigation */}
-         <div className="flex flex-wrap gap-4 mb-16">
-            <Link href="/">
-               <motion.span 
-                  whileHover={{ x: -2 }}
-                  className="font-mono text-[0.55rem] uppercase tracking-widest px-3 py-1.5 rounded-sm flex items-center gap-2 transition-colors"
-                  style={{ background: "var(--surface-1)", color: "var(--text-secondary)", border: "1px solid rgba(255,255,255,0.06)" }}
-               >
-                  ← Home
-               </motion.span>
-            </Link>
-            <Link href="/ml">
-               <motion.span 
-                  whileHover={{ x: -2 }}
-                  className="font-mono text-[0.55rem] uppercase tracking-widest px-3 py-1.5 rounded-sm flex items-center gap-2 transition-colors"
-                  style={{ background: "rgba(200,255,0,0.08)", color: "#C8FF00", border: "1px solid rgba(200,255,0,0.2)" }}
-               >
-                  ← ML Lab
-               </motion.span>
-            </Link>
-         </div>
-
-         {/* Header */}
-         <ScrollReveal>
-            <div className="mb-16">
-               <h1 className="font-display leading-none tracking-tight mb-6" style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)", color: "var(--text-primary)" }}>
-                  MULTI-AGENT <br/>
-                  <span style={{ background: "linear-gradient(135deg, #C8FF00 0%, #FF6B35 55%, #A855F7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                     FINANCIAL AI
-                  </span>
-               </h1>
-               <p className="font-body text-lg sm:text-xl leading-relaxed max-w-2xl mb-8" style={{ color: "var(--text-secondary)" }}>
-                  An enterprise-grade digital workforce showcasing deterministic AI orchestration. A state machine router directs a team of specialized Llama-3 agents to execute quantitative analysis, web research, and editorial synthesis.
-               </p>
-               
-               <div className="flex flex-wrap gap-2 mb-10">
-                  {financialTechBadges.map((badge) => (
-                    <span
-                      key={badge}
-                      className="font-mono text-[0.58rem] tracking-wider rounded-sm px-2.5 py-1"
-                      style={{ color: "#C8FF00", border: "1px solid rgba(200,255,0,0.18)", background: "rgba(200,255,0,0.06)" }}
-                    >
-                      {badge}
-                    </span>
-                  ))}
-               </div>
-            </div>
-         </ScrollReveal>
-
-         {/* Live Demo Headless Component */}
-         <ScrollReveal delay={0.1}>
-            <div className="mb-24">
-               <div className="flex items-center gap-3 mb-6">
-                  <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#C8FF00", boxShadow: "0 0 10px #C8FF00" }} />
-                  <p className="font-mono text-[0.6rem] tracking-[0.25em] uppercase" style={{ color: "#C8FF00" }}>Live Inference Interface</p>
-               </div>
-               <HeadlessFinancialAnalyst />
-            </div>
-         </ScrollReveal>
-
-         <div className="space-y-20">
-            <ScrollReveal direction="up" delay={0.1}>
-               <WorkflowPipeline />
-            </ScrollReveal>
-
-            <ScrollReveal direction="up" delay={0.2}>
-               <AgentCards />
-            </ScrollReveal>
-
-            <ScrollReveal direction="up" delay={0.3}>
-               <ArchitectureSection />
-            </ScrollReveal>
-         </div>
-
+      <div className="absolute top-4 left-4 z-50 flex gap-4">
+          <Link href="/">
+             <motion.span 
+                whileHover={{ x: -2 }}
+                className="font-mono text-[0.55rem] uppercase tracking-widest px-3 py-1.5 rounded-sm flex items-center gap-2 transition-colors bg-[#111] text-[var(--text-secondary)] border border-[rgba(255,255,255,0.06)]"
+             >
+                ← Home
+             </motion.span>
+          </Link>
+          <Link href="/ml">
+             <motion.span 
+                whileHover={{ x: -2 }}
+                className="font-mono text-[0.55rem] uppercase tracking-widest px-3 py-1.5 rounded-sm flex items-center gap-2 transition-colors bg-[rgba(200,255,0,0.08)] text-[#C8FF00] border border-[rgba(200,255,0,0.2)]"
+             >
+                ← ML Lab
+             </motion.span>
+          </Link>
       </div>
+
+      <PortfolioDashboard />
     </main>
   );
 }

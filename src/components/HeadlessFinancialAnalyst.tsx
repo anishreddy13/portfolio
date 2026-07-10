@@ -53,8 +53,12 @@ const extractKPIs = (markdown: string, ticker: string): { kpis: KPIData[], clean
   return { kpis, cleaned };
 };
 
-export default function HeadlessFinancialAnalyst() {
-  const [ticker, setTicker] = useState("");
+interface HeadlessFinancialAnalystProps {
+  initialTicker?: string;
+}
+
+export default function HeadlessFinancialAnalyst({ initialTicker = "" }: HeadlessFinancialAnalystProps) {
+  const [ticker, setTicker] = useState(initialTicker);
   const [result, setResult] = useState<string | null>(null);
   const [chartData, setChartData] = useState<any[]>([]);
   const [financialData, setFinancialData] = useState<string | null>(null);
@@ -69,6 +73,12 @@ export default function HeadlessFinancialAnalyst() {
   const inputRef = useRef<HTMLDivElement>(null);
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (initialTicker) {
+      setTicker(initialTicker);
+    }
+  }, [initialTicker]);
 
   // Agent sequence simulation
   useEffect(() => {
