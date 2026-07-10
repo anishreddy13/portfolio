@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "../i18n/routing";
 import { fetchPlantForm } from "../../lib/mlApi";
 import { getPlantGuidance } from "../lib/plantDiseaseContent";
 

@@ -173,5 +173,193 @@
     "filter_ml": "ML",
     "filter_data": "Data",
     "filter_cloud": "Cloud"
+  },
+  "Stats": {
+    "header1": "Developer ",
+    "header_highlight": "Metrics",
+    "description": "Real-time insights into my coding activity, language distribution, and open-source contributions. Powered by GitHub & WakaTime data.",
+    "commits_label": "Total Commits (30d)",
+    "commits_sub": "+12% from last month",
+    "hours_label": "Hours Coded (30d)",
+    "hours_sub": "Avg 3.9h / day",
+    "streak_label": "Longest Streak",
+    "streak_val": "14 days",
+    "streak_sub": "Current: 3 days",
+    "top_lang_label": "Top Language",
+    "top_lang_sub": "45.2% of coding time",
+    "other_lang": "Other",
+    "footer_note": "Note: displaying realistic mock data for V1 demonstration purposes."
+  },
+  "ML": {
+    "title": "Interactive",
+    "title_highlight": "ML Lab",
+    "subtitle": "Live inference endpoints serving Hugging Face & Scikit-Learn models via FastAPI.",
+    "tabs": {
+      "plant": "Plant AI",
+      "interview": "Coach AI",
+      "sentiment": "Sentiment",
+      "spam": "Spam",
+      "emotion": "Emotion",
+      "skin": "Skin AI",
+      "cancer": "Cancer"
+    },
+    "health": {
+      "api_status": "API Status",
+      "online": "Online",
+      "offline": "Offline",
+      "checking": "Checking..."
+    },
+    "sentiment": {
+      "header": "Sentiment Analysis",
+      "desc": "Analyzes text to classify underlying sentiment with confidence scoring.",
+      "placeholder": "Type a sentence to analyze sentiment...",
+      "analyze_btn": "Analyze Text",
+      "analyzing": "Analyzing...",
+      "examples": "Examples",
+      "results": "Analysis Results",
+      "confidence": "Confidence",
+      "history": "Recent Predictions",
+      "no_history": "No history yet"
+    },
+    "spam": {
+      "header": "Spam Detection",
+      "desc": "Classifies text messages as HAM (legitimate) or SPAM based on linguistic patterns.",
+      "placeholder": "Paste an SMS or email text to check...",
+      "analyze_btn": "Check for Spam",
+      "analyzing": "Checking...",
+      "examples": "Examples",
+      "results": "Detection Results",
+      "safe": "Safe (Ham)",
+      "spam": "Spam Detected",
+      "keywords": "Flagged Keywords:",
+      "none": "None"
+    },
+    "emotion": {
+      "header": "Emotion Detection",
+      "desc": "Multi-task NLP model extracting primary emotion, gender, and age from text.",
+      "placeholder": "Describe how you feel right now...",
+      "analyze_btn": "Detect Emotion",
+      "analyzing": "Processing...",
+      "primary_emotion": "Primary Emotion",
+      "gender": "Predicted Gender",
+      "age": "Predicted Age Group",
+      "top_emotions": "Top Emotions"
+    },
+    "skin": {
+      "header": "Skin Lesion Analysis",
+      "desc": "Computer vision demo identifying 7 types of skin lesions using a PyTorch CNN.",
+      "upload_box": "Drag and drop a skin image here",
+      "upload_sub": "or click to browse files",
+      "supported": "Supported formats: JPEG, PNG",
+      "analyze_btn": "Analyze Image",
+      "analyzing": "Processing Image...",
+      "results": "Diagnostic Results",
+      "risk_level": "Risk Level",
+      "malignant": "High Risk (Cancerous)",
+      "benign": "Low Risk (Benign)",
+      "top_predictions": "Top Predictions",
+      "probability": "Probability"
+    },
+    "cancer": {
+      "header": "Breast Cancer Prediction",
+      "desc": "Tabular data model predicting malignancy from cell nuclei features.",
+      "predict_btn": "Run Prediction",
+      "predicting": "Calculating...",
+      "results": "Prediction Results",
+      "malignant": "Malignant (Cancerous)",
+      "benign": "Benign (Safe)",
+      "risk": "Risk Analysis",
+      "top_features": "Top Contributing Features"
+    }
+  },
+  "Dashboard": {
+    "header1": "Project",
+    "header_highlight": "Dashboard",
+    "description": "Live performance metrics, API health, and system analytics for all deployed AI models.",
+    "tabs": {
+      "live": "Live Feed",
+      "analytics": "Analytics",
+      "monitoring": "System Health",
+      "visitors": "Global Traffic",
+      "pipeline": "CI/CD Pipeline"
+    },
+    "health": {
+      "api_status": "API Status",
+      "online": "Online",
+      "offline": "Offline",
+      "checking": "Checking..."
+    },
+    "metrics": {
+      "total_requests": "Total Requests",
+      "avg_latency": "Avg Latency",
+      "uptime": "Uptime",
+      "error_rate": "Error Rate",
+      "from_last_month": "from last month",
+      "live_traffic": "Live Traffic",
+      "requests_sec": "requests / sec"
+    },
+    "monitoring": {
+      "service_health": "Service Health Overview",
+      "service": "Service",
+      "status": "Status",
+      "latency": "Latency",
+      "uptime": "Uptime",
+      "last_check": "Last Check",
+      "data_drift": "Data Drift Analysis",
+      "feature": "Feature",
+      "drift_score": "Drift Score",
+      "recommendation": "Recommendation",
+      "details": "Details"
+    },
+    "visitors": {
+      "geography": "Global Request Geography",
+      "total_hits": "Total Hits"
+    },
+    "pipeline": {
+      "cicd": "CI/CD Pipeline Status",
+      "build": "Build ID",
+      "status": "Status",
+      "deployed": "Deployed",
+      "meaning": "Meaning",
+      "success": "Success",
+      "failed": "Failed",
+      "running": "Running",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "Plant": {
+    "header": "Plant Disease Detector",
+    "desc": "Upload a leaf image to diagnose diseases across 38 crop-disease pairs using a custom PyTorch CNN model.",
+    "upload": "Upload Leaf Image",
+    "browse": "or click to browse",
+    "supported": "Supported formats: JPG, PNG",
+    "processing": "Processing Image...",
+    "analyzing": "Running Inference...",
+    "analyze_btn": "Analyze Leaf",
+    "disease": "Detected Disease",
+    "healthy": "Healthy",
+    "probability": "Probability",
+    "disease_class": "Disease Class",
+    "recommendation": "Recommendation",
+    "treatment": "Apply recommended fungicide and ensure proper watering.",
+    "treatment_healthy": "Maintain current care routine.",
+    "try_sample": "Try Sample"
+  },
+  "Interview": {
+    "header": "AI Interview Coach",
+    "desc": "Real-time speech analysis that evaluates confidence, pacing, filler words, and technical accuracy.",
+    "start": "Start Interview",
+    "stop": "Stop Recording",
+    "processing": "Processing...",
+    "speak_now": "Speak now, we are analyzing your response...",
+    "transcription": "Transcription",
+    "results": "Analysis Results",
+    "confidence": "Confidence Score",
+    "pacing": "Pacing (WPM)",
+    "filler": "Filler Words",
+    "clarity": "Clarity Score",
+    "feedback": "AI Feedback",
+    "feedback_text": "Good pacing, but try to reduce filler words like \"um\" and \"uh\". Your technical explanation was clear and concise."
   }
 }

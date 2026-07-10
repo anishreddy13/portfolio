@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import HeadlessFinancialAnalyst from "@/components/HeadlessFinancialAnalyst";

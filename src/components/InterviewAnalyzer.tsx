@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -174,6 +175,7 @@ function ScoreRing({
 }: {
   score: number; label: string; color: string; size?: number;
 }) {
+  const t = useTranslations("Interview");
   const radius       = (size - 16) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset       = circumference - (score / 100) * circumference;
@@ -225,6 +227,7 @@ function ScoreRing({
 // ─── Waveform ─────────────────────────────────────────────────────────────────
 
 function WaveformVisualizer({ isListening }: { isListening: boolean }) {
+  const t = useTranslations("Interview");
   const bars = 24;
   return (
     <div className="flex items-center justify-center gap-[3px] h-10">
@@ -253,6 +256,7 @@ function WaveformVisualizer({ isListening }: { isListening: boolean }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function InterviewAnalyzer() {
+  const t = useTranslations("Interview");
   const [isListening,    setIsListening]    = useState(false);
   const [isPaused,       setIsPaused]       = useState(false);
   const [transcript,     setTranscript]     = useState<TranscriptEntry[]>([]);

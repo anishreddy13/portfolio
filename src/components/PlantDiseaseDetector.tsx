@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { fetchPlantForm } from "../../lib/mlApi";
 import { usePlantScanAnalytics } from "../hooks/usePlantScanAnalytics";
 import {
@@ -57,6 +58,7 @@ function fileToDataUrl(file: File) {
 }
 
 function MiniConfidenceBar({ label, value, color }: { label: string; value: number; color: string }) {
+  const t = useTranslations("Plant");
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between gap-3">
@@ -81,6 +83,7 @@ function MiniConfidenceBar({ label, value, color }: { label: string; value: numb
 }
 
 function PanelTitle({ label, color = PLANT_ACCENT }: { label: string; color?: string }) {
+  const t = useTranslations("Plant");
   return (
     <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-3" style={{ color }}>
       {label}
@@ -311,6 +314,7 @@ function ResultDashboard({
   uploadKb: number;
   timestamp: string | null;
 }) {
+  const t = useTranslations("Plant");
   const resultColor = result.is_healthy ? PLANT_ACCENT : PLANT_DISEASE;
 
   return (
@@ -336,7 +340,7 @@ function ResultDashboard({
 
         <div className="px-4 sm:px-5 py-4 grid grid-cols-2 sm:grid-cols-4 gap-2">
           {[
-            { label: "Status", value: result.is_healthy ? "Healthy" : "Disease", color: resultColor },
+            { label: "Status", value: result.is_healthy ? t("healthy") : "Disease", color: resultColor },
             { label: "API", value: apiMs ? `${apiMs}ms` : "--", color: PLANT_VIOLET },
             { label: "Model", value: modelMs ? `${modelMs}ms` : "Pending", color: PLANT_ACCENT },
             { label: "Upload", value: `${uploadKb.toFixed(0)}KB`, color: "var(--text-secondary)" },
@@ -396,6 +400,7 @@ function ObservabilityPanel({
   timestamp: string | null;
   success: boolean;
 }) {
+  const t = useTranslations("Plant");
   const confidence = result?.confidence_score ?? 0;
   const circumference = 2 * Math.PI * 34;
   const dash = circumference - (confidence / 100) * circumference;
@@ -462,6 +467,7 @@ function AttentionMapPanel({
   loading: boolean;
   error: string | null;
 }) {
+  const t = useTranslations("Plant");
   const [view, setView] = useState<AttentionView>("heatmap");
   const imageSrc = view === "heatmap" && explanation ? explanation.overlay_base64 : original;
 
@@ -519,9 +525,10 @@ function AttentionMapPanel({
 }
 
 function GuidancePanel({ result }: { result: PlantPredictionResult | null }) {
+  const t = useTranslations("Plant");
   const [expanded, setExpanded] = useState<string | null>("treatment");
   const guidance = getPlantGuidance(result?.predicted_class, result?.is_healthy);
-  const severityColor = guidance.severity === "Healthy" ? PLANT_ACCENT : guidance.severity === "High" ? PLANT_ERROR : PLANT_DISEASE;
+  const severityColor = guidance.severity === t("healthy") ? PLANT_ACCENT : guidance.severity === "High" ? PLANT_ERROR : PLANT_DISEASE;
   const sections = [
     { id: "treatment", label: "Treatment", items: guidance.treatment },
     { id: "prevention", label: "Prevention", items: guidance.prevention },
@@ -571,6 +578,7 @@ function GuidancePanel({ result }: { result: PlantPredictionResult | null }) {
 }
 
 function MediaShowcase() {
+  const t = useTranslations("Plant");
   const [active, setActive] = useState(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [customAsset, setCustomAsset] = useState<{ url: string; type: "image" | "video"; name: string } | null>(null);
@@ -719,6 +727,7 @@ function MediaShowcase() {
 }
 
 function ArchitecturePanel() {
+  const t = useTranslations("Plant");
   return (
     <div className="rounded-sm p-4 sm:p-5" style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}>
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5">
@@ -762,6 +771,7 @@ function ArchitecturePanel() {
 }
 
 function ModelDetailsPanel() {
+  const t = useTranslations("Plant");
   const [expanded, setExpanded] = useState(true);
 
   return (
@@ -895,6 +905,7 @@ function AnalyticsDashboard({
 }
 
 export default function PlantDiseaseDetector() {
+  const t = useTranslations("Plant");
   const [mode, setMode] = useState<InputMode>("upload");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

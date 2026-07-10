@@ -3,8 +3,9 @@
 import { trackActivity } from "../../../lib/trackActivity";
 import { fetchMlHealth, fetchMlJson, fetchSkinJson } from "../../../lib/mlApi";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import InterviewAnalyzer from "@/components/InterviewAnalyzer";
 import PlantDiseaseDetector from "@/components/PlantDiseaseDetector";
 
@@ -379,6 +380,7 @@ function LoadingState({ color, text }: { color: string; text: string }) {
 // ─── Sentiment Tab ────────────────────────────────────────────────────────────
 
 function SentimentTab({ serverStatus }: { serverStatus: string }) {
+  const t = useTranslations("ML");
   const [text, setText]       = useState("");
   const [result, setResult]   = useState<SentimentResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -550,6 +552,7 @@ function SentimentTab({ serverStatus }: { serverStatus: string }) {
 // ─── Spam Tab ─────────────────────────────────────────────────────────────────
 
 function SpamTab({ serverStatus }: { serverStatus: string }) {
+  const t = useTranslations("ML");
   const [text, setText]       = useState("");
   const [result, setResult]   = useState<SpamResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -631,7 +634,7 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>Confidence</p>
+                  <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>{t("sentiment.confidence")}</p>
                   <span className="font-display text-4xl" style={{ color: rc }}>{result.confidence.toFixed(1)}%</span>
                 </div>
               </div>
@@ -692,6 +695,7 @@ function SpamTab({ serverStatus }: { serverStatus: string }) {
 // ─── Emotion Tab ──────────────────────────────────────────────────────────────
 
 function EmotionTab({ serverStatus }: { serverStatus: string }) {
+  const t = useTranslations("ML");
   const [text, setText]       = useState("");
   const [result, setResult]   = useState<EmotionResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -838,6 +842,7 @@ function EmotionTab({ serverStatus }: { serverStatus: string }) {
 // ─── Cancer Tab ───────────────────────────────────────────────────────────────
 
 function CancerTab({ serverStatus }: { serverStatus: string }) {
+  const t = useTranslations("ML");
   const [features, setFeatures] = useState<Record<string, number>>(BENIGN_SAMPLE);
   const [result, setResult]     = useState<CancerResult | null>(null);
   const [loading, setLoading]   = useState(false);
@@ -932,7 +937,7 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
                   <div className="px-5 py-4 space-y-3">
                     <div className="flex items-center justify-between rounded-sm px-3 py-2"
                       style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                      <span className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Risk Level</span>
+                      <span className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{t("skin.risk_level")}</span>
                       <span className="font-display text-xl" style={{ color: riskColors[result.risk_level] || "#C8FF00" }}>
                         {result.risk_level}
                       </span>
@@ -986,6 +991,7 @@ function CancerTab({ serverStatus }: { serverStatus: string }) {
 // ─── Skin Cancer Tab ──────────────────────────────────────────────────────────
 
 function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
+  const t = useTranslations("ML");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageBase64, setImageBase64]   = useState<string | null>(null);
   const [result, setResult]             = useState<SkinResult | null>(null);
@@ -1130,7 +1136,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
                 <div className="px-5 py-4 space-y-3">
                   <div className="flex items-center justify-between rounded-sm px-3 py-2"
                     style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                    <span className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Risk Level</span>
+                    <span className="font-mono text-[0.6rem] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{t("skin.risk_level")}</span>
                     <span className="font-display text-xl" style={{ color: riskColors[result.risk_level] || "#C8FF00" }}>{result.risk_level}</span>
                   </div>
                   <ConfidenceBar label="Cancerous"     value={result.cancer_probability}  color="#FF2D2D" />
@@ -1182,6 +1188,7 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function MLPage() {
+  const t = useTranslations("ML");
   const [activeTab, setActiveTab]       = useState<TabType>("sentiment");
   const [serverStatus, setServerStatus] = useState("checking");
 
@@ -1222,13 +1229,13 @@ export default function MLPage() {
   }, []);
 
   const tabs = [
-    { id: "plant"     as TabType, label: "Plant AI",       icon: "🌿", color: "#C8FF00", desc: "New · Leaf CNN", featured: true },
-    { id: "sentiment" as TabType, label: "Sentiment",      icon: "🧠", color: "#FF2D2D", desc: "Pos · Neg · Neutral"    },
-    { id: "spam"      as TabType, label: "Spam",           icon: "🔍", color: "#FF6B35", desc: "Spam · Ham"             },
-    { id: "emotion"   as TabType, label: "Emotion",        icon: "🎭", color: "#A855F7", desc: "28 Emotions · Demo"     },
-    { id: "cancer"    as TabType, label: "Breast Cancer",  icon: "🔬", color: "#C8FF00", desc: "Malignant · Benign"     },
-    { id: "skin"      as TabType, label: "Skin Cancer",    icon: "🖼️", color: "#FF6B35", desc: "Image Upload · CNN"     },
-    { id: "interview" as TabType, label: "AI Interview",   icon: "🎤", color: "#FF2D2D", desc: "Live Speech"            },
+    { id: "plant"     as TabType, label: t("tabs.plant"),       icon: "🌿", color: "#C8FF00", desc: "New · Leaf CNN", featured: true },
+    { id: "sentiment" as TabType, label: t("tabs.sentiment"),      icon: "🧠", color: "#FF2D2D", desc: "Pos · Neg · Neutral"    },
+    { id: "spam"      as TabType, label: t("tabs.spam"),           icon: "🔍", color: "#FF6B35", desc: "Spam · Ham"             },
+    { id: "emotion"   as TabType, label: t("tabs.emotion"),        icon: "🎭", color: "#A855F7", desc: "28 Emotions · Demo"     },
+    { id: "cancer"    as TabType, label: t("tabs.cancer"),  icon: "🔬", color: "#C8FF00", desc: "Malignant · Benign"     },
+    { id: "skin"      as TabType, label: t("tabs.skin"),    icon: "🖼️", color: "#FF6B35", desc: "Image Upload · CNN"     },
+    { id: "interview" as TabType, label: t("tabs.interview"),   icon: "🎤", color: "#FF2D2D", desc: "Live Speech"            },
   ];
 
   return (

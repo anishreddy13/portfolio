@@ -17,6 +17,7 @@ import {
   XAxis, YAxis, Tooltip, ResponsiveContainer,
 } from "recharts";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 // ─── Types ────────────────────────────────────────────────────
 // ─── Constants ────────────────────────────────────────────────
@@ -769,6 +770,7 @@ const axisTickDim = { fill: "var(--text-tertiary)", fontSize: 8, fontFamily: "DM
 
 // ─── Main Dashboard ───────────────────────────────────────────
 export default function Dashboard() {
+  const t = useTranslations("Dashboard");
   const [activeTab,     setActiveTab]    = useState<DashboardTab>("live");
   const [page,   setPage]   = useState(1);
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -911,11 +913,11 @@ export default function Dashboard() {
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   const tabs = [
-    { id: "live",       label: isMobile ? "🔴 Live"    : "🔴 Live Feed"      },
-    { id: "analytics",  label: isMobile ? "📊 ML"      : "📊 ML Analytics"   },
+    { id: "live",       label: isMobile ? "🔴 Live"    : `🔴 ${t("tabs.live")}`      },
+    { id: "analytics",  label: isMobile ? "📊 ML"      : `📊 ${t("tabs.analytics")}`   },
     { id: "monitoring", label: isMobile ? "🔬 Monitor" : "🔬 Monitoring"      },
     { id: "visitors",   label: isMobile ? "👥 Visitors": "👥 Visitors"        },
-    { id: "pipeline",   label: isMobile ? "⚙️ CI/CD"  : "⚙️ CI/CD Pipeline" },
+    { id: "pipeline",   label: isMobile ? "⚙️ CI/CD"  : `⚙️ ${t("tabs.pipeline")}` },
   ] as const;
 
   return (

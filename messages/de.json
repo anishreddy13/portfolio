@@ -173,5 +173,193 @@
     "filter_ml": "ML",
     "filter_data": "Daten",
     "filter_cloud": "Cloud"
+  },
+  "Stats": {
+    "header1": "Entwickler-",
+    "header_highlight": "Metriken",
+    "description": "Echtzeiteinblicke in meine Programmieraktivitäten, Sprachverteilung und Open-Source-Beiträge. Unterstützt durch GitHub- und WakaTime-Daten.",
+    "commits_label": "Gesamte Commits (30d)",
+    "commits_sub": "+12% im Vergleich zum Vormonat",
+    "hours_label": "Programmierstunden (30d)",
+    "hours_sub": "Ø 3,9 Std. / Tag",
+    "streak_label": "Längste Serie",
+    "streak_val": "14 Tage",
+    "streak_sub": "Aktuell: 3 Tage",
+    "top_lang_label": "Top-Sprache",
+    "top_lang_sub": "45,2 % der Programmierzeit",
+    "other_lang": "Andere",
+    "footer_note": "Hinweis: Zeigt realistische Mock-Daten zu Demonstrationszwecken in V1."
+  },
+  "ML": {
+    "title": "Interaktives",
+    "title_highlight": "ML Lab",
+    "subtitle": "Live-Inferenz-Endpunkte, die Hugging Face & Scikit-Learn Modelle über FastAPI bereitstellen.",
+    "tabs": {
+      "plant": "Pflanzen-KI",
+      "interview": "Coach-KI",
+      "sentiment": "Stimmung",
+      "spam": "Spam",
+      "emotion": "Emotion",
+      "skin": "Haut-KI",
+      "cancer": "Krebs"
+    },
+    "health": {
+      "api_status": "API-Status",
+      "online": "Online",
+      "offline": "Offline",
+      "checking": "Wird überprüft..."
+    },
+    "sentiment": {
+      "header": "Stimmungsanalyse",
+      "desc": "Analysiert Text, um die zugrunde liegende Stimmung mit Konfidenzbewertung zu klassifizieren.",
+      "placeholder": "Geben Sie einen Satz ein, um die Stimmung zu analysieren...",
+      "analyze_btn": "Text analysieren",
+      "analyzing": "Wird analysiert...",
+      "examples": "Beispiele",
+      "results": "Analyseergebnisse",
+      "confidence": "Konfidenz",
+      "history": "Letzte Vorhersagen",
+      "no_history": "Noch kein Verlauf"
+    },
+    "spam": {
+      "header": "Spam-Erkennung",
+      "desc": "Klassifiziert Textnachrichten basierend auf linguistischen Mustern als HAM (legitim) oder SPAM.",
+      "placeholder": "Fügen Sie einen SMS- oder E-Mail-Text zur Überprüfung ein...",
+      "analyze_btn": "Auf Spam prüfen",
+      "analyzing": "Wird geprüft...",
+      "examples": "Beispiele",
+      "results": "Erkennungsergebnisse",
+      "safe": "Sicher (Ham)",
+      "spam": "Spam erkannt",
+      "keywords": "Markierte Schlüsselwörter:",
+      "none": "Keine"
+    },
+    "emotion": {
+      "header": "Emotionserkennung",
+      "desc": "Multi-Task-NLP-Modell, das primäre Emotion, Geschlecht und Alter aus Text extrahiert.",
+      "placeholder": "Beschreiben Sie, wie Sie sich gerade fühlen...",
+      "analyze_btn": "Emotion erkennen",
+      "analyzing": "Wird verarbeitet...",
+      "primary_emotion": "Primäre Emotion",
+      "gender": "Vorhergesagtes Geschlecht",
+      "age": "Vorhergesagte Altersgruppe",
+      "top_emotions": "Top-Emotionen"
+    },
+    "skin": {
+      "header": "Hautläsionsanalyse",
+      "desc": "Computer-Vision-Demo zur Identifizierung von 7 Arten von Hautläsionen mit einem PyTorch CNN.",
+      "upload_box": "Ziehen Sie ein Hautbild hierher",
+      "upload_sub": "oder klicken Sie, um Dateien zu durchsuchen",
+      "supported": "Unterstützte Formate: JPEG, PNG",
+      "analyze_btn": "Bild analysieren",
+      "analyzing": "Bild wird verarbeitet...",
+      "results": "Diagnoseergebnisse",
+      "risk_level": "Risikostufe",
+      "malignant": "Hohes Risiko (Bösartig)",
+      "benign": "Geringes Risiko (Gutartig)",
+      "top_predictions": "Top-Vorhersagen",
+      "probability": "Wahrscheinlichkeit"
+    },
+    "cancer": {
+      "header": "Brustkrebsvorhersage",
+      "desc": "Tabellarisches Datenmodell zur Vorhersage von Bösartigkeit anhand von Zellkernmerkmalen.",
+      "predict_btn": "Vorhersage ausführen",
+      "predicting": "Wird berechnet...",
+      "results": "Vorhersageergebnisse",
+      "malignant": "Bösartig (Krebs)",
+      "benign": "Gutartig (Sicher)",
+      "risk": "Risikoanalyse",
+      "top_features": "Wichtigste beitragende Merkmale"
+    }
+  },
+  "Dashboard": {
+    "header1": "Projekt-",
+    "header_highlight": "Dashboard",
+    "description": "Live-Leistungsmetriken, API-Integrität und Systemanalysen für alle bereitgestellten KI-Modelle.",
+    "tabs": {
+      "live": "Live-Feed",
+      "analytics": "Analytik",
+      "monitoring": "Systemintegrität",
+      "visitors": "Weltweiter Traffic",
+      "pipeline": "CI/CD-Pipeline"
+    },
+    "health": {
+      "api_status": "API-Status",
+      "online": "Online",
+      "offline": "Offline",
+      "checking": "Wird überprüft..."
+    },
+    "metrics": {
+      "total_requests": "Gesamtanfragen",
+      "avg_latency": "Ø Latenz",
+      "uptime": "Betriebszeit",
+      "error_rate": "Fehlerrate",
+      "from_last_month": "im Vergleich zum Vormonat",
+      "live_traffic": "Live-Traffic",
+      "requests_sec": "Anfragen / Sek."
+    },
+    "monitoring": {
+      "service_health": "Service-Integritätsübersicht",
+      "service": "Service",
+      "status": "Status",
+      "latency": "Latenz",
+      "uptime": "Betriebszeit",
+      "last_check": "Letzte Prüfung",
+      "data_drift": "Data-Drift-Analyse",
+      "feature": "Merkmal",
+      "drift_score": "Drift-Score",
+      "recommendation": "Empfehlung",
+      "details": "Details"
+    },
+    "visitors": {
+      "geography": "Globale Anfragengeografie",
+      "total_hits": "Gesamtzugriffe"
+    },
+    "pipeline": {
+      "cicd": "CI/CD-Pipeline-Status",
+      "build": "Build-ID",
+      "status": "Status",
+      "deployed": "Bereitgestellt",
+      "meaning": "Bedeutung",
+      "success": "Erfolg",
+      "failed": "Fehlgeschlagen",
+      "running": "Läuft",
+      "yes": "Ja",
+      "no": "Nein"
+    }
+  },
+  "Plant": {
+    "header": "Pflanzenkrankheits-Detektor",
+    "desc": "Laden Sie ein Blattbild hoch, um Krankheiten bei 38 Paarungen aus Nutz- und Krankheitsarten mit einem speziellen PyTorch-CNN-Modell zu diagnostizieren.",
+    "upload": "Blattbild hochladen",
+    "browse": "oder klicken, um zu durchsuchen",
+    "supported": "Unterstützte Formate: JPG, PNG",
+    "processing": "Bild wird verarbeitet...",
+    "analyzing": "Inferenz wird ausgeführt...",
+    "analyze_btn": "Blatt analysieren",
+    "disease": "Erkannte Krankheit",
+    "healthy": "Gesund",
+    "probability": "Wahrscheinlichkeit",
+    "disease_class": "Krankheitsklasse",
+    "recommendation": "Empfehlung",
+    "treatment": "Empfohlenes Fungizid anwenden und auf angemessene Bewässerung achten.",
+    "treatment_healthy": "Aktuelle Pflegeroutine beibehalten.",
+    "try_sample": "Beispiel testen"
+  },
+  "Interview": {
+    "header": "KI-Interview-Coach",
+    "desc": "Echtzeit-Sprachanalyse zur Bewertung von Konfidenz, Sprechtempo, Füllwörtern und technischer Genauigkeit.",
+    "start": "Interview starten",
+    "stop": "Aufnahme stoppen",
+    "processing": "Wird verarbeitet...",
+    "speak_now": "Sprechen Sie jetzt, wir analysieren Ihre Antwort...",
+    "transcription": "Transkription",
+    "results": "Analyseergebnisse",
+    "confidence": "Konfidenz-Score",
+    "pacing": "Sprechtempo (WpM)",
+    "filler": "Füllwörter",
+    "clarity": "Klarheits-Score",
+    "feedback": "KI-Feedback",
+    "feedback_text": "Gutes Sprechtempo, aber versuchen Sie, Füllwörter wie \"ähm\" zu reduzieren. Ihre technische Erklärung war klar und präzise."
   }
 }
