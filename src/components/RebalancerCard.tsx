@@ -119,8 +119,22 @@ export default function RebalancerCard({ portfolio, setPortfolio }: RebalancerCa
                  {error}
                </motion.div>
              ) : report ? (
-               <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-10}} className="prose prose-invert prose-p:text-sm prose-p:leading-relaxed prose-h3:text-lg prose-h3:text-[#C8FF00] prose-li:text-sm max-w-none">
-                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
+               <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-10}} className="w-full">
+                 <ReactMarkdown 
+                   remarkPlugins={[remarkGfm]}
+                   components={{
+                     h3: ({node, ...props}) => <h3 className="text-lg font-display text-[#C8FF00] mt-8 mb-3 pb-2 border-b border-[rgba(255,255,255,0.1)]" {...props} />,
+                     p: ({node, ...props}) => <p className="font-body text-sm text-[var(--text-secondary)] leading-relaxed mb-4 bg-slate-900/30 p-4 rounded border border-[rgba(255,255,255,0.04)]" {...props} />,
+                     ul: ({node, ...props}) => <ul className="space-y-3 mb-4 text-sm text-[var(--text-secondary)] list-none" {...props} />,
+                     li: ({node, ...props}) => (
+                       <li className="flex items-start gap-2 bg-slate-900/30 p-3 rounded border border-[rgba(255,255,255,0.04)]">
+                         <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#C8FF00] shrink-0" />
+                         <span className="leading-relaxed" {...props} />
+                       </li>
+                     ),
+                     strong: ({node, ...props}) => <strong className="font-semibold text-[var(--text-primary)]" {...props} />
+                   }}
+                 >
                     {report}
                  </ReactMarkdown>
                </motion.div>
