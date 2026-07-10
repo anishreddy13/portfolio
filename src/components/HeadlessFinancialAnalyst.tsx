@@ -61,6 +61,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   const [ticker, setTicker] = useState(initialTicker);
   const [result, setResult] = useState<string | null>(null);
   const [chartData, setChartData] = useState<any[]>([]);
+  const [accuracy, setAccuracy] = useState<number | null>(null);
   const [financialData, setFinancialData] = useState<string | null>(null);
   const [displayedResult, setDisplayedResult] = useState<string>("");
   const [kpis, setKpis] = useState<KPIData[]>([]);
@@ -139,6 +140,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     setError(null);
     setResult(null);
     setKpis([]);
+    setAccuracy(null);
 
     try {
       const app = await Client.connect("Anishreddy13/ai-financial-analyst");
@@ -161,13 +163,17 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
 
       if (chartResponse && chartResponse.data) {
         try {
-           const parsedChart = JSON.parse((chartResponse.data as unknown[])[0] as string);
-           if (!parsedChart.error && Array.isArray(parsedChart)) {
-              const formattedData = parsedChart.map((d: any) => ({
+           const parsedPayload = JSON.parse((chartResponse.data as unknown[])[0] as string);
+           if (!parsedPayload.error && parsedPayload.chart && Array.isArray(parsedPayload.chart)) {
+              const formattedData = parsedPayload.chart.map((d: any) => ({
                  ...d,
-                 confidence: (d.lowerBound !== null && d.upperBound !== null) ? [d.lowerBound, d.upperBound] : undefined
+                 confidence: (d.lowerBound !== null && d.upperBound !== null) ? [d.lowerBound, d.upperBound] : undefined,
+                 archivedConfidence: (d.archivedLowerBound !== null && d.archivedUpperBound !== null) ? [d.archivedLowerBound, d.archivedUpperBound] : undefined
               }));
               setChartData(formattedData);
+              if (parsedPayload.accuracy !== null) {
+                  setAccuracy(parsedPayload.accuracy);
+              }
            }
         } catch(e) { console.error("Chart parse error", e); }
       }
@@ -377,6 +383,26 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                {/* KPIs */}
                <div className="lg:col-span-1 grid grid-cols-2 gap-3">
+                  {/* Accuracy KPI injected as first block if available */}
+                  {accuracy !== null && (
+                     <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="rounded-sm p-4 relative overflow-hidden flex flex-col justify-between col-span-2"
+                        style={{ background: "rgba(0,255,209,0.05)", border: "1px solid rgba(0,255,209,0.2)" }}
+                     >
+                        <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>
+                           Live Forecast Accuracy
+                        </p>
+                        <div className="flex items-end justify-between">
+                           <p className="font-display text-2xl" style={{ color: "#00FFD1" }}>
+                              {accuracy}%
+                           </p>
+                           <Activity size={16} color="#00FFD1" className="mb-1" />
+                        </div>
+                     </motion.div>
+                  )}
+
                   {kpis.map((kpi, i) => (
                      <motion.div 
                         key={i}
@@ -430,6 +456,25 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                              <Tooltip 
                                contentStyle={{ background: '#0A0A0A', border: '1px solid #333', fontSize: '12px', color: '#fff' }}
                                itemStyle={{ color: '#C8FF00' }}
+                             />
+                             <Area 
+                               yAxisId="price"
+                               type="monotone" 
+                               dataKey="archivedConfidence" 
+                               stroke="none" 
+                               fill="#888888" 
+                               fillOpacity={0.05} 
+                             />
+                             <Line 
+                                yAxisId="price"
+                                type="monotone" 
+                                dataKey="archivedProjectedPrice" 
+                                stroke="#888888" 
+                                strokeWidth={2} 
+                                strokeDasharray="3 3"
+                                opacity={0.5}
+                                dot={false}
+                                animationDuration={1500}
                              />
                              <Area 
                                yAxisId="price"
