@@ -50,17 +50,41 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
       const fhText = text.substring(fhStart, fhEnd).trim();
       const lines = fhText.split("\n").map(l => l.trim()).filter(l => l);
       
-      // Assume lines are "Metric Value" pairs, or 2-column table rows. 
-      // Sometimes it outputs "Metric Value" as header. Skip it if so.
+      // Parse each line, handling Markdown tables, bulleted lists, and raw text formats
       lines.forEach(line => {
-        if (line.toLowerCase().includes("metric") && line.toLowerCase().includes("value")) return; // skip header
-        // Simple heuristic: The last word/number is usually the value
-        const parts = line.match(/(.+?)\s+([$%\d.\-NA]+|N\/A)$/i);
+        // Skip table separators or headers
+        if (line.includes("---")) return;
+        if (line.toLowerCase().includes("metric") && line.toLowerCase().includes("value")) return; 
+        
+        let cleanedLine = line.trim();
+        
+        // 1. Handle Markdown Table Rows: | Metric | Value |
+        if (cleanedLine.startsWith("|") && cleanedLine.endsWith("|")) {
+           const cells = cleanedLine.split("|").map(c => c.trim()).filter(c => c);
+           if (cells.length >= 2) {
+              const metric = cells[0].replace(/\*\*/g, "");
+              const value = cells[1].replace(/\*\*/g, "");
+              financialData.push({ metric, value });
+              return;
+           }
+        }
+        
+        // 2. Handle Bulleted/Colon List: * Metric: Value  OR - Metric: Value
+        const colonMatch = cleanedLine.match(/^[-*•\d\.]*\s*(.+?):\s*(.+)$/);
+        if (colonMatch) {
+            const metric = colonMatch[1].replace(/\*\*/g, "").trim();
+            const value = colonMatch[2].replace(/\*\*/g, "").trim();
+            financialData.push({ metric, value });
+            return;
+        }
+
+        // 3. Fallback: Old format (Metric Value separated by spaces)
+        cleanedLine = cleanedLine.replace(/\*\*/g, "").trim();
+        const parts = cleanedLine.match(/(.+?)\s+([$%\d.\-NA]+|N\/A)$/i);
         if (parts && parts.length >= 3) {
           financialData.push({ metric: parts[1].trim(), value: parts[2].trim() });
         } else {
-           // Fallback split by tab or multiple spaces if generated like that
-           const fallbackParts = line.split(/\s{2,}|\t/);
+           const fallbackParts = cleanedLine.split(/\s{2,}|\t/);
            if (fallbackParts.length >= 2) {
              financialData.push({ metric: fallbackParts[0].trim(), value: fallbackParts[fallbackParts.length-1].trim() });
            }
