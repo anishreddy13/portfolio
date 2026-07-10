@@ -4,6 +4,7 @@ import PlatformShell from "@/components/PlatformShell";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import WelcomeAvatar from "@/components/WelcomeAvatar";
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -68,6 +69,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <PlatformShell>{children}</PlatformShell>
+            <WelcomeAvatar />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
