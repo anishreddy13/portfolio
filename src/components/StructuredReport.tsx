@@ -17,6 +17,7 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
     const execSummaryMatch = text.match(/Executive Summary/i);
     const financialHealthMatch = text.match(/Financial Health/i);
     const secRisksMatch = text.match(/SEC Compliance & Hidden Risks/i);
+    const peerMatch = text.match(/Peer Comparison/i);
     const riskFactorsMatch = text.match(/Risk Factors/i);
     const recommendationMatch = text.match(/Recommendation/i);
     
@@ -27,8 +28,9 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
     const startIndex = execSummaryMatch ? execSummaryMatch.index! + execSummaryMatch[0].length : 0;
     const endIndex = financialHealthMatch ? financialHealthMatch.index : 
                      (secRisksMatch ? secRisksMatch.index :
+                     (peerMatch ? peerMatch.index :
                      (riskFactorsMatch ? riskFactorsMatch.index : 
-                     (recommendationMatch ? recommendationMatch.index : text.length)));
+                     (recommendationMatch ? recommendationMatch.index : text.length))));
                      
     if (endIndex !== undefined) {
       execSummary = text.substring(startIndex, endIndex).trim();
@@ -47,8 +49,9 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
     if (financialHealthMatch) {
       const fhStart = financialHealthMatch.index! + financialHealthMatch[0].length;
       const fhEnd = secRisksMatch ? secRisksMatch.index :
+                    (peerMatch ? peerMatch.index :
                     (riskFactorsMatch ? riskFactorsMatch.index : 
-                    (recommendationMatch ? recommendationMatch.index : text.length));
+                    (recommendationMatch ? recommendationMatch.index : text.length)));
       
       const fhText = text.substring(fhStart, fhEnd).trim();
       const lines = fhText.split("\n").map(l => l.trim()).filter(l => l);
@@ -99,13 +102,42 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
     let secRisks: string[] = [];
     if (secRisksMatch) {
       const secStart = secRisksMatch.index! + secRisksMatch[0].length;
-      const secEnd = riskFactorsMatch ? riskFactorsMatch.index : 
-                     (recommendationMatch ? recommendationMatch.index : text.length);
+      const secEnd = peerMatch ? peerMatch.index :
+                     (riskFactorsMatch ? riskFactorsMatch.index : 
+                     (recommendationMatch ? recommendationMatch.index : text.length));
       
       const secText = text.substring(secStart, secEnd).trim();
       secRisks = secText.split("\n")
         .map(l => l.replace(/^[-\*•\d\.]+\s*/, "").trim())
         .filter(l => l.length > 5);
+    }
+
+    // Extract Peer Comparison
+    let peerComparison: { headers: string[], rows: string[][] } = { headers: [], rows: [] };
+    let peerTakeaway = "";
+    if (peerMatch) {
+      const pStart = peerMatch.index! + peerMatch[0].length;
+      const pEnd = riskFactorsMatch ? riskFactorsMatch.index : 
+                   (recommendationMatch ? recommendationMatch.index : text.length);
+      
+      const pText = text.substring(pStart, pEnd).trim();
+      const pLines = pText.split("\n").map(l => l.trim()).filter(l => l);
+      
+      pLines.forEach(line => {
+        if (line.includes("---")) return;
+        
+        if (line.startsWith("|") && line.endsWith("|")) {
+          const cells = line.split("|").map(c => c.trim()).filter(c => c);
+          if (peerComparison.headers.length === 0) {
+            peerComparison.headers = cells.map(c => c.replace(/\*\*/g, ""));
+          } else {
+            peerComparison.rows.push(cells.map(c => c.replace(/\*\*/g, "")));
+          }
+        } else if (!line.startsWith("|") && line.length > 10) {
+          peerTakeaway += line + " ";
+        }
+      });
+      peerTakeaway = peerTakeaway.trim();
     }
 
     // Extract Risk Factors
@@ -138,6 +170,8 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
       sentiment,
       financialData,
       secRisks,
+      peerComparison,
+      peerTakeaway,
       riskFactors,
       recommendation
     };
@@ -274,6 +308,46 @@ export default function StructuredReport({ markdown }: StructuredReportProps) {
                   ))}
                </ul>
             </div>
+         </div>
+      )}
+
+      {/* Peer Comparison */}
+      {parsed.peerComparison.headers.length > 0 && (
+         <div className="rounded-md bg-[var(--surface-1)] border border-[rgba(255,255,255,0.06)] overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-slate-800/80 bg-slate-900/20">
+               <h3 className="font-display text-xl text-[var(--text-primary)]">Peer Comparison</h3>
+            </div>
+            <div className="flex-1 overflow-x-auto">
+               <table className="w-full text-left table-auto">
+                  <thead>
+                     <tr className="bg-slate-900/50">
+                        {parsed.peerComparison.headers.map((header, idx) => (
+                          <th key={idx} className={`py-3 px-5 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)] border-b border-slate-800 font-normal ${idx > 0 ? 'text-right' : ''}`}>
+                            {header}
+                          </th>
+                        ))}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {parsed.peerComparison.rows.map((row, idx) => (
+                        <tr key={idx} className={`border-b border-slate-800/50 hover:bg-slate-800/20 transition-colors ${idx % 2 === 0 ? 'bg-transparent' : 'bg-slate-900/20'}`}>
+                           {row.map((cell, cellIdx) => (
+                             <td key={cellIdx} className={`py-3 px-5 font-body text-[0.85rem] ${cellIdx === 0 ? 'text-[var(--text-secondary)]' : 'font-mono text-[var(--text-primary)] text-right'}`}>
+                               {cell}
+                             </td>
+                           ))}
+                        </tr>
+                     ))}
+                  </tbody>
+               </table>
+            </div>
+            {parsed.peerTakeaway && (
+              <div className="p-4 bg-slate-900/10 border-t border-[rgba(255,255,255,0.02)]">
+                 <p className="font-body text-sm text-[var(--text-secondary)] leading-relaxed italic">
+                    "{parsed.peerTakeaway}"
+                 </p>
+              </div>
+            )}
          </div>
       )}
 

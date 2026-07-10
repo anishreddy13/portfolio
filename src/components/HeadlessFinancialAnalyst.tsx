@@ -6,8 +6,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity, ShieldAlert } from "lucide-react";
-import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
+import { LineChart, Line, BarChart, Bar, ComposedChart, ResponsiveContainer, YAxis, XAxis, Tooltip } from "recharts";
 import StructuredReport from "./StructuredReport";
+import FinancialStatements from "./FinancialStatements";
 
 // --- Types ---
 interface KPIData {
@@ -16,17 +17,7 @@ interface KPIData {
   trend: "up" | "down";
 }
 
-// --- Mock Chart Data Generator ---
-const generateMockChartData = (ticker: string) => {
-  const seed = ticker.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  let basePrice = 100 + (seed % 200);
-  const data = [];
-  for (let i = 0; i < 30; i++) {
-    basePrice = basePrice + (Math.sin(i + seed) * 5) + (Math.random() * 4 - 2);
-    data.push({ day: i, price: Math.max(10, basePrice) });
-  }
-  return data;
-};
+// Removed mock chart data generator
 
 // --- KPI Extractor ---
 const extractKPIs = (markdown: string, ticker: string): { kpis: KPIData[], cleaned: string } => {
@@ -65,6 +56,8 @@ const extractKPIs = (markdown: string, ticker: string): { kpis: KPIData[], clean
 export default function HeadlessFinancialAnalyst() {
   const [ticker, setTicker] = useState("");
   const [result, setResult] = useState<string | null>(null);
+  const [chartData, setChartData] = useState<any[]>([]);
+  const [financialData, setFinancialData] = useState<string | null>(null);
   const [displayedResult, setDisplayedResult] = useState<string>("");
   const [kpis, setKpis] = useState<KPIData[]>([]);
   const [loading, setLoading] = useState(false);
@@ -139,18 +132,36 @@ export default function HeadlessFinancialAnalyst() {
 
     try {
       const app = await Client.connect("Anishreddy13/ai-financial-analyst");
-      const response = await app.predict("/analyze_stock", [
-        ticker.trim().toUpperCase()
+      
+      // Parallel execution of all 3 endpoints
+      const [analysisResponse, chartResponse, finResponse] = await Promise.all([
+        app.predict("/analyze_stock", [ticker.trim().toUpperCase()]),
+        app.predict("/get_historical", [ticker.trim().toUpperCase()]),
+        app.predict("/get_financials_tables", [ticker.trim().toUpperCase()]),
       ]);
       
-      if (response && response.data) {
-        const rawMarkdown = (response.data as unknown[])[0] as string;
+      if (analysisResponse && analysisResponse.data) {
+        const rawMarkdown = (analysisResponse.data as unknown[])[0] as string;
         const { kpis: extractedKpis, cleaned } = extractKPIs(rawMarkdown, ticker);
         setKpis(extractedKpis);
         setResult(cleaned);
       } else {
          setError("Received an unexpected response format from the server.");
       }
+
+      if (chartResponse && chartResponse.data) {
+        try {
+           const parsedChart = JSON.parse((chartResponse.data as unknown[])[0] as string);
+           if (!parsedChart.error) {
+              setChartData(parsedChart);
+           }
+        } catch(e) { console.error("Chart parse error", e); }
+      }
+
+      if (finResponse && finResponse.data) {
+         setFinancialData((finResponse.data as unknown[])[0] as string);
+      }
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to connect to the AI agents.");
       console.error("Gradio Client Error:", err);
@@ -378,32 +389,46 @@ export default function HeadlessFinancialAnalyst() {
                   ))}
                </div>
 
-               {/* Mock Recharts Line Chart */}
+               {/* Real Recharts Line/Volume Chart */}
                <motion.div 
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.3 }}
-                  className="lg:col-span-2 rounded-sm p-5 h-[160px] flex flex-col"
+                  className="lg:col-span-2 rounded-sm p-5 h-[200px] flex flex-col"
                   style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}
                >
                   <div className="flex justify-between items-center mb-4">
-                     <p className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>30-Day Price Trend (Simulated)</p>
+                     <p className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>6-Month Price History</p>
                      <span className="px-2 py-0.5 rounded-sm font-mono text-[0.5rem] bg-[#C8FF00] text-black uppercase">Live</span>
                   </div>
                   <div className="flex-1 w-full h-full">
-                     <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={generateMockChartData(ticker)}>
-                           <YAxis domain={['auto', 'auto']} hide />
-                           <Line 
-                              type="monotone" 
-                              dataKey="price" 
-                              stroke="#C8FF00" 
-                              strokeWidth={2} 
-                              dot={false}
-                              animationDuration={2000}
-                           />
-                        </LineChart>
-                     </ResponsiveContainer>
+                     {chartData.length > 0 ? (
+                       <ResponsiveContainer width="100%" height="100%">
+                          <ComposedChart data={chartData}>
+                             <XAxis dataKey="date" hide />
+                             <YAxis yAxisId="price" domain={['auto', 'auto']} hide />
+                             <YAxis yAxisId="volume" orientation="right" hide />
+                             <Tooltip 
+                               contentStyle={{ background: '#0A0A0A', border: '1px solid #333', fontSize: '12px', color: '#fff' }}
+                               itemStyle={{ color: '#C8FF00' }}
+                             />
+                             <Bar yAxisId="volume" dataKey="volume" fill="rgba(255,255,255,0.1)" />
+                             <Line 
+                                yAxisId="price"
+                                type="monotone" 
+                                dataKey="close" 
+                                stroke="#C8FF00" 
+                                strokeWidth={2} 
+                                dot={false}
+                                animationDuration={1500}
+                             />
+                          </ComposedChart>
+                       </ResponsiveContainer>
+                     ) : (
+                       <div className="w-full h-full flex items-center justify-center font-mono text-xs text-[var(--text-tertiary)]">
+                          Loading chart data...
+                       </div>
+                     )}
                   </div>
                </motion.div>
             </div>
@@ -449,7 +474,10 @@ export default function HeadlessFinancialAnalyst() {
                   </div>
                </div>
             ) : (
-               <StructuredReport markdown={result} />
+               <>
+                 <StructuredReport markdown={result} />
+                 {financialData && <FinancialStatements data={financialData} />}
+               </>
             )}
           </motion.div>
         )}
