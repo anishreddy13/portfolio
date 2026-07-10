@@ -5,6 +5,7 @@ import WatchlistSidebar from "./WatchlistSidebar";
 import SignalFeed from "./SignalFeed";
 import HeadlessFinancialAnalyst from "./HeadlessFinancialAnalyst";
 import RebalancerCard from "./RebalancerCard";
+import WelcomeAvatar from "./WelcomeAvatar";
 
 export default function PortfolioDashboard() {
   // Global persistent portfolio state: Ticker -> Weight
@@ -99,6 +100,9 @@ export default function PortfolioDashboard() {
           
         </div>
       </div>
+      
+      {/* Voice Assistant Avatar - Scoped to Dashboard Only */}
+      <WelcomeAvatar />
     </div>
   );
 }
