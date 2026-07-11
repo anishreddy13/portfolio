@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { MessageSquare, Newspaper, CheckCircle, TrendingUp, TrendingDown, Minus, PlayCircle } from "lucide-react";
+import { MessageSquare, Newspaper, CheckCircle, TrendingUp, TrendingDown, Minus, PlayCircle, Loader2 } from "lucide-react";
 
 interface SocialItem {
   source: string;
+  source_type?: "social" | "news" | "video";
   content: string;
   sentiment: "Bullish" | "Bearish" | "Neutral";
   url: string;
@@ -14,10 +16,15 @@ interface SocialItem {
 interface SocialSentinelProps {
   data: SocialItem[] | null;
   loading: boolean;
+  loadMore?: (page: number) => Promise<void>;
 }
 
-export default function SocialSentinel({ data, loading }: SocialSentinelProps) {
-  if (loading) {
+export default function SocialSentinel({ data, loading, loadMore }: SocialSentinelProps) {
+  const [activeFilter, setActiveFilter] = useState<"All" | "social" | "news" | "video">("All");
+  const [page, setPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+
+  if (loading && (!data || data.length === 0)) {
     return (
       <div className="w-full flex items-center justify-center p-20">
          <div className="flex flex-col items-center gap-4">
@@ -38,18 +45,37 @@ export default function SocialSentinel({ data, loading }: SocialSentinelProps) {
 
   return (
     <div className="w-full">
-      <div className="mb-6 flex items-center justify-between border-b border-[rgba(255,255,255,0.06)] pb-4">
+      <div className="mb-6 flex flex-col md:flex-row md:items-end justify-between border-b border-[rgba(255,255,255,0.06)] pb-4 gap-4">
         <div>
            <h3 className="font-display text-xl text-[var(--text-primary)]">Social & News Sentinel</h3>
            <p className="font-mono text-[0.6rem] tracking-widest uppercase text-[var(--text-tertiary)] mt-1">
              Real-Time Retail & Institutional Sentiment
            </p>
         </div>
+        
+        {/* Pill Bar Filter */}
+        <div className="flex items-center gap-2">
+          {["All", "news", "social", "video"].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter as any)}
+              className={`px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-full border transition-colors ${
+                activeFilter === filter 
+                  ? "bg-[#C8FF00] text-black border-[#C8FF00]" 
+                  : "bg-transparent text-[var(--text-secondary)] border-[rgba(255,255,255,0.1)] hover:border-[rgba(255,255,255,0.3)]"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Masonry Layout Grid */}
       <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
-        {data.map((item, idx) => {
+        {data
+          .filter(item => activeFilter === "All" || item.source_type === activeFilter)
+          .map((item, idx) => {
           const isBullish = item.sentiment === "Bullish";
           const isBearish = item.sentiment === "Bearish";
           const isNeutral = item.sentiment === "Neutral";
@@ -131,6 +157,25 @@ export default function SocialSentinel({ data, loading }: SocialSentinelProps) {
           );
         })}
       </div>
+      
+      {/* Load More Button */}
+      {loadMore && (
+        <div className="mt-8 flex justify-center">
+           <button
+             onClick={async () => {
+               setLoadingMore(true);
+               await loadMore(page + 1);
+               setPage(p => p + 1);
+               setLoadingMore(false);
+             }}
+             disabled={loadingMore}
+             className="flex items-center gap-2 px-6 py-2.5 bg-[var(--surface-1)] hover:bg-[var(--surface-2)] border border-[rgba(255,255,255,0.1)] rounded-sm font-mono text-xs text-white tracking-widest uppercase transition-colors disabled:opacity-50"
+           >
+             {loadingMore ? <Loader2 size={14} className="animate-spin" /> : null}
+             {loadingMore ? "Loading..." : "Load More"}
+           </button>
+        </div>
+      )}
     </div>
   );
 }

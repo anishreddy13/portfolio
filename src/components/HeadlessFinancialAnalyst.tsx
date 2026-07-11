@@ -198,7 +198,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
         app.predict("/get_forecast", [ticker.trim().toUpperCase()]),
         app.predict("/get_financials_tables", [ticker.trim().toUpperCase()]),
         app.predict("/get_xai_explanation", [ticker.trim().toUpperCase()]),
-        app.predict("/get_social_sentiment", [ticker.trim().toUpperCase()]),
+        app.predict("/get_social_sentiment", [ticker.trim().toUpperCase(), 1, 20]),
       ]);
       
       if (analysisResponse && analysisResponse.data) {
@@ -255,6 +255,22 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     } finally {
       setLoading(false);
       setAgentStep(4); // Done
+    }
+  };
+
+  const loadMoreSocialData = async (page: number) => {
+    if (!ticker.trim()) return;
+    try {
+      const app = await Client.connect("Anishreddy13/ai-financial-analyst");
+      const response = await app.predict("/get_social_sentiment", [ticker.trim().toUpperCase(), page, 20]);
+      if (response && response.data) {
+        const parsed = JSON.parse((response.data as unknown[])[0] as string);
+        if (!parsed.error && Array.isArray(parsed)) {
+           setSocialData((prev) => [...(prev || []), ...parsed]);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to load more social data", e);
     }
   };
 
@@ -574,7 +590,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                 ) : (
                    <div className="flex flex-col gap-6">
                      {socialData ? (
-                        <SocialSentinel data={socialData} loading={loading} />
+                        <SocialSentinel data={socialData} loading={loading} loadMore={loadMoreSocialData} />
                      ) : (
                         <div className="p-10 text-center font-mono text-[var(--text-tertiary)] bg-[var(--surface-1)] border border-[rgba(255,255,255,0.06)] rounded-sm">
                            No social sentiment data available for this asset.
