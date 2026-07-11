@@ -566,10 +566,20 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                          </div>
                       </div>
                    </div>
-                ) : (
+                ) : activeTab === 'metrics' ? (
                    <div className="flex flex-col gap-6">
                      <StructuredReport markdown={result} />
                      {financialData && <FinancialStatements data={financialData} />}
+                   </div>
+                ) : (
+                   <div className="flex flex-col gap-6">
+                     {socialData ? (
+                        <SocialSentinel data={socialData} loading={loading} />
+                     ) : (
+                        <div className="p-10 text-center font-mono text-[var(--text-tertiary)] bg-[var(--surface-1)] border border-[rgba(255,255,255,0.06)] rounded-sm">
+                           No social sentiment data available for this asset.
+                        </div>
+                     )}
                    </div>
                 )}
              </div>
