@@ -192,14 +192,18 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     try {
       const app = await Client.connect("Anishreddy13/ai-financial-analyst");
       
-      // Parallel execution of all 5 endpoints
-      const [analysisResponse, chartResponse, finResponse, xaiResponse, socialResponse] = await Promise.all([
-        app.predict("/analyze_stock", [ticker.trim().toUpperCase()]),
-        app.predict("/get_forecast", [ticker.trim().toUpperCase()]),
-        app.predict("/get_financials_tables", [ticker.trim().toUpperCase()]),
-        app.predict("/get_xai_explanation", [ticker.trim().toUpperCase()]),
-        app.predict("/get_social_sentiment", [ticker.trim().toUpperCase(), 1, 20]),
-      ]);
+      // 1. Fire off the non-LLM API calls concurrently (they are fast and don't hit Groq)
+      const chartPromise = app.predict("/get_forecast", [ticker.trim().toUpperCase()]);
+      const finPromise = app.predict("/get_financials_tables", [ticker.trim().toUpperCase()]);
+      
+      // 2. Await the LLM-heavy endpoints SEQUENTIALLY to prevent Groq 429 API Overload
+      const analysisResponse = await app.predict("/analyze_stock", [ticker.trim().toUpperCase()]);
+      const xaiResponse = await app.predict("/get_xai_explanation", [ticker.trim().toUpperCase()]);
+      const socialResponse = await app.predict("/get_social_sentiment", [ticker.trim().toUpperCase(), 1, 20]);
+      
+      // 3. Resolve the non-LLM responses
+      const chartResponse = await chartPromise;
+      const finResponse = await finPromise;
       
       if (analysisResponse && analysisResponse.data) {
         const rawMarkdown = (analysisResponse.data as unknown[])[0] as string;
