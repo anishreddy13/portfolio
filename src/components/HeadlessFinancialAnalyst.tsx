@@ -72,6 +72,11 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   const [agentStep, setAgentStep] = useState<number>(0);
   const [logs, setLogs] = useState<string[]>([]);
   
+  // Smart Autocomplete State
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLDivElement>(null);
 
@@ -82,6 +87,39 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       setTicker(initialTicker);
     }
   }, [initialTicker]);
+
+  // Debounced Ticker Autocomplete Fetch
+  useEffect(() => {
+    if (!ticker.trim() || ticker.length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+    
+    // Don't search if the ticker matches a suggestion exactly (user clicked it)
+    if (suggestions.some(s => s.symbol === ticker)) {
+       return;
+    }
+
+    const delayDebounceFn = setTimeout(async () => {
+      setIsSearching(true);
+      try {
+        const app = await Client.connect("Anishreddy13/ai-financial-analyst");
+        const response = await app.predict("/search_ticker", [ticker.trim().toUpperCase()]);
+        if (response && response.data) {
+           const parsed = JSON.parse((response.data as unknown[])[0] as string);
+           setSuggestions(parsed);
+           setShowSuggestions(parsed.length > 0);
+        }
+      } catch (err) {
+        console.error("Search error", err);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [ticker]);
 
   // Agent sequence simulation
   useEffect(() => {
@@ -248,9 +286,16 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                   <input 
                      type="text" 
                      value={ticker} 
-                     onChange={(e) => setTicker(e.target.value)} 
-                     onKeyDown={(e) => e.key === "Enter" && analyzeTicker()}
-                     placeholder="Enter Stock Ticker (e.g. AAPL, TSLA, NVDA)" 
+                     onChange={(e) => setTicker(e.target.value.toUpperCase())} 
+                     onKeyDown={(e) => {
+                         if (e.key === "Enter") {
+                             setShowSuggestions(false);
+                             analyzeTicker();
+                         }
+                     }}
+                     onFocus={() => { if(suggestions.length > 0) setShowSuggestions(true); }}
+                     onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                     placeholder="Search Global Ticker (e.g. AAPL, RELIANCE.NS)" 
                      className="w-full px-5 py-4 rounded-sm font-mono text-sm placeholder:text-[#555] focus:outline-none transition-colors relative z-10"
                      style={{
                         background: "var(--surface-2)",
@@ -260,8 +305,36 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                      disabled={loading}
                   />
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
-                     <Activity className="text-[#C8FF00] opacity-40" size={20} />
+                     {isSearching ? (
+                        <div className="w-4 h-4 border-2 border-[#C8FF00] border-t-transparent rounded-full animate-spin opacity-60" />
+                     ) : (
+                        <Activity className="text-[#C8FF00] opacity-40" size={20} />
+                     )}
                   </div>
+
+                  {/* Dropdown Suggestions */}
+                  {showSuggestions && suggestions.length > 0 && (
+                     <div className="absolute top-full left-0 right-0 mt-2 z-50 rounded-sm overflow-hidden" 
+                          style={{ background: "var(--surface-2)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 10px 40px rgba(0,0,0,0.5)" }}>
+                        {suggestions.map((s: any, idx: number) => (
+                           <div 
+                              key={idx}
+                              onClick={() => {
+                                 setTicker(s.symbol);
+                                 setShowSuggestions(false);
+                                 // Optional: Automatically trigger analysis if requested, but user usually wants to hit 'Run'
+                              }}
+                              className="px-5 py-3 hover:bg-[rgba(200,255,0,0.05)] cursor-pointer border-b border-[rgba(255,255,255,0.02)] last:border-0 flex justify-between items-center transition-colors"
+                           >
+                              <div className="flex items-center gap-3">
+                                 <span className="font-mono text-[#C8FF00] font-bold text-sm">{s.symbol}</span>
+                                 <span className="font-body text-[var(--text-secondary)] text-sm truncate max-w-[200px]">{s.shortname}</span>
+                              </div>
+                              <span className="font-mono text-[0.6rem] text-[var(--text-tertiary)] uppercase tracking-wider">{s.exchange}</span>
+                           </div>
+                        ))}
+                     </div>
+                  )}
                </div>
                
                <motion.button 
