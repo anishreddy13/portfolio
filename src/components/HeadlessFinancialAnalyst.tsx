@@ -10,6 +10,7 @@ import { LineChart, Line, BarChart, Bar, ComposedChart, ResponsiveContainer, YAx
 import StructuredReport from "./StructuredReport";
 import FinancialStatements from "./FinancialStatements";
 import ExplainabilityCard from "./ExplainabilityCard";
+import SocialSentinel from "./SocialSentinel";
 
 // --- Types ---
 interface KPIData {
@@ -64,6 +65,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   const [chartData, setChartData] = useState<any[]>([]);
   const [accuracy, setAccuracy] = useState<number | null>(null);
   const [xaiData, setXaiData] = useState<any | null>(null);
+  const [socialData, setSocialData] = useState<any[] | null>(null);
   const [financialData, setFinancialData] = useState<string | null>(null);
   const [displayedResult, setDisplayedResult] = useState<string>("");
   const [kpis, setKpis] = useState<KPIData[]>([]);
@@ -71,6 +73,9 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   const [error, setError] = useState<string | null>(null);
   const [agentStep, setAgentStep] = useState<number>(0);
   const [logs, setLogs] = useState<string[]>([]);
+  
+  // Layout State
+  const [activeTab, setActiveTab] = useState<"metrics" | "sentinel">("metrics");
   
   // Smart Autocomplete State
   const [suggestions, setSuggestions] = useState<any[]>([]);
@@ -182,16 +187,18 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     setKpis([]);
     setAccuracy(null);
     setXaiData(null);
+    setSocialData(null);
 
     try {
       const app = await Client.connect("Anishreddy13/ai-financial-analyst");
       
-      // Parallel execution of all 4 endpoints
-      const [analysisResponse, chartResponse, finResponse, xaiResponse] = await Promise.all([
+      // Parallel execution of all 5 endpoints
+      const [analysisResponse, chartResponse, finResponse, xaiResponse, socialResponse] = await Promise.all([
         app.predict("/analyze_stock", [ticker.trim().toUpperCase()]),
         app.predict("/get_forecast", [ticker.trim().toUpperCase()]),
         app.predict("/get_financials_tables", [ticker.trim().toUpperCase()]),
         app.predict("/get_xai_explanation", [ticker.trim().toUpperCase()]),
+        app.predict("/get_social_sentiment", [ticker.trim().toUpperCase()]),
       ]);
       
       if (analysisResponse && analysisResponse.data) {
@@ -233,6 +240,15 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
          } catch(e) { console.error("XAI parse error", e); }
       }
 
+      if (socialResponse && socialResponse.data) {
+         try {
+            const parsedSocial = JSON.parse((socialResponse.data as unknown[])[0] as string);
+            if (!parsedSocial.error) {
+               setSocialData(parsedSocial);
+            }
+         } catch(e) { console.error("Social data parse error", e); }
+      }
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to connect to the AI agents.");
       console.error("Gradio Client Error:", err);
@@ -259,7 +275,19 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   ];
 
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-6 relative">
+      {/* ── Global Navigation ── */}
+      <div className="flex items-center gap-4 mb-2">
+         <a href="/" className="font-mono text-xs text-[var(--text-secondary)] hover:text-[#C8FF00] transition-colors flex items-center gap-1.5 uppercase tracking-wider">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            Back to Home
+         </a>
+         <span className="text-[rgba(255,255,255,0.2)]">|</span>
+         <a href="/dashboard" className="font-mono text-xs text-[var(--text-secondary)] hover:text-[#C8FF00] transition-colors flex items-center gap-1.5 uppercase tracking-wider">
+            Back to Dashboard
+         </a>
+      </div>
+
       {/* ── Spotlight Input Section ── */}
       <div 
          ref={inputRef}
@@ -467,160 +495,41 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-6"
           >
-            {/* KPI Cards & Chart Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-               {/* KPIs */}
-               <div className="lg:col-span-1 grid grid-cols-2 gap-3">
-                  {/* Accuracy KPI injected as first block if available */}
-                  {accuracy !== null && (
-                     <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="rounded-sm p-4 relative overflow-hidden flex flex-col justify-between col-span-2"
-                        style={{ background: "rgba(0,255,209,0.05)", border: "1px solid rgba(0,255,209,0.2)" }}
-                     >
-                        <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>
-                           Live Forecast Accuracy
-                        </p>
-                        <div className="flex items-end justify-between">
-                           <p className="font-display text-2xl" style={{ color: "#00FFD1" }}>
-                              {accuracy}%
-                           </p>
-                           <Activity size={16} color="#00FFD1" className="mb-1" />
-                        </div>
-                     </motion.div>
-                  )}
-
-                  {kpis.map((kpi, i) => (
-                     <motion.div 
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="rounded-sm p-4 relative overflow-hidden flex flex-col justify-between"
-                        style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}
-                     >
-                        <p className="font-mono text-[0.55rem] uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>
-                           {kpi.label}
-                        </p>
-                        <div className="flex items-end justify-between">
-                           <p className="font-display text-xl" style={{ color: "var(--text-primary)" }}>
-                              {kpi.value}
-                           </p>
-                           {kpi.trend === "up" ? (
-                              <TrendingUp size={14} color="#C8FF00" className="mb-1" />
-                           ) : (
-                              <TrendingDown size={14} color="#FF2D2D" className="mb-1" />
-                           )}
-                        </div>
-                     </motion.div>
-                  ))}
-               </div>
-
-               {/* Real Recharts Line/Volume Chart */}
-               <motion.div 
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="lg:col-span-2 rounded-sm p-5 h-[200px] flex flex-col"
-                  style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}
-               >
-                  <div className="flex justify-between items-center mb-4">
-                     <p className="font-mono text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>6-Month History & 30-Day ML Forecast</p>
-                     <div className="flex items-center gap-2">
-                        <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-sm font-mono text-[0.5rem] uppercase border border-[rgba(0,255,209,0.3)] text-[#00FFD1] bg-[rgba(0,255,209,0.05)]">
-                           <span className="w-1.5 h-1.5 rounded-full bg-[#00FFD1] animate-pulse" />
-                           ML Inference Engine: Active
-                        </span>
-                        <span className="px-2 py-0.5 rounded-sm font-mono text-[0.5rem] bg-[#C8FF00] text-black uppercase">Live</span>
-                     </div>
-                  </div>
-                  <div className="flex-1 w-full h-full">
-                     {chartData.length > 0 ? (
-                       <ResponsiveContainer width="100%" height="100%">
-                          <ComposedChart data={chartData}>
-                             <XAxis dataKey="date" hide />
-                             <YAxis yAxisId="price" domain={['auto', 'auto']} hide />
-                             <Tooltip 
-                               contentStyle={{ background: '#0A0A0A', border: '1px solid #333', fontSize: '12px', color: '#fff' }}
-                               itemStyle={{ color: '#C8FF00' }}
-                             />
-                             <Area 
-                               yAxisId="price"
-                               type="monotone" 
-                               dataKey="archivedConfidence" 
-                               stroke="none" 
-                               fill="#888888" 
-                               fillOpacity={0.05} 
-                             />
-                             <Line 
-                                yAxisId="price"
-                                type="monotone" 
-                                dataKey="archivedProjectedPrice" 
-                                stroke="#888888" 
-                                strokeWidth={2} 
-                                strokeDasharray="3 3"
-                                opacity={0.5}
-                                dot={false}
-                                animationDuration={1500}
-                             />
-                             <Area 
-                               yAxisId="price"
-                               type="monotone" 
-                               dataKey="confidence" 
-                               stroke="none" 
-                               fill="#00FFD1" 
-                               fillOpacity={0.15} 
-                             />
-                             <Line 
-                                yAxisId="price"
-                                type="monotone" 
-                                dataKey="actualPrice" 
-                                stroke="#C8FF00" 
-                                strokeWidth={2} 
-                                dot={false}
-                                animationDuration={1500}
-                             />
-                             <Line 
-                                yAxisId="price"
-                                type="monotone" 
-                                dataKey="projectedPrice" 
-                                stroke="#00FFD1" 
-                                strokeWidth={2} 
-                                strokeDasharray="5 5"
-                                dot={false}
-                                animationDuration={1500}
-                             />
-                          </ComposedChart>
-                       </ResponsiveContainer>
-                     ) : (
-                       <div className="w-full h-full flex items-center justify-center font-mono text-xs text-[var(--text-tertiary)]">
-                          Loading chart data...
-                       </div>
-                     )}
-                  </div>
-               </motion.div>
+            {/* Global Navigation */}
+            <div className="flex items-center gap-4 mb-4">
+               <button onClick={() => window.location.href = '/'} className="flex items-center gap-2 text-[var(--text-tertiary)] hover:text-white transition-colors">
+                  <ChevronLeft size={16} />
+                  <span className="font-mono text-xs uppercase tracking-widest">Back to Dashboard</span>
+               </button>
+               <div className="w-[1px] h-4 bg-[rgba(255,255,255,0.1)]" />
+               <button onClick={() => setTicker("")} className="text-[var(--text-tertiary)] hover:text-white transition-colors font-mono text-xs uppercase tracking-widest">
+                  Reset Search
+               </button>
             </div>
 
-             {/* XAI Explainability Card */}
-             {xaiData && (
-                <div className="mt-2">
-                   <ExplainabilityCard data={xaiData} />
+             {/* ── Main Tabbed Content Area ── */}
+             <div className="mt-8">
+                {/* Tab Navigation */}
+                <div className="flex items-center gap-1 mb-6 border-b border-[rgba(255,255,255,0.06)]">
+                   <button 
+                      onClick={() => setActiveTab("metrics")}
+                      className={`px-6 py-3 font-mono text-xs uppercase tracking-widest transition-colors relative ${activeTab === 'metrics' ? 'text-[#C8FF00]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]'}`}
+                   >
+                      Charts & Metrics (ML Tab)
+                      {activeTab === 'metrics' && (
+                         <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C8FF00]" />
+                      )}
+                   </button>
+                   <button 
+                      onClick={() => setActiveTab("sentinel")}
+                      className={`px-6 py-3 font-mono text-xs uppercase tracking-widest transition-colors relative ${activeTab === 'sentinel' ? 'text-[#C8FF00]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]'}`}
+                   >
+                      News & Sentiment Feed
+                      {activeTab === 'sentinel' && (
+                         <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C8FF00]" />
+                      )}
+                   </button>
                 </div>
-             )}
-
-            {/* Markdown Report Container OR Structured Dashboard */}
-            {displayedResult.length < result.length ? (
-               <div 
-                  className="rounded-sm p-6 sm:p-10 relative overflow-hidden flex flex-col"
-                  style={{ 
-                     background: "var(--surface-1)", 
-                     border: "1px solid rgba(200,255,0,0.2)",
-                     boxShadow: "0 20px 60px rgba(0,0,0,0.4)"
-                  }}
-               >
-                  {/* Decor */}
-                  <div className="absolute top-0 left-0 right-0 h-1" style={{ background: "linear-gradient(90deg, #C8FF00, #FF6B35, #A855F7)" }} />
                   
                   <div className="mb-8 border-b pb-6 shrink-0" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
                      <p className="font-mono text-[0.55rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#C8FF00" }}>
