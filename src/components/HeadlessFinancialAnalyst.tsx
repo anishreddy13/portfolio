@@ -264,15 +264,17 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       <div 
          ref={inputRef}
          onMouseMove={handleMouseMove}
-         className="relative rounded-sm p-[1px] overflow-hidden group"
+         className="relative rounded-sm p-[1px] group"
       >
          {/* Spotlight Background */}
-         <div 
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-            style={{
-               background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(200,255,0,0.15), transparent 40%)`
-            }}
-         />
+         <div className="absolute inset-0 rounded-sm overflow-hidden pointer-events-none z-0">
+             <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{
+                   background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(200,255,0,0.15), transparent 40%)`
+                }}
+             />
+         </div>
          
          <div 
             className="relative rounded-sm p-5 sm:p-7 z-10"
