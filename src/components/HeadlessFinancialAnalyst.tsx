@@ -5,7 +5,7 @@ import { Client } from "@gradio/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity, ShieldAlert } from "lucide-react";
+import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity, ShieldAlert, ChevronLeft } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, ComposedChart, ResponsiveContainer, YAxis, XAxis, Tooltip, Area } from "recharts";
 import StructuredReport from "./StructuredReport";
 import FinancialStatements from "./FinancialStatements";
@@ -530,40 +530,49 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                       )}
                    </button>
                 </div>
-                  
-                  <div className="mb-8 border-b pb-6 shrink-0" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                     <p className="font-mono text-[0.55rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#C8FF00" }}>
-                        Agent Synthesis Running...
-                     </p>
-                     <h3 className="font-display text-4xl tracking-wide" style={{ color: "var(--text-primary)" }}>
-                        Investment Brief: {ticker.toUpperCase()}
-                     </h3>
-                  </div>
+                {displayedResult.length < result.length ? (
+                   <div 
+                      ref={scrollRef}
+                      className="rounded-sm p-6 sm:p-10 relative overflow-hidden flex flex-col"
+                      style={{ 
+                         background: "var(--surface-1)", 
+                         border: "1px solid rgba(200,255,0,0.2)",
+                         boxShadow: "0 20px 60px rgba(0,0,0,0.4)"
+                      }}
+                   >
+                      <div className="mb-8 border-b pb-6 shrink-0" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                         <p className="font-mono text-[0.55rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#C8FF00" }}>
+                            Agent Synthesis Running...
+                         </p>
+                         <h3 className="font-display text-4xl tracking-wide" style={{ color: "var(--text-primary)" }}>
+                            Investment Brief: {ticker.toUpperCase()}
+                         </h3>
+                      </div>
 
-                  {/* Streaming Text Area */}
-                  <div 
-                     ref={scrollRef}
-                     className="max-h-[500px] overflow-y-auto pr-4 relative scroll-smooth"
-                  >
-                     <div className="prose prose-invert prose-p:text-[0.95rem] prose-p:leading-relaxed prose-h1:text-3xl prose-h1:font-display prose-h2:text-2xl prose-h2:font-display prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-[#C8FF00] prose-h3:text-xl prose-h3:text-[#E0E0E0] prose-li:text-[0.95rem] prose-strong:text-[#F0F0F0] max-w-none">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                           {displayedResult}
-                        </ReactMarkdown>
-                     </div>
-                     
-                     {/* Streaming fade indicator */}
-                     <div className="h-10 flex items-center gap-2 mt-4">
-                        <span className="w-2 h-2 rounded-full bg-[#C8FF00] animate-pulse" />
-                        <span className="font-mono text-xs" style={{ color: "var(--text-tertiary)" }}>Writing...</span>
-                     </div>
-                  </div>
-               </div>
-            ) : (
-               <>
-                 <StructuredReport markdown={result} />
-                 {financialData && <FinancialStatements data={financialData} />}
-               </>
-            )}
+                      {/* Streaming Text Area */}
+                      <div 
+                         className="max-h-[500px] overflow-y-auto pr-4 relative scroll-smooth"
+                      >
+                         <div className="prose prose-invert prose-p:text-[0.95rem] prose-p:leading-relaxed prose-h1:text-3xl prose-h1:font-display prose-h2:text-2xl prose-h2:font-display prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-[#C8FF00] prose-h3:text-xl prose-h3:text-[#E0E0E0] prose-li:text-[0.95rem] prose-strong:text-[#F0F0F0] max-w-none">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                               {displayedResult}
+                            </ReactMarkdown>
+                         </div>
+                         
+                         {/* Streaming fade indicator */}
+                         <div className="h-10 flex items-center gap-2 mt-4">
+                            <span className="w-2 h-2 rounded-full bg-[#C8FF00] animate-pulse" />
+                            <span className="font-mono text-xs" style={{ color: "var(--text-tertiary)" }}>Writing...</span>
+                         </div>
+                      </div>
+                   </div>
+                ) : (
+                   <div className="flex flex-col gap-6">
+                     <StructuredReport markdown={result} />
+                     {financialData && <FinancialStatements data={financialData} />}
+                   </div>
+                )}
+             </div>
           </motion.div>
         )}
       </AnimatePresence>
