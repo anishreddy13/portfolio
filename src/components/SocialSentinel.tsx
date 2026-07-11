@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MessageSquare, Newspaper, CheckCircle, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { MessageSquare, Newspaper, CheckCircle, TrendingUp, TrendingDown, Minus, PlayCircle } from "lucide-react";
 
 interface SocialItem {
   source: string;
@@ -77,8 +77,14 @@ export default function SocialSentinel({ data, loading }: SocialSentinelProps) {
             >
               {/* Header: Source and Verification */}
               <div className="flex items-center justify-between mb-3">
-                 <div className="flex items-center gap-2">
-                    {item.verified ? (
+                  <div className="flex items-center gap-2">
+                    {item.source === "YouTube" ? (
+                       <PlayCircle size={14} className="text-[#FF0000]" />
+                    ) : item.source === "Reddit" ? (
+                       <MessageSquare size={14} className="text-[#FF4500]" />
+                    ) : item.source === "StockTwits" ? (
+                       <MessageSquare size={14} className="text-[#00A6DF]" />
+                    ) : item.verified ? (
                        <Newspaper size={14} className="text-[#C8FF00]" />
                     ) : (
                        <MessageSquare size={14} className="text-[var(--text-tertiary)]" />
