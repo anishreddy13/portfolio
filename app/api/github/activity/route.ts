@@ -5,13 +5,29 @@ export const dynamic = "force-dynamic";
 
 const GITHUB_USER = process.env.GITHUB_STATS_USER || "anishreddy13";
 const DAYS = 30;
+const MAX_RECENT_PAGES = 3;
 
-interface GithubEvent {
-  type: string;
-  created_at: string;
-  payload?: {
-    commits?: unknown[];
+interface CommitSearchItem {
+  sha: string;
+  html_url: string;
+  commit?: {
+    author?: {
+      date?: string;
+    };
+    committer?: {
+      date?: string;
+    };
+    message?: string;
   };
+  repository?: {
+    full_name?: string;
+  };
+}
+
+interface CommitSearchResponse {
+  total_count: number;
+  incomplete_results: boolean;
+  items: CommitSearchItem[];
 }
 
 function emptyBuckets() {
@@ -23,7 +39,6 @@ function emptyBuckets() {
     date.setDate(today.getDate() - (DAYS - 1 - index));
     return {
       date: date.toISOString(),
-      events: 0,
       commits: 0,
     };
   });
@@ -33,69 +48,120 @@ function bucketKey(date: string) {
   return new Date(date).toISOString().slice(0, 10);
 }
 
-function isRecent(date: string) {
-  const created = new Date(date).getTime();
-  return Number.isFinite(created) && Date.now() - created <= DAYS * 24 * 60 * 60 * 1000;
+function githubHeaders() {
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "User-Agent": "portfolio-stats",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+
+  if (process.env.GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+
+  return headers;
+}
+
+async function searchCommits(query: string, page = 1, perPage = 100) {
+  const params = new URLSearchParams({
+    q: query,
+    sort: "author-date",
+    order: "desc",
+    per_page: String(perPage),
+    page: String(page),
+  });
+
+  const response = await fetch(`https://api.github.com/search/commits?${params}`, {
+    headers: githubHeaders(),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub commit search returned ${response.status}`);
+  }
+
+  return (await response.json()) as CommitSearchResponse;
 }
 
 export async function GET() {
   const buckets = emptyBuckets();
   const byDate = new Map(buckets.map((bucket) => [bucketKey(bucket.date), bucket]));
+  const since = new Date();
+  since.setDate(since.getDate() - DAYS);
+  const sinceDate = since.toISOString().slice(0, 10);
 
   try {
-    const response = await fetch(`https://api.github.com/users/${GITHUB_USER}/events/public?per_page=100`, {
-      headers: {
-        Accept: "application/vnd.github+json",
-        "User-Agent": "portfolio-stats",
-      },
-      cache: "no-store",
-    });
+    const [allTime, recentFirstPage] = await Promise.all([
+      searchCommits(`author:${GITHUB_USER}`, 1, 1),
+      searchCommits(`author:${GITHUB_USER} author-date:>=${sinceDate}`, 1, 100),
+    ]);
 
-    if (!response.ok) {
-      throw new Error(`GitHub returned ${response.status}`);
+    const recentItems = [...recentFirstPage.items];
+    const totalRecentPages = Math.min(
+      MAX_RECENT_PAGES,
+      Math.ceil(recentFirstPage.total_count / 100)
+    );
+
+    if (totalRecentPages > 1) {
+      const rest = await Promise.all(
+        Array.from({ length: totalRecentPages - 1 }, (_, index) =>
+          searchCommits(`author:${GITHUB_USER} author-date:>=${sinceDate}`, index + 2, 100)
+        )
+      );
+      rest.forEach((page) => recentItems.push(...page.items));
     }
 
-    const events = (await response.json()) as GithubEvent[];
+    recentItems.forEach((item) => {
+      const date = item.commit?.author?.date || item.commit?.committer?.date;
+      if (!date) return;
 
-    events.filter((event) => isRecent(event.created_at)).forEach((event) => {
-      const bucket = byDate.get(bucketKey(event.created_at));
-      if (!bucket) return;
-
-      bucket.events += 1;
-      if (event.type === "PushEvent") {
-        bucket.commits += Array.isArray(event.payload?.commits)
-          ? event.payload?.commits.length || 1
-          : 1;
+      const bucket = byDate.get(bucketKey(date));
+      if (bucket) {
+        bucket.commits += 1;
       }
     });
 
-    const totalCommits = buckets.reduce((sum, bucket) => sum + bucket.commits, 0);
-    const activeDays = buckets.filter((bucket) => bucket.events > 0).length;
-    const lastEventAt = events[0]?.created_at || null;
+    const activeDays = buckets.filter((bucket) => bucket.commits > 0).length;
+    const latestCommit = recentItems[0];
+    const lastCommitAt =
+      latestCommit?.commit?.author?.date ||
+      latestCommit?.commit?.committer?.date ||
+      null;
 
     return NextResponse.json({
       ok: true,
       user: GITHUB_USER,
       activity: buckets,
       stats: {
-        commits: totalCommits,
+        allTimeCommits: allTime.total_count,
+        commits30d: recentFirstPage.total_count,
         activeDays,
-        events: buckets.reduce((sum, bucket) => sum + bucket.events, 0),
-        lastEventAt,
+        indexedRecentCommits: recentItems.length,
+        lastCommitAt,
+        latestCommit: latestCommit
+          ? {
+              sha: latestCommit.sha,
+              message: latestCommit.commit?.message || "",
+              repository: latestCommit.repository?.full_name || "",
+              url: latestCommit.html_url,
+            }
+          : null,
       },
     });
   } catch (error) {
-    console.error("GitHub activity fetch failed:", error);
+    console.error("GitHub commit metrics fetch failed:", error);
     return NextResponse.json(
       {
         ok: false,
         user: GITHUB_USER,
         activity: buckets,
         stats: {
-          commits: 0,
+          allTimeCommits: 0,
+          commits30d: 0,
           activeDays: 0,
-          events: 0,
-          lastEventAt: null,
+          indexedRecentCommits: 0,
+          lastCommitAt: null,
+          latestCommit: null,
         },
       },
       { status: 200 }

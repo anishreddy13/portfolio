@@ -7,6 +7,19 @@ import { ActivityGraph } from "@/components/developer/ActivityGraph";
 import { useTranslations } from "next-intl";
 
 type ActivityPoint = { date: string; commits: number; events?: number };
+type GithubStats = {
+  allTimeCommits: number;
+  commits30d: number;
+  activeDays: number;
+  indexedRecentCommits: number;
+  lastCommitAt: string | null;
+  latestCommit: {
+    sha: string;
+    message: string;
+    repository: string;
+    url: string;
+  } | null;
+};
 
 function emptyActivity(): ActivityPoint[] {
   const today = new Date();
@@ -26,7 +39,14 @@ function emptyActivity(): ActivityPoint[] {
 export default function StatsPage() {
   const t = useTranslations("Stats");
   const [activityData, setActivityData] = useState<ActivityPoint[]>(() => emptyActivity());
-  const [githubStats, setGithubStats] = useState({ commits: 0, activeDays: 0, events: 0, lastEventAt: null as string | null });
+  const [githubStats, setGithubStats] = useState<GithubStats>({
+    allTimeCommits: 0,
+    commits30d: 0,
+    activeDays: 0,
+    indexedRecentCommits: 0,
+    lastCommitAt: null,
+    latestCommit: null,
+  });
   const [loadingActivity, setLoadingActivity] = useState(true);
 
   useEffect(() => {
@@ -68,8 +88,8 @@ export default function StatsPage() {
   ];
 
   const stats = useMemo(() => [
-    { label: t('commits_label'), value: githubStats.commits, sub: "last 30 days", color: "#FF6B35" },
-    { label: t('hours_label'), value: githubStats.events, sub: "public GitHub events", color: "#C8FF00" },
+    { label: "All-Time Commits", value: githubStats.allTimeCommits, sub: "public GitHub author index", color: "#FF6B35" },
+    { label: "Commits (30D)", value: githubStats.commits30d, sub: "includes latest push", color: "#C8FF00" },
     { label: t('streak_label'), value: githubStats.activeDays, sub: "active coding days", color: "#A855F7" },
     { label: t('top_lang_label'), value: "TypeScript", sub: t('top_lang_sub'), color: "#3178c6" },
   ], [githubStats, t]);
@@ -96,7 +116,7 @@ export default function StatsPage() {
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
           <div className="lg:col-span-2">
-            <ActivityGraph data={activityData} loading={loadingActivity} lastUpdated={githubStats.lastEventAt} />
+            <ActivityGraph data={activityData} loading={loadingActivity} lastUpdated={githubStats.lastCommitAt} />
           </div>
           <div className="lg:col-span-1">
             <LanguagePieChart data={MOCK_LANGUAGES} />
@@ -106,7 +126,7 @@ export default function StatsPage() {
         {/* Footer note for V1 */}
         <div className="flex justify-center mb-10">
           <p className="font-mono text-[0.55rem] sm:text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>
-            Live public GitHub activity refreshes every 5 minutes.
+            Live GitHub commit metrics refresh every 5 minutes.
           </p>
         </div>
 

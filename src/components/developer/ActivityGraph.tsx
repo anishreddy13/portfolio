@@ -111,7 +111,7 @@ export function ActivityGraph({ data, loading = false, lastUpdated = null }: Act
                         {new Date(data.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
                       </p>
                       <p className="font-mono text-[0.7rem]" style={{ color: "#FF6B35" }}>
-                        {data.commits} commits - {data.events || 0} events
+                        {data.commits} commits
                       </p>
                     </div>
                   );
