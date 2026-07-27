@@ -5,12 +5,12 @@ import { Client } from "@gradio/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, BarChart2, Edit3, Terminal, TrendingUp, TrendingDown, Activity, ShieldAlert, ChevronLeft } from "lucide-react";
-import { LineChart, Line, BarChart, Bar, ComposedChart, ResponsiveContainer, YAxis, XAxis, Tooltip, Area } from "recharts";
+import { Search, BarChart2, Edit3, Terminal, Activity, ShieldAlert, ChevronLeft } from "lucide-react";
 import StructuredReport from "./StructuredReport";
 import FinancialStatements from "./FinancialStatements";
 import ExplainabilityCard from "./ExplainabilityCard";
 import SocialSentinel from "./SocialSentinel";
+import NeuralChartVisionCard, { NeuralChartVisionPayload } from "./NeuralChartVisionCard";
 
 // --- Types ---
 interface KPIData {
@@ -77,6 +77,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   const [chartData, setChartData] = useState<any[]>([]);
   const [accuracy, setAccuracy] = useState<number | null>(null);
   const [xaiData, setXaiData] = useState<any | null>(null);
+  const [neuralChartData, setNeuralChartData] = useState<NeuralChartVisionPayload | null>(null);
   const [socialData, setSocialData] = useState<any[] | null>(null);
   const [financialData, setFinancialData] = useState<string | null>(null);
   const [displayedResult, setDisplayedResult] = useState<string>("");
@@ -200,6 +201,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     setKpis([]);
     setAccuracy(null);
     setXaiData(null);
+    setNeuralChartData(null);
     setSocialData(null);
 
     try {
@@ -210,6 +212,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       const chartPromise = app.predict("/get_forecast", [normalizedTicker]);
       const finPromise = app.predict("/get_financials_tables", [normalizedTicker]);
       const socialPromise = app.predict("/get_social_sentiment", [normalizedTicker, 1, 20]);
+      const neuralChartPromise = app.predict("/get_neural_chart_vision", [normalizedTicker]);
       
       // 2. Await the LLM-heavy endpoints SEQUENTIALLY to prevent Groq 429 API Overload
       const analysisResponse = await app.predict("/analyze_stock", [normalizedTicker]);
@@ -219,6 +222,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       const chartResponse = await chartPromise;
       const finResponse = await finPromise;
       const socialResponse = await socialPromise;
+      const neuralChartResponse = await neuralChartPromise;
       
       if (analysisResponse && analysisResponse.data) {
         const rawMarkdown = (analysisResponse.data as unknown[])[0] as string;
@@ -257,6 +261,13 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                setXaiData(parsedXai);
             }
          } catch(e) { console.error("XAI parse error", e); }
+      }
+
+      if (neuralChartResponse && neuralChartResponse.data) {
+         const parsedNeuralChart = parseGradioJson<NeuralChartVisionPayload | null>(neuralChartResponse, null);
+         if (parsedNeuralChart && !parsedNeuralChart.error) {
+            setNeuralChartData(parsedNeuralChart);
+         }
       }
 
       if (socialResponse && socialResponse.data) {
@@ -599,8 +610,9 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                          </div>
                       </div>
                    </div>
-                ) : activeTab === 'metrics' ? (
+                 ) : activeTab === 'metrics' ? (
                    <div className="flex flex-col gap-6">
+                     <NeuralChartVisionCard data={neuralChartData} />
                      <StructuredReport markdown={result} />
                      {financialData && <FinancialStatements data={financialData} />}
                    </div>
