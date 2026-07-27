@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Client } from "@gradio/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { Settings2, RefreshCw, AlertTriangle, ShieldCheck } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { getFinancialAnalystServiceMessage, predictFinancialAnalyst } from "@/lib/financialAnalystClient";
 
 interface RebalancerCardProps {
   portfolio: Record<string, number>;
@@ -32,9 +32,8 @@ export default function RebalancerCard({ portfolio, setPortfolio }: RebalancerCa
     setReport(null);
 
     try {
-      const app = await Client.connect("Anishreddy13/ai-financial-analyst");
       const payload = JSON.stringify(portfolio);
-      const response = await app.predict("/rebalance_portfolio", [payload]);
+      const response = await predictFinancialAnalyst("/rebalance_portfolio", [payload]);
       
       if (response && response.data) {
         const result = (response.data as unknown[])[0] as string;
@@ -43,7 +42,7 @@ export default function RebalancerCard({ portfolio, setPortfolio }: RebalancerCa
       }
     } catch (e) {
       console.error(e);
-      setError("Failed to run portfolio optimization.");
+      setError(getFinancialAnalystServiceMessage(e));
     } finally {
       setLoading(false);
     }

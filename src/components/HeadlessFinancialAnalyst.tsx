@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Client } from "@gradio/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,6 +10,7 @@ import FinancialStatements from "./FinancialStatements";
 import ExplainabilityCard from "./ExplainabilityCard";
 import SocialSentinel from "./SocialSentinel";
 import NeuralChartVisionCard, { NeuralChartVisionPayload } from "./NeuralChartVisionCard";
+import { getFinancialAnalystServiceMessage, predictFinancialAnalyst } from "@/lib/financialAnalystClient";
 
 // --- Types ---
 interface KPIData {
@@ -123,8 +123,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     const delayDebounceFn = setTimeout(async () => {
       setIsSearching(true);
       try {
-        const app = await Client.connect("Anishreddy13/ai-financial-analyst");
-        const response = await app.predict("/search_ticker", [ticker.trim().toUpperCase()]);
+        const response = await predictFinancialAnalyst("/search_ticker", [ticker.trim().toUpperCase()]);
         if (response && response.data) {
            const parsed = JSON.parse((response.data as unknown[])[0] as string);
            setSuggestions(parsed);
@@ -205,18 +204,16 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     setSocialData(null);
 
     try {
-      const app = await Client.connect("Anishreddy13/ai-financial-analyst");
-      
       // 1. Fire off the non-LLM API calls concurrently (they are fast and don't hit Groq)
       const normalizedTicker = ticker.trim().toUpperCase();
-      const chartPromise = app.predict("/get_forecast", [normalizedTicker]);
-      const finPromise = app.predict("/get_financials_tables", [normalizedTicker]);
-      const socialPromise = app.predict("/get_social_sentiment", [normalizedTicker, 1, 20]);
-      const neuralChartPromise = app.predict("/get_neural_chart_vision", [normalizedTicker]);
+      const chartPromise = predictFinancialAnalyst("/get_forecast", [normalizedTicker]);
+      const finPromise = predictFinancialAnalyst("/get_financials_tables", [normalizedTicker]);
+      const socialPromise = predictFinancialAnalyst("/get_social_sentiment", [normalizedTicker, 1, 20]);
+      const neuralChartPromise = predictFinancialAnalyst("/get_neural_chart_vision", [normalizedTicker]);
       
       // 2. Await the LLM-heavy endpoints SEQUENTIALLY to prevent Groq 429 API Overload
-      const analysisResponse = await app.predict("/analyze_stock", [normalizedTicker]);
-      const xaiResponse = await app.predict("/get_xai_explanation", [normalizedTicker]);
+      const analysisResponse = await predictFinancialAnalyst("/analyze_stock", [normalizedTicker]);
+      const xaiResponse = await predictFinancialAnalyst("/get_xai_explanation", [normalizedTicker]);
       
       // 3. Resolve the non-LLM responses
       const chartResponse = await chartPromise;
@@ -278,7 +275,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       }
 
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to connect to the AI agents.");
+      setError(getFinancialAnalystServiceMessage(err));
       console.error("Gradio Client Error:", err);
     } finally {
       setLoading(false);
@@ -289,8 +286,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   const loadMoreSocialData = async (page: number) => {
     if (!ticker.trim()) return;
     try {
-      const app = await Client.connect("Anishreddy13/ai-financial-analyst");
-      const response = await app.predict("/get_social_sentiment", [ticker.trim().toUpperCase(), page, 20]);
+      const response = await predictFinancialAnalyst("/get_social_sentiment", [ticker.trim().toUpperCase(), page, 20]);
       if (response && response.data) {
         const parsed = parseGradioJson<any[]>(response, []);
         if (Array.isArray(parsed)) {

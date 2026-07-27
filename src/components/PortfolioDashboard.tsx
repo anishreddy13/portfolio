@@ -7,6 +7,7 @@ import SignalFeed from "./SignalFeed";
 import HeadlessFinancialAnalyst from "./HeadlessFinancialAnalyst";
 import RebalancerCard from "./RebalancerCard";
 import WelcomeAvatar from "./WelcomeAvatar";
+import FinancialAnalystHealthStrip from "./FinancialAnalystHealthStrip";
 
 export default function PortfolioDashboard() {
   // Global persistent portfolio state: Ticker -> Weight
@@ -49,6 +50,7 @@ export default function PortfolioDashboard() {
       <div className="shrink-0 h-14 w-full">
         <SignalFeed />
       </div>
+      <FinancialAnalystHealthStrip />
 
       <div className="flex-1 w-full max-w-[1600px] mx-auto p-4 md:p-6 lg:p-8">
         <div className="mb-4 flex items-center justify-between gap-3">

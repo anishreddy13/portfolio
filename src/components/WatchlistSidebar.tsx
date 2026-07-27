@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Client } from "@gradio/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Plus, X, Activity, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { predictFinancialAnalyst } from "@/lib/financialAnalystClient";
 
 interface TickerMetrics {
   price: number;
@@ -47,10 +47,9 @@ export default function WatchlistSidebar({ portfolio, setPortfolio, onSelectTick
     const fetchPortfolioData = async () => {
       setLoading(true);
       try {
-        const app = await Client.connect("Anishreddy13/ai-financial-analyst");
         // We pass the portfolio dict to the backend so it can calc weighted metrics
         const payload = portfolioStr;
-        const response = await app.predict("/get_portfolio_data", [payload]);
+        const response = await predictFinancialAnalyst("/get_portfolio_data", [payload]);
         
         if (response && response.data) {
           const rawJson = (response.data as unknown[])[0] as string;

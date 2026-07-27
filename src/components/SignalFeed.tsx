@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Client } from "@gradio/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, TrendingUp, ShieldAlert, Zap, Activity } from "lucide-react";
+import { predictFinancialAnalyst } from "@/lib/financialAnalystClient";
 
 interface Signal {
   ticker: string;
@@ -34,14 +34,21 @@ export default function SignalFeed() {
     
     const fetchSignals = async () => {
       try {
-        const app = await Client.connect("Anishreddy13/ai-financial-analyst");
-        const response = await app.predict("/get_market_signals", []);
+        const response = await predictFinancialAnalyst("/get_market_signals", []);
         
         if (mounted && response && response.data) {
           setSignals(parseSignals(response));
         }
       } catch (e) {
         console.error("Failed to fetch market signals", e);
+        if (mounted) {
+          setSignals([{
+            ticker: "SERVICE",
+            signal_type: "SERVICE_STATUS",
+            severity: "LOW",
+            description: "AI analyst service is warming up. Market signals will reconnect automatically.",
+          }]);
+        }
       } finally {
         if (mounted) setLoading(false);
       }
