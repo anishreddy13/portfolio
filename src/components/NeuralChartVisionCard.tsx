@@ -81,6 +81,9 @@ export interface NeuralChartVisionPayload {
 
 interface NeuralChartVisionCardProps {
   data: NeuralChartVisionPayload | null;
+  loading?: boolean;
+  error?: string | null;
+  ticker?: string;
 }
 
 function formatDate(value: string) {
@@ -126,8 +129,58 @@ function polarityColor(polarity: NeuralEvidence["polarity"]) {
   return "#4DA3FF";
 }
 
-export default function NeuralChartVisionCard({ data }: NeuralChartVisionCardProps) {
-  if (!data || data.error) return null;
+export default function NeuralChartVisionCard({ data, loading = false, error = null, ticker = "" }: NeuralChartVisionCardProps) {
+  if (loading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-sm border border-[rgba(77,163,255,0.22)] bg-[var(--surface-1)] p-5 sm:p-6"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <div className="mb-2 flex items-center gap-2">
+              <ScanLine size={15} className="text-[#4DA3FF]" />
+              <p className="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)]">
+                Neural Chart Vision
+              </p>
+            </div>
+            <h3 className="font-display text-2xl text-[var(--text-primary)]">
+              Scanning {ticker || "asset"} chart structure
+            </h3>
+          </div>
+          <Activity size={20} className="animate-spin text-[#4DA3FF]" />
+        </div>
+        <div className="mt-5 grid gap-3 sm:grid-cols-4">
+          {[0, 1, 2, 3].map((item) => (
+            <div key={item} className="h-16 animate-pulse rounded-sm bg-[rgba(255,255,255,0.05)]" />
+          ))}
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (error || data?.error) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-sm border border-[rgba(255,176,32,0.28)] bg-[rgba(255,176,32,0.06)] p-5 sm:p-6"
+      >
+        <div className="mb-2 flex items-center gap-2">
+          <ScanLine size={15} className="text-[#FFB020]" />
+          <p className="font-mono text-[0.6rem] uppercase tracking-widest text-[#FFB020]">
+            Neural Chart Vision Unavailable
+          </p>
+        </div>
+        <p className="font-body text-sm leading-relaxed text-[var(--text-secondary)]">
+          {error || data?.error || "The visual model endpoint did not return a usable payload."}
+        </p>
+      </motion.div>
+    );
+  }
+
+  if (!data) return null;
 
   const isBullish = data.direction === "bullish";
   const sortedPatterns = [...(data.patterns || [])].sort((a, b) => b.probability - a.probability);

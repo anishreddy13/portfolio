@@ -78,6 +78,8 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   const [accuracy, setAccuracy] = useState<number | null>(null);
   const [xaiData, setXaiData] = useState<any | null>(null);
   const [neuralChartData, setNeuralChartData] = useState<NeuralChartVisionPayload | null>(null);
+  const [neuralChartLoading, setNeuralChartLoading] = useState(false);
+  const [neuralChartError, setNeuralChartError] = useState<string | null>(null);
   const [socialData, setSocialData] = useState<any[] | null>(null);
   const [financialData, setFinancialData] = useState<string | null>(null);
   const [displayedResult, setDisplayedResult] = useState<string>("");
@@ -201,6 +203,8 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     setAccuracy(null);
     setXaiData(null);
     setNeuralChartData(null);
+    setNeuralChartError(null);
+    setNeuralChartLoading(true);
     setSocialData(null);
 
     try {
@@ -209,7 +213,23 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       const chartPromise = predictFinancialAnalyst("/get_forecast", [normalizedTicker]);
       const finPromise = predictFinancialAnalyst("/get_financials_tables", [normalizedTicker]);
       const socialPromise = predictFinancialAnalyst("/get_social_sentiment", [normalizedTicker, 1, 20]);
-      const neuralChartPromise = predictFinancialAnalyst("/get_neural_chart_vision", [normalizedTicker]);
+      const neuralChartPromise = predictFinancialAnalyst("/get_neural_chart_vision", [normalizedTicker])
+        .then((response) => {
+          const parsedNeuralChart = parseGradioJson<NeuralChartVisionPayload | null>(response, null);
+          if (parsedNeuralChart && !parsedNeuralChart.error) {
+            setNeuralChartData(parsedNeuralChart);
+            setNeuralChartError(null);
+          } else {
+            setNeuralChartError(parsedNeuralChart?.error || "Neural Chart Vision returned no visual payload.");
+          }
+        })
+        .catch((err) => {
+          console.error("Neural Chart Vision error", err);
+          setNeuralChartError(getFinancialAnalystServiceMessage(err));
+        })
+        .finally(() => {
+          setNeuralChartLoading(false);
+        });
       
       // 2. Await the LLM-heavy endpoints SEQUENTIALLY to prevent Groq 429 API Overload
       const analysisResponse = await predictFinancialAnalyst("/analyze_stock", [normalizedTicker]);
@@ -219,7 +239,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       const chartResponse = await chartPromise;
       const finResponse = await finPromise;
       const socialResponse = await socialPromise;
-      const neuralChartResponse = await neuralChartPromise;
+      await neuralChartPromise;
       
       if (analysisResponse && analysisResponse.data) {
         const rawMarkdown = (analysisResponse.data as unknown[])[0] as string;
@@ -260,13 +280,6 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
          } catch(e) { console.error("XAI parse error", e); }
       }
 
-      if (neuralChartResponse && neuralChartResponse.data) {
-         const parsedNeuralChart = parseGradioJson<NeuralChartVisionPayload | null>(neuralChartResponse, null);
-         if (parsedNeuralChart && !parsedNeuralChart.error) {
-            setNeuralChartData(parsedNeuralChart);
-         }
-      }
-
       if (socialResponse && socialResponse.data) {
          const parsedSocial = parseGradioJson<any[]>(socialResponse, []);
          if (Array.isArray(parsedSocial)) {
@@ -277,6 +290,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     } catch (err) {
       setError(getFinancialAnalystServiceMessage(err));
       console.error("Gradio Client Error:", err);
+      setNeuralChartLoading(false);
     } finally {
       setLoading(false);
       setAgentStep(4); // Done
@@ -526,6 +540,49 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
          )}
       </AnimatePresence>
 
+      {(neuralChartLoading || neuralChartData || neuralChartError) && (
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-2 flex flex-col gap-6"
+        >
+          <div className="flex items-center gap-1 border-b border-[rgba(255,255,255,0.06)]">
+            <button
+              onClick={() => setActiveTab("metrics")}
+              className={`px-6 py-3 font-mono text-xs uppercase tracking-widest transition-colors relative ${activeTab === 'metrics' ? 'text-[#C8FF00]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]'}`}
+            >
+              Charts & Metrics (ML Tab)
+              {activeTab === 'metrics' && (
+                <motion.div layoutId="activeTabStandalone" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C8FF00]" />
+              )}
+            </button>
+            <button
+              onClick={() => setActiveTab("sentinel")}
+              className={`px-6 py-3 font-mono text-xs uppercase tracking-widest transition-colors relative ${activeTab === 'sentinel' ? 'text-[#C8FF00]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]'}`}
+            >
+              News & Sentiment Feed
+              {activeTab === 'sentinel' && (
+                <motion.div layoutId="activeTabStandalone" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C8FF00]" />
+              )}
+            </button>
+          </div>
+          {activeTab === "metrics" ? (
+            <NeuralChartVisionCard
+              data={neuralChartData}
+              loading={neuralChartLoading}
+              error={neuralChartError}
+              ticker={ticker.trim().toUpperCase()}
+            />
+          ) : socialData ? (
+            <SocialSentinel data={socialData} loading={loading} loadMore={loadMoreSocialData} />
+          ) : (
+            <div className="p-10 text-center font-mono text-[var(--text-tertiary)] bg-[var(--surface-1)] border border-[rgba(255,255,255,0.06)] rounded-sm">
+              News & sentiment data is loading or unavailable for this asset.
+            </div>
+          )}
+        </motion.div>
+      )}
+
       {/* ── Output Result (Data Vis + Streaming Markdown) ── */}
       <AnimatePresence>
         {result && (
@@ -608,7 +665,6 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                    </div>
                  ) : activeTab === 'metrics' ? (
                    <div className="flex flex-col gap-6">
-                     <NeuralChartVisionCard data={neuralChartData} />
                      <StructuredReport markdown={result} />
                      {financialData && <FinancialStatements data={financialData} />}
                    </div>
