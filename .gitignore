@@ -28,6 +28,8 @@ ml-backend/logs/
 *.csv
 
 # Datasets
+dataset/
+dataset/**
 datasets/
 datasets/**
 
