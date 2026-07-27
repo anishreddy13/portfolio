@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import WatchlistSidebar from "./WatchlistSidebar";
 import SignalFeed from "./SignalFeed";
 import HeadlessFinancialAnalyst from "./HeadlessFinancialAnalyst";
@@ -50,6 +51,19 @@ export default function PortfolioDashboard() {
       </div>
 
       <div className="flex-1 w-full max-w-[1600px] mx-auto p-4 md:p-6 lg:p-8">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-sm border border-[rgba(255,255,255,0.08)] bg-[var(--surface-1)] px-3 py-2 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--text-secondary)] transition-colors hover:border-[#C8FF00]/40 hover:text-[#C8FF00]"
+          >
+            <span aria-hidden="true">&larr;</span>
+            Back to Home
+          </Link>
+          <span className="hidden sm:inline font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)]">
+            AI Financial Analyst
+          </span>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
           
           {/* Main Content Area (3/4 on Desktop, full on Mobile) */}

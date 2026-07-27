@@ -12,6 +12,19 @@ interface Signal {
   description: string;
 }
 
+function parseSignals(response: unknown): Signal[] {
+  const data = (response as { data?: unknown[] } | null)?.data;
+  const raw = Array.isArray(data) ? data[0] : null;
+  if (typeof raw !== "string") return [];
+
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function SignalFeed() {
   const [signals, setSignals] = useState<Signal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,9 +38,7 @@ export default function SignalFeed() {
         const response = await app.predict("/get_market_signals", []);
         
         if (mounted && response && response.data) {
-          const rawJson = (response.data as unknown[])[0] as string;
-          const parsed = JSON.parse(rawJson);
-          setSignals(parsed);
+          setSignals(parseSignals(response));
         }
       } catch (e) {
         console.error("Failed to fetch market signals", e);

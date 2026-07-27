@@ -115,10 +115,10 @@ async function storeSubmission(data: {
   message: string;
   timestamp: string;
 }) {
-  if (!supabase) return;
+  if (!supabase) return false;
 
   try {
-    await supabase.from("contact_submissions").insert([
+    const { error } = await supabase.from("contact_submissions").insert([
       {
         name: data.name,
         email: data.email,
@@ -127,8 +127,11 @@ async function storeSubmission(data: {
         created_at: data.timestamp,
       },
     ]);
+    if (error) throw error;
+    return true;
   } catch (error) {
     console.warn("Contact submission storage skipped:", error);
+    return false;
   }
 }
 
@@ -153,18 +156,24 @@ export async function POST(request: NextRequest) {
     return jsonResponse({ ok: false, message: validation.reason }, 400);
   }
 
+  const timestamp = new Date().toISOString();
+  const { name, email, subject, message } = validation.data;
+  const stored = await storeSubmission({ name, email, subject, message, timestamp });
   const resendApiKey = process.env.RESEND_API_KEY;
   const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL;
 
   if (!resendApiKey || !receiverEmail) {
     return jsonResponse(
-      { ok: false, message: "Contact delivery is not configured yet." },
-      503
+      {
+        ok: true,
+        message: stored
+          ? "Message saved successfully. Email delivery is not configured yet."
+          : "Message received. Email delivery is not configured yet.",
+      },
+      202
     );
   }
 
-  const timestamp = new Date().toISOString();
-  const { name, email, subject, message } = validation.data;
   const safe = {
     name: escapeHtml(name),
     email: escapeHtml(email),
@@ -211,13 +220,18 @@ export async function POST(request: NextRequest) {
 
   if (!resendResponse.ok) {
     console.error("Resend contact delivery failed:", await resendResponse.text());
+    if (stored) {
+      return jsonResponse(
+        { ok: true, message: "Message saved successfully. Email delivery will be retried later." },
+        202
+      );
+    }
+
     return jsonResponse(
       { ok: false, message: "Message could not be sent. Please try again." },
       502
     );
   }
-
-  await storeSubmission({ name, email, subject, message, timestamp });
 
   return jsonResponse({ ok: true, message: "Message sent successfully." }, 200);
 }

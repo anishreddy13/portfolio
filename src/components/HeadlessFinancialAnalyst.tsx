@@ -59,6 +59,18 @@ interface HeadlessFinancialAnalystProps {
   initialTicker?: string;
 }
 
+function parseGradioJson<T>(response: unknown, fallback: T): T {
+  const data = (response as { data?: unknown[] } | null)?.data;
+  const raw = Array.isArray(data) ? data[0] : null;
+  if (typeof raw !== "string") return fallback;
+
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return fallback;
+  }
+}
+
 export default function HeadlessFinancialAnalyst({ initialTicker = "" }: HeadlessFinancialAnalystProps) {
   const [ticker, setTicker] = useState(initialTicker);
   const [result, setResult] = useState<string | null>(null);
@@ -90,6 +102,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   useEffect(() => {
     if (initialTicker) {
       setTicker(initialTicker);
+      setSocialData(null);
     }
   }, [initialTicker]);
 
@@ -124,7 +137,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [ticker]);
+  }, [suggestions, ticker]);
 
   // Agent sequence simulation
   useEffect(() => {
@@ -193,17 +206,19 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       const app = await Client.connect("Anishreddy13/ai-financial-analyst");
       
       // 1. Fire off the non-LLM API calls concurrently (they are fast and don't hit Groq)
-      const chartPromise = app.predict("/get_forecast", [ticker.trim().toUpperCase()]);
-      const finPromise = app.predict("/get_financials_tables", [ticker.trim().toUpperCase()]);
+      const normalizedTicker = ticker.trim().toUpperCase();
+      const chartPromise = app.predict("/get_forecast", [normalizedTicker]);
+      const finPromise = app.predict("/get_financials_tables", [normalizedTicker]);
+      const socialPromise = app.predict("/get_social_sentiment", [normalizedTicker, 1, 20]);
       
       // 2. Await the LLM-heavy endpoints SEQUENTIALLY to prevent Groq 429 API Overload
-      const analysisResponse = await app.predict("/analyze_stock", [ticker.trim().toUpperCase()]);
-      const xaiResponse = await app.predict("/get_xai_explanation", [ticker.trim().toUpperCase()]);
-      const socialResponse = await app.predict("/get_social_sentiment", [ticker.trim().toUpperCase(), 1, 20]);
+      const analysisResponse = await app.predict("/analyze_stock", [normalizedTicker]);
+      const xaiResponse = await app.predict("/get_xai_explanation", [normalizedTicker]);
       
       // 3. Resolve the non-LLM responses
       const chartResponse = await chartPromise;
       const finResponse = await finPromise;
+      const socialResponse = await socialPromise;
       
       if (analysisResponse && analysisResponse.data) {
         const rawMarkdown = (analysisResponse.data as unknown[])[0] as string;
@@ -245,12 +260,10 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       }
 
       if (socialResponse && socialResponse.data) {
-         try {
-            const parsedSocial = JSON.parse((socialResponse.data as unknown[])[0] as string);
-            if (!parsedSocial.error) {
-               setSocialData(parsedSocial);
-            }
-         } catch(e) { console.error("Social data parse error", e); }
+         const parsedSocial = parseGradioJson<any[]>(socialResponse, []);
+         if (Array.isArray(parsedSocial)) {
+            setSocialData(parsedSocial);
+         }
       }
 
     } catch (err) {
@@ -268,8 +281,8 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
       const app = await Client.connect("Anishreddy13/ai-financial-analyst");
       const response = await app.predict("/get_social_sentiment", [ticker.trim().toUpperCase(), page, 20]);
       if (response && response.data) {
-        const parsed = JSON.parse((response.data as unknown[])[0] as string);
-        if (!parsed.error && Array.isArray(parsed)) {
+        const parsed = parseGradioJson<any[]>(response, []);
+        if (Array.isArray(parsed)) {
            setSocialData((prev) => [...(prev || []), ...parsed]);
         }
       }
@@ -519,7 +532,7 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
             <div className="flex items-center gap-4 mb-4">
                <button onClick={() => window.location.href = '/'} className="flex items-center gap-2 text-[var(--text-tertiary)] hover:text-white transition-colors">
                   <ChevronLeft size={16} />
-                  <span className="font-mono text-xs uppercase tracking-widest">Back to Dashboard</span>
+                  <span className="font-mono text-xs uppercase tracking-widest">Back to Home</span>
                </button>
                <div className="w-[1px] h-4 bg-[rgba(255,255,255,0.1)]" />
                <button onClick={() => setTicker("")} className="text-[var(--text-tertiary)] hover:text-white transition-colors font-mono text-xs uppercase tracking-widest">

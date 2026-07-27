@@ -11,10 +11,12 @@ import {
 } from "recharts";
 
 interface ActivityGraphProps {
-  data: { date: string; commits: number }[];
+  data: { date: string; commits: number; events?: number }[];
+  loading?: boolean;
+  lastUpdated?: string | null;
 }
 
-export function ActivityGraph({ data }: ActivityGraphProps) {
+export function ActivityGraph({ data, loading = false, lastUpdated = null }: ActivityGraphProps) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -42,6 +44,9 @@ export function ActivityGraph({ data }: ActivityGraphProps) {
   }, [data]);
 
   const maxCommits = Math.max(...data.map((d) => d.commits), 10);
+  const updatedLabel = lastUpdated
+    ? new Date(lastUpdated).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    : "Live GitHub";
 
   return (
     <div
@@ -59,7 +64,7 @@ export function ActivityGraph({ data }: ActivityGraphProps) {
           Activity Pulse
         </p>
         <p className="font-mono text-[0.5rem] sm:text-[0.55rem]" style={{ color: "var(--text-tertiary)" }}>
-          Last 30 Days
+          {loading ? "Syncing..." : updatedLabel}
         </p>
       </div>
 
@@ -106,7 +111,7 @@ export function ActivityGraph({ data }: ActivityGraphProps) {
                         {new Date(data.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
                       </p>
                       <p className="font-mono text-[0.7rem]" style={{ color: "#FF6B35" }}>
-                        {data.commits} commits
+                        {data.commits} commits - {data.events || 0} events
                       </p>
                     </div>
                   );

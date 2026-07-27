@@ -74,7 +74,7 @@ export default function SocialSentinel({ data, loading, loadMore }: SocialSentin
       {/* Masonry Layout Grid */}
       <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
         {data
-          .filter(item => activeFilter === "All" || item.source_type === activeFilter)
+          .filter(item => activeFilter === "All" || (item.source_type || "news") === activeFilter)
           .map((item, idx) => {
           const isBullish = item.sentiment === "Bullish";
           const isBearish = item.sentiment === "Bearish";

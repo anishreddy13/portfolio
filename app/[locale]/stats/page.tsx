@@ -1,40 +1,63 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import CursorEffect from "@/components/CursorEffect";
-import AnimatedBackground from "@/components/AnimatedBackground";
-import PlatformShell from "@/components/PlatformShell";
+import { useEffect, useMemo, useState } from "react";
 import { StatCards } from "@/components/developer/StatCards";
 import { LanguagePieChart } from "@/components/developer/LanguagePieChart";
 import { ActivityGraph } from "@/components/developer/ActivityGraph";
 import { useTranslations } from "next-intl";
 
-// Mock Data Generators for V1
-function generateMockActivity() {
-  const data = [];
-  const today = new Date();
-  for (let i = 30; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    
-    // Create realistic-looking commit patterns (fewer on weekends)
-    const isWeekend = d.getDay() === 0 || d.getDay() === 6;
-    const baseCommits = isWeekend ? Math.floor(Math.random() * 3) : Math.floor(Math.random() * 8) + 2;
-    // Occasional spikes
-    const spike = Math.random() > 0.85 ? Math.floor(Math.random() * 10) : 0;
+type ActivityPoint = { date: string; commits: number; events?: number };
 
-    data.push({
+function emptyActivity(): ActivityPoint[] {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return Array.from({ length: 30 }, (_, index) => {
+    const d = new Date(today);
+    d.setDate(today.getDate() - (29 - index));
+    return {
       date: d.toISOString(),
-      commits: baseCommits + spike,
-    });
-  }
-  return data;
+      commits: 0,
+      events: 0,
+    };
+  });
 }
 
 export default function StatsPage() {
   const t = useTranslations("Stats");
-  const activityData = generateMockActivity();
+  const [activityData, setActivityData] = useState<ActivityPoint[]>(() => emptyActivity());
+  const [githubStats, setGithubStats] = useState({ commits: 0, activeDays: 0, events: 0, lastEventAt: null as string | null });
+  const [loadingActivity, setLoadingActivity] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadActivity = async () => {
+      try {
+        const response = await fetch("/api/github/activity", { cache: "no-store" });
+        const payload = await response.json();
+        if (!mounted) return;
+
+        if (Array.isArray(payload.activity)) {
+          setActivityData(payload.activity);
+        }
+        if (payload.stats) {
+          setGithubStats(payload.stats);
+        }
+      } catch (error) {
+        console.error("Failed to load GitHub activity:", error);
+      } finally {
+        if (mounted) setLoadingActivity(false);
+      }
+    };
+
+    loadActivity();
+    const interval = window.setInterval(loadActivity, 5 * 60 * 1000);
+    return () => {
+      mounted = false;
+      window.clearInterval(interval);
+    };
+  }, []);
 
   const MOCK_LANGUAGES = [
     { name: "TypeScript", value: 45.2, color: "#3178c6" },
@@ -44,12 +67,12 @@ export default function StatsPage() {
     { name: t('other_lang'), value: 5.0, color: "var(--text-secondary)" },
   ];
 
-  const MOCK_STATS = [
-    { label: t('commits_label'), value: 142, sub: t('commits_sub'), color: "#FF6B35" },
-    { label: t('hours_label'), value: "118h", sub: t('hours_sub'), color: "#C8FF00" },
-    { label: t('streak_label'), value: t('streak_val'), sub: t('streak_sub'), color: "#A855F7" },
+  const stats = useMemo(() => [
+    { label: t('commits_label'), value: githubStats.commits, sub: "last 30 days", color: "#FF6B35" },
+    { label: t('hours_label'), value: githubStats.events, sub: "public GitHub events", color: "#C8FF00" },
+    { label: t('streak_label'), value: githubStats.activeDays, sub: "active coding days", color: "#A855F7" },
     { label: t('top_lang_label'), value: "TypeScript", sub: t('top_lang_sub'), color: "#3178c6" },
-  ];
+  ], [githubStats, t]);
 
   return (
     <main className="relative z-10 pt-24 sm:pt-32 pb-20">
@@ -67,13 +90,13 @@ export default function StatsPage() {
 
         {/* Top Stat Cards */}
         <div className="mb-6 sm:mb-8">
-          <StatCards stats={MOCK_STATS} />
+          <StatCards stats={stats} />
         </div>
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
           <div className="lg:col-span-2">
-            <ActivityGraph data={activityData} />
+            <ActivityGraph data={activityData} loading={loadingActivity} lastUpdated={githubStats.lastEventAt} />
           </div>
           <div className="lg:col-span-1">
             <LanguagePieChart data={MOCK_LANGUAGES} />
@@ -83,7 +106,7 @@ export default function StatsPage() {
         {/* Footer note for V1 */}
         <div className="flex justify-center mb-10">
           <p className="font-mono text-[0.55rem] sm:text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>
-            {t('footer_note')}
+            Live public GitHub activity refreshes every 5 minutes.
           </p>
         </div>
 
