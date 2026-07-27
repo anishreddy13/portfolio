@@ -5,6 +5,7 @@ import {
   Activity,
   BrainCircuit,
   CandlestickChart,
+  Gauge,
   ScanLine,
   TrendingDown,
   TrendingUp,
@@ -36,6 +37,27 @@ interface NeuralChartPoint {
   volume: number;
 }
 
+interface NeuralAttentionPoint {
+  date: string;
+  attention: number;
+  close: number;
+}
+
+interface NeuralKeyLevel {
+  label: string;
+  price: number;
+  distance_percent: number;
+  kind: "support" | "resistance" | "mean";
+}
+
+interface NeuralEvidence {
+  label: string;
+  value: number;
+  unit: string;
+  polarity: "positive" | "negative" | "neutral";
+  detail: string;
+}
+
 export interface NeuralChartVisionPayload {
   ticker: string;
   as_of: string;
@@ -50,6 +72,9 @@ export interface NeuralChartVisionPayload {
   confidence_score: number;
   patterns: NeuralPattern[];
   chart: NeuralChartPoint[];
+  attention_timeline?: NeuralAttentionPoint[];
+  key_levels?: NeuralKeyLevel[];
+  evidence?: NeuralEvidence[];
   summary: string;
   error?: string;
 }
@@ -95,6 +120,12 @@ function CustomTooltip({ active, payload, label }: any) {
   );
 }
 
+function polarityColor(polarity: NeuralEvidence["polarity"]) {
+  if (polarity === "positive") return "#C8FF00";
+  if (polarity === "negative") return "#FF5A5F";
+  return "#4DA3FF";
+}
+
 export default function NeuralChartVisionCard({ data }: NeuralChartVisionCardProps) {
   if (!data || data.error) return null;
 
@@ -105,6 +136,9 @@ export default function NeuralChartVisionCard({ data }: NeuralChartVisionCardPro
     label: formatDate(point.date),
     volumeScaled: point.volume / 1_000_000,
   }));
+  const attentionData = data.attention_timeline || [];
+  const keyLevels = data.key_levels || [];
+  const evidence = data.evidence || [];
 
   return (
     <motion.div
@@ -215,6 +249,33 @@ export default function NeuralChartVisionCard({ data }: NeuralChartVisionCardPro
               </ComposedChart>
             </ResponsiveContainer>
           </div>
+          {attentionData.length > 0 && (
+            <div className="mt-4">
+              <div className="mb-2 flex items-center justify-between">
+                <p className="font-mono text-[0.55rem] uppercase tracking-widest text-[var(--text-tertiary)]">
+                  Model Attention Timeline
+                </p>
+                <p className="font-mono text-[0.55rem] uppercase tracking-widest text-[#4DA3FF]">
+                  Phase 4 X-Ray
+                </p>
+              </div>
+              <div className="grid h-7 grid-flow-col gap-[2px] overflow-hidden rounded-sm bg-[rgba(255,255,255,0.04)] p-[2px]">
+                {attentionData.map((point) => {
+                  const intensity = Math.max(0.05, Math.min(1, point.attention));
+                  return (
+                    <div
+                      key={point.date}
+                      title={`${point.date}: ${Math.round(point.attention * 100)}% attention`}
+                      className="h-full rounded-[1px]"
+                      style={{
+                        background: `rgba(77, 163, 255, ${0.12 + intensity * 0.78})`,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="rounded-sm border border-[rgba(255,255,255,0.05)] bg-[#050505] p-4">
@@ -250,6 +311,74 @@ export default function NeuralChartVisionCard({ data }: NeuralChartVisionCardPro
           </div>
         </div>
       </div>
+
+      {(keyLevels.length > 0 || evidence.length > 0) && (
+        <div className="mt-5 grid gap-5 xl:grid-cols-[0.8fr_1.2fr]">
+          {keyLevels.length > 0 && (
+            <div className="rounded-sm border border-[rgba(255,255,255,0.05)] bg-[#050505] p-4">
+              <div className="mb-4 flex items-center gap-2">
+                <Gauge size={15} className="text-[#FFB020]" />
+                <p className="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)]">
+                  Key Levels
+                </p>
+              </div>
+              <div className="grid gap-2">
+                {keyLevels.map((level) => {
+                  const color =
+                    level.kind === "support" ? "#C8FF00" : level.kind === "resistance" ? "#FF5A5F" : "#4DA3FF";
+                  return (
+                    <div
+                      key={level.label}
+                      className="flex items-center justify-between rounded-sm border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)] px-3 py-2"
+                    >
+                      <div>
+                        <p className="font-mono text-[0.62rem] uppercase tracking-wider text-[var(--text-secondary)]">
+                          {level.label}
+                        </p>
+                        <p className="font-mono text-[0.58rem] text-[var(--text-tertiary)]">
+                          {formatPercent(level.distance_percent, 2)} from spot
+                        </p>
+                      </div>
+                      <p className="font-mono text-sm" style={{ color }}>
+                        ${Number(level.price).toFixed(2)}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {evidence.length > 0 && (
+            <div className="rounded-sm border border-[rgba(255,255,255,0.05)] bg-[#050505] p-4">
+              <p className="mb-4 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)]">
+                Pattern Evidence
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {evidence.map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-sm border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)] p-3"
+                  >
+                    <div className="mb-2 flex items-start justify-between gap-3">
+                      <p className="font-mono text-[0.62rem] uppercase tracking-wider text-[var(--text-secondary)]">
+                        {item.label}
+                      </p>
+                      <p className="font-mono text-sm" style={{ color: polarityColor(item.polarity) }}>
+                        {Number(item.value).toFixed(item.unit === "x" ? 2 : 1)}
+                        {item.unit}
+                      </p>
+                    </div>
+                    <p className="font-body text-xs leading-relaxed text-[var(--text-tertiary)]">
+                      {item.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="mt-5 rounded-sm border border-[rgba(255,255,255,0.05)] bg-[rgba(255,255,255,0.02)] p-4">
         <p className="font-body text-sm leading-relaxed text-[var(--text-secondary)]">
