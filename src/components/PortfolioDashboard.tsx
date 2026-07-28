@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { BrainCircuit, BookOpen } from "lucide-react";
 import WatchlistSidebar from "./WatchlistSidebar";
 import SignalFeed from "./SignalFeed";
 import HeadlessFinancialAnalyst from "./HeadlessFinancialAnalyst";
@@ -53,14 +54,25 @@ export default function PortfolioDashboard() {
       <FinancialAnalystHealthStrip />
 
       <div className="flex-1 w-full max-w-[1600px] mx-auto p-4 md:p-6 lg:p-8">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-sm border border-[rgba(255,255,255,0.08)] bg-[var(--surface-1)] px-3 py-2 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--text-secondary)] transition-colors hover:border-[#C8FF00]/40 hover:text-[#C8FF00]"
-          >
-            <span aria-hidden="true">&larr;</span>
-            Back to Home
-          </Link>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-sm border border-[rgba(255,255,255,0.08)] bg-[var(--surface-1)] px-3 py-2 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--text-secondary)] transition-colors hover:border-[#C8FF00]/40 hover:text-[#C8FF00]"
+            >
+              <span aria-hidden="true">&larr;</span>
+              Back to Home
+            </Link>
+
+            <Link
+              href="/projects/ai-financial-analyst/explainer"
+              className="inline-flex items-center gap-2 rounded-sm border border-[#C8FF00]/40 bg-[#C8FF00]/10 px-3.5 py-2 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-[#C8FF00] transition-all hover:bg-[#C8FF00] hover:text-[#0A0A0A] shadow-lg"
+            >
+              <BrainCircuit size={14} />
+              System Explainer / How This Works
+            </Link>
+          </div>
+
           <span className="hidden sm:inline font-mono text-[0.6rem] uppercase tracking-widest text-[var(--text-tertiary)]">
             AI Financial Analyst
           </span>

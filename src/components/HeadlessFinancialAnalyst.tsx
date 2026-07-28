@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, BarChart2, Edit3, Terminal, Activity, ShieldAlert, ChevronLeft } from "lucide-react";
+import { Search, BarChart2, Edit3, Terminal, Activity, ShieldAlert, ChevronLeft, HelpCircle } from "lucide-react";
 import StructuredReport from "./StructuredReport";
 import FinancialStatements from "./FinancialStatements";
 import ExplainabilityCard from "./ExplainabilityCard";
@@ -331,15 +332,25 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
   return (
     <div className="w-full flex flex-col gap-6 relative">
       {/* ── Global Navigation ── */}
-      <div className="flex items-center gap-4 mb-2">
-         <a href="/" className="font-mono text-xs text-[var(--text-secondary)] hover:text-[#C8FF00] transition-colors flex items-center gap-1.5 uppercase tracking-wider">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            Back to Home
-         </a>
-         <span className="text-[rgba(255,255,255,0.2)]">|</span>
-         <a href="/dashboard" className="font-mono text-xs text-[var(--text-secondary)] hover:text-[#C8FF00] transition-colors flex items-center gap-1.5 uppercase tracking-wider">
-            Back to Dashboard
-         </a>
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-2">
+         <div className="flex items-center gap-4">
+            <a href="/" className="font-mono text-xs text-[var(--text-secondary)] hover:text-[#C8FF00] transition-colors flex items-center gap-1.5 uppercase tracking-wider">
+               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+               Back to Home
+            </a>
+            <span className="text-[rgba(255,255,255,0.2)]">|</span>
+            <a href="/dashboard" className="font-mono text-xs text-[var(--text-secondary)] hover:text-[#C8FF00] transition-colors flex items-center gap-1.5 uppercase tracking-wider">
+               Back to Dashboard
+            </a>
+         </div>
+
+         <Link
+            href="/projects/ai-financial-analyst/explainer"
+            className="font-mono text-xs text-[var(--text-tertiary)] hover:text-[#C8FF00] transition-colors inline-flex items-center gap-1.5 uppercase tracking-wider"
+         >
+            <HelpCircle size={14} className="text-[#C8FF00]" />
+            Curious how this works? View system tour &rarr;
+         </Link>
       </div>
 
       {/* ── Spotlight Input Section ── */}

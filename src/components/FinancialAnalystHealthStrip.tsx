@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Activity, AlertTriangle, CheckCircle2, Cpu } from "lucide-react";
+import { Activity, AlertTriangle, CheckCircle2, Cpu, HelpCircle } from "lucide-react";
 import { getFinancialAnalystServiceMessage, predictFinancialAnalyst } from "@/lib/financialAnalystClient";
 
 interface HealthPayload {
@@ -90,6 +91,12 @@ export default function FinancialAnalystHealthStrip() {
             <Cpu size={11} />
             DL Bundle {dlReady ? "loaded" : "fallback"}
           </span>
+          <Link
+            href="/projects/ai-financial-analyst/explainer"
+            className="inline-flex items-center gap-1 rounded-sm border border-[#C8FF00]/40 bg-[#C8FF00]/10 px-2 py-1 font-mono text-[0.55rem] uppercase tracking-widest text-[#C8FF00] transition-colors hover:bg-[#C8FF00] hover:text-[#0A0A0A]"
+          >
+            System Tour &rarr;
+          </Link>
           {error && (
             <span className="font-mono text-[0.55rem] uppercase tracking-widest text-[#FFB020]">
               {error}
