@@ -606,27 +606,6 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
 
              {/* ── Main Tabbed Content Area ── */}
              <div className="mt-8">
-                {/* Tab Navigation */}
-                <div className="flex items-center gap-1 mb-6 border-b border-[rgba(255,255,255,0.06)]">
-                   <button 
-                      onClick={() => setActiveTab("metrics")}
-                      className={`px-6 py-3 font-mono text-xs uppercase tracking-widest transition-colors relative ${activeTab === 'metrics' ? 'text-[#C8FF00]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]'}`}
-                   >
-                      Charts & Metrics (ML Tab)
-                      {activeTab === 'metrics' && (
-                         <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C8FF00]" />
-                      )}
-                   </button>
-                   <button 
-                      onClick={() => setActiveTab("sentinel")}
-                      className={`px-6 py-3 font-mono text-xs uppercase tracking-widest transition-colors relative ${activeTab === 'sentinel' ? 'text-[#C8FF00]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]'}`}
-                   >
-                      News & Sentiment Feed
-                      {activeTab === 'sentinel' && (
-                         <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C8FF00]" />
-                      )}
-                   </button>
-                </div>
                 {displayedResult.length < result.length ? (
                    <div 
                       ref={scrollRef}
