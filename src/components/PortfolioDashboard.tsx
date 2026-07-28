@@ -66,7 +66,12 @@ export default function PortfolioDashboard() {
 
             <Link
               href="/projects/ai-financial-analyst/explainer"
-              className="inline-flex items-center gap-2 rounded-sm border border-[#C8FF00]/40 bg-[#C8FF00]/10 px-3.5 py-2 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-[#C8FF00] transition-all hover:bg-[#C8FF00] hover:text-[#0A0A0A] shadow-lg"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.location.href = "/projects/ai-financial-analyst/explainer";
+                }
+              }}
+              className="inline-flex items-center gap-2 rounded-sm border border-[#C8FF00]/40 bg-[#C8FF00]/10 px-3.5 py-2 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-[#C8FF00] transition-all hover:bg-[#C8FF00] hover:text-[#0A0A0A] shadow-lg cursor-pointer"
             >
               <BrainCircuit size={14} />
               System Explainer / How This Works

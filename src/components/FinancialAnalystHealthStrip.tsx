@@ -93,7 +93,12 @@ export default function FinancialAnalystHealthStrip() {
           </span>
           <Link
             href="/projects/ai-financial-analyst/explainer"
-            className="inline-flex items-center gap-1 rounded-sm border border-[#C8FF00]/40 bg-[#C8FF00]/10 px-2 py-1 font-mono text-[0.55rem] uppercase tracking-widest text-[#C8FF00] transition-colors hover:bg-[#C8FF00] hover:text-[#0A0A0A]"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.location.href = "/projects/ai-financial-analyst/explainer";
+              }
+            }}
+            className="inline-flex items-center gap-1 rounded-sm border border-[#C8FF00]/40 bg-[#C8FF00]/10 px-2 py-1 font-mono text-[0.55rem] uppercase tracking-widest text-[#C8FF00] transition-colors hover:bg-[#C8FF00] hover:text-[#0A0A0A] cursor-pointer"
           >
             System Tour &rarr;
           </Link>

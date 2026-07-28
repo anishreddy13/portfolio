@@ -346,7 +346,12 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
 
          <Link
             href="/projects/ai-financial-analyst/explainer"
-            className="font-mono text-xs text-[var(--text-tertiary)] hover:text-[#C8FF00] transition-colors inline-flex items-center gap-1.5 uppercase tracking-wider"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.location.href = "/projects/ai-financial-analyst/explainer";
+              }
+            }}
+            className="font-mono text-xs text-[var(--text-tertiary)] hover:text-[#C8FF00] transition-colors inline-flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
          >
             <HelpCircle size={14} className="text-[#C8FF00]" />
             Curious how this works? View system tour &rarr;

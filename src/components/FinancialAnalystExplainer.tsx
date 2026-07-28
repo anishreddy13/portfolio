@@ -203,6 +203,11 @@ export default function FinancialAnalystExplainer() {
           <div className="flex items-center gap-3">
             <Link
               href="/projects/ai-financial-analyst"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.location.href = "/projects/ai-financial-analyst";
+                }
+              }}
               className="inline-flex items-center gap-2 rounded-sm border border-[rgba(255,255,255,0.1)] bg-[var(--surface-1)] px-3 py-1.5 font-mono text-xs uppercase tracking-wider text-[var(--text-secondary)] transition-colors hover:border-[#C8FF00]/40 hover:text-[#C8FF00]"
             >
               <span aria-hidden="true">&larr;</span>
