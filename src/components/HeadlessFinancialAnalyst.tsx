@@ -339,9 +339,9 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
                Back to Home
             </a>
             <span className="text-[rgba(255,255,255,0.2)]">|</span>
-            <a href="/dashboard" className="font-mono text-xs text-[var(--text-secondary)] hover:text-[#C8FF00] transition-colors flex items-center gap-1.5 uppercase tracking-wider">
-               Back to Dashboard
-            </a>
+            <Link href="/#projects" className="font-mono text-xs text-[var(--text-secondary)] hover:text-[#C8FF00] transition-colors flex items-center gap-1.5 uppercase tracking-wider">
+               Back to Projects
+            </Link>
          </div>
 
          <Link

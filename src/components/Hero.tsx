@@ -5,7 +5,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-const words = ["BUILDER", "ENGINEER", "RESEARCHER", "CREATOR"];
+// Fixed hero title role label for maximum performance
+const HERO_ROLE = "ENGINEER";
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   return (
@@ -16,31 +17,6 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
     >
       {target}{suffix}
     </motion.span>
-  );
-}
-
-function WordCycle() {
-  return (
-    <div className="relative overflow-hidden" style={{ height: "1em" }}>
-      {words.map((word, i) => (
-        <motion.span
-          key={word}
-          className="absolute inset-0 flex items-center"
-          initial={{ y: "110%" }}
-          animate={{ y: ["110%", "0%", "0%", "-110%"] }}
-          transition={{
-            duration: 3,
-            delay: i * 3,
-            repeat: Infinity,
-            repeatDelay: (words.length - 1) * 3,
-            ease: [0.16, 1, 0.3, 1],
-            times: [0, 0.15, 0.85, 1],
-          }}
-        >
-          {word}
-        </motion.span>
-      ))}
-    </div>
   );
 }
 
@@ -169,7 +145,7 @@ export default function Hero() {
                   backgroundClip: "text",
                 }}
               >
-                <WordCycle />
+                {HERO_ROLE}
               </motion.div>
             </div>
 

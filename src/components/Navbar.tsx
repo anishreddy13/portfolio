@@ -154,17 +154,21 @@ export default function Navbar() {
             <span style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.1)", margin: "0 12px" }} />
             <LanguageSwitcher />
 
-            {/* ── Dashboard button ── */}
-            <Link href="/dashboard">
+            {/* ── AI Financial Analyst button ── */}
+            <Link href="/projects/ai-financial-analyst">
               <motion.span
                 className="inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300"
                 style={{
-                  background:  "rgba(200,255,0,0.08)",
-                  borderColor: "rgba(200,255,0,0.3)",
+                  background: pathname.includes("/projects/ai-financial-analyst")
+                    ? "rgba(200,255,0,0.18)"
+                    : "rgba(200,255,0,0.08)",
+                  borderColor: pathname.includes("/projects/ai-financial-analyst")
+                    ? "#C8FF00"
+                    : "rgba(200,255,0,0.3)",
                   color: isDark ? "#C8FF00" : "#0F172A",
                 }}
                 whileHover={{
-                  background:  "rgba(200,255,0,0.16)",
+                  background: "rgba(200,255,0,0.22)",
                   borderColor: "rgba(200,255,0,0.6)",
                   scale: 1.03,
                 }}
@@ -174,47 +178,25 @@ export default function Navbar() {
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ background: "#C8FF00", boxShadow: "0 0 6px #C8FF00" }}
                 />
-                {t('dashboard')}
+                AI Analyst
               </motion.span>
             </Link>
-
-            {/* ── Stats button ── */}
-            <Link href="/stats">
-              <motion.span
-                className="inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300"
-                style={{
-                  background:   "rgba(168,85,247,0.08)",
-                  borderColor:  "rgba(168,85,247,0.3)",
-                  color: isDark ? "#A855F7" : "#0F172A",
-                }}
-                whileHover={{
-                  background:  "rgba(168,85,247,0.16)",
-                  borderColor: "rgba(168,85,247,0.6)",
-                  scale: 1.03,
-                }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <span
-                  className="w-1.5 h-1.5 rounded-full animate-pulse"
-                  style={{ background: "#A855F7", boxShadow: "0 0 6px #A855F7" }}
-                />
-                {t('stats')}
-              </motion.span>
-            </Link>
-
-
 
             {/* ── ML Lab button ── */}
             <Link href="/ml">
               <motion.span
                 className="inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300"
                 style={{
-                  background:   "rgba(255,45,45,0.08)",
-                  borderColor:  "rgba(255,45,45,0.3)",
+                  background: pathname.includes("/ml")
+                    ? "rgba(255,45,45,0.18)"
+                    : "rgba(255,45,45,0.08)",
+                  borderColor: pathname.includes("/ml")
+                    ? "#FF2D2D"
+                    : "rgba(255,45,45,0.3)",
                   color: isDark ? "#FF2D2D" : "#0F172A",
                 }}
                 whileHover={{
-                  background:  "rgba(255,45,45,0.16)",
+                  background: "rgba(255,45,45,0.22)",
                   borderColor: "rgba(255,45,45,0.6)",
                   scale: 1.03,
                 }}
@@ -225,6 +207,34 @@ export default function Navbar() {
                   style={{ background: "#FF2D2D", boxShadow: "0 0 6px #FF2D2D" }}
                 />
                 {t('mlLab')}
+              </motion.span>
+            </Link>
+
+            {/* ── Stats button ── */}
+            <Link href="/stats">
+              <motion.span
+                className="inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300"
+                style={{
+                  background: pathname.includes("/stats")
+                    ? "rgba(168,85,247,0.18)"
+                    : "rgba(168,85,247,0.08)",
+                  borderColor: pathname.includes("/stats")
+                    ? "#A855F7"
+                    : "rgba(168,85,247,0.3)",
+                  color: isDark ? "#A855F7" : "#0F172A",
+                }}
+                whileHover={{
+                  background: "rgba(168,85,247,0.22)",
+                  borderColor: "rgba(168,85,247,0.6)",
+                  scale: 1.03,
+                }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full animate-pulse"
+                  style={{ background: "#A855F7", boxShadow: "0 0 6px #A855F7" }}
+                />
+                {t('stats')}
               </motion.span>
             </Link>
           </div>
@@ -403,7 +413,7 @@ export default function Navbar() {
 
 
 
-              {/* ── Dashboard mobile ── */}
+              {/* ── AI Financial Analyst mobile ── */}
               <motion.div
                 initial={{ opacity: 0, x: -32 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -411,7 +421,7 @@ export default function Navbar() {
                 transition={{ delay: 0.44, duration: 0.45 }}
                 className="mt-2"
               >
-                <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
+                <Link href="/projects/ai-financial-analyst" onClick={() => setMobileOpen(false)}>
                   <span
                     className="inline-flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.2em] uppercase px-4 py-2.5 rounded-sm border"
                     style={{
@@ -424,7 +434,7 @@ export default function Navbar() {
                       className="w-1.5 h-1.5 rounded-full animate-pulse"
                       style={{ background: "#C8FF00", boxShadow: "0 0 8px #C8FF00" }}
                     />
-                    Dashboard
+                    AI Analyst
                     <span className="opacity-50">↗</span>
                   </span>
                 </Link>

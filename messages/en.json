@@ -5,7 +5,6 @@
     "work": "Work",
     "certs": "Certs",
     "contact": "Contact",
-    "dashboard": "Dashboard",
     "stats": "Stats",
     "mlLab": "ML Lab"
   },
@@ -105,8 +104,8 @@
         "desc": "Production-style leaf disease classifier served through a lightweight Hugging Face Spaces FastAPI deployment with multipart uploads, EfficientNet-B0 inference, top-5 confidence analysis, Grad-CAM explanations, webcam capture, and local analytics."
       },
       "02": {
-        "title": "ML Monitoring Dashboard",
-        "desc": "Operational dashboard for model predictions, service health, drift reports, pipeline runs, visitor telemetry, and live analytics. Built as the observability layer for the portfolio's deployed AI systems."
+        "title": "AI Financial Analyst",
+        "desc": "Enterprise-grade financial intelligence platform orchestrated by 5 specialized AI agents (Researcher, Quant, Auditor, Competitor, Editor) with PyTorch Neural Chart Vision, live portfolio rebalancing, social sentiment feeds, and XAI explainability."
       },
       "03": {
         "title": "AI Interview Analyzer",
@@ -270,62 +269,6 @@
       "benign": "Benign (Safe)",
       "risk": "Risk Analysis",
       "top_features": "Top Contributing Features"
-    }
-  },
-  "Dashboard": {
-    "header1": "Project",
-    "header_highlight": "Dashboard",
-    "description": "Live performance metrics, API health, and system analytics for all deployed AI models.",
-    "tabs": {
-      "live": "Live Feed",
-      "analytics": "Analytics",
-      "monitoring": "System Health",
-      "visitors": "Global Traffic",
-      "pipeline": "CI/CD Pipeline"
-    },
-    "health": {
-      "api_status": "API Status",
-      "online": "Online",
-      "offline": "Offline",
-      "checking": "Checking..."
-    },
-    "metrics": {
-      "total_requests": "Total Requests",
-      "avg_latency": "Avg Latency",
-      "uptime": "Uptime",
-      "error_rate": "Error Rate",
-      "from_last_month": "from last month",
-      "live_traffic": "Live Traffic",
-      "requests_sec": "requests / sec"
-    },
-    "monitoring": {
-      "service_health": "Service Health Overview",
-      "service": "Service",
-      "status": "Status",
-      "latency": "Latency",
-      "uptime": "Uptime",
-      "last_check": "Last Check",
-      "data_drift": "Data Drift Analysis",
-      "feature": "Feature",
-      "drift_score": "Drift Score",
-      "recommendation": "Recommendation",
-      "details": "Details"
-    },
-    "visitors": {
-      "geography": "Global Request Geography",
-      "total_hits": "Total Hits"
-    },
-    "pipeline": {
-      "cicd": "CI/CD Pipeline Status",
-      "build": "Build ID",
-      "status": "Status",
-      "deployed": "Deployed",
-      "meaning": "Meaning",
-      "success": "Success",
-      "failed": "Failed",
-      "running": "Running",
-      "yes": "Yes",
-      "no": "No"
     }
   },
   "Plant": {

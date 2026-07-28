@@ -158,80 +158,106 @@ export async function POST(request: NextRequest) {
 
   const timestamp = new Date().toISOString();
   const { name, email, subject, message } = validation.data;
-  const stored = await storeSubmission({ name, email, subject, message, timestamp });
+
   const resendApiKey = process.env.RESEND_API_KEY;
   const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL;
+  const hasResendConfig = Boolean(resendApiKey && receiverEmail);
+  const hasSupabaseConfig = Boolean(supabase);
 
-  if (!resendApiKey || !receiverEmail) {
-    return jsonResponse(
-      {
-        ok: true,
-        message: stored
-          ? "Message saved successfully. Email delivery is not configured yet."
-          : "Message received. Email delivery is not configured yet.",
-      },
-      202
-    );
-  }
-
-  const safe = {
-    name: escapeHtml(name),
-    email: escapeHtml(email),
-    subject: escapeHtml(subject),
-    message: escapeHtml(message).replace(/\n/g, "<br />"),
-    timestamp: escapeHtml(timestamp),
-  };
-
-  const resendResponse = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: "Portfolio Contact <onboarding@resend.dev>",
-      to: [receiverEmail],
-      reply_to: email,
-      subject: `Portfolio Contact: ${subject}`,
-      html: `
-        <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111;background:#f7f7f7;padding:24px;">
-          <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e5e5e5;padding:24px;">
-            <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#ff2d2d;margin:0 0 16px;">New Portfolio Message</p>
-            <h1 style="font-size:24px;margin:0 0 18px;color:#111;">${safe.subject}</h1>
-            <p><strong>Name:</strong> ${safe.name}</p>
-            <p><strong>Email:</strong> ${safe.email}</p>
-            <p><strong>Timestamp:</strong> ${safe.timestamp}</p>
-            <hr style="border:none;border-top:1px solid #eee;margin:22px 0;" />
-            <p style="margin:0;">${safe.message}</p>
-          </div>
-        </div>
-      `,
-      text: [
-        "New Portfolio Message",
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Subject: ${subject}`,
-        `Timestamp: ${timestamp}`,
-        "",
-        message,
-      ].join("\n"),
-    }),
+  // Diagnostic logging for backend debug without revealing credentials
+  console.log("[Contact API Audit]", {
+    resendApiKeyConfigured: Boolean(resendApiKey),
+    receiverEmailConfigured: Boolean(receiverEmail),
+    supabaseConfigured: hasSupabaseConfig,
+    timestamp,
   });
 
-  if (!resendResponse.ok) {
-    console.error("Resend contact delivery failed:", await resendResponse.text());
-    if (stored) {
-      return jsonResponse(
-        { ok: true, message: "Message saved successfully. Email delivery will be retried later." },
-        202
-      );
-    }
+  const stored = await storeSubmission({ name, email, subject, message, timestamp });
 
+  let emailSent = false;
+  if (hasResendConfig) {
+    const safe = {
+      name: escapeHtml(name),
+      email: escapeHtml(email),
+      subject: escapeHtml(subject),
+      message: escapeHtml(message).replace(/\n/g, "<br />"),
+      timestamp: escapeHtml(timestamp),
+    };
+
+    try {
+      const resendResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "Portfolio Contact <onboarding@resend.dev>",
+          to: [receiverEmail],
+          reply_to: email,
+          subject: `Portfolio Contact: ${subject}`,
+          html: `
+            <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111;background:#f7f7f7;padding:24px;">
+              <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e5e5e5;padding:24px;">
+                <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#ff2d2d;margin:0 0 16px;">New Portfolio Message</p>
+                <h1 style="font-size:24px;margin:0 0 18px;color:#111;">${safe.subject}</h1>
+                <p><strong>Name:</strong> ${safe.name}</p>
+                <p><strong>Email:</strong> ${safe.email}</p>
+                <p><strong>Timestamp:</strong> ${safe.timestamp}</p>
+                <hr style="border:none;border-top:1px solid #eee;margin:22px 0;" />
+                <p style="margin:0;">${safe.message}</p>
+              </div>
+            </div>
+          `,
+          text: [
+            "New Portfolio Message",
+            `Name: ${name}`,
+            `Email: ${email}`,
+            `Subject: ${subject}`,
+            `Timestamp: ${timestamp}`,
+            "",
+            message,
+          ].join("\n"),
+        }),
+      });
+
+      if (resendResponse.ok) {
+        emailSent = true;
+      } else {
+        console.error("[Contact API] Resend email delivery failed:", await resendResponse.text());
+      }
+    } catch (err) {
+      console.error("[Contact API] Resend fetch network error:", err);
+    }
+  }
+
+  // ── Success condition evaluation ──
+  if (emailSent) {
     return jsonResponse(
-      { ok: false, message: "Message could not be sent. Please try again." },
-      502
+      { ok: true, message: "Message sent successfully. I will get back to you soon!" },
+      200
     );
   }
 
-  return jsonResponse({ ok: true, message: "Message sent successfully." }, 200);
+  if (stored) {
+    return jsonResponse(
+      { ok: true, message: "Message received and saved successfully. I will get back to you soon!" },
+      200
+    );
+  }
+
+  // Neither email nor database storage succeeded -> return clear error indicating missing service credentials
+  console.error("[Contact API Failure] Message delivery and database storage both failed or unconfigured.", {
+    hasResendConfig,
+    hasSupabaseConfig,
+  });
+
+  return jsonResponse(
+    {
+      ok: false,
+      message:
+        "Contact service is unconfigured (missing RESEND_API_KEY/CONTACT_RECEIVER_EMAIL or Supabase credentials). Please reach out directly at anishreddy1373@gmail.com.",
+    },
+    503
+  );
 }

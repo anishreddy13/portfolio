@@ -5,7 +5,6 @@
     "work": "Projekte",
     "certs": "Zertifikate",
     "contact": "Kontakt",
-    "dashboard": "Dashboard",
     "stats": "Statistiken",
     "mlLab": "KI-Labor"
   },
@@ -105,8 +104,8 @@
         "desc": "Blattkrankheitsklassifikator im Produktionsstil, der über ein leichtgewichtiges Hugging Face Spaces FastAPI-Deployment mit Multipart-Uploads, EfficientNet-B0-Inferenz, Top-5-Konfidenzanalyse, Grad-CAM-Erklärungen, Webcam-Erfassung und lokalen Analysen bereitgestellt wird."
       },
       "02": {
-        "title": "ML-Überwachungs-Dashboard",
-        "desc": "Betriebliches Dashboard für Modellvorhersagen, Service-Gesundheit, Drift-Berichte, Pipeline-Läufe, Besucher-Telemetrie und Live-Analysen. Aufgebaut als Beobachtbarkeitsebene für die bereitgestellten KI-Systeme des Portfolios."
+        "title": "KI-Finanzanalyst",
+        "desc": "Unternehmensklasse Finanz-Intelligenz-Plattform, orchestriert von 5 spezialisierten KI-Agenten mit PyTorch Neural Chart Vision, Live-Portfolio-Rebalancing und Social-Sentiment-Feeds."
       },
       "03": {
         "title": "KI-Interview-Analysator",
@@ -270,62 +269,6 @@
       "benign": "Gutartig (Sicher)",
       "risk": "Risikoanalyse",
       "top_features": "Wichtigste beitragende Merkmale"
-    }
-  },
-  "Dashboard": {
-    "header1": "Projekt-",
-    "header_highlight": "Dashboard",
-    "description": "Live-Leistungsmetriken, API-Integrität und Systemanalysen für alle bereitgestellten KI-Modelle.",
-    "tabs": {
-      "live": "Live-Feed",
-      "analytics": "Analytik",
-      "monitoring": "Systemintegrität",
-      "visitors": "Weltweiter Traffic",
-      "pipeline": "CI/CD-Pipeline"
-    },
-    "health": {
-      "api_status": "API-Status",
-      "online": "Online",
-      "offline": "Offline",
-      "checking": "Wird überprüft..."
-    },
-    "metrics": {
-      "total_requests": "Gesamtanfragen",
-      "avg_latency": "Ø Latenz",
-      "uptime": "Betriebszeit",
-      "error_rate": "Fehlerrate",
-      "from_last_month": "im Vergleich zum Vormonat",
-      "live_traffic": "Live-Traffic",
-      "requests_sec": "Anfragen / Sek."
-    },
-    "monitoring": {
-      "service_health": "Service-Integritätsübersicht",
-      "service": "Service",
-      "status": "Status",
-      "latency": "Latenz",
-      "uptime": "Betriebszeit",
-      "last_check": "Letzte Prüfung",
-      "data_drift": "Data-Drift-Analyse",
-      "feature": "Merkmal",
-      "drift_score": "Drift-Score",
-      "recommendation": "Empfehlung",
-      "details": "Details"
-    },
-    "visitors": {
-      "geography": "Globale Anfragengeografie",
-      "total_hits": "Gesamtzugriffe"
-    },
-    "pipeline": {
-      "cicd": "CI/CD-Pipeline-Status",
-      "build": "Build-ID",
-      "status": "Status",
-      "deployed": "Bereitgestellt",
-      "meaning": "Bedeutung",
-      "success": "Erfolg",
-      "failed": "Fehlgeschlagen",
-      "running": "Läuft",
-      "yes": "Ja",
-      "no": "Nein"
     }
   },
   "Plant": {

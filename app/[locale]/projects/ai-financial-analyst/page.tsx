@@ -265,15 +265,23 @@ function ArchitectureSection() {
 /* ═════════════════════════════════════════════
    Main Page Component
    ═════════════════════════════════════════════ */
+import Breadcrumbs from "@/components/Breadcrumbs";
+
 export default function AIFinancialAnalystPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <main
-      className="relative min-h-screen bg-[#050505]"
-    >
+    <main className="relative min-h-screen bg-[#050505] pt-16">
+      <Breadcrumbs
+        items={[
+          { label: "Projects", href: "/#projects" },
+          { label: "AI Financial Analyst" },
+        ]}
+        backToHref="/#projects"
+        backToLabel="Back to Projects"
+      />
       <PortfolioDashboard />
     </main>
   );

@@ -6,6 +6,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/i18n/routing";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import InterviewAnalyzer from "@/components/InterviewAnalyzer";
 import PlantDiseaseDetector from "@/components/PlantDiseaseDetector";
 
@@ -1290,7 +1291,11 @@ export default function MLPage() {
         </span>
       </motion.div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-36 sm:pt-40 pb-24">
+      <div className="relative z-10 pt-20">
+        <Breadcrumbs items={[{ label: "ML Lab" }]} backToHref="/" backToLabel="Back to Home" />
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-10 sm:pt-14 pb-24">
 
         {/* Header */}
         <motion.div

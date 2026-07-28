@@ -19,7 +19,7 @@ function ParticleField() {
   const meshRef = useRef<THREE.Points>(null);
 
   const { positions, colors, sizes } = useMemo(() => {
-    const count = 1800;
+    const count = 750;
     const positions = new Float32Array(count * 3);
     const colors    = new Float32Array(count * 3);
     const sizes     = new Float32Array(count);
@@ -113,7 +113,7 @@ function EnergyOrb({
     <>
       {/* Core orb */}
       <mesh ref={meshRef} position={position} scale={scale}>
-        <sphereGeometry args={[1, 24, 24]} />
+        <sphereGeometry args={[1, 12, 12]} />
         <meshBasicMaterial
           color={color}
           transparent
@@ -124,7 +124,7 @@ function EnergyOrb({
       </mesh>
       {/* Outer glow halo */}
       <mesh ref={glowRef} position={position} scale={scale * 2.8}>
-        <sphereGeometry args={[1, 16, 16]} />
+        <sphereGeometry args={[1, 10, 10]} />
         <meshBasicMaterial
           color={color}
           transparent

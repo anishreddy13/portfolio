@@ -70,28 +70,53 @@ export default function CursorEffect() {
   }, []);
 
   useEffect(() => {
-    setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    const checkTouchOrReducedMotion = () => {
+      const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      setIsTouchDevice(isTouch || reducedMotion);
+    };
+    checkTouchOrReducedMotion();
   }, []);
 
   useEffect(() => {
     if (isTouchDevice) return;
 
+    let rafId: number | null = null;
+    let lastHovering = false;
+    let lastColor = "#FF2D2D";
+
     const onMove = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-      setIsVisible(true);
 
-      const target = e.target as HTMLElement;
-      const interactive =
-        target.closest("a") ||
-        target.closest("button") ||
-        target.closest("input") ||
-        target.closest("textarea") ||
-        target.closest("[data-cursor-hover]");
+      if (rafId !== null) return;
 
-      setIsHovering(!!interactive);
-      if (interactive) setCursorColor(getElementColor(target));
-      else setCursorColor("#FF2D2D");
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        setIsVisible(true);
+
+        const target = e.target as HTMLElement;
+        if (!target) return;
+
+        const interactive =
+          target.closest("a") ||
+          target.closest("button") ||
+          target.closest("input") ||
+          target.closest("textarea") ||
+          target.closest("[data-cursor-hover]");
+
+        const nextHovering = !!interactive;
+        const nextColor = interactive ? getElementColor(target) : "#FF2D2D";
+
+        if (nextHovering !== lastHovering) {
+          lastHovering = nextHovering;
+          setIsHovering(nextHovering);
+        }
+        if (nextColor !== lastColor) {
+          lastColor = nextColor;
+          setCursorColor(nextColor);
+        }
+      });
     };
 
     const onDown = (e: MouseEvent) => {
@@ -102,13 +127,14 @@ export default function CursorEffect() {
     const onLeave = () => setIsVisible(false);
     const onEnter = () => setIsVisible(true);
 
-    window.addEventListener("mousemove",  onMove);
-    window.addEventListener("mousedown",  onDown);
-    window.addEventListener("mouseup",    onUp);
+    window.addEventListener("mousemove",  onMove, { passive: true });
+    window.addEventListener("mousedown",  onDown, { passive: true });
+    window.addEventListener("mouseup",    onUp,   { passive: true });
     document.documentElement.addEventListener("mouseleave", onLeave);
     document.documentElement.addEventListener("mouseenter", onEnter);
 
     return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove",  onMove);
       window.removeEventListener("mousedown",  onDown);
       window.removeEventListener("mouseup",    onUp);
