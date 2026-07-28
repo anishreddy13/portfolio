@@ -107,14 +107,20 @@ async function storeSubmission(data: {
       message:    data.message,
       created_at: data.timestamp,
     }]);
-    if (error) throw error;
+    if (error) {
+      console.error("[Contact API] Supabase insert error:", {
+        code: error.code, message: error.message, details: error.details, hint: error.hint,
+      });
+      return false;
+    }
     console.log("[Contact API] Stored in Supabase successfully.");
     return true;
   } catch (err) {
-    console.warn("[Contact API] Supabase storage failed:", err);
+    console.warn("[Contact API] Supabase storage exception:", err);
     return false;
   }
 }
+
 
 async function sendEmail(data: {
   name: string; email: string; subject: string; message: string; timestamp: string;
