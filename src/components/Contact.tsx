@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 import { useTranslations } from "next-intl";
+import SpotlightCard from "./SpotlightCard";
 
 interface FormState {
   name: string;
@@ -133,6 +134,13 @@ export default function Contact() {
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("");
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("anishreddy1373@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2500);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -272,189 +280,191 @@ export default function Contact() {
           {/* Form — 3 cols */}
           <div className="lg:col-span-3">
             <ScrollReveal delay={0.15}>
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <input
-                  type="text"
-                  name="company"
-                  value={form.company}
-                  onChange={handleChange}
-                  tabIndex={-1}
-                  autoComplete="off"
-                  aria-hidden="true"
-                  className="hidden"
-                />
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <AnimatedInput
-                    label={t('name_label')} name="name"
-                    value={form.name} onChange={handleChange}
-                    focused={focused.name}
-                    onFocus={() => handleFocus("name")}
-                    onBlur={() => handleBlur("name")}
-                    required
-                  />
-                  <AnimatedInput
-                    label={t('email_label')} name="email" type="email"
-                    value={form.email} onChange={handleChange}
-                    focused={focused.email}
-                    onFocus={() => handleFocus("email")}
-                    onBlur={() => handleBlur("email")}
-                    required
-                  />
-                </div>
-
-                <AnimatedInput
-                  label={t('subject_label')} name="subject"
-                  value={form.subject} onChange={handleChange}
-                  focused={focused.subject}
-                  onFocus={() => handleFocus("subject")}
-                  onBlur={() => handleBlur("subject")}
-                />
-
-                <AnimatedInput
-                  label={t('message_label')}
-                  name="message" value={form.message}
-                  onChange={handleChange}
-                  focused={focused.message}
-                  onFocus={() => handleFocus("message")}
-                  onBlur={() => handleBlur("message")}
-                  multiline rows={6} required
-                />
-
-                {/* Submit button */}
-                <motion.button
-                  type="submit"
-                  disabled={status === "sending" || status === "sent"}
-                  aria-busy={status === "sending"}
-                  className="relative w-full py-4 rounded-sm font-mono
-                             text-[0.72rem] tracking-[0.22em] uppercase overflow-hidden"
-                  whileHover={{ scale: status === "idle" ? 1.01 : 1 }}
-                  whileTap={{ scale: status === "idle" ? 0.98 : 1 }}
-                >
-                  <div
-                    className="absolute inset-0 transition-all duration-400"
-                    style={{
-                      background:
-                        status === "sent"
-                          ? "#22c55e"
-                          : status === "error"
-                          ? "#CC1A1A"
-                          : status === "sending"
-                          ? "var(--border)"
-                          : "#FF2D2D",
-                    }}
+              <SpotlightCard className="p-6 sm:p-8" spotlightColor="rgba(255, 45, 45, 0.12)">
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  <input
+                    type="text"
+                    name="company"
+                    value={form.company}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="hidden"
                   />
 
-                  {status === "idle" && (
-                    <motion.div
-                      className="absolute inset-0 skew-x-12"
-                      style={{ background: "rgba(255,255,255,0.15)" }}
-                      initial={{ x: "-200%" }}
-                      whileHover={{ x: "200%" }}
-                      transition={{ duration: 0.55 }}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <AnimatedInput
+                      label={t('name_label')} name="name"
+                      value={form.name} onChange={handleChange}
+                      focused={focused.name}
+                      onFocus={() => handleFocus("name")}
+                      onBlur={() => handleBlur("name")}
+                      required
                     />
-                  )}
-
-                  {status === "idle" && (
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{ boxShadow: "0 0 30px rgba(255,45,45,0.4)" }}
+                    <AnimatedInput
+                      label={t('email_label')} name="email" type="email"
+                      value={form.email} onChange={handleChange}
+                      focused={focused.email}
+                      onFocus={() => handleFocus("email")}
+                      onBlur={() => handleBlur("email")}
+                      required
                     />
-                  )}
+                  </div>
 
-                  <span
-                    className="relative z-10"
-                    style={{
-                      color: status === "sending" ? "var(--text-secondary)" : "#fff",
-                    }}
+                  <AnimatedInput
+                    label={t('subject_label')} name="subject"
+                    value={form.subject} onChange={handleChange}
+                    focused={focused.subject}
+                    onFocus={() => handleFocus("subject")}
+                    onBlur={() => handleBlur("subject")}
+                  />
+
+                  <AnimatedInput
+                    label={t('message_label')}
+                    name="message" value={form.message}
+                    onChange={handleChange}
+                    focused={focused.message}
+                    onFocus={() => handleFocus("message")}
+                    onBlur={() => handleBlur("message")}
+                    multiline rows={6} required
+                  />
+
+                  {/* Submit button */}
+                  <motion.button
+                    type="submit"
+                    disabled={status === "sending" || status === "sent"}
+                    aria-busy={status === "sending"}
+                    className="relative w-full py-4 rounded-sm font-mono
+                               text-[0.72rem] tracking-[0.22em] uppercase overflow-hidden"
+                    whileHover={{ scale: status === "idle" ? 1.01 : 1 }}
+                    whileTap={{ scale: status === "idle" ? 0.98 : 1 }}
                   >
-                    <AnimatePresence mode="wait">
-                      {status === "idle" && (
-                        <motion.span
-                          key="idle"
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          className="flex items-center justify-center gap-2"
-                        >
-                          {t('send_btn')} →
-                        </motion.span>
-                      )}
-                      {status === "sending" && (
-                        <motion.span
-                          key="sending"
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          className="flex items-center justify-center gap-2"
-                        >
-                          <motion.span
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                            className="inline-block w-4 h-4 border-2 rounded-full"
-                            style={{
-                              borderColor: "rgba(160,160,160,0.3)",
-                              borderTopColor: "var(--text-secondary)",
-                            }}
-                          />
-                          {t('sending')}
-                        </motion.span>
-                      )}
-                      {status === "sent" && (
-                        <motion.span
-                          key="sent"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0 }}
-                          className="flex items-center justify-center gap-2"
-                        >
-                          {t('sent_btn_success')}
-                        </motion.span>
-                      )}
-                      {status === "error" && (
-                        <motion.span
-                          key="error"
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          className="flex items-center justify-center gap-2"
-                        >
-                          {t('error_btn')}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </span>
-                </motion.button>
-
-                <AnimatePresence>
-                  {statusMessage && (
-                    <motion.div
-                      role={status === "error" ? "alert" : "status"}
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      className="rounded-sm px-4 py-3"
+                    <div
+                      className="absolute inset-0 transition-all duration-400"
                       style={{
                         background:
-                          status === "error"
-                            ? "rgba(255,45,45,0.08)"
-                            : "rgba(34,197,94,0.08)",
-                        border:
-                          status === "error"
-                            ? "1px solid rgba(255,45,45,0.25)"
-                            : "1px solid rgba(34,197,94,0.22)",
+                          status === "sent"
+                            ? "#22c55e"
+                            : status === "error"
+                            ? "#CC1A1A"
+                            : status === "sending"
+                            ? "var(--border)"
+                            : "#FF2D2D",
+                      }}
+                    />
+
+                    {status === "idle" && (
+                      <motion.div
+                        className="absolute inset-0 skew-x-12"
+                        style={{ background: "rgba(255,255,255,0.15)" }}
+                        initial={{ x: "-200%" }}
+                        whileHover={{ x: "200%" }}
+                        transition={{ duration: 0.55 }}
+                      />
+                    )}
+
+                    {status === "idle" && (
+                      <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{ boxShadow: "0 0 30px rgba(255,45,45,0.4)" }}
+                      />
+                    )}
+
+                    <span
+                      className="relative z-10"
+                      style={{
+                        color: status === "sending" ? "var(--text-secondary)" : "#fff",
                       }}
                     >
-                      <p
-                        className="font-mono text-[0.62rem] leading-relaxed"
-                        style={{ color: status === "error" ? "#FF2D2D" : "#22c55e" }}
+                      <AnimatePresence mode="wait">
+                        {status === "idle" && (
+                          <motion.span
+                            key="idle"
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            className="flex items-center justify-center gap-2"
+                          >
+                            {t('send_btn')} →
+                          </motion.span>
+                        )}
+                        {status === "sending" && (
+                          <motion.span
+                            key="sending"
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            className="flex items-center justify-center gap-2"
+                          >
+                            <motion.span
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                              className="inline-block w-4 h-4 border-2 rounded-full"
+                              style={{
+                                borderColor: "rgba(160,160,160,0.3)",
+                                borderTopColor: "var(--text-secondary)",
+                              }}
+                            />
+                            {t('sending')}
+                          </motion.span>
+                        )}
+                        {status === "sent" && (
+                          <motion.span
+                            key="sent"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="flex items-center justify-center gap-2"
+                          >
+                            {t('sent_btn_success')}
+                          </motion.span>
+                        )}
+                        {status === "error" && (
+                          <motion.span
+                            key="error"
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            className="flex items-center justify-center gap-2"
+                          >
+                            {t('error_btn')}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </span>
+                  </motion.button>
+
+                  <AnimatePresence>
+                    {statusMessage && (
+                      <motion.div
+                        role={status === "error" ? "alert" : "status"}
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        className="rounded-sm px-4 py-3"
+                        style={{
+                          background:
+                            status === "error"
+                              ? "rgba(255,45,45,0.08)"
+                              : "rgba(34,197,94,0.08)",
+                          border:
+                            status === "error"
+                              ? "1px solid rgba(255,45,45,0.25)"
+                              : "1px solid rgba(34,197,94,0.22)",
+                        }}
                       >
-                        {statusMessage}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </form>
+                        <p
+                          className="font-mono text-[0.62rem] leading-relaxed"
+                          style={{ color: status === "error" ? "#FF2D2D" : "#22c55e" }}
+                        >
+                          {statusMessage}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </form>
+              </SpotlightCard>
             </ScrollReveal>
           </div>
 
@@ -463,17 +473,44 @@ export default function Contact() {
             <ScrollReveal direction="left" delay={0.25}>
               <div className="space-y-6">
                 {[
-                  { lbl: "Email",         val: "anishreddy1373@gmail.com",       href: "mailto:anishreddy1373@gmail.com" },
+                  { lbl: "Email",         val: "anishreddy1373@gmail.com",       href: "mailto:anishreddy1373@gmail.com", copyable: true },
                   { lbl: "Location",      val: "Hyderabad · Remote OK", href: null },
                   { lbl: "Response Time", val: "Within 24 hours",       href: null },
                 ].map((item) => (
                   <div key={item.lbl}>
-                    <p
-                      className="font-mono text-[0.58rem] tracking-[0.32em] uppercase mb-1.5"
-                      style={{ color: "#FF2D2D" }}
-                    >
-                      {item.lbl}
-                    </p>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <p
+                        className="font-mono text-[0.58rem] tracking-[0.32em] uppercase"
+                        style={{ color: "#FF2D2D" }}
+                      >
+                        {item.lbl}
+                      </p>
+                      {item.copyable && (
+                        <motion.button
+                          type="button"
+                          onClick={handleCopyEmail}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex items-center gap-1.5 px-2 py-0.5 rounded-sm border font-mono text-[0.55rem] tracking-wider uppercase transition-colors"
+                          style={{
+                            background: copiedEmail ? "rgba(200,255,0,0.15)" : "rgba(255,255,255,0.04)",
+                            borderColor: copiedEmail ? "#C8FF00" : "rgba(255,255,255,0.1)",
+                            color: copiedEmail ? "#C8FF00" : "var(--text-secondary)",
+                          }}
+                        >
+                          {copiedEmail ? (
+                            <>
+                              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#C8FF00" }} />
+                              Copied! ✓
+                            </>
+                          ) : (
+                            <>
+                              <span>📋</span> Copy Email
+                            </>
+                          )}
+                        </motion.button>
+                      )}
+                    </div>
                     {item.href ? (
                       <a
                         href={item.href}

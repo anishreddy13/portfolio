@@ -433,13 +433,21 @@ export default function About() {
                   style={{ color: group.accent }}>
                   {group.category}
                 </h3>
-                <ul className="space-y-2">
+                <ul className="flex flex-wrap gap-2">
                   {group.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2.5">
-                      <span className="w-1 h-1 rounded-full shrink-0"
-                        style={{ background: group.accent, opacity: 0.6 }} />
-                      <span className="font-body text-sm" style={{ color: "var(--text-secondary)" }}>{item}</span>
-                    </li>
+                    <motion.li
+                      key={item}
+                      whileHover={{ scale: 1.05, borderColor: group.accent, color: "#FFFFFF" }}
+                      className="flex items-center gap-2 px-2.5 py-1 rounded-sm border font-mono text-[0.62rem] tracking-wide transition-colors cursor-pointer"
+                      style={{
+                        background: "rgba(255, 255, 255, 0.02)",
+                        borderColor: "rgba(255, 255, 255, 0.08)",
+                        color: "var(--text-secondary)",
+                      }}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full shrink-0 animate-pulse" style={{ background: group.accent, boxShadow: `0 0 6px ${group.accent}` }} />
+                      <span>{item}</span>
+                    </motion.li>
                   ))}
                 </ul>
               </motion.div>

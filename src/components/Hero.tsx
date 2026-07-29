@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import TelemetryTicker from "./TelemetryTicker";
 
 // Fixed hero title role label for maximum performance
 const HERO_ROLE = "ENGINEER";
@@ -67,6 +68,28 @@ export default function Hero() {
           background:
             "radial-gradient(circle at bottom right, rgba(200,255,0,0.07) 0%, transparent 65%)",
         }}
+      />
+
+      {/* ── Drifting Ambient Mesh Glow Orbs ── */}
+      <motion.div
+        className="absolute top-1/4 left-1/4 w-[450px] h-[450px] rounded-full pointer-events-none blur-[100px]"
+        animate={{
+          x: [0, 45, -30, 0],
+          y: [0, -35, 25, 0],
+          opacity: [0.08, 0.16, 0.08],
+        }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        style={{ background: "radial-gradient(circle, rgba(255,45,45,0.22) 0%, transparent 70%)" }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] rounded-full pointer-events-none blur-[100px]"
+        animate={{
+          x: [0, -35, 35, 0],
+          y: [0, 25, -45, 0],
+          opacity: [0.06, 0.14, 0.06],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        style={{ background: "radial-gradient(circle, rgba(200,255,0,0.18) 0%, transparent 70%)" }}
       />
 
       {/* ── Horizontal red rule — desktop only ── */}
@@ -449,6 +472,11 @@ export default function Hero() {
           }}
         />
       </motion.div>
+
+      {/* ── System Telemetry Ticker at bottom ── */}
+      <div className="absolute bottom-0 left-0 right-0 z-20">
+        <TelemetryTicker />
+      </div>
     </section>
   );
 }
