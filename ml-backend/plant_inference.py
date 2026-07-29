@@ -7,32 +7,34 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-import torch
-from PIL import Image, UnidentifiedImageError
-from torchvision import transforms
+class PlantInferenceError(ValueError):
+    pass
 
-from plant_dataset import DEFAULT_IMAGE_SIZE, IMAGENET_MEAN, IMAGENET_STD
-from plant_model import build_efficientnet_b0
+try:
+    import torch
+    from torchvision import transforms
+    from plant_dataset import DEFAULT_IMAGE_SIZE, IMAGENET_MEAN, IMAGENET_STD
+    from plant_model import build_efficientnet_b0
 
-
-PLANT_INFERENCE_TRANSFORM = transforms.Compose(
-    [
-        transforms.Resize((DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
-    ]
-)
+    TORCH_AVAILABLE = True
+    PLANT_INFERENCE_TRANSFORM = transforms.Compose(
+        [
+            transforms.Resize((DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
+        ]
+    )
+except (ImportError, ModuleNotFoundError):
+    TORCH_AVAILABLE = False
+    torch = None
+    PLANT_INFERENCE_TRANSFORM = None
 
 
 @dataclass
 class PlantDiseasePredictor:
-    model: torch.nn.Module
+    model: any
     idx_to_class: dict[int, str]
-    device: torch.device
-
-
-class PlantInferenceError(ValueError):
-    pass
+    device: any
 
 
 def load_class_mapping(mapping_path: str | Path) -> tuple[dict[str, int], dict[int, str]]:

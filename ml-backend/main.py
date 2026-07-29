@@ -36,11 +36,23 @@ load_cancer_model = _optional_loader_unavailable
 FEATURE_RANGES = {}
 MALIGNANT_SAMPLE = {}
 BENIGN_SAMPLE = {}
-from plant_inference import (
-    PlantInferenceError,
-    load_plant_predictor,
-    predict_plant_disease_from_bytes,
-)
+try:
+    from plant_inference import (
+        PlantInferenceError,
+        load_plant_predictor,
+        predict_plant_disease_from_bytes,
+    )
+except (ImportError, ModuleNotFoundError) as err:
+    class PlantInferenceError(ValueError):
+        pass
+
+    def load_plant_predictor(*args, **kwargs):
+        return None
+
+    def predict_plant_disease_from_bytes(*args, **kwargs):
+        raise PlantInferenceError("PyTorch plant inference is handled via Hugging Face Space.")
+
+    OPTIONAL_IMPORT_ERRORS["plant"] = str(err)
 
 # ─────────────────────────────────────────────────────────────
 # NEW INFRASTRUCTURE
