@@ -429,12 +429,36 @@ img { display: block; max-width: 100%; }
     margin: 10mm;
   }
 
-  /* 1. Hide everything on screen by default */
-  body * {
+  html,
+  body {
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    cursor: auto !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body::before,
+  body::after,
+  .noise::after,
+  canvas,
+  video {
+    display: none !important;
     visibility: hidden !important;
   }
 
-  /* 2. Make ONLY #print-root and its children visible */
+  body * {
+    visibility: hidden !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
   #print-root,
   #print-root * {
     visibility: visible !important;
@@ -445,26 +469,46 @@ img { display: block; max-width: 100%; }
     left: 0 !important;
     top: 0 !important;
     width: 100% !important;
+    min-height: 0 !important;
     background: #ffffff !important;
     color: #000000 !important;
-    font-size: 11px !important;
-    line-height: 1.4 !important;
     display: block !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 10.5px !important;
+    line-height: 1.4 !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  html, body {
+  #print-root,
+  #print-root section,
+  #print-root div,
+  #print-root table,
+  #print-root thead,
+  #print-root tbody,
+  #print-root tr,
+  #print-root td,
+  #print-root th,
+  #print-root pre,
+  #print-root header,
+  #print-root footer {
     background: #ffffff !important;
     color: #000000 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    height: auto !important;
-    overflow: visible !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
   }
 
   .print-card {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
+  }
+
+  #print-root pre,
+  #print-root table,
+  #print-root tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  #print-root .grid {
+    break-inside: auto !important;
   }
 }
