@@ -186,10 +186,24 @@ export default function About() {
   const lineHeight = useTransform(scrollYProgress, [0.1, 0.6], ["0%", "100%"]);
 
   const timeline = [
-    { year: "2024", role: t('timeline_2024_role'), company: t('timeline_2024_company'),    current: true  },
-    { year: "2022", role: t('timeline_2022_role'), company: t('timeline_2022_company'), current: false },
-    { year: "2020", role: t('timeline_2020_role'), company: t('timeline_2020_company'),  current: false },
-    { year: "2019", role: t('timeline_2019_role'), company: t('timeline_2019_company'),      current: false },
+    {
+      period: t("exp_frontend_time"),
+      role: t("exp_frontend_role"),
+      company: t("exp_frontend_company"),
+      location: t("exp_frontend_location"),
+      description: t("exp_frontend_desc"),
+      skills: t("exp_frontend_skills"),
+      current: true,
+    },
+    {
+      period: t("exp_data_time"),
+      role: t("exp_data_role"),
+      company: t("exp_data_company"),
+      location: t("exp_data_location"),
+      description: t("exp_data_desc"),
+      skills: t("exp_data_skills"),
+      current: false,
+    },
   ];
 
   const stats = [
@@ -463,7 +477,7 @@ export default function About() {
                 fontSize: "clamp(1.6rem, 4vw, 2.5rem)",
                 color: "rgba(240,240,240,0.12)",
               }}>
-                EXPERIENCE
+                {t("experience_heading")}
               </h3>
               <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
             </div>
@@ -508,9 +522,12 @@ export default function About() {
                           <p className="font-mono text-[0.62rem] tracking-wide mt-1" style={{ color: "#FF6B35" }}>
                             {item.company}
                           </p>
+                          <p className="font-mono text-[0.58rem] tracking-wide mt-2" style={{ color: "var(--text-tertiary)" }}>
+                            {item.location}
+                          </p>
                         </div>
                         <div className="flex items-center gap-2 shrink-0">
-                          <span className="font-mono text-[0.62rem]" style={{ color: "var(--text-tertiary)" }}>{item.year}</span>
+                          <span className="font-mono text-[0.62rem]" style={{ color: "var(--text-tertiary)" }}>{item.period}</span>
                           {item.current && (
                             <span className="flex items-center gap-1.5 font-mono text-[0.58rem] tracking-wide rounded-sm px-2 py-0.5"
                               style={{ color: "#FF2D2D", border: "1px solid rgba(255,45,45,0.3)", background: "rgba(255,45,45,0.08)" }}>
@@ -519,6 +536,20 @@ export default function About() {
                             </span>
                           )}
                         </div>
+                      </div>
+                      <p className="font-body text-sm leading-relaxed mt-4" style={{ color: "var(--text-secondary)" }}>
+                        {item.description}
+                      </p>
+                      <div
+                        className="inline-flex items-center gap-2 px-3 py-1.5 mt-4 rounded-sm border"
+                        style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.06)" }}
+                      >
+                        <span className="font-mono text-[0.56rem] uppercase tracking-wider" style={{ color: "#C8FF00" }}>
+                          Skills
+                        </span>
+                        <span className="font-body text-xs sm:text-sm" style={{ color: "var(--text-secondary)" }}>
+                          {item.skills}
+                        </span>
                       </div>
                     </motion.div>
                   </div>

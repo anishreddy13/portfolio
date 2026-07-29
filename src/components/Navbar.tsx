@@ -234,10 +234,11 @@ export default function Navbar() {
               </motion.span>
             </Link>
 
-            {/* ── Export PDF button ── */}
-            <motion.button
-              type="button"
-              onClick={() => window.print()}
+            {/* ── Architecture PDF button ── */}
+            <motion.a
+              href="/docs/anish-portfolio-system-architecture.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300 cursor-pointer"
               style={{
                 background: "rgba(200, 255, 0, 0.08)",
@@ -250,10 +251,10 @@ export default function Navbar() {
                 scale: 1.03,
               }}
               whileTap={{ scale: 0.97 }}
-              title="Export 3-Page Technical Portfolio PDF"
+              title="Open Technical System Architecture PDF"
             >
               <span>🖨️</span> PDF
-            </motion.button>
+            </motion.a>
           </div>
 
           {/* ── Mobile: buttons + hamburger ── */}
@@ -472,7 +473,7 @@ export default function Navbar() {
                 </Link>
               </motion.div>
 
-              {/* ── Export PDF mobile ── */}
+              {/* ── Architecture PDF mobile ── */}
               <motion.div
                 initial={{ opacity: 0, x: -32 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -480,9 +481,11 @@ export default function Navbar() {
                 transition={{ delay: 0.50, duration: 0.45 }}
                 className="mt-4"
               >
-                <button
-                  type="button"
-                  onClick={() => { setMobileOpen(false); window.print(); }}
+                <a
+                  href="/docs/anish-portfolio-system-architecture.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
                   className="w-full inline-flex items-center justify-between font-mono text-[0.7rem] tracking-[0.2em] uppercase px-4 py-2.5 rounded-sm border cursor-pointer"
                   style={{
                     background: "rgba(200,255,0,0.08)",
@@ -491,10 +494,10 @@ export default function Navbar() {
                   }}
                 >
                   <span className="flex items-center gap-2">
-                    <span>🖨️</span> Export Technical PDF
+                    <span>🖨️</span> Open Architecture PDF
                   </span>
                   <span>↗</span>
-                </button>
+                </a>
               </motion.div>
             </div>
 

@@ -209,11 +209,12 @@ export default function Footer() {
               © {currentYear} AnishReddy.Online — All rights reserved
             </p>
 
-            {/* Status badge & Print Action */}
+            {/* Status badge & PDF Action */}
             <div className="flex items-center gap-3 order-1 sm:order-2">
-              <motion.button
-                type="button"
-                onClick={() => window.print()}
+              <motion.a
+                href="/docs/anish-portfolio-system-architecture.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.04, borderColor: "#C8FF00", color: "#C8FF00" }}
                 whileTap={{ scale: 0.96 }}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border font-mono text-[0.58rem] tracking-[0.2em] uppercase transition-colors cursor-pointer"
@@ -222,10 +223,10 @@ export default function Footer() {
                   borderColor: "rgba(200, 255, 0, 0.25)",
                   color: "var(--text-secondary)",
                 }}
-                title="Export Technical Portfolio as 3-Page PDF"
+                title="Open Technical System Architecture PDF"
               >
-                <span>🖨️</span> EXPORT PDF
-              </motion.button>
+                <span>🖨️</span> OPEN PDF
+              </motion.a>
 
               <motion.div
                 className="flex items-center gap-2 px-4 py-2 rounded-sm"
