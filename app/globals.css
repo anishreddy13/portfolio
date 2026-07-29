@@ -422,23 +422,27 @@ img { display: block; max-width: 100%; }
   }
 }
 
-/* ═══ PRINT STYLESHEET (PDF OVERVIEW) ═══ */
+/* ═══ PRINT STYLESHEET (SYSTEM SPECIFICATION BLUEPRINT) ═══ */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 10mm 12mm;
+    margin: 8mm 10mm;
   }
 
   html, body {
     background: #ffffff !important;
     color: #000000 !important;
     font-size: 11px !important;
-    line-height: 1.4 !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Hide screen-only interactive UI elements */
+  /* Hide all screen-only interactive UI elements */
   nav,
   footer,
   header,
@@ -459,9 +463,16 @@ img { display: block; max-width: 100%; }
   /* Display print portfolio document */
   .print\:block {
     display: block !important;
+    height: auto !important;
   }
 
   .print\:hidden {
     display: none !important;
+  }
+
+  /* Prevent page split inside elements */
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 }
