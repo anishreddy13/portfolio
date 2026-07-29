@@ -230,9 +230,30 @@ export default function Navbar() {
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ background: "#A855F7", boxShadow: "0 0 6px #A855F7" }}
                 />
-                {t('stats')}
+                <span>{t('stats')}</span>
               </motion.span>
             </Link>
+
+            {/* ── Export PDF button ── */}
+            <motion.button
+              type="button"
+              onClick={() => window.print()}
+              className="inline-flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300 cursor-pointer"
+              style={{
+                background: "rgba(200, 255, 0, 0.08)",
+                borderColor: "rgba(200, 255, 0, 0.3)",
+                color: "#C8FF00",
+              }}
+              whileHover={{
+                background: "rgba(200, 255, 0, 0.22)",
+                borderColor: "rgba(200, 255, 0, 0.6)",
+                scale: 1.03,
+              }}
+              whileTap={{ scale: 0.97 }}
+              title="Export 3-Page Technical Portfolio PDF"
+            >
+              <span>🖨️</span> PDF
+            </motion.button>
           </div>
 
           {/* ── Mobile: buttons + hamburger ── */}
@@ -449,6 +470,31 @@ export default function Navbar() {
                     <span className="opacity-50">↗</span>
                   </span>
                 </Link>
+              </motion.div>
+
+              {/* ── Export PDF mobile ── */}
+              <motion.div
+                initial={{ opacity: 0, x: -32 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.50, duration: 0.45 }}
+                className="mt-4"
+              >
+                <button
+                  type="button"
+                  onClick={() => { setMobileOpen(false); window.print(); }}
+                  className="w-full inline-flex items-center justify-between font-mono text-[0.7rem] tracking-[0.2em] uppercase px-4 py-2.5 rounded-sm border cursor-pointer"
+                  style={{
+                    background: "rgba(200,255,0,0.08)",
+                    borderColor: "rgba(200,255,0,0.3)",
+                    color: "#C8FF00",
+                  }}
+                >
+                  <span className="flex items-center gap-2">
+                    <span>🖨️</span> Export Technical PDF
+                  </span>
+                  <span>↗</span>
+                </button>
               </motion.div>
             </div>
 
