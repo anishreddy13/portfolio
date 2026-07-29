@@ -242,7 +242,7 @@ export async function POST(request: NextRequest) {
     {
       ok: false,
       message:
-        "Your message couldn\u2019t be delivered right now. Please email me directly at anishreddy1373@gmail.com.",
+        "Your message couldn\u2019t be delivered right now. Please email me directly at test@example.com.",
     },
     503
   );
