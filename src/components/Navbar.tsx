@@ -143,16 +143,12 @@ export default function Navbar() {
               );
             })}
 
-            {/* ── Theme Toggle Desktop ── */}
             <span style={{
               width: "1px",
               height: "16px",
               background: "rgba(255,255,255,0.1)",
               margin: "0 12px"
             }} />
-            <ThemeToggle />
-            <span style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.1)", margin: "0 12px" }} />
-            <LanguageSwitcher />
 
             {/* ── AI Financial Analyst button ── */}
             <Link href="/projects/ai-financial-analyst">
@@ -370,19 +366,7 @@ export default function Navbar() {
                 );
               })}
 
-              {/* ── Appearance mobile ── */}
-              <motion.div
-                initial={{ opacity: 0, x: -32 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 0.35, duration: 0.45 }}
-                className="mt-4 w-full"
-              >
-                <div className="font-mono text-[0.6rem] tracking-[0.3em] uppercase mb-3" style={{ color: "#FF2D2D" }}>
-                  — Appearance
-                </div>
-                <MobileThemeToggle />
-              </motion.div>
+
 
               {/* ── ML Lab mobile ── */}
               <motion.div

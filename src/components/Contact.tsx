@@ -463,7 +463,7 @@ export default function Contact() {
             <ScrollReveal direction="left" delay={0.25}>
               <div className="space-y-6">
                 {[
-                  { lbl: "Email",         val: "test@example.com",       href: "mailto:test@example.com" },
+                  { lbl: "Email",         val: "anishreddy1373@gmail.com",       href: "mailto:anishreddy1373@gmail.com" },
                   { lbl: "Location",      val: "Hyderabad · Remote OK", href: null },
                   { lbl: "Response Time", val: "Within 24 hours",       href: null },
                 ].map((item) => (
