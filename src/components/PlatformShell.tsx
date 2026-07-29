@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import FinancialAnalystAnnouncement from "./FinancialAnalystAnnouncement";
 import BackToTop from "./BackToTop";
+import PrintPortfolio from "./PrintPortfolio";
 
 const AnimatedBackground = dynamic(() => import("./AnimatedBackground"), {
   ssr: false,
@@ -14,6 +15,7 @@ const AnimatedBackground = dynamic(() => import("./AnimatedBackground"), {
 export default function PlatformShell({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <PrintPortfolio />
       <AnimatedBackground />
       <CursorEffect />
       <FinancialAnalystAnnouncement />

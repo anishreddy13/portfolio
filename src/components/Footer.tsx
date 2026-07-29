@@ -209,23 +209,41 @@ export default function Footer() {
               © {currentYear} AnishReddy.Online — All rights reserved
             </p>
 
-            {/* Status badge */}
-            <motion.div
-              className="flex items-center gap-2 px-4 py-2 rounded-sm order-1 sm:order-2"
-              style={{ background: "rgba(255,45,45,0.08)", border: "1px solid rgba(255,45,45,0.2)" }}
-              whileHover={{ scale: 1.04, borderColor: "rgba(255,45,45,0.4)", boxShadow: "0 0 20px rgba(255,45,45,0.15)" }}
-            >
-              <span
-                className="w-1.5 h-1.5 rounded-full animate-pulse"
-                style={{ background: "#FF2D2D", boxShadow: "0 0 6px #FF2D2D" }}
-              />
-              <span
-                className="font-mono text-[0.58rem] tracking-[0.2em] uppercase"
-                style={{ color: "#FF2D2D" }}
+            {/* Status badge & Print Action */}
+            <div className="flex items-center gap-3 order-1 sm:order-2">
+              <motion.button
+                type="button"
+                onClick={() => window.print()}
+                whileHover={{ scale: 1.04, borderColor: "#C8FF00", color: "#C8FF00" }}
+                whileTap={{ scale: 0.96 }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border font-mono text-[0.58rem] tracking-[0.2em] uppercase transition-colors cursor-pointer"
+                style={{
+                  background: "rgba(200, 255, 0, 0.06)",
+                  borderColor: "rgba(200, 255, 0, 0.25)",
+                  color: "var(--text-secondary)",
+                }}
+                title="Export Technical Portfolio as 3-Page PDF"
               >
-                Available for projects
-              </span>
-            </motion.div>
+                <span>🖨️</span> EXPORT PDF
+              </motion.button>
+
+              <motion.div
+                className="flex items-center gap-2 px-4 py-2 rounded-sm"
+                style={{ background: "rgba(255,45,45,0.08)", border: "1px solid rgba(255,45,45,0.2)" }}
+                whileHover={{ scale: 1.04, borderColor: "rgba(255,45,45,0.4)", boxShadow: "0 0 20px rgba(255,45,45,0.15)" }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full animate-pulse"
+                  style={{ background: "#FF2D2D", boxShadow: "0 0 6px #FF2D2D" }}
+                />
+                <span
+                  className="font-mono text-[0.58rem] tracking-[0.2em] uppercase"
+                  style={{ color: "#FF2D2D" }}
+                >
+                  {t('available')}
+                </span>
+              </motion.div>
+            </div>
 
             {/* Stack */}
             <p

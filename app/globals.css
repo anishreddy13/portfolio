@@ -421,3 +421,47 @@ img { display: block; max-width: 100%; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ═══ PRINT STYLESHEET (PDF OVERVIEW) ═══ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide screen-only interactive UI elements */
+  nav,
+  footer,
+  header,
+  button:not(.print-keep),
+  #hero,
+  #projects,
+  #about,
+  #contact,
+  [class*="cursor"],
+  [class*="telemetry"],
+  [class*="announcement"],
+  [class*="spotlight"],
+  .fixed,
+  .sticky {
+    display: none !important;
+  }
+
+  /* Display print portfolio document */
+  .print\:block {
+    display: block !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+}
