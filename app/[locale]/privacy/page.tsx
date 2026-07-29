@@ -5,55 +5,53 @@ import { useRouter } from "next/navigation";
 
 const sections = [
   {
-    title: "Information We Collect",
+    title: "1. Information We Collect",
     content: [
-      "When you visit this site, we automatically collect certain information including your IP address, browser type, operating system, device type, country, and city (derived from your IP via ipapi.co).",
-      "When you submit the contact form, we collect your name, email address, subject, and message.",
-      "We use session identifiers (stored in localStorage) to avoid counting the same visit multiple times.",
+      "AI & ML Interactive Demo Inputs: When you use interactive features (such as Plant Disease Detection or Skin Cancer Diagnosis), image files you upload are sent directly to our hosted inference microservices to generate predictions and Grad-CAM heatmaps. These images are processed in-memory and are not stored permanently.",
+      "Financial Analysis Inputs: When running market analysis or portfolio rebalancing, ticker symbols and query parameters are sent to our multi-agent LLM reasoning pipeline.",
+      "Contact Submissions: When submitting the contact form, we collect your name, email address, subject line, and message body.",
+      "System Telemetry & Analytics: We record non-personally identifiable visit telemetry (browser type, device type, approximate city/country derived via IP API) to monitor website performance and API latency.",
     ],
   },
   {
-    title: "How We Use Your Information",
+    title: "2. How We Process & Use Data",
     content: [
-      "Visit data (browser, device, location) is used solely for analytics — to understand how people discover and use this portfolio.",
-      "Contact form submissions are used only to respond to your message. Your details are never shared with third parties.",
-      "We do not use your data for advertising, profiling, or any commercial purpose.",
+      "Model Inference: Uploaded images and text inputs are processed strictly to execute machine learning models (EfficientNet-B0, Custom CNNs, PyTorch transformers) and return live inference payloads.",
+      "Communication: Contact form submissions are used solely to respond to your professional or technical inquiries.",
+      "Telemetry & System Monitoring: Performance logs are used to ensure 24/7 API uptime, evaluate pipeline latency, and maintain model readiness.",
+      "No Monetization: We never sell, rent, or trade your data. There are no advertising trackers or commercial monetization services on this site.",
     ],
   },
   {
-    title: "Third-Party Services",
+    title: "3. Integrated Third-Party Infrastructure",
     content: [
-      "ipapi.co — used to determine your approximate location from your IP address. Their privacy policy applies.",
-      "Supabase — used to store visit analytics and contact form submissions securely.",
-      "Resend — used to deliver contact form messages to the site owner's email.",
+      "Hugging Face Spaces: Hosts our isolated deep learning Docker and Gradio inference endpoints (Plant Disease API, Skin Cancer API, Neural Chart Vision, AI Financial Analyst).",
+      "Groq API: Provides fast LLM inference (Llama-3) for our multi-agent financial research agents.",
+      "Render.com: Hosts our production FastAPI backend serving real-time ML classifiers.",
+      "Supabase: Provides secure PostgreSQL storage for contact submissions and pipeline health metrics.",
+      "Upstash Redis: Manages real-time event queues for background prediction workers.",
+      "Resend: Delivers contact form submissions to anishreddy1373@gmail.com.",
     ],
   },
   {
-    title: "Data Retention",
+    title: "4. Data Retention & Privacy",
     content: [
-      "Analytics data (visits, browser, location) is retained indefinitely for portfolio insights but contains no personally identifiable information beyond IP address.",
-      "Contact form submissions are retained to maintain a record of communications.",
-      "You may request deletion of your data at any time by emailing anishreddy1373@gmail.com.",
+      "Uploaded inference images are held ephemerally in server RAM during the request lifecycle and discarded immediately upon response generation.",
+      "Contact messages and anonymous telemetry logs are retained in Supabase.",
+      "You may request access to or complete deletion of your submitted contact details at any time by emailing anishreddy1373@gmail.com.",
     ],
   },
   {
-    title: "Cookies & Storage",
+    title: "5. Cookies & Local Storage",
     content: [
-      "This site does not use tracking cookies.",
-      "A session ID is stored in your browser's localStorage purely to avoid duplicate visit counts. It contains no personal information.",
+      "This site does not use tracking or advertising cookies.",
+      "Browser localStorage is used solely for non-tracking session state (e.g. preventing duplicate visit counters).",
     ],
   },
   {
-    title: "Your Rights",
+    title: "6. Contact & Data Requests",
     content: [
-      "You have the right to request access to, correction of, or deletion of any personal data we hold about you.",
-      "To exercise these rights, contact us at anishreddy1373@gmail.com.",
-    ],
-  },
-  {
-    title: "Contact",
-    content: [
-      "If you have any questions about this Privacy Policy, please reach out at anishreddy1373@gmail.com.",
+      "For privacy inquiries, data deletion requests, or technical questions regarding model data processing, please contact Anish Reddy at anishreddy1373@gmail.com.",
     ],
   },
 ];
@@ -70,7 +68,7 @@ export default function PrivacyPage() {
 
       {/* Header */}
       <div className="sticky top-0 z-50 px-4 sm:px-8 py-4 flex items-center justify-between"
-        style={{ background: "rgba(var(--color-overlay-base), 0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,45,45,0.12)" }}>
+        style={{ background: "rgba(10, 10, 10, 0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,45,45,0.12)" }}>
         <button onClick={() => router.push("/")}
           className="font-display text-lg tracking-[0.15em]"
           style={{ color: "var(--text-primary)" }}>
@@ -90,13 +88,13 @@ export default function PrivacyPage() {
         {/* Title */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
           <p className="font-mono text-[0.58rem] tracking-[0.32em] uppercase mb-4"
-            style={{ color: "#FF2D2D" }}>Legal</p>
+            style={{ color: "#FF2D2D" }}>Legal & Systems Privacy</p>
           <h1 className="font-display text-4xl sm:text-5xl tracking-[0.1em] mb-4"
             style={{ color: "var(--text-primary)" }}>
             Privacy Policy
           </h1>
-          <p className="font-mono text-[0.6rem] tracking-widest" style={{ color: "#404040" }}>
-            Last updated: May 2026
+          <p className="font-mono text-[0.6rem] tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+            Last updated: July 2026 · Anish Reddy (AI Researcher)
           </p>
           <div className="mt-6 h-px w-16"
             style={{ background: "linear-gradient(90deg, #FF2D2D, transparent)" }} />
@@ -105,10 +103,8 @@ export default function PrivacyPage() {
         {/* Intro */}
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
           className="font-body text-sm leading-relaxed mb-12"
-          style={{ color: "var(--text-tertiary)" }}>
-          This Privacy Policy explains how Anish.Dev collects, uses, and protects information
-          when you visit this portfolio website. This is a personal portfolio site with no
-          paid services or user accounts.
+          style={{ color: "var(--text-secondary)" }}>
+          This Privacy Policy explains how Anish.Dev processes data across our live portfolio, AI model inference microservices, deep learning vision endpoints, and multi-agent reasoning systems. This is a personal research portfolio with no commercial transactions or paid services.
         </motion.p>
 
         {/* Sections */}
@@ -124,10 +120,10 @@ export default function PrivacyPage() {
               <ul className="space-y-3">
                 {section.content.map((item, j) => (
                   <li key={j} className="flex items-start gap-3">
-                    <span className="w-1 h-1 rounded-full mt-2 shrink-0"
+                    <span className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                       style={{ background: "#FF2D2D" }} />
                     <p className="font-body text-sm leading-relaxed"
-                      style={{ color: "#808080" }}>{item}</p>
+                      style={{ color: "var(--text-secondary)" }}>{item}</p>
                   </li>
                 ))}
               </ul>
@@ -138,8 +134,8 @@ export default function PrivacyPage() {
         {/* Footer note */}
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
           className="font-mono text-[0.55rem] tracking-widest uppercase mt-12 text-center"
-          style={{ color: "#303030" }}>
-          © {new Date().getFullYear()} Anish.Dev — All rights reserved
+          style={{ color: "var(--text-tertiary)" }}>
+          © {new Date().getFullYear()} Anish.Dev — AI Researcher & Engineer
         </motion.p>
       </div>
     </div>

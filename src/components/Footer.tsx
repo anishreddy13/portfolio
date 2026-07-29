@@ -21,9 +21,9 @@ export default function Footer() {
       { label: t('contact'),  href: "#contact"  },
     ],
     [t('connect')]: [
-      { label: "GitHub",   href: "https://github.com"   },
-      { label: "LinkedIn", href: "https://linkedin.com"  },
-      { label: "Twitter",  href: "https://twitter.com"   },
+      { label: "GitHub",   href: "https://github.com/anishreddy13"   },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/anishreddy5676"  },
+      { label: "Twitter",  href: "https://x.com/anishreddy1373"   },
       { label: "Dribbble", href: "https://dribbble.com"  },
     ],
     [t('legal')]: [
