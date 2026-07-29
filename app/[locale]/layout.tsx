@@ -15,22 +15,22 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
-  title: "Anish.Dev – Full Stack Developer",
+  title: "Anish Reddy — AI Researcher",
   description:
-    "Full-stack developer crafting bold, electric digital experiences at the intersection of design and engineering.",
+    "AI Researcher & Engineer crafting intelligent systems, machine learning pipelines, and multi-agent frameworks.",
   keywords: [
-    "developer",
-    "portfolio",
-    "full-stack",
-    "creative",
-    "next.js",
-    "react",
-    "typescript",
+    "AI Researcher",
+    "Machine Learning",
+    "AI Engineer",
+    "Deep Learning",
+    "PyTorch",
+    "Portfolio",
+    "Next.js",
   ],
   openGraph: {
-    title: "Anish.Dev – Full Stack Developer",
+    title: "Anish Reddy — AI Researcher",
     description:
-      "Full-stack developer crafting bold, electric digital experiences.",
+      "AI Researcher & Engineer crafting intelligent systems and machine learning pipelines.",
     type: "website",
   },
 };
