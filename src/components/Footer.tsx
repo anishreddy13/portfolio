@@ -94,7 +94,7 @@ export default function Footer() {
             transform:        "translateY(25%)",
           }}
         >
-          ANISH.DEV
+          ANISHREDDY.ONLINE
         </span>
       </div>
 
@@ -126,9 +126,9 @@ export default function Footer() {
                   className="font-display text-xl tracking-[0.16em]"
                   style={{ color: "var(--text-primary)" }}
                 >
-                  ANISH
+                  ANISHREDDY
                   <span style={{ color: "#FF2D2D" }}>.</span>
-                  DEV
+                  ONLINE
                 </span>
               </motion.button>
             </ScrollReveal>
@@ -206,7 +206,7 @@ export default function Footer() {
               className="font-mono text-[0.58rem] tracking-[0.22em] uppercase order-2 sm:order-1"
               style={{ color: "var(--text-tertiary)" }}
             >
-              © {currentYear} Anish.Dev — All rights reserved
+              © {currentYear} AnishReddy.Online — All rights reserved
             </p>
 
             {/* Status badge */}

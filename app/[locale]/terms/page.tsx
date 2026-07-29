@@ -7,7 +7,7 @@ const sections = [
   {
     title: "1. Acceptance of Terms",
     content: [
-      "By accessing and using anish.dev, including live AI model inference demos and research showcases, you agree to be bound by these Terms of Service.",
+      "By accessing and using anishreddy.online, including live AI model inference demos and research showcases, you agree to be bound by these Terms of Service.",
       "If you do not agree to these terms, please do not access or use our site and hosted endpoints.",
     ],
   },
@@ -70,7 +70,7 @@ export default function TermsPage() {
         <button onClick={() => router.push("/")}
           className="font-display text-lg tracking-[0.15em]"
           style={{ color: "var(--text-primary)" }}>
-          ANISH<span style={{ color: "#FF2D2D" }}>.</span>DEV
+          ANISHREDDY<span style={{ color: "#FF2D2D" }}>.</span>ONLINE
         </button>
         <button onClick={() => router.back()}
           className="font-mono text-[0.6rem] tracking-widest uppercase"
@@ -102,7 +102,7 @@ export default function TermsPage() {
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
           className="font-body text-sm leading-relaxed mb-12"
           style={{ color: "var(--text-secondary)" }}>
-          These Terms of Service govern your use of the Anish.Dev portfolio website, live AI model inference endpoints, multi-agent systems, and technical research showcases.
+          These Terms of Service govern your use of the AnishReddy.Online portfolio website, live AI model inference endpoints, multi-agent systems, and technical research showcases.
         </motion.p>
 
         {/* Sections */}
@@ -133,7 +133,7 @@ export default function TermsPage() {
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
           className="font-mono text-[0.55rem] tracking-widest uppercase mt-12 text-center"
           style={{ color: "var(--text-tertiary)" }}>
-          © {new Date().getFullYear()} Anish.Dev — AI Researcher & Engineer
+          © {new Date().getFullYear()} AnishReddy.Online — AI Researcher & Engineer
         </motion.p>
       </div>
     </div>

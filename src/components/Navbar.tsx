@@ -114,9 +114,9 @@ export default function Navbar() {
               className="font-display tracking-[0.16em] leading-none select-none transition-colors"
               style={{ fontSize: "clamp(1.1rem, 3vw, 1.4rem)", color: isDark ? "var(--text-primary)" : "#0A0A0A" }}
             >
-              ANISH
+              ANISHREDDY
               <span style={{ color: "#FF2D2D" }}>.</span>
-              DEV
+              ONLINE
             </span>
           </motion.button>
 

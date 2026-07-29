@@ -72,7 +72,7 @@ export default function PrivacyPage() {
         <button onClick={() => router.push("/")}
           className="font-display text-lg tracking-[0.15em]"
           style={{ color: "var(--text-primary)" }}>
-          ANISH<span style={{ color: "#FF2D2D" }}>.</span>DEV
+          ANISHREDDY<span style={{ color: "#FF2D2D" }}>.</span>ONLINE
         </button>
         <button onClick={() => router.back()}
           className="font-mono text-[0.6rem] tracking-widest uppercase"
@@ -104,7 +104,7 @@ export default function PrivacyPage() {
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
           className="font-body text-sm leading-relaxed mb-12"
           style={{ color: "var(--text-secondary)" }}>
-          This Privacy Policy explains how Anish.Dev processes data across our live portfolio, AI model inference microservices, deep learning vision endpoints, and multi-agent reasoning systems. This is a personal research portfolio with no commercial transactions or paid services.
+          This Privacy Policy explains how AnishReddy.Online processes data across our live portfolio, AI model inference microservices, deep learning vision endpoints, and multi-agent reasoning systems. This is a personal research portfolio with no commercial transactions or paid services.
         </motion.p>
 
         {/* Sections */}
@@ -135,7 +135,7 @@ export default function PrivacyPage() {
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
           className="font-mono text-[0.55rem] tracking-widest uppercase mt-12 text-center"
           style={{ color: "var(--text-tertiary)" }}>
-          © {new Date().getFullYear()} Anish.Dev — AI Researcher & Engineer
+          © {new Date().getFullYear()} AnishReddy.Online — AI Researcher & Engineer
         </motion.p>
       </div>
     </div>
