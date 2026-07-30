@@ -472,14 +472,22 @@ export default function About() {
         {/* ════════ EXPERIENCE TIMELINE ════════ */}
         <div className="relative">
           <ScrollReveal>
-            <div className="flex items-center gap-4 mb-10">
-              <h3 className="font-display tracking-[0.18em]" style={{
-                fontSize: "clamp(1.6rem, 4vw, 2.5rem)",
-                color: "rgba(240,240,240,0.12)",
-              }}>
-                {t("experience_heading")}
-              </h3>
+            <div className="flex flex-col gap-3 mb-10 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <span className="font-mono text-[0.58rem] tracking-[0.3em] uppercase" style={{ color: "#C8FF00" }}>
+                  Verified profile signal
+                </span>
+                <h3 className="font-display tracking-[0.18em] mt-2" style={{
+                  fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+                  color: "var(--text-primary)",
+                }}>
+                  {t("experience_heading")}
+                </h3>
+              </div>
               <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
+              <p className="max-w-sm font-body text-sm leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
+                Real roles mapped into the portfolio system: frontend delivery, data analysis, client collaboration, and applied AI/ML product work.
+              </p>
             </div>
           </ScrollReveal>
 
@@ -509,47 +517,86 @@ export default function About() {
                       whileHover={{ scale: 1.4, borderColor: "#FF2D2D", boxShadow: "0 0 16px rgba(255,45,45,0.6)" }}
                     />
                     <motion.div
-                      className="ml-4 sm:ml-8 rounded-sm p-4 sm:p-5"
-                      style={{ background: "var(--surface-1)", border: "1px solid rgba(255,255,255,0.06)" }}
-                      whileHover={{ background: "var(--surface-2)", borderColor: "rgba(255,45,45,0.2)", x: 4 }}
+                      className="relative ml-4 sm:ml-8 rounded-sm p-0 overflow-hidden"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012))",
+                        border: "1px solid rgba(255,255,255,0.075)",
+                      }}
+                      whileHover={{ borderColor: item.current ? "rgba(255,45,45,0.35)" : "rgba(200,255,0,0.22)", x: 4 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <div className="flex items-start justify-between flex-wrap gap-2">
-                        <div>
-                          <h4 className="font-body font-medium text-sm sm:text-base" style={{ color: "var(--text-primary)" }}>
-                            {item.role}
-                          </h4>
-                          <p className="font-mono text-[0.62rem] tracking-wide mt-1" style={{ color: "#FF6B35" }}>
-                            {item.company}
-                          </p>
-                          <p className="font-mono text-[0.58rem] tracking-wide mt-2" style={{ color: "var(--text-tertiary)" }}>
-                            {item.location}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2 shrink-0">
-                          <span className="font-mono text-[0.62rem]" style={{ color: "var(--text-tertiary)" }}>{item.period}</span>
+                      <div
+                        className="absolute inset-y-0 left-0 w-1"
+                        style={{
+                          background: item.current
+                            ? "linear-gradient(to bottom, #FF2D2D, #FF6B35)"
+                            : "linear-gradient(to bottom, #C8FF00, transparent)",
+                        }}
+                      />
+                      <div
+                        className="absolute right-0 top-0 h-28 w-48 pointer-events-none"
+                        style={{
+                          background: item.current
+                            ? "radial-gradient(circle at top right, rgba(255,45,45,0.14), transparent 70%)"
+                            : "radial-gradient(circle at top right, rgba(200,255,0,0.10), transparent 70%)",
+                        }}
+                      />
+                      <div className="relative p-5 sm:p-6">
+                        <div className="flex items-start justify-between flex-wrap gap-4">
+                          <div className="min-w-0">
+                            <div className="mb-3 flex flex-wrap items-center gap-2">
+                              <span
+                                className="rounded-sm border px-2.5 py-1 font-mono text-[0.52rem] uppercase tracking-[0.18em]"
+                                style={{
+                                  color: item.current ? "#FF6B35" : "#C8FF00",
+                                  borderColor: item.current ? "rgba(255,107,53,0.35)" : "rgba(200,255,0,0.28)",
+                                  background: item.current ? "rgba(255,107,53,0.08)" : "rgba(200,255,0,0.06)",
+                                }}
+                              >
+                                {item.current ? "Current role" : "Internship"}
+                              </span>
+                              <span className="font-mono text-[0.56rem] tracking-wider" style={{ color: "var(--text-tertiary)" }}>
+                                {item.period}
+                              </span>
+                            </div>
+                            <h4 className="font-display text-2xl sm:text-3xl leading-none tracking-wide" style={{ color: "var(--text-primary)" }}>
+                              {item.role}
+                            </h4>
+                            <p className="font-mono text-[0.68rem] tracking-wide mt-2" style={{ color: "#FF6B35" }}>
+                              {item.company}
+                            </p>
+                            <p className="font-mono text-[0.58rem] tracking-wide mt-2" style={{ color: "var(--text-tertiary)" }}>
+                              {item.location}
+                            </p>
+                          </div>
                           {item.current && (
-                            <span className="flex items-center gap-1.5 font-mono text-[0.58rem] tracking-wide rounded-sm px-2 py-0.5"
+                            <span className="flex items-center gap-1.5 font-mono text-[0.58rem] tracking-wide rounded-sm px-2 py-0.5 shrink-0"
                               style={{ color: "#FF2D2D", border: "1px solid rgba(255,45,45,0.3)", background: "rgba(255,45,45,0.08)" }}>
                               <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: "#FF2D2D" }} />
-                              Current
+                              Active
                             </span>
                           )}
                         </div>
-                      </div>
-                      <p className="font-body text-sm leading-relaxed mt-4" style={{ color: "var(--text-secondary)" }}>
-                        {item.description}
-                      </p>
-                      <div
-                        className="inline-flex items-center gap-2 px-3 py-1.5 mt-4 rounded-sm border"
-                        style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.06)" }}
-                      >
-                        <span className="font-mono text-[0.56rem] uppercase tracking-wider" style={{ color: "#C8FF00" }}>
-                          Skills
-                        </span>
-                        <span className="font-body text-xs sm:text-sm" style={{ color: "var(--text-secondary)" }}>
-                          {item.skills}
-                        </span>
+
+                        <p className="font-body text-sm leading-relaxed mt-5 max-w-4xl" style={{ color: "var(--text-secondary)" }}>
+                          {item.description}
+                        </p>
+
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {item.skills.split(",").map((skill) => (
+                            <span
+                              key={`${item.role}-${skill.trim()}`}
+                              className="rounded-sm border px-2.5 py-1 font-mono text-[0.56rem] uppercase tracking-wider"
+                              style={{
+                                color: "var(--text-secondary)",
+                                borderColor: "rgba(255,255,255,0.08)",
+                                background: "rgba(255,255,255,0.035)",
+                              }}
+                            >
+                              {skill.trim()}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </motion.div>
                   </div>

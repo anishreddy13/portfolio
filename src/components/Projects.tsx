@@ -14,6 +14,8 @@ const statusConfig: Record<ProjectStatus, { label: string; color: string }> = {
   monitoring: { label: "Monitoring", color: "#FF2D2D" },
 };
 
+const projectVisualLabels = ["AI", "CV", "NLP", "OPS", "UX"];
+
 function ProjectCard({
   project,
   index,
@@ -53,7 +55,7 @@ function ProjectCard({
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="relative group h-full min-h-[640px] sm:min-h-[690px] lg:min-h-[720px] block focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D2D]"
+        className="relative group h-full min-h-[710px] sm:min-h-[740px] lg:min-h-[760px] block focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D2D]"
         aria-label={`Open ${project.title}`}
       >
         <AnimatePresence>
@@ -85,6 +87,76 @@ function ProjectCard({
             animate={{ scaleX: hovered ? 1 : 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           />
+
+          <div
+            className="relative h-40 overflow-hidden border-b"
+            style={{
+              borderColor: "rgba(255,255,255,0.06)",
+              background: `linear-gradient(135deg, ${project.accentColor}12, rgba(255,255,255,0.015) 46%, rgba(0,0,0,0.18))`,
+            }}
+          >
+            <div
+              className="absolute inset-0 opacity-45"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)",
+                backgroundSize: "28px 28px",
+                maskImage: "linear-gradient(90deg, transparent, black 18%, black 82%, transparent)",
+              }}
+            />
+            <div
+              className="absolute -right-10 -top-16 h-48 w-48 rounded-full blur-sm"
+              style={{
+                background: `radial-gradient(circle, ${project.accentColor}40 0%, ${project.accentColor}10 42%, transparent 72%)`,
+              }}
+            />
+            <div
+              className="absolute left-5 top-5 flex h-16 w-16 items-center justify-center rounded-sm border font-display text-3xl tracking-widest"
+              style={{
+                color: project.accentColor,
+                borderColor: `${project.accentColor}35`,
+                background: "rgba(10,10,10,0.55)",
+                boxShadow: `0 0 28px ${project.accentColor}18`,
+              }}
+            >
+              {project.id}
+            </div>
+            <div className="absolute bottom-5 left-5 right-5">
+              <div className="mb-3 flex items-center gap-2">
+                {projectVisualLabels.map((label, visualIndex) => (
+                  <span
+                    key={`${project.id}-${label}`}
+                    className="rounded-sm border px-2 py-1 font-mono text-[0.48rem] uppercase tracking-[0.18em]"
+                    style={{
+                      color: visualIndex === 0 ? project.accentColor : "var(--text-tertiary)",
+                      borderColor: visualIndex === 0 ? `${project.accentColor}45` : "rgba(255,255,255,0.08)",
+                      background: visualIndex === 0 ? `${project.accentColor}12` : "rgba(255,255,255,0.025)",
+                    }}
+                  >
+                    {label}
+                  </span>
+                ))}
+              </div>
+              <div className="flex items-end justify-between gap-4">
+                <div className="min-w-0">
+                  <p className="font-mono text-[0.52rem] uppercase tracking-[0.28em]" style={{ color: "var(--text-tertiary)" }}>
+                    System cover
+                  </p>
+                  <p className="font-display text-xl leading-none tracking-wide truncate" style={{ color: "var(--text-primary)" }}>
+                    {project.section}
+                  </p>
+                </div>
+                <div
+                  className="h-10 w-24 shrink-0 rounded-sm"
+                  style={{
+                    background: `linear-gradient(90deg, ${project.accentColor}, transparent)`,
+                    clipPath: "polygon(0 70%, 16% 50%, 32% 62%, 46% 28%, 60% 38%, 75% 12%, 100% 22%, 100% 100%, 0 100%)",
+                    opacity: 0.75,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="p-5 sm:p-6 flex flex-col flex-1 min-h-0">
             <div className="flex items-start justify-between gap-3 mb-5">
