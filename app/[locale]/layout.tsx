@@ -4,6 +4,7 @@ import PlatformShell from "@/components/PlatformShell";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -70,6 +71,7 @@ export default async function RootLayout({
             <PlatformShell>{children}</PlatformShell>
           </ThemeProvider>
         </NextIntlClientProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
