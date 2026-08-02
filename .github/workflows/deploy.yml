@@ -1,0 +1,42 @@
+name: Enterprise Platform Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - production
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: enterprise-backend
+  EKS_CLUSTER_NAME: enterprise-platform-cluster
+
+jobs:
+  deploy:
+    name: Deploy to Kubernetes
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t $ECR_REPOSITORY:${{ github.sha }} -f docker/Dockerfile.backend .
+        # ECR Push simulation
+        echo "Pushing $ECR_REPOSITORY:${{ github.sha }} to ECR"
+
+    - name: Update KubeConfig
+      run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
+
+    - name: Deploy to EKS
+      run: |
+        kubectl set image deployment/backend-deployment backend=$ECR_REPOSITORY:${{ github.sha }} -n enterprise-platform
+        kubectl rollout status deployment/backend-deployment -n enterprise-platform

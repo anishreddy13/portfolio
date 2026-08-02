@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trading-platform-config
+  namespace: trading-platform
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  SINGLEFLIGHT_COALESCING_ENABLED: "true"
+  AUDIT_ENGINE_MODE: "APPEND_ONLY"
+  DEFAULT_BROKER: "PAPER_BROKER"

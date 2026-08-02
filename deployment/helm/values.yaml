@@ -1,0 +1,33 @@
+replicaCount: 3
+
+image:
+  repository: registry.enterprise.com/trading/platform
+  pullPolicy: IfNotPresent
+  tag: "v1.28.0"
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 15
+  targetCPUUtilizationPercentage: 70
+
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: trading.enterprise.com
+      paths:
+        - path: /
+          pathType: Prefix

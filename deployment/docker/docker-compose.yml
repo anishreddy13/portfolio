@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  trading-dashboard:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile
+    container_name: trading_dashboard_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MARKET_CACHE_REDIS_URL=redis://redis:6379/0
+      - AUDIT_ENGINE_ENABLED=true
+    depends_on:
+      - redis
+    networks:
+      - trading_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: trading_market_cache
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - trading_net
+
+networks:
+  trading_net:
+    driver: bridge
+
+volumes:
+  redis_data:

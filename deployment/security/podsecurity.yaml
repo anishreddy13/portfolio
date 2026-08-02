@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trading-platform-hardened
+  namespace: trading-platform
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: trading-platform
+  template:
+    metadata:
+      labels:
+        app: trading-platform
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: trading-platform
+          image: registry.enterprise.com/trading/platform:v1.28.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL

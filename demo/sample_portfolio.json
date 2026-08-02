@@ -1,0 +1,8 @@
+{
+  "portfolio_name": "Genesis Fund",
+  "cash_balance": 1000000.0,
+  "positions": [
+    { "symbol": "AAPL", "quantity": 1000, "average_price": 150.0 },
+    { "symbol": "MSFT", "quantity": 500, "average_price": 300.0 }
+  ]
+}

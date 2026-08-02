@@ -1,0 +1,41 @@
+name: Enterprise Trading Platform CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Python Compile Check
+        run: |
+          python -m py_compile ai-financial-analyst/*.py
+
+      - name: Run Python Unit & Integration Tests
+        run: |
+          python -m unittest discover -s testing/unit -p "test_*.py"
+          python -m unittest discover -s testing/integration -p "test_*.py"
+          python -m unittest discover -s testing/performance -p "test_*.py"
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+
+      - name: Next.js Production Build & TypeScript Typecheck
+        run: npm run build

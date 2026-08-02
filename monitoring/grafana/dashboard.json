@@ -1,0 +1,24 @@
+{
+  "title": "Enterprise Operations Dashboard",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "System Uptime",
+      "targets": [
+        {
+          "expr": "up{job=\"enterprise-platform\"}"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "API Latency",
+      "targets": [
+        {
+          "expr": "rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])"
+        }
+      ]
+    }
+  ]
+}

@@ -63,6 +63,26 @@ const portfolioProjects: PortfolioProject[] = [
     complexityTags: ["LANGGRAPH", "MULTI-AGENT", "PYTORCH VISION", "FINTECH", "XAI"],
   },
   {
+    id: "08",
+    title: "AI Trading CoPilot",
+    category: "Algorithmic Trading & AI",
+    description:
+      "Build, Backtest, Monitor and Improve Trading Strategies using natural language, autonomous validation, market context analysis, event-driven backtesting, paper trading, and real-time drift detection.",
+    technologies: ["LangGraph", "Event Backtesting", "Drift Engine", "PyTorch", "Next.js"],
+    priority: 2,
+    route: "/trading-copilot",
+    section: "Trading CoPilot",
+    featured: true,
+    status: "live",
+    metrics: [
+      { label: "Nodes", value: "9" },
+      { label: "Health", value: "10-Dim" },
+      { label: "Engine", value: "Event" },
+    ],
+    accentColor: "#C8FF00",
+    complexityTags: ["LANGGRAPH", "EVENT-DRIVEN", "DRIFT DETECTION", "PAPER TRADING", "AI COACH"],
+  },
+  {
     id: "03",
     title: "AI Interview Analyzer",
     category: "Speech AI",
@@ -161,6 +181,26 @@ const portfolioProjects: PortfolioProject[] = [
     ],
     accentColor: "#C8FF00",
     complexityTags: ["NLP", "TEXT ML", "FASTAPI", "DASHBOARD"],
+  },
+  {
+    id: "08",
+    title: "Live Trading Dashboard",
+    category: "Real-Time Streaming",
+    description:
+      "Phase 5 Live Trading Dashboard consuming EnterpriseMarketCache, SingleFlight Request Coordinator, Streaming Consensus, and AI Strategy Coach with live watchlists, provider health matrices, and telemetry meters.",
+    technologies: ["Next.js", "Python", "WebSockets", "SingleFlight", "Multi-Provider Consensus"],
+    priority: 3,
+    route: "/live-dashboard",
+    section: "FinTech Platform",
+    featured: true,
+    status: "live",
+    metrics: [
+      { label: "Consensus", value: "Real-Time" },
+      { label: "Providers", value: "3 Active" },
+      { label: "Latency", value: "0ms SWR" },
+    ],
+    accentColor: "#C8FF00",
+    complexityTags: ["WEBSOCKET", "SINGLEFLIGHT", "SWR CACHE", "REALTIME"],
   },
 ];
 

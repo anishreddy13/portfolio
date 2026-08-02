@@ -1,0 +1,28 @@
+{
+  "profiles": [
+    {
+      "profile_id": "prof-peak-load",
+      "profile_name": "Peak Trading Hour Load Profile",
+      "target_rps": 3500,
+      "duration_seconds": 60,
+      "concurrency": 100,
+      "pattern": "CONSTANT"
+    },
+    {
+      "profile_id": "prof-spike-stress",
+      "profile_name": "Market Opening Bell Volatility Spike",
+      "target_rps": 10000,
+      "duration_seconds": 30,
+      "concurrency": 250,
+      "pattern": "SPIKE"
+    },
+    {
+      "profile_id": "prof-soak-test",
+      "profile_name": "24-Hour Continuous Endurance Soak",
+      "target_rps": 1000,
+      "duration_seconds": 86400,
+      "concurrency": 25,
+      "pattern": "CONSTANT"
+    }
+  ]
+}

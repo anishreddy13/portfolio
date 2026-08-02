@@ -1,0 +1,17 @@
+{
+  "baseline_report_id": "baseline-v1.28.0",
+  "generated_at": "2026-08-02T10:00:00Z",
+  "environment": "PRODUCTION",
+  "subsystem_latencies": {
+    "RequestCoordinator": { "p50_ms": 5.2, "p95_ms": 12.4, "p99_ms": 18.0 },
+    "MarketCache": { "p50_ms": 0.5, "p95_ms": 1.2, "p99_ms": 2.5 },
+    "StreamingManager": { "p50_ms": 1.1, "p95_ms": 3.5, "p99_ms": 4.2 },
+    "ConsensusEngine": { "p50_ms": 3.4, "p95_ms": 9.1, "p99_ms": 14.0 },
+    "ComplianceEngine": { "p50_ms": 2.1, "p95_ms": 6.5, "p99_ms": 9.8 },
+    "OrderManagementSystem": { "p50_ms": 8.5, "p95_ms": 22.0, "p99_ms": 35.0 },
+    "ExecutionManager": { "p50_ms": 12.0, "p95_ms": 42.0, "p99_ms": 65.0 },
+    "AuditEngine": { "p50_ms": 0.8, "p95_ms": 2.2, "p99_ms": 3.8 }
+  },
+  "overall_throughput_rps": 3450.0,
+  "overall_success_rate_pct": 99.98
+}
