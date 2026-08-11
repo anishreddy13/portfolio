@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useWorkspace } from "@/hooks/useWorkspace";
+import { useDashboardStream } from "@/hooks/useDashboardStream";
 import WorkspaceHeader from "@/components/workspace/WorkspaceHeader";
 import WorkspaceSidebar from "@/components/workspace/WorkspaceSidebar";
 import WorkspaceDock from "@/components/workspace/WorkspaceDock";
@@ -37,8 +38,6 @@ import BenchmarkPanel from "@/components/BenchmarkPanel";
 import SystemStatusPanel from "@/components/SystemStatusPanel";
 import { useIdentity } from "@/hooks/useIdentity";
 import { LoginPanel } from "@/components/LoginPanel";
-import { UserMenu } from "@/components/UserMenu";
-import { WorkspaceSelector } from "@/components/WorkspaceSelector";
 import { AdminPanel } from "@/components/AdminPanel";
 import DeploymentPanel from "@/components/DeploymentPanel";
 import OperationsPanel from "@/components/OperationsPanel";
@@ -68,6 +67,7 @@ import {
 
 export default function TradingWorkspace() {
   const { user, workspaces, activeWorkspace, isLoading, login, logout, switchWorkspace } = useIdentity();
+  const { connectionStatus, latencyMs, lastUpdatedAt, latestSignals, serviceHealth } = useDashboardStream();
   
   const {
     activeTab,
@@ -82,9 +82,6 @@ export default function TradingWorkspace() {
     setIsCommandPaletteOpen,
     theme,
     toggleTheme,
-    notifications,
-    addNotification,
-    dismissNotification,
   } = useWorkspace();
 
   const [activeSymbol, setActiveSymbol] = useState("AAPL");
@@ -102,30 +99,21 @@ export default function TradingWorkspace() {
     <div className={`min-h-screen ${theme === "dark" ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"} flex flex-col`}>
       {/* Workstation Header */}
       <WorkspaceHeader
-        preset={preset}
-        applyPreset={applyPreset}
         isCommandPaletteOpen={isCommandPaletteOpen}
         setIsCommandPaletteOpen={setIsCommandPaletteOpen}
         theme={theme}
         toggleTheme={toggleTheme}
-        notifications={notifications}
-        dismissNotification={dismissNotification}
+        workspaces={workspaces}
+        activeWorkspace={activeWorkspace}
+        onSwitch={switchWorkspace}
+        user={user}
+        onLogout={logout}
+        connectionStatus={connectionStatus}
+        latencyMs={latencyMs}
+        lastUpdatedAt={lastUpdatedAt}
+        serviceHealth={serviceHealth}
+        latestSignalCount={latestSignals.length}
       />
-
-      {/* IAM Status Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800">
-        <div className="flex items-center gap-4">
-          <WorkspaceSelector workspaces={workspaces} activeWorkspace={activeWorkspace} onSwitch={switchWorkspace} />
-          {user.roles.includes('ADMIN') && (
-            <span className="text-[10px] bg-red-900/40 text-red-400 border border-red-800/50 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">
-              Admin Mode
-            </span>
-          )}
-        </div>
-        <div className="flex items-center">
-          <UserMenu user={user} onLogout={logout} />
-        </div>
-      </div>
 
       {/* Main Workstation Body */}
       <div className="flex-1 flex overflow-hidden">
@@ -450,7 +438,13 @@ export default function TradingWorkspace() {
       </div>
 
       {/* Workstation Status Footer Bar */}
-      <WorkspaceStatusBar />
+      <WorkspaceStatusBar
+        connectionStatus={connectionStatus}
+        latencyMs={latencyMs}
+        lastUpdatedAt={lastUpdatedAt}
+        serviceHealth={serviceHealth}
+        latestSignalCount={latestSignals.length}
+      />
 
       {/* Command Palette Modal */}
       <WorkspaceLayoutManager

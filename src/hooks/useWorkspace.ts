@@ -41,12 +41,40 @@ const DEFAULT_PANEL_VISIBILITY: Record<string, boolean> = {
   settings: false,
 };
 
+const TRADING_PANEL_VISIBILITY: Record<string, boolean> = {
+  marketOverview: true,
+  portfolio: true,
+  orderEntry: true,
+  openOrders: false,
+  signals: true,
+  portfolioConstruction: false,
+  risk: false,
+  compliance: false,
+  oms: false,
+  execution: false,
+  broker: true,
+  strategy: false,
+  backtest: false,
+  telemetry: false,
+  brokerConnectivity: false,
+  highAvailability: false,
+  platform: false,
+  security: false,
+  benchmark: false,
+  systemStatus: false,
+  iamAdmin: false,
+  deployment: false,
+  operations: false,
+  release: false,
+  settings: false,
+};
+
 const STORAGE_KEY = "enterprise_trading_workspace_layout_v1";
 
 export function useWorkspace() {
-  const [activeTab, setActiveTab] = useState<WorkspaceTab>("all");
-  const [preset, setPreset] = useState<WorkspaceLayoutPreset>("DEFAULT");
-  const [panelVisibility, setPanelVisibility] = useState<Record<string, boolean>>(DEFAULT_PANEL_VISIBILITY);
+  const [activeTab, setActiveTab] = useState<WorkspaceTab>("trading");
+  const [preset, setPreset] = useState<WorkspaceLayoutPreset>("TRADING");
+  const [panelVisibility, setPanelVisibility] = useState<Record<string, boolean>>(TRADING_PANEL_VISIBILITY);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -106,10 +134,10 @@ export function useWorkspace() {
         marketOverview: true,
         portfolio: true,
         orderEntry: true,
-        openOrders: true,
+        openOrders: false,
         signals: true,
-        oms: true,
-        execution: true,
+        oms: false,
+        execution: false,
         broker: true,
         portfolioConstruction: false,
         risk: false,

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, TrendingUp, ShieldAlert, Zap, Activity } from "lucide-react";
 import { predictFinancialAnalyst } from "@/lib/financialAnalystClient";
+import { useDashboardStream } from "@/hooks/useDashboardStream";
 
 interface Signal {
   ticker: string;
@@ -28,6 +29,20 @@ function parseSignals(response: unknown): Signal[] {
 export default function SignalFeed() {
   const [signals, setSignals] = useState<Signal[]>([]);
   const [loading, setLoading] = useState(true);
+  const { connectionStatus, subscribe } = useDashboardStream();
+
+  useEffect(() => {
+    return subscribe((event) => {
+      if (event.type !== "signal_feed") return;
+
+      const payload = event.payload;
+      const liveSignals = Array.isArray(payload?.signals) ? payload.signals : Array.isArray(payload) ? payload : [];
+      if (liveSignals.length > 0) {
+        setSignals(liveSignals);
+        setLoading(false);
+      }
+    });
+  }, [subscribe]);
 
   useEffect(() => {
     let mounted = true;
@@ -124,6 +139,23 @@ export default function SignalFeed() {
               <span className="font-body text-xs pr-2">{sig.description}</span>
             </div>
           ))}
+
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[rgba(255,255,255,0.08)] bg-white/5 text-[10px] font-mono uppercase tracking-widest text-[var(--text-tertiary)]">
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                connectionStatus === "CONNECTED"
+                  ? "bg-[#C8FF00]"
+                  : connectionStatus === "RECONNECTING"
+                    ? "bg-[#FFB020]"
+                    : "bg-[#FF2D2D]"
+              }`}
+            />
+            {connectionStatus === "CONNECTED"
+              ? "stream online"
+              : connectionStatus === "RECONNECTING"
+                ? "reconnecting"
+                : "stream offline"}
+          </div>
         </motion.div>
       </div>
     </div>

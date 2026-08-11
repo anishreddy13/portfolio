@@ -9,11 +9,41 @@ export interface StreamEvent {
   payload: any;
 }
 
+export interface DashboardSignal {
+  ticker: string;
+  signal_type: string;
+  severity: "HIGH" | "MEDIUM" | "LOW" | string;
+  description: string;
+}
+
+export interface DashboardBatch {
+  batch_id: string;
+  created_at: string;
+  source: string;
+  events?: Array<{
+    event_type: string;
+    payload: any;
+  }>;
+}
+
+export interface WorkspaceServiceHealth {
+  status?: string;
+  phase?: number;
+  python?: string;
+  created_at?: string;
+  features?: Record<string, boolean>;
+  checks?: Record<string, boolean>;
+}
+
 type EventListenerCallback = (event: StreamEvent) => void;
 
 export function useDashboardStream() {
-  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>("CONNECTED");
+  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>("RECONNECTING");
   const [latencyMs, setLatencyMs] = useState<number>(8.2);
+  const [lastUpdatedAt, setLastUpdatedAt] = useState<string | null>(null);
+  const [latestBatch, setLatestBatch] = useState<DashboardBatch | null>(null);
+  const [latestSignals, setLatestSignals] = useState<DashboardSignal[]>([]);
+  const [serviceHealth, setServiceHealth] = useState<WorkspaceServiceHealth | null>(null);
 
   const listenersRef = useRef<EventListenerCallback[]>([]);
 
@@ -44,6 +74,7 @@ export function useDashboardStream() {
           try {
             const data = JSON.parse(e.data);
             dispatchEvent({ type: "watchlist_tick", payload: data });
+            setLastUpdatedAt(new Date().toISOString());
           } catch (err) {}
         });
 
@@ -52,6 +83,47 @@ export function useDashboardStream() {
             const data = JSON.parse(e.data);
             setLatencyMs(data.streamLatencyMs || 8.2);
             dispatchEvent({ type: "telemetry_update", payload: data });
+            setLastUpdatedAt(new Date().toISOString());
+          } catch (err) {}
+        });
+
+        eventSource.addEventListener("signal_feed", (e: MessageEvent) => {
+          try {
+            const data = JSON.parse(e.data);
+            const signals = Array.isArray(data?.signals) ? data.signals : Array.isArray(data) ? data : [];
+            setLatestSignals(signals);
+            dispatchEvent({ type: "signal_feed", payload: data });
+            setLastUpdatedAt(data?.updatedAt || new Date().toISOString());
+          } catch (err) {}
+        });
+
+        eventSource.addEventListener("service_health", (e: MessageEvent) => {
+          try {
+            const data = JSON.parse(e.data);
+            setServiceHealth(data);
+            dispatchEvent({ type: "service_health", payload: data });
+            setLastUpdatedAt(data?.created_at || new Date().toISOString());
+          } catch (err) {}
+        });
+
+        eventSource.addEventListener("dashboard_batch", (e: MessageEvent) => {
+          try {
+            const data = JSON.parse(e.data) as DashboardBatch;
+            setLatestBatch(data);
+            const signalEvent = data.events?.find((event) => event.event_type === "signal_feed");
+            if (signalEvent?.payload?.signals && Array.isArray(signalEvent.payload.signals)) {
+              setLatestSignals(signalEvent.payload.signals);
+            }
+            const telemetryEvent = data.events?.find((event) => event.event_type === "telemetry_update");
+            if (telemetryEvent?.payload?.streamLatencyMs) {
+              setLatencyMs(telemetryEvent.payload.streamLatencyMs);
+            }
+            const healthEvent = data.events?.find((event) => event.event_type === "service_health");
+            if (healthEvent?.payload) {
+              setServiceHealth(healthEvent.payload);
+            }
+            setLastUpdatedAt(data.created_at || new Date().toISOString());
+            dispatchEvent({ type: "dashboard_batch", payload: data });
           } catch (err) {}
         });
 
@@ -78,6 +150,10 @@ export function useDashboardStream() {
   return {
     connectionStatus,
     latencyMs,
+    lastUpdatedAt,
+    latestBatch,
+    latestSignals,
+    serviceHealth,
     subscribe,
   };
 }
