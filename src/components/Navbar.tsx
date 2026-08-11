@@ -234,6 +234,28 @@ export default function Navbar() {
               </motion.span>
             </Link>
 
+            {/* Resume button */}
+            <motion.a
+              href="/docs/PalReddy_AnishReddy_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.18em] uppercase rounded-sm px-3 py-1.5 border transition-all duration-300 cursor-pointer"
+              style={{
+                background: "rgba(56, 189, 248, 0.08)",
+                borderColor: "rgba(56, 189, 248, 0.32)",
+                color: "#38BDF8",
+              }}
+              whileHover={{
+                background: "rgba(56, 189, 248, 0.2)",
+                borderColor: "rgba(56, 189, 248, 0.64)",
+                scale: 1.03,
+              }}
+              whileTap={{ scale: 0.97 }}
+              title="Open Resume PDF"
+            >
+              CV <span>Resume</span>
+            </motion.a>
+
             {/* ── Architecture PDF button ── */}
             <motion.a
               href="/docs/anish-portfolio-system-architecture.pdf"
@@ -473,12 +495,39 @@ export default function Navbar() {
                 </Link>
               </motion.div>
 
-              {/* ── Architecture PDF mobile ── */}
+              {/* Resume mobile */}
               <motion.div
                 initial={{ opacity: 0, x: -32 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ delay: 0.50, duration: 0.45 }}
+                className="mt-4"
+              >
+                <a
+                  href="/docs/PalReddy_AnishReddy_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                  className="w-full inline-flex items-center justify-between font-mono text-[0.7rem] tracking-[0.2em] uppercase px-4 py-2.5 rounded-sm border cursor-pointer"
+                  style={{
+                    background: "rgba(56,189,248,0.08)",
+                    borderColor: "rgba(56,189,248,0.32)",
+                    color: "#38BDF8",
+                  }}
+                >
+                  <span className="flex items-center gap-2">
+                    <span>CV</span> Open Resume
+                  </span>
+                  <span>↗</span>
+                </a>
+              </motion.div>
+
+              {/* ── Architecture PDF mobile ── */}
+              <motion.div
+                initial={{ opacity: 0, x: -32 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.53, duration: 0.45 }}
                 className="mt-4"
               >
                 <a

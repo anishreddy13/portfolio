@@ -5,6 +5,7 @@ import CursorEffect from "./CursorEffect";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import FinancialAnalystAnnouncement from "./FinancialAnalystAnnouncement";
+import ResumeAnnouncement from "./ResumeAnnouncement";
 import BackToTop from "./BackToTop";
 
 const AnimatedBackground = dynamic(() => import("./AnimatedBackground"), {
@@ -17,6 +18,7 @@ export default function PlatformShell({ children }: { children: React.ReactNode 
       <AnimatedBackground />
       <CursorEffect />
       <FinancialAnalystAnnouncement />
+      <ResumeAnnouncement />
       <BackToTop />
       <div className="relative z-10 min-h-screen">
         <Navbar />

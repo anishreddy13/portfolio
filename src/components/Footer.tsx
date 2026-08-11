@@ -212,6 +212,23 @@ export default function Footer() {
             {/* Status badge & PDF Action */}
             <div className="flex items-center gap-3 order-1 sm:order-2">
               <motion.a
+                href="/docs/PalReddy_AnishReddy_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.04, borderColor: "#38BDF8", color: "#38BDF8" }}
+                whileTap={{ scale: 0.96 }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border font-mono text-[0.58rem] tracking-[0.2em] uppercase transition-colors cursor-pointer"
+                style={{
+                  background: "rgba(56, 189, 248, 0.06)",
+                  borderColor: "rgba(56, 189, 248, 0.25)",
+                  color: "var(--text-secondary)",
+                }}
+                title="Open Resume PDF"
+              >
+                CV Resume
+              </motion.a>
+
+              <motion.a
                 href="/docs/anish-portfolio-system-architecture.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
