@@ -27,6 +27,13 @@ export const metadata: Metadata = {
     "Portfolio",
     "Next.js",
   ],
+  authors: [
+    {
+      name: "Anish Reddy",
+      url: "https://www.anishreddy.online",
+    },
+  ],
+  creator: "Anish Reddy",
   openGraph: {
     title: "Anish Reddy — AI Researcher",
     description:
