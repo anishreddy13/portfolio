@@ -12,6 +12,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.anishreddy.online"),
   icons: {
     icon: "/favicon.svg",
   },
@@ -34,11 +35,15 @@ export const metadata: Metadata = {
     },
   ],
   creator: "Anish Reddy",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Anish Reddy — AI Researcher",
     description:
       "AI Researcher & Engineer crafting intelligent systems and machine learning pipelines.",
     type: "website",
+    url: "https://www.anishreddy.online",
   },
 };
 
