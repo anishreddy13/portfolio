@@ -96,7 +96,8 @@
     "projects": "Projects",
     "contact": "Contact",
     "privacy": "Privacy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "available": "Available for new projects"
   },
   "Projects": {
     "tag": "04 / Showcases",
@@ -131,6 +132,14 @@
       "07": {
         "title": "Sentiment Analysis",
         "desc": "Deployed sentiment model for positive, negative, and neutral text classification with confidence scores, class distribution bars, examples, and prediction history."
+      },
+      "08": {
+        "title": "AI Trading CoPilot",
+        "desc": "Build, Backtest, Monitor and Improve Trading Strategies using natural language, autonomous validation, market context analysis, event-driven backtesting, paper trading, and real-time drift detection."
+      },
+      "09": {
+        "title": "Live Trading Dashboard",
+        "desc": "Phase 5 Live Trading Dashboard consuming EnterpriseMarketCache, SingleFlight Request Coordinator, Streaming Consensus, and AI Strategy Coach with live watchlists, provider health matrices, and telemetry meters."
       }
     }
   },
