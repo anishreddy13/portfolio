@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/routing";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import ScrollReveal from "@/components/ScrollReveal";
 import PortfolioDashboard from "@/components/PortfolioDashboard";
 import {
@@ -35,7 +36,11 @@ function WorkflowPipeline() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.12, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                delay: i * 0.12,
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
               <motion.div
                 className="w-12 h-12 rounded-sm flex items-center justify-center text-xl"
@@ -44,16 +49,21 @@ function WorkflowPipeline() {
                   border: `1px solid ${step.color}35`,
                   boxShadow: `0 0 20px ${step.color}15`,
                 }}
-                whileHover={{ scale: 1.1, boxShadow: `0 0 30px ${step.color}30` }}
+                whileHover={{
+                  scale: 1.1,
+                  boxShadow: `0 0 30px ${step.color}30`,
+                }}
               >
                 {step.icon}
               </motion.div>
+
               <p
                 className="font-mono text-[0.6rem] tracking-wider text-center"
                 style={{ color: step.color }}
               >
                 {step.label}
               </p>
+
               <p
                 className="font-mono text-[0.48rem] tracking-wider text-center"
                 style={{ color: "var(--text-tertiary)" }}
@@ -69,13 +79,19 @@ function WorkflowPipeline() {
                 initial={{ opacity: 0, scaleX: 0 }}
                 whileInView={{ opacity: 1, scaleX: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.12 + 0.2, duration: 0.4 }}
+                transition={{
+                  delay: i * 0.12 + 0.2,
+                  duration: 0.4,
+                }}
                 style={{ originX: 0 }}
               >
                 <div
                   className="h-px w-6 lg:w-10"
-                  style={{ background: `linear-gradient(90deg, ${step.color}60, ${workflowSteps[i + 1].color}60)` }}
+                  style={{
+                    background: `linear-gradient(90deg, ${step.color}60, ${workflowSteps[i + 1].color}60)`,
+                  }}
                 />
+
                 <div
                   className="w-0 h-0"
                   style={{
@@ -99,7 +115,10 @@ function WorkflowPipeline() {
               initial={{ opacity: 0, x: -16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
+              transition={{
+                delay: i * 0.08,
+                duration: 0.4,
+              }}
             >
               <div
                 className="w-10 h-10 rounded-sm flex items-center justify-center text-base shrink-0"
@@ -110,11 +129,19 @@ function WorkflowPipeline() {
               >
                 {step.icon}
               </div>
+
               <div className="min-w-0">
-                <p className="font-mono text-[0.6rem] tracking-wider" style={{ color: step.color }}>
+                <p
+                  className="font-mono text-[0.6rem] tracking-wider"
+                  style={{ color: step.color }}
+                >
                   {step.label}
                 </p>
-                <p className="font-mono text-[0.48rem] tracking-wider" style={{ color: "var(--text-tertiary)" }}>
+
+                <p
+                  className="font-mono text-[0.48rem] tracking-wider"
+                  style={{ color: "var(--text-tertiary)" }}
+                >
                   {step.sublabel}
                 </p>
               </div>
@@ -127,12 +154,14 @@ function WorkflowPipeline() {
                   className="w-px h-4"
                   style={{
                     background: `linear-gradient(180deg, ${step.color}40, ${workflowSteps[i + 1].color}40)`,
-                    originY: 0
+                    originY: 0,
                   }}
                   initial={{ scaleY: 0 }}
                   whileInView={{ scaleY: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 + 0.15 }}
+                  transition={{
+                    delay: i * 0.08 + 0.15,
+                  }}
                 />
               </div>
             )}
@@ -165,19 +194,33 @@ function AgentCards() {
               background: "var(--surface-1)",
               border: "1px solid rgba(255,255,255,0.06)",
             }}
-            whileHover={{ y: -4, boxShadow: `0 8px 30px ${agent.color}15` }}
+            whileHover={{
+              y: -4,
+              boxShadow: `0 8px 30px ${agent.color}15`,
+            }}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1, duration: 0.5 }}
+            transition={{
+              delay: i * 0.1,
+              duration: 0.5,
+            }}
           >
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">{agent.icon}</span>
+
               <div>
-                <p className="font-mono text-xs tracking-wider" style={{ color: agent.color }}>
+                <p
+                  className="font-mono text-xs tracking-wider"
+                  style={{ color: agent.color }}
+                >
                   {agent.name}
                 </p>
-                <p className="font-mono text-[0.5rem] tracking-wider" style={{ color: "var(--text-tertiary)" }}>
+
+                <p
+                  className="font-mono text-[0.5rem] tracking-wider"
+                  style={{ color: "var(--text-tertiary)" }}
+                >
                   {agent.role}
                 </p>
               </div>
@@ -199,8 +242,11 @@ function AgentCards() {
               ))}
             </div>
 
-            <p className="font-body text-sm leading-relaxed mt-auto" style={{ color: "var(--text-secondary)" }}>
-               {agent.description}
+            <p
+              className="font-body text-sm leading-relaxed mt-auto"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              {agent.description}
             </p>
           </motion.div>
         ))}
@@ -234,7 +280,10 @@ function ArchitectureSection() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1, duration: 0.5 }}
+            transition={{
+              delay: i * 0.1,
+              duration: 0.5,
+            }}
             whileHover={{ y: -2 }}
           >
             <p
@@ -243,12 +292,14 @@ function ArchitectureSection() {
             >
               {card.eyebrow}
             </p>
+
             <p
               className="font-mono text-sm tracking-wide mb-2"
               style={{ color: "var(--text-primary)" }}
             >
               {card.title}
             </p>
+
             <p
               className="font-body text-xs leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
@@ -268,21 +319,87 @@ function ArchitectureSection() {
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AIFinancialAnalystPage() {
+  const pathname = usePathname();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const pageUrl = `https://www.anishreddy.online${pathname}`;
+
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: "AI Financial Analyst — Anish Reddy",
+    description:
+      "Enterprise-grade AI financial intelligence platform built with specialized AI agents for research, quantitative analysis, auditing, competitor analysis, and editorial synthesis.",
+    isPartOf: {
+      "@id": "https://www.anishreddy.online/#profile",
+    },
+    about: {
+      "@type": "CreativeWork",
+      name: "AI Financial Analyst",
+      creator: {
+        "@id": "https://www.anishreddy.online/#person",
+      },
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://www.anishreddy.online/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Projects",
+        item: "https://www.anishreddy.online/#projects",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "AI Financial Analyst",
+        item: pageUrl,
+      },
+    ],
+  };
+
   return (
-    <main className="relative min-h-screen bg-[#050505] pt-16">
-      <Breadcrumbs
-        items={[
-          { label: "Projects", href: "/#projects" },
-          { label: "AI Financial Analyst" },
-        ]}
-        backToHref="/#projects"
-        backToLabel="Back to Projects"
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(projectSchema),
+        }}
       />
-      <PortfolioDashboard />
-    </main>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
+      <main className="relative min-h-screen bg-[#050505] pt-16">
+        <Breadcrumbs
+          items={[
+            { label: "Projects", href: "/#projects" },
+            { label: "AI Financial Analyst" },
+          ]}
+          backToHref="/#projects"
+          backToLabel="Back to Projects"
+        />
+
+        <PortfolioDashboard />
+      </main>
+    </>
   );
 }
