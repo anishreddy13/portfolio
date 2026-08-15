@@ -183,7 +183,7 @@ const portfolioProjects: PortfolioProject[] = [
     complexityTags: ["NLP", "TEXT ML", "FASTAPI", "DASHBOARD"],
   },
   {
-    id: "08",
+    id: "09",
     title: "Live Trading Dashboard",
     category: "Real-Time Streaming",
     description:
