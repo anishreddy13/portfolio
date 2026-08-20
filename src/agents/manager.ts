@@ -23,10 +23,9 @@ async function runAgent(agent: LlmAgent, input: string): Promise<string> {
   });
 
   for await (const event of stream) {
-    if ((event as any).errorCode) {
-      const code = ((event as any).errorCode);
-      const msg = ((event as any).errorMessage);
-      output += `\n[API ERROR ${code}]: ${msg}`;
+    const errorEvent = event as unknown as { errorCode?: string | number; errorMessage?: string };
+    if (errorEvent.errorCode) {
+      output += `\n[API ERROR ${errorEvent.errorCode}]: ${errorEvent.errorMessage ?? "Unknown error"}`;
     }
 
     const structuredEvents = toStructuredEvents(event);
@@ -41,14 +40,11 @@ async function runAgent(agent: LlmAgent, input: string): Promise<string> {
   return output || 'No response generated.';
 }
 
-const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-
 export async function runManagerWorkflow(task: string) {
   console.log(`\n[Manager] Received Task: ${task}`);
   
   // 1. Planner
-  console.log(`[Manager] Delegating to Planner (waiting 3s)...`);
-  await delay(3000);
+  console.log(`[Manager] Delegating to Planner...`);
   const plan = await runAgent(planner, task);
   console.log(`\n=== Planner Output ===\n${plan}\n======================\n`);
 
@@ -61,19 +57,17 @@ export async function runManagerWorkflow(task: string) {
 
   while (!approved && iterations < maxIterations) {
     iterations++;
-    console.log(`[Manager] Loop ${iterations}: Delegating to Implementor (waiting 3s)...`);
-    await delay(3000);
+    console.log(`[Manager] Loop ${iterations}: Delegating to Implementor...`);
     const implementation = await runAgent(implementor, currentImplementorInput);
     console.log(`\n=== Implementor Output ===\n${implementation}\n==========================\n`);
 
-    console.log(`[Manager] Delegating to Reviewer (waiting 3s)...`);
-    await delay(3000);
+    console.log(`[Manager] Delegating to Reviewer...`);
     const reviewerInput = `Plan:\n${plan}\n\nImplementation:\n${implementation}`;
     const review = await runAgent(reviewer, reviewerInput);
     
     console.log(`\n=== Reviewer Output ===\n${review}\n=======================\n`);
 
-    if (review.includes('APPROVED')) {
+    if (review.trim() === 'APPROVED') {
       approved = true;
       finalImplementation = implementation;
       console.log(`[Manager] Workflow complete. Implementation approved!`);

@@ -3,7 +3,9 @@ import { Client } from "@gradio/client";
 const SPACE_ID = "Anishreddy13/ai-financial-analyst";
 const SPACE_URL = "https://anishreddy13-ai-financial-analyst.hf.space";
 
-let clientPromise: Promise<any> | null = null;
+type FinancialAnalystClient = Awaited<ReturnType<typeof Client.connect>>;
+
+let clientPromise: Promise<FinancialAnalystClient> | null = null;
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));

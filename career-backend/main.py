@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,6 +16,13 @@ from utils.logger import get_logger
 from workers.scraper_worker import get_queue_length
 
 logger = get_logger(__name__)
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+    if origin.strip()
+]
+if not allowed_origins or "*" in allowed_origins:
+    raise RuntimeError("ALLOWED_ORIGINS must contain explicit trusted origins; wildcards are not allowed.")
 
 app = FastAPI(
     title="Career Intelligence API",
@@ -24,10 +32,10 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=allowed_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 app.include_router(scraper.router)

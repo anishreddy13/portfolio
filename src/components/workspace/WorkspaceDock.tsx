@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { Layout, Maximize2, Minimize2, EyeOff, RotateCcw } from "lucide-react";
+import { Maximize2, Minimize2, EyeOff, type LucideIcon } from "lucide-react";
 
 interface WorkspaceDockProps {
   title: string;
-  icon?: React.ElementType;
+  icon?: LucideIcon;
   isVisible: boolean;
   onToggle: () => void;
   children: React.ReactNode;

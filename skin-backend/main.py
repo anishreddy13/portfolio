@@ -9,9 +9,12 @@ from skin_model import predict_skin_cancer, load_skin_model
 MODEL_PATH = "skin_model.pth"
 ALLOWED_ORIGINS = [
     origin.strip()
-    for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",")
+    for origin in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
     if origin.strip()
-] or ["*"]
+]
+
+if not ALLOWED_ORIGINS or "*" in ALLOWED_ORIGINS:
+    raise RuntimeError("ALLOWED_ORIGINS must contain explicit trusted origins; wildcards are not allowed.")
 
 app = FastAPI(
     title="Skin Cancer Detection API",
@@ -21,9 +24,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
 )
 
 skin_model = None

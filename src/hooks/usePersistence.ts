@@ -40,7 +40,7 @@ export function usePersistence() {
     return true;
   }, []);
 
-  const exportPortfolio = useCallback((data: any) => {
+  const exportPortfolio = useCallback((data: unknown) => {
     const jsonStr = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonStr], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -51,7 +51,7 @@ export function usePersistence() {
     URL.revokeObjectURL(url);
   }, []);
 
-  const importPortfolio = useCallback((file: File, onComplete?: (data: any) => void) => {
+  const importPortfolio = useCallback((file: File, onComplete?: (data: unknown) => void) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       try {

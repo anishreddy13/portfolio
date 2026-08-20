@@ -13,10 +13,11 @@ create table if not exists public.contact_submissions (
   created_at timestamptz not null default now()
 );
 
--- Disable RLS so service role key can insert without policy setup
-alter table public.contact_submissions disable row level security;
+-- Keep RLS enabled; service_role bypasses RLS while browser roles retain no access.
+alter table public.contact_submissions enable row level security;
 
 -- Grant all permissions to service_role (used by the API route)
+revoke all on public.contact_submissions from anon, authenticated;
 grant all on public.contact_submissions to service_role;
 
 -- Verify the table was created

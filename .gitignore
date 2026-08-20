@@ -2,6 +2,7 @@
 node_modules/
 .next/
 *.tsbuildinfo
+.eslintcache
 
 # Environment
 .env
@@ -12,6 +13,11 @@ node_modules/
 __pycache__/
 *.pyc
 *.pyo
+.venv/
+venv/
+backend/venv/
+.pytest_cache/
+.mypy_cache/
 
 # Logs
 *.log
@@ -36,10 +42,6 @@ datasets/**
 # ML backend large files
 ml-backend/models/
 ml-backend/skin_data/
-
-# ML workers compiled
-mlworkers/
-mlworkers/**
 
 # OS
 .DS_Store

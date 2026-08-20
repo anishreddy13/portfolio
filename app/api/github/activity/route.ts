@@ -6,9 +6,6 @@ export const dynamic = "force-dynamic";
 const GITHUB_USER = process.env.GITHUB_STATS_USER || "anishreddy13";
 const DAYS = 30;
 const MAX_RECENT_PAGES = 3;
-const VERIFIED_FALLBACK_TOTAL = 121;
-const VERIFIED_FALLBACK_30D = 48;
-const VERIFIED_FALLBACK_LAST_COMMIT_AT = "2026-07-27T15:44:49.000+05:30";
 
 interface CommitSearchItem {
   sha: string;
@@ -45,37 +42,6 @@ function emptyBuckets() {
       commits: 0,
     };
   });
-}
-
-function fallbackBuckets() {
-  const buckets = emptyBuckets();
-  const distribution = [6, 5, 7, 4, 8, 6, 5, 4, 3];
-  const activeDates = [
-    "2026-07-11",
-    "2026-07-12",
-    "2026-07-13",
-    "2026-07-15",
-    "2026-07-18",
-    "2026-07-21",
-    "2026-07-24",
-    "2026-07-26",
-    "2026-07-27",
-  ];
-
-  activeDates.forEach((date, index) => {
-    const target = buckets.find((bucket) => bucketKey(bucket.date) === date);
-    if (target) {
-      target.commits = distribution[index] || 0;
-    }
-  });
-
-  const total = buckets.reduce((sum, bucket) => sum + bucket.commits, 0);
-  const latest = buckets[buckets.length - 1];
-  if (latest && total !== VERIFIED_FALLBACK_30D) {
-    latest.commits += VERIFIED_FALLBACK_30D - total;
-  }
-
-  return buckets;
 }
 
 function bucketKey(date: string) {
@@ -184,28 +150,13 @@ export async function GET() {
     });
   } catch (error) {
     console.error("GitHub commit metrics fetch failed:", error);
-    const activity = fallbackBuckets();
     return NextResponse.json(
       {
         ok: false,
         user: GITHUB_USER,
-        activity,
-        stats: {
-          allTimeCommits: VERIFIED_FALLBACK_TOTAL,
-          commits30d: VERIFIED_FALLBACK_30D,
-          activeDays: activity.filter((bucket) => bucket.commits > 0).length,
-          indexedRecentCommits: VERIFIED_FALLBACK_30D,
-          lastCommitAt: VERIFIED_FALLBACK_LAST_COMMIT_AT,
-          latestCommit: {
-            sha: "25bfa5f",
-            message: "Fix analyst feeds and live stats",
-            repository: `${GITHUB_USER}/portfolio`,
-            url: "https://github.com/anishreddy13/portfolio/commit/25bfa5f9ad9fb5145ea78adf5a4784e384b01f2d",
-          },
-          source: "verified-fallback",
-        },
+        error: "GitHub activity is temporarily unavailable. No cached data is being shown.",
       },
-      { status: 200 }
+      { status: 503, headers: { "Cache-Control": "no-store" } }
     );
   }
 }

@@ -29,6 +29,13 @@ const BASE_PRICES: Record<string, number> = {
   AMZN: 187.9,
 };
 const STREAM_INTERVAL_MS = 15_000;
+const SNAPSHOT_TTL_MS = 10_000;
+const MAX_STREAM_CONNECTIONS = 100;
+
+let cachedSnapshot: Awaited<ReturnType<typeof loadLiveSnapshot>> | null = null;
+let cachedSnapshotAt = 0;
+let snapshotPromise: Promise<Awaited<ReturnType<typeof loadLiveSnapshot>>> | null = null;
+let activeConnections = 0;
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -147,9 +154,45 @@ async function loadLiveSnapshot() {
   };
 }
 
+async function getSharedSnapshot() {
+  if (cachedSnapshot && Date.now() - cachedSnapshotAt < SNAPSHOT_TTL_MS) {
+    return cachedSnapshot;
+  }
+
+  if (!snapshotPromise) {
+    snapshotPromise = loadLiveSnapshot()
+      .then((snapshot) => {
+        cachedSnapshot = snapshot;
+        cachedSnapshotAt = Date.now();
+        return snapshot;
+      })
+      .finally(() => {
+        snapshotPromise = null;
+      });
+  }
+
+  return snapshotPromise;
+}
+
 export async function GET(req: NextRequest) {
+  if (activeConnections >= MAX_STREAM_CONNECTIONS) {
+    return new Response("Too many active dashboard streams.", { status: 429 });
+  }
+
   const encoder = new TextEncoder();
   let active = true;
+  activeConnections += 1;
+
+  const close = (controller: ReadableStreamDefaultController) => {
+    if (!active) return;
+    active = false;
+    activeConnections = Math.max(0, activeConnections - 1);
+    try {
+      controller.close();
+    } catch {
+      // The stream may already be closed.
+    }
+  };
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -166,17 +209,12 @@ export async function GET(req: NextRequest) {
       );
 
       req.signal.addEventListener("abort", () => {
-        active = false;
-        try {
-          controller.close();
-        } catch {
-          // Stream already closed.
-        }
+        close(controller);
       });
 
       while (active) {
         try {
-          const snapshot = await loadLiveSnapshot();
+          const snapshot = await getSharedSnapshot();
           const batchPayload = {
             batch_id: `batch-${Date.now().toString(36)}`,
             created_at: new Date().toISOString(),
@@ -255,6 +293,10 @@ export async function GET(req: NextRequest) {
         await sleep(STREAM_INTERVAL_MS);
       }
     },
+    cancel() {
+      active = false;
+      activeConnections = Math.max(0, activeConnections - 1);
+    },
   });
 
   return new Response(stream, {
@@ -262,6 +304,7 @@ export async function GET(req: NextRequest) {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache, no-transform",
       Connection: "keep-alive",
+      "X-Accel-Buffering": "no",
     },
   });
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MousePointer, TrendingUp, Minus, Square, Hash, Type, Bookmark } from "lucide-react";
+import { MousePointer, TrendingUp, Minus, Square, Hash, Type, type LucideIcon } from "lucide-react";
 import { DrawingTool } from "@/hooks/useChart";
 
 interface DrawingToolbarProps {
@@ -10,7 +10,7 @@ interface DrawingToolbarProps {
 }
 
 export default function DrawingToolbar({ activeTool, setActiveTool }: DrawingToolbarProps) {
-  const TOOLS: { id: DrawingTool; label: string; icon: React.ElementType }[] = [
+  const TOOLS: { id: DrawingTool; label: string; icon: LucideIcon }[] = [
     { id: "SELECT", label: "Select Pointer", icon: MousePointer },
     { id: "TREND", label: "Trend Line", icon: TrendingUp },
     { id: "HORIZONTAL", label: "Horizontal Line", icon: Minus },

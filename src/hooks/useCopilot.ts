@@ -6,7 +6,7 @@ export interface CopilotActionData {
   actionId: string;
   actionType: string;
   targetSymbol: string;
-  parameters: Record<string, any>;
+  parameters: Record<string, unknown>;
   status: string;
 }
 

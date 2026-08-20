@@ -7,7 +7,7 @@ export interface StrategyPluginItem {
   category: string;
   description: string;
   isActive: boolean;
-  parameters: Record<string, any>;
+  parameters: Record<string, unknown>;
   riskPerTradePct: number;
   lastSignal: {
     type: "BUY" | "SELL" | "HOLD";
@@ -64,7 +64,7 @@ export function useStrategies() {
     );
   }, []);
 
-  const updateParameters = useCallback((name: string, newParams: Record<string, any>) => {
+  const updateParameters = useCallback((name: string, newParams: Record<string, unknown>) => {
     setStrategies((prev) =>
       prev.map((s) => (s.name === name ? { ...s, parameters: { ...s.parameters, ...newParams } } : s))
     );

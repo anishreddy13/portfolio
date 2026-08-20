@@ -1,8 +1,16 @@
-# Enterprise Trading Platform v1.0
+# Portfolio Platform
 
-Welcome to the Enterprise Trading Platform. This platform represents a complete, institutional-grade trading system, encompassing signal generation, portfolio management, risk evaluation, algorithmic execution, and site reliability operations.
+This workspace contains a Next.js portfolio frontend and independently deployable Python services.
+See [the service catalog](docs/SERVICES.md) for service boundaries and local setup.
 
-## Quickstart
-1. Run `./scripts/bootstrap.sh`
-2. Start the backend: `uvicorn main:app`
-3. Start the frontend: `npm run dev`
+## Frontend
+
+Copy `.env.example` to `.env.local`, install dependencies with `npm ci`, then run `npm run dev`.
+
+Run `npm run lint`, `npm run typecheck`, and `npm run build` before opening a pull request.
+
+## Security
+
+Apply [secure_contact_submissions.sql](scripts/secure_contact_submissions.sql) before enabling the contact endpoint. If needed, explicitly expose the `public` schema in Supabase Data API settings first.
+Set `CONTACT_RATE_LIMIT_SALT` to a high-entropy secret. Only enable `TRUST_PROXY_HEADERS` behind a proxy that overwrites forwarding headers.
+Configure explicit `ALLOWED_ORIGINS` for every Python service. Analytics are opt-in and collect no IP address or location.

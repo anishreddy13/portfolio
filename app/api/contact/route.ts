@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { createHash } from "node:crypto";
 
 export const runtime = "nodejs";
 
@@ -22,7 +23,6 @@ interface ContactPayload {
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const RATE_LIMIT_MAX = 3;
 const MAX_FIELD_LENGTHS = { name: 80, email: 120, subject: 140, message: 3000 };
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
 function jsonResponse(body: Record<string, unknown>, status: number) {
   return NextResponse.json(body, {
@@ -32,24 +32,37 @@ function jsonResponse(body: Record<string, unknown>, status: number) {
 }
 
 function getClientIp(request: NextRequest) {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    request.headers.get("x-real-ip") ||
-    "unknown"
-  );
+  if (process.env.TRUST_PROXY_HEADERS !== "true") return "unknown";
+  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
 }
 
-function isRateLimited(ip: string) {
-  const now = Date.now();
-  const current = rateLimitStore.get(ip);
-  if (!current || current.resetAt <= now) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return false;
+function rateLimitKey(ip: string) {
+  const salt = process.env.CONTACT_RATE_LIMIT_SALT;
+  if (!salt) return null;
+  return createHash("sha256").update(salt + ":" + ip).digest("hex");
+}
+
+async function isRateLimited(request: NextRequest) {
+  const db = getServiceSupabase();
+  const key = rateLimitKey(getClientIp(request));
+  if (!db || !key) {
+    return null;
   }
-  if (current.count >= RATE_LIMIT_MAX) return true;
-  current.count += 1;
-  rateLimitStore.set(ip, current);
-  return false;
+
+  const { data, error } = await db.rpc("check_contact_rate_limit", {
+    request_key: key,
+    window_seconds: RATE_LIMIT_WINDOW_MS / 1000,
+    max_requests: RATE_LIMIT_MAX,
+  });
+
+  if (error || typeof data !== "boolean") {
+    console.error("[Contact API] Rate-limit check failed.", { code: error?.code, message: error?.message });
+    return null;
+  }
+
+  return data;
 }
 
 function sanitize(value: unknown) {
@@ -190,8 +203,11 @@ async function sendEmail(data: {
 }
 
 export async function POST(request: NextRequest) {
-  const ip = getClientIp(request);
-  if (isRateLimited(ip)) {
+  const limited = await isRateLimited(request);
+  if (limited === null) {
+    return jsonResponse({ ok: false, message: "Contact service is temporarily unavailable." }, 503);
+  }
+  if (limited) {
     return jsonResponse(
       { ok: false, message: "Too many messages. Please wait a minute and try again." },
       429

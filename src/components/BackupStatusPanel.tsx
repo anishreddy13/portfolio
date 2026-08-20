@@ -1,6 +1,12 @@
 import React from 'react';
 
-export function BackupStatusPanel({ backups }: { backups: any }) {
+export interface BackupStatus {
+  lastBackup: string;
+  size: string;
+  status: string;
+}
+
+export function BackupStatusPanel({ backups }: { backups: BackupStatus }) {
   return (
     <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 flex flex-col h-full">
       <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">

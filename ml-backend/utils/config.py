@@ -18,14 +18,14 @@ class Settings:
     APP_NAME:    str  = os.getenv("APP_NAME",    "ML Production System")
     APP_VERSION: str  = os.getenv("APP_VERSION", "6.0.0")
     ENVIRONMENT: str  = os.getenv("ENVIRONMENT", "development")
-    DEBUG:       bool = os.getenv("DEBUG", "True").lower() == "true"
+    DEBUG:       bool = os.getenv("DEBUG", "False").lower() == "true"
 
     # ─────────────────────────────────────────────────────────
     # FASTAPI
     # ─────────────────────────────────────────────────────────
     API_HOST: str = os.getenv("API_HOST", "0.0.0.0")
     API_PORT: int = int(os.getenv("API_PORT", 8000))
-    ALLOWED_ORIGINS: str = os.getenv("ALLOWED_ORIGINS", "*")
+    ALLOWED_ORIGINS: str = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000")
 
     # ─────────────────────────────────────────────────────────
     # SUPABASE
@@ -120,7 +120,9 @@ class Settings:
             for origin in self.ALLOWED_ORIGINS.split(",")
             if origin.strip()
         ]
-        return origins or ["*"]
+        if not origins or "*" in origins:
+            raise ValueError("ALLOWED_ORIGINS must contain explicit trusted origins; wildcards are not allowed.")
+        return origins
 
 
 # ✅ Singleton — never raises, so importing config is always safe
