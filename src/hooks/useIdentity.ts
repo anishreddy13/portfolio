@@ -13,32 +13,62 @@ export interface Workspace {
   name: string;
 }
 
+// Demo credentials are intentionally not hardcoded in source.
+// Demo login is explicitly opt-in via env vars so production deployments remain locked down.
+// Roles are intentionally limited to TRADER (no ADMIN) for demo users.
+const DEMO_LOGIN_ENABLED = process.env.NEXT_PUBLIC_DEMO_LOGIN_ENABLED === 'true';
+const DEMO_USERNAME = (process.env.NEXT_PUBLIC_DEMO_USERNAME ?? '').trim();
+const DEMO_PASSWORD = (process.env.NEXT_PUBLIC_DEMO_PASSWORD ?? '').trim();
+
+const isDemoLoginConfigured = () => DEMO_LOGIN_ENABLED && Boolean(DEMO_USERNAME) && Boolean(DEMO_PASSWORD);
+
 export function useIdentity() {
   const [user, setUser] = useState<User | null>(null);
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
 
-  // Demo mode: credentials are not validated against the backend.
-  // In production, replace this with a real API call to the IdentityEngine.
-  const login = useCallback(async (username: string, _password: string) => {
+  const login = useCallback(async (username: string, password: string) => {
+    setLoginError(null);
+
+    const safeUsername = username.trim();
+    const safePassword = password.trim();
+
+    if (!safeUsername || !safePassword) {
+      setLoginError('Username and password are required.');
+      return;
+    }
+
+    if (!isDemoLoginConfigured()) {
+      setLoginError('Demo authentication is disabled. Set NEXT_PUBLIC_DEMO_LOGIN_ENABLED=true and valid demo credentials to enable the demo login flow.');
+      return;
+    }
+
     setIsLoading(true);
-    setTimeout(() => {
-      setUser({
-        id: 'usr_1',
-        username,
-        organization: 'Enterprise Corp',
-        roles: ['ADMIN', 'TRADER'],
-        permissions: ['EXECUTE_TRADES', 'VIEW_PORTFOLIO', 'SYSTEM_ADMIN']
-      });
-      const wss = [
-        { id: 'ws_1', name: 'Global Equities' },
-        { id: 'ws_2', name: 'Crypto Desk' }
-      ];
-      setWorkspaces(wss);
-      setActiveWorkspace(wss[0]);
+    // Simulate async credential check.
+    await new Promise<void>((resolve) => setTimeout(resolve, 400));
+
+    if (safeUsername !== DEMO_USERNAME || safePassword !== DEMO_PASSWORD) {
+      setLoginError('Invalid username or password.');
       setIsLoading(false);
-    }, 500);
+      return;
+    }
+
+    setUser({
+      id: 'usr_1',
+      username: safeUsername,
+      organization: 'Enterprise Corp',
+      roles: ['TRADER'],
+      permissions: ['EXECUTE_TRADES', 'VIEW_PORTFOLIO'],
+    });
+    const wss = [
+      { id: 'ws_1', name: 'Global Equities' },
+      { id: 'ws_2', name: 'Crypto Desk' },
+    ];
+    setWorkspaces(wss);
+    setActiveWorkspace(wss[0]);
+    setIsLoading(false);
   }, []);
 
   const logout = useCallback(() => {
@@ -57,8 +87,9 @@ export function useIdentity() {
     workspaces,
     activeWorkspace,
     isLoading,
+    loginError,
     login,
     logout,
-    switchWorkspace
+    switchWorkspace,
   };
 }

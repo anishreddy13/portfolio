@@ -66,7 +66,7 @@ import {
 } from "lucide-react";
 
 export default function TradingWorkspace() {
-  const { user, workspaces, activeWorkspace, isLoading, login, logout, switchWorkspace } = useIdentity();
+  const { user, workspaces, activeWorkspace, isLoading, loginError, login, logout, switchWorkspace } = useIdentity();
   const { connectionStatus, latencyMs, lastUpdatedAt, latestSignals, serviceHealth } = useDashboardStream();
   
   const {
@@ -92,7 +92,7 @@ export default function TradingWorkspace() {
   };
 
   if (!user) {
-    return <LoginPanel onLogin={login} isLoading={isLoading} />;
+    return <LoginPanel onLogin={login} isLoading={isLoading} loginError={loginError} />;
   }
 
   return (

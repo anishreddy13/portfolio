@@ -3,15 +3,16 @@ import React, { useState } from 'react';
 interface LoginPanelProps {
   onLogin: (username: string, password: string) => void;
   isLoading: boolean;
+  loginError?: string | null;
 }
 
-export function LoginPanel({ onLogin, isLoading }: LoginPanelProps) {
+export function LoginPanel({ onLogin, isLoading, loginError }: LoginPanelProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username) {
+    if (username.trim() && password.trim()) {
       onLogin(username, password);
     }
   };
@@ -26,10 +27,9 @@ export function LoginPanel({ onLogin, isLoading }: LoginPanelProps) {
         </div>
         <h2 className="text-2xl font-bold mb-2 text-center">Enterprise Access</h2>
         <p className="text-slate-400 text-sm text-center mb-4">Sign in to your trading workspace</p>
-        {/* Demo mode notice — authentication is mocked. Replace useIdentity with a real API call before production deployment. */}
         <div className="flex items-center justify-center gap-2 mb-5 px-3 py-1.5 bg-amber-900/30 border border-amber-700/40 rounded-lg">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400 shrink-0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <span className="text-xs text-amber-300 font-medium">Demo Mode — credentials are not validated</span>
+          <span className="text-xs text-amber-300 font-medium">Demo login is intentionally opt-in and must be explicitly enabled.</span>
         </div>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -55,6 +55,11 @@ export function LoginPanel({ onLogin, isLoading }: LoginPanelProps) {
               required
             />
           </div>
+          {loginError ? (
+            <div className="rounded border border-red-700/60 bg-red-950/40 px-3 py-2 text-sm text-red-200">
+              {loginError}
+            </div>
+          ) : null}
           <button 
             type="submit" 
             disabled={isLoading}
