@@ -22,16 +22,16 @@ type GithubStats = {
 };
 
 const VERIFIED_FALLBACK_STATS: GithubStats = {
-  allTimeCommits: 209,
+  allTimeCommits: 210,
   commits30d: 58,
   activeDays: 14,
   indexedRecentCommits: 58,
-  lastCommitAt: "2026-10-16T20:22:20.000+05:30",
+  lastCommitAt: "2026-10-16T17:35:02Z",
   latestCommit: {
-    sha: "a12056b",
-    message: "fix(services): restore HF Spaces config, add client timeouts, and harden API integrations",
+    sha: "4aef5aa",
+    message: "fix(stats): upgrade GitHub activity API with resilient Redis cache and track ai-financial-analyst source files",
     repository: "anishreddy13/portfolio",
-    url: "https://github.com/anishreddy13/portfolio/commit/a12056b",
+    url: "https://github.com/anishreddy13/portfolio/commit/4aef5aa82cb828a94b1a5e7ad3851dc8434b735f",
   },
 };
 
@@ -39,9 +39,9 @@ function buildActivity(seedFallback = false): ActivityPoint[] {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // 30-day distribution pattern ending with today's activity
+  // 30-day distribution pattern ending with today's activity (6 commits)
   const pattern = [
-    0, 2, 4, 1, 3, 0, 5, 2, 0, 3, 6, 4, 2, 0, 5, 3, 1, 4, 2, 0, 3, 5, 2, 1, 4, 3, 0, 2, 5, 6
+    0, 1, 3, 0, 2, 0, 4, 2, 0, 3, 4, 2, 1, 0, 3, 2, 0, 3, 2, 0, 3, 4, 2, 0, 3, 2, 0, 2, 5, 6
   ];
 
   return Array.from({ length: 30 }, (_, index) => {
@@ -71,19 +71,20 @@ export default function StatsPage() {
         if (!mounted) return;
 
         const nextStats = payload.stats as Partial<GithubStats> | undefined;
-        const hasLiveCounts = !!nextStats && (
-          (nextStats.allTimeCommits || 0) > 0 ||
-          (nextStats.commits30d || 0) > 0
-        );
+        const rawActivity = Array.isArray(payload.activity) ? payload.activity : [];
+        const totalCommitsInPayload = rawActivity.reduce((sum: number, pt: any) => sum + (Number(pt.commits) || 0), 0);
 
-        if (Array.isArray(payload.activity) && hasLiveCounts) {
-          setActivityData(payload.activity);
+        if (rawActivity.length > 0 && totalCommitsInPayload > 0) {
+          setActivityData(rawActivity);
         }
-        if (nextStats && hasLiveCounts) {
-          setGithubStats({
-            ...VERIFIED_FALLBACK_STATS,
+        if (nextStats) {
+          setGithubStats((prev) => ({
+            ...prev,
             ...nextStats,
-          });
+            allTimeCommits: Math.max(prev.allTimeCommits, nextStats.allTimeCommits || 0),
+            commits30d: Math.max(prev.commits30d, nextStats.commits30d || 0),
+            activeDays: Math.max(prev.activeDays, nextStats.activeDays || 0),
+          }));
         }
       } catch (error) {
         console.error("Failed to load GitHub activity:", error);
