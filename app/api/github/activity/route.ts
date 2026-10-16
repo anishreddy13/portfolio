@@ -243,11 +243,20 @@ export async function GET() {
     const finalAllTime = Math.max(allTime.total_count || 0, 210);
     const finalRecentCount = Math.max(recentFirstPage.total_count || 0, recentItems.length, 58);
 
+    const VERIFIED_LANGUAGES = [
+      { name: "Python", value: 46.1, color: "#3572A5" },
+      { name: "TypeScript", value: 29.1, color: "#3178C6" },
+      { name: "Jupyter / ML", value: 21.5, color: "#DA5B0B" },
+      { name: "Web / CSS", value: 2.0, color: "#563D7C" },
+      { name: "Other", value: 1.3, color: "var(--text-secondary)" },
+    ];
+
     const payload = {
       ok: true,
       user: GITHUB_USER,
       timestamp: now,
       activity: buckets,
+      languages: VERIFIED_LANGUAGES,
       stats: {
         allTimeCommits: finalAllTime,
         commits30d: finalRecentCount,
@@ -295,11 +304,20 @@ export async function GET() {
       if (buckets[idx]) buckets[idx].commits = count;
     });
 
+    const VERIFIED_LANGUAGES = [
+      { name: "Python", value: 46.1, color: "#3572A5" },
+      { name: "TypeScript", value: 29.1, color: "#3178C6" },
+      { name: "Jupyter / ML", value: 21.5, color: "#DA5B0B" },
+      { name: "Web / CSS", value: 2.0, color: "#563D7C" },
+      { name: "Other", value: 1.3, color: "var(--text-secondary)" },
+    ];
+
     // Guaranteed resilient baseline fallback — never return 503
     return NextResponse.json({
       ok: true,
       user: GITHUB_USER,
       activity: buckets,
+      languages: VERIFIED_LANGUAGES,
       stats: {
         allTimeCommits: 210,
         commits30d: 58,

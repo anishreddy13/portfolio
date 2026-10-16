@@ -6,7 +6,8 @@
 
 I build production-grade AI systems — from multi-agent LangGraph platforms to real-time trading infrastructure and deployed computer vision APIs.
 
-[![Portfolio](https://img.shields.io/badge/🚀_Portfolio-Live-C8FF00?style=for-the-badge)](https://anishreddy13.github.io)
+[![Portfolio](https://img.shields.io/badge/🚀_Portfolio-Live-C8FF00?style=for-the-badge)](https://www.anishreddy.online)
+[![CI](https://github.com/anishreddy13/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/anishreddy13/portfolio/actions/workflows/ci.yml)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/anishreddy13)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:anishreddy13@gmail.com)
 
@@ -113,7 +114,7 @@ Real-Time Streaming     ·  NLP Inference Services  ·  Cloud-Native Deployments
 I'm open to AI/ML engineering roles, interesting collaborations, and technical discussions.
 
 - 💼 [LinkedIn](https://linkedin.com/in/anishreddy13)
-- 🚀 [Portfolio](https://anishreddy13.github.io)
+- 🚀 [Portfolio](https://www.anishreddy.online)
 - 📧 [Email](mailto:anishreddy13@gmail.com)
 
 ---

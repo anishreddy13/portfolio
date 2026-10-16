@@ -346,11 +346,6 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
 
          <Link
             href="/projects/ai-financial-analyst/explainer"
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.location.href = "/projects/ai-financial-analyst/explainer";
-              }
-            }}
             className="font-mono text-xs text-[var(--text-tertiary)] hover:text-[#C8FF00] transition-colors inline-flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
          >
             <HelpCircle size={14} className="text-[#C8FF00]" />
@@ -610,10 +605,10 @@ export default function HeadlessFinancialAnalyst({ initialTicker = "" }: Headles
           >
             {/* Global Navigation */}
             <div className="flex items-center gap-4 mb-4">
-               <button onClick={() => window.location.href = '/'} className="flex items-center gap-2 text-[var(--text-tertiary)] hover:text-white transition-colors">
+               <Link href="/" className="flex items-center gap-2 text-[var(--text-tertiary)] hover:text-white transition-colors">
                   <ChevronLeft size={16} />
                   <span className="font-mono text-xs uppercase tracking-widest">Back to Home</span>
-               </button>
+               </Link>
                <div className="w-[1px] h-4 bg-[rgba(255,255,255,0.1)]" />
                <button onClick={() => setTicker("")} className="text-[var(--text-tertiary)] hover:text-white transition-colors font-mono text-xs uppercase tracking-widest">
                   Reset Search

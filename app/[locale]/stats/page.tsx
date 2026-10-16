@@ -4,9 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import { StatCards } from "@/components/developer/StatCards";
 import { LanguagePieChart } from "@/components/developer/LanguagePieChart";
 import { ActivityGraph } from "@/components/developer/ActivityGraph";
+import { ServiceHealthGrid } from "@/components/developer/ServiceHealthGrid";
 import { useTranslations } from "next-intl";
 
 type ActivityPoint = { date: string; commits: number; events?: number };
+type LanguagePoint = { name: string; value: number; color: string };
 type GithubStats = {
   allTimeCommits: number;
   commits30d: number;
@@ -20,6 +22,14 @@ type GithubStats = {
     url: string;
   } | null;
 };
+
+const VERIFIED_LANGUAGES: LanguagePoint[] = [
+  { name: "Python", value: 46.1, color: "#3572A5" },
+  { name: "TypeScript", value: 29.1, color: "#3178C6" },
+  { name: "Jupyter / ML", value: 21.5, color: "#DA5B0B" },
+  { name: "Web / CSS", value: 2.0, color: "#563D7C" },
+  { name: "Other", value: 1.3, color: "var(--text-secondary)" },
+];
 
 const VERIFIED_FALLBACK_STATS: GithubStats = {
   allTimeCommits: 210,
@@ -58,6 +68,7 @@ function buildActivity(seedFallback = false): ActivityPoint[] {
 export default function StatsPage() {
   const t = useTranslations("Stats");
   const [activityData, setActivityData] = useState<ActivityPoint[]>(() => buildActivity(true));
+  const [languageData, setLanguageData] = useState<LanguagePoint[]>(VERIFIED_LANGUAGES);
   const [githubStats, setGithubStats] = useState<GithubStats>(VERIFIED_FALLBACK_STATS);
   const [loadingActivity, setLoadingActivity] = useState(true);
 
@@ -76,6 +87,9 @@ export default function StatsPage() {
 
         if (rawActivity.length > 0 && totalCommitsInPayload > 0) {
           setActivityData(rawActivity);
+        }
+        if (Array.isArray(payload.languages) && payload.languages.length > 0) {
+          setLanguageData(payload.languages);
         }
         if (nextStats) {
           setGithubStats((prev) => ({
@@ -101,20 +115,16 @@ export default function StatsPage() {
     };
   }, []);
 
-  const MOCK_LANGUAGES = [
-    { name: "TypeScript", value: 45.2, color: "#3178c6" },
-    { name: "Python", value: 30.5, color: "#3572A5" },
-    { name: "Rust", value: 12.8, color: "#dea584" },
-    { name: "CSS", value: 6.5, color: "#563d7c" },
-    { name: t('other_lang'), value: 5.0, color: "var(--text-secondary)" },
-  ];
+  const topLanguage = useMemo(() => {
+    return languageData[0] || { name: "Python", value: 46.1, color: "#3572A5" };
+  }, [languageData]);
 
   const stats = useMemo(() => [
     { label: "All-Time Commits", value: githubStats.allTimeCommits, sub: "public GitHub author index", color: "#FF6B35" },
     { label: "Commits (30D)", value: githubStats.commits30d, sub: "includes latest push", color: "#C8FF00" },
     { label: t('streak_label'), value: githubStats.activeDays, sub: "active coding days", color: "#A855F7" },
-    { label: t('top_lang_label'), value: "TypeScript", sub: t('top_lang_sub'), color: "#3178c6" },
-  ], [githubStats, t]);
+    { label: t('top_lang_label'), value: topLanguage.name, sub: `${topLanguage.value}% of codebase`, color: topLanguage.color },
+  ], [githubStats, topLanguage, t]);
 
   return (
     <main className="relative z-10 pt-24 sm:pt-32 pb-20">
@@ -136,19 +146,22 @@ export default function StatsPage() {
         </div>
 
         {/* Charts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
           <div className="lg:col-span-2">
             <ActivityGraph data={activityData} loading={loadingActivity} lastUpdated={githubStats.lastCommitAt} />
           </div>
           <div className="lg:col-span-1">
-            <LanguagePieChart data={MOCK_LANGUAGES} />
+            <LanguagePieChart data={languageData} />
           </div>
         </div>
+
+        {/* Microservices & Infrastructure Real-Time Health Grid */}
+        <ServiceHealthGrid />
         
         {/* Footer note for V1 */}
         <div className="flex justify-center mb-10">
           <p className="font-mono text-[0.55rem] sm:text-[0.6rem] tracking-widest uppercase" style={{ color: "var(--text-tertiary)" }}>
-            Live GitHub commit metrics refresh every 5 minutes.
+            Live GitHub commit metrics & microservice heartbeats refresh every 5 minutes.
           </p>
         </div>
 

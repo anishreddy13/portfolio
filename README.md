@@ -4,6 +4,8 @@
 
 **9 Production-Grade AI/ML Projects** · Full-Stack · Cloud-Native · Enterprise Architecture
 
+[![Live Website](https://img.shields.io/badge/🚀_Live_Website-www.anishreddy.online-C8FF00?style=for-the-badge)](https://www.anishreddy.online)
+
 [![CI](https://github.com/anishreddy13/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/anishreddy13/portfolio/actions/workflows/ci.yml)
 [![Frontend](https://github.com/anishreddy13/portfolio/actions/workflows/frontend.yml/badge.svg)](https://github.com/anishreddy13/portfolio/actions/workflows/frontend.yml)
 [![ML Pipeline](https://github.com/anishreddy13/portfolio/actions/workflows/ml_pipeline.yml/badge.svg)](https://github.com/anishreddy13/portfolio/actions/workflows/ml_pipeline.yml)
