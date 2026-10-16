@@ -10,9 +10,9 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const navLinks = [
   { id: "about",   href: "#about" },
-  { id: "edu",     href: "#education" },
-  { id: "work",    href: "#projects" },
-  { id: "certs",   href: "#certificates" },
+  { id: "systems", href: "#systems" },
+  { id: "architecture", href: "#architecture" },
+  { id: "work",    href: "#selected-systems" },
   { id: "contact", href: "#contact" },
 ];
 
@@ -34,7 +34,7 @@ export default function Navbar() {
         return;
       }
 
-      const sections = ["about", "education", "projects", "certificates", "contact"];
+      const sections = ["about", "systems", "architecture", "selected-systems", "contact"];
       for (const sec of [...sections].reverse()) {
         const el = document.getElementById(sec);
         if (el && window.scrollY >= el.offsetTop - 200) {

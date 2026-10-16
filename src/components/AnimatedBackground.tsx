@@ -58,6 +58,7 @@ function ParticleField() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         <bufferAttribute attach="attributes-color"    args={[colors, 3]} />
+        <bufferAttribute attach="attributes-size"     args={[sizes, 1]} />
       </bufferGeometry>
       <pointsMaterial
         size={0.1}

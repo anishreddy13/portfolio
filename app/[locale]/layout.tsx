@@ -8,7 +8,7 @@ import { getMessages } from 'next-intl/server';
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
+  // maximumScale removed: restricting it blocks pinch-to-zoom (WCAG 1.4.4)
 };
 
 export const metadata: Metadata = {

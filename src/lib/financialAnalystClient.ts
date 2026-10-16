@@ -2,6 +2,7 @@ import { Client } from "@gradio/client";
 
 const SPACE_ID = "Anishreddy13/ai-financial-analyst";
 const SPACE_URL = "https://anishreddy13-ai-financial-analyst.hf.space";
+const CONNECT_TIMEOUT_MS = 20_000;
 
 type FinancialAnalystClient = Awaited<ReturnType<typeof Client.connect>>;
 
@@ -11,11 +12,20 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  const timeout = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error(`Connect timed out after ${ms}ms`)), ms)
+  );
+  return Promise.race([promise, timeout]);
+}
+
 async function connectOnce() {
+  // Both SPACE_ID and SPACE_URL resolve to the same HuggingFace space; the
+  // fallback only guards against transient ID-resolution failures.
   try {
-    return await Client.connect(SPACE_ID);
+    return await withTimeout(Client.connect(SPACE_ID), CONNECT_TIMEOUT_MS);
   } catch {
-    return Client.connect(SPACE_URL);
+    return withTimeout(Client.connect(SPACE_URL), CONNECT_TIMEOUT_MS);
   }
 }
 

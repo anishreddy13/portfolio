@@ -47,8 +47,10 @@ function rateLimitKey(ip: string) {
 async function isRateLimited(request: NextRequest) {
   const db = getServiceSupabase();
   const key = rateLimitKey(getClientIp(request));
+  // If rate-limiting cannot be configured (missing env vars), allow the
+  // request through rather than returning 503. Rate limiting is best-effort.
   if (!db || !key) {
-    return null;
+    return false;
   }
 
   const { data, error } = await db.rpc("check_contact_rate_limit", {
@@ -59,7 +61,7 @@ async function isRateLimited(request: NextRequest) {
 
   if (error || typeof data !== "boolean") {
     console.error("[Contact API] Rate-limit check failed.", { code: error?.code, message: error?.message });
-    return null;
+    return false;
   }
 
   return data;
@@ -203,10 +205,19 @@ async function sendEmail(data: {
 }
 
 export async function POST(request: NextRequest) {
-  const limited = await isRateLimited(request);
-  if (limited === null) {
-    return jsonResponse({ ok: false, message: "Contact service is temporarily unavailable." }, 503);
+  // Basic CSRF mitigation: only allow same-origin and explicitly allowed origins.
+  const origin = request.headers.get("origin") ?? "";
+  const host = request.headers.get("host") ?? "";
+  const allowedOrigins = [
+    `https://${host}`,
+    `http://${host}`,
+    process.env.NEXT_PUBLIC_SITE_URL ?? "",
+  ].filter(Boolean);
+  if (origin && !allowedOrigins.some((o) => origin === o)) {
+    return jsonResponse({ ok: false, message: "Forbidden." }, 403);
   }
+
+  const limited = await isRateLimited(request);
   if (limited) {
     return jsonResponse(
       { ok: false, message: "Too many messages. Please wait a minute and try again." },

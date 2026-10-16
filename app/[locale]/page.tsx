@@ -10,6 +10,7 @@ import FeaturedFinancialAnalyst from "@/components/FeaturedFinancialAnalyst";
 import Projects from "@/components/Projects";
 import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
+import SystemsLab from "@/components/SystemsLab";
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -80,6 +81,7 @@ export default function Home() {
         style={{ background: "var(--surface-0)" }}
       >
         <Hero />
+        <SystemsLab />
         <FeaturedFinancialAnalyst />
         <About />
         <Education />

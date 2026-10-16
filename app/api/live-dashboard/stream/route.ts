@@ -37,8 +37,15 @@ let cachedSnapshotAt = 0;
 let snapshotPromise: Promise<Awaited<ReturnType<typeof loadLiveSnapshot>>> | null = null;
 let activeConnections = 0;
 
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+// Returns a promise that resolves after `ms` ms OR rejects immediately when
+// `signal` fires — so the stream loop wakes up on client disconnect instead
+// of waiting for the full 15-second interval to elapse.
+function sleep(ms: number, signal?: AbortSignal) {
+  return new Promise<void>((resolve, reject) => {
+    if (signal?.aborted) { reject(new DOMException("Aborted", "AbortError")); return; }
+    const timer = setTimeout(resolve, ms);
+    signal?.addEventListener("abort", () => { clearTimeout(timer); reject(new DOMException("Aborted", "AbortError")); }, { once: true });
+  });
 }
 
 function readResponseJson(response: unknown) {
@@ -290,7 +297,12 @@ export async function GET(req: NextRequest) {
         }
 
         if (!active) break;
-        await sleep(STREAM_INTERVAL_MS);
+        try {
+          await sleep(STREAM_INTERVAL_MS, req.signal);
+        } catch {
+          // Client disconnected — exit the loop immediately.
+          break;
+        }
       }
     },
     cancel() {

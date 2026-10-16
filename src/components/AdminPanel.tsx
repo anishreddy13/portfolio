@@ -5,6 +5,11 @@ interface AdminPanelProps {
   user: User;
 }
 
+// IMPORTANT: This panel is client-side only. Any admin actions wired to the
+// "Configure" buttons MUST be backed by server-side authorization — never
+// trust the client-supplied role list alone. Currently the buttons are UI-only
+// with no server calls, so there is no privilege escalation risk, but any
+// future server actions must re-verify the session server-side.
 export function AdminPanel({ user }: AdminPanelProps) {
   if (!user.roles.includes('ADMIN')) return null;
 

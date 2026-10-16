@@ -1,3 +1,12 @@
+---
+title: Plant Disease FastAPI
+emoji: 🌿
+colorFrom: green
+colorTo: teal
+sdk: docker
+pinned: false
+---
+
 <div align="center">
 
 # 🌿 Plant Disease Detection

@@ -128,26 +128,30 @@ export async function GET() {
       latestCommit?.commit?.committer?.date ||
       null;
 
-    return NextResponse.json({
-      ok: true,
-      user: GITHUB_USER,
-      activity: buckets,
-      stats: {
-        allTimeCommits: allTime.total_count,
-        commits30d: recentFirstPage.total_count,
-        activeDays,
-        indexedRecentCommits: recentItems.length,
-        lastCommitAt,
-        latestCommit: latestCommit
-          ? {
-              sha: latestCommit.sha,
-              message: latestCommit.commit?.message || "",
-              repository: latestCommit.repository?.full_name || "",
-              url: latestCommit.html_url,
-            }
-          : null,
+    return NextResponse.json(
+      {
+        ok: true,
+        user: GITHUB_USER,
+        activity: buckets,
+        stats: {
+          allTimeCommits: allTime.total_count,
+          commits30d: recentFirstPage.total_count,
+          activeDays,
+          indexedRecentCommits: recentItems.length,
+          lastCommitAt,
+          latestCommit: latestCommit
+            ? {
+                sha: latestCommit.sha,
+                message: latestCommit.commit?.message || "",
+                repository: latestCommit.repository?.full_name || "",
+                url: latestCommit.html_url,
+              }
+            : null,
+        },
       },
-    });
+      // Cache for 10 minutes at CDN/edge; re-validate in background.
+      { headers: { "Cache-Control": "public, s-maxage=600, stale-while-revalidate=120" } }
+    );
   } catch (error) {
     console.error("GitHub commit metrics fetch failed:", error);
     return NextResponse.json(

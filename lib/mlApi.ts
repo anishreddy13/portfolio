@@ -6,6 +6,10 @@ const mlApiUrl = process.env.NEXT_PUBLIC_ML_API_URL || DEFAULT_ML_API_URL;
 const skinApiUrl = process.env.NEXT_PUBLIC_SKIN_API_URL || DEFAULT_SKIN_API_URL;
 const plantApiUrl = process.env.NEXT_PUBLIC_PLANT_API_URL || DEFAULT_PLANT_API_URL;
 
+// 30-second timeout for all ML API calls — Render and HuggingFace cold-starts
+// can be slow; without a timeout requests hang until the platform kills them.
+const ML_FETCH_TIMEOUT_MS = 30_000;
+
 function buildUrl(baseUrl: string, path: string) {
   return `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 }
@@ -29,6 +33,7 @@ async function postJson<T>(
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
+    signal: AbortSignal.timeout(ML_FETCH_TIMEOUT_MS),
   });
 
   if (!response.ok) {
@@ -53,6 +58,7 @@ export async function fetchPlantForm<T>(path: string, image: File) {
   const response = await fetch(buildUrl(plantApiUrl, path), {
     method: "POST",
     body: formData,
+    signal: AbortSignal.timeout(ML_FETCH_TIMEOUT_MS),
   });
 
   if (!response.ok) {
@@ -63,13 +69,13 @@ export async function fetchPlantForm<T>(path: string, image: File) {
 }
 
 export function fetchMlHealth() {
-  return fetch(buildUrl(mlApiUrl, "/health"));
+  return fetch(buildUrl(mlApiUrl, "/health"), { signal: AbortSignal.timeout(ML_FETCH_TIMEOUT_MS) });
 }
 
 export function fetchSkinHealth() {
-  return fetch(buildUrl(skinApiUrl, "/"));
+  return fetch(buildUrl(skinApiUrl, "/"), { signal: AbortSignal.timeout(ML_FETCH_TIMEOUT_MS) });
 }
 
 export function fetchPlantHealth() {
-  return fetch(buildUrl(plantApiUrl, "/health"));
+  return fetch(buildUrl(plantApiUrl, "/health"), { signal: AbortSignal.timeout(ML_FETCH_TIMEOUT_MS) });
 }
