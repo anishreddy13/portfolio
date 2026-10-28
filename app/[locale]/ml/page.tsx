@@ -9,10 +9,11 @@ import { Link } from "@/i18n/routing";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import InterviewAnalyzer from "@/components/InterviewAnalyzer";
 import PlantDiseaseDetector from "@/components/PlantDiseaseDetector";
+import AuthorshipLab from "@/components/AuthorshipLab";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type TabType = "sentiment" | "spam" | "emotion" | "cancer" | "skin" | "plant" | "interview";
+type TabType = "sentiment" | "spam" | "emotion" | "cancer" | "skin" | "plant" | "interview" | "authorship";
 
 interface SentimentResult {
   sentiment: string;
@@ -1198,7 +1199,7 @@ export default function MLPage() {
   }, []);
 
   useEffect(() => {
-    const validTabs: TabType[] = ["sentiment", "spam", "emotion", "cancer", "skin", "plant", "interview"];
+    const validTabs: TabType[] = ["sentiment", "spam", "emotion", "cancer", "skin", "plant", "interview", "authorship"];
     const activateFromUrl = () => {
       const tab = new URLSearchParams(window.location.search).get("tab") as TabType | null;
       if (tab && validTabs.includes(tab)) setActiveTab(tab);
@@ -1230,7 +1231,8 @@ export default function MLPage() {
   }, []);
 
   const tabs = [
-    { id: "plant"     as TabType, label: t("tabs.plant"),       icon: "🌿", color: "#C8FF00", desc: "New · Leaf CNN", featured: true },
+    { id: "authorship" as TabType, label: t("tabs.authorship"), icon: "⚖️", color: "#C8FF00", desc: "3 Models · Robustness", featured: true },
+    { id: "plant"     as TabType, label: t("tabs.plant"),       icon: "🌿", color: "#C8FF00", desc: "Leaf CNN"               },
     { id: "sentiment" as TabType, label: t("tabs.sentiment"),      icon: "🧠", color: "#FF2D2D", desc: "Pos · Neg · Neutral"    },
     { id: "spam"      as TabType, label: t("tabs.spam"),           icon: "🔍", color: "#FF6B35", desc: "Spam · Ham"             },
     { id: "emotion"   as TabType, label: t("tabs.emotion"),        icon: "🎭", color: "#A855F7", desc: "28 Emotions · Demo"     },
@@ -1328,7 +1330,7 @@ export default function MLPage() {
             </span>
           </h1>
           <p className="font-body text-base max-w-xl leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            Seven real ML models across text, speech, tabular, and vision workflows.{" "}
+            Eight real ML models across text, speech, tabular, vision, and authorship workflows.{" "}
             <span style={{ color: "var(--text-primary)" }}>Python, scikit-learn, PyTorch & FastAPI.</span>
           </p>
         </motion.div>
@@ -1389,7 +1391,7 @@ export default function MLPage() {
         <motion.div
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-2 mb-8"
+          className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 mb-8"
         >
           {tabs.map((tab) => {
             const active = activeTab === tab.id;
@@ -1442,7 +1444,8 @@ export default function MLPage() {
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.25 }}
           >
-            {activeTab === "sentiment" ? <SentimentTab serverStatus={serverStatus} /> :
+            {activeTab === "authorship" ? <AuthorshipLab serverStatus={serverStatus as any} /> :
+             activeTab === "sentiment" ? <SentimentTab serverStatus={serverStatus} /> :
              activeTab === "spam"      ? <SpamTab      serverStatus={serverStatus} /> :
              activeTab === "emotion"   ? <EmotionTab   serverStatus={serverStatus} /> :
              activeTab === "cancer"    ? <CancerTab    serverStatus={serverStatus} /> :

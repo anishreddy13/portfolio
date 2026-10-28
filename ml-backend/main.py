@@ -6,8 +6,9 @@ from datetime import datetime
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional, Dict, Any
 import os
+import json
 import uvicorn
 from pathlib import Path
 
@@ -121,6 +122,13 @@ CANCER_MODEL_PATH    = "cancer_model.pkl"
 ML_BACKEND_DIR       = Path(__file__).resolve().parent
 PLANT_MODEL_PATH     = ML_BACKEND_DIR / "models" / "plant_disease" / "best_model.pt"
 PLANT_MAPPING_PATH   = ML_BACKEND_DIR / "models" / "plant_disease" / "plant_class_to_idx.json"
+AUTHORSHIP_BUNDLE_PATH = ML_BACKEND_DIR / "authorship_bundle_v1.pkl"
+BENCHMARK_RESULTS_PATH = ML_BACKEND_DIR / "authorship" / "benchmark_results.json"
+try:
+    from authorship.config import TRAINING_WORD_COUNT_MIN, TRAINING_WORD_COUNT_MAX
+except ImportError:
+    TRAINING_WORD_COUNT_MIN = 266
+    TRAINING_WORD_COUNT_MAX = 5958
 SUPPORTED_PLANT_IMAGE_MIME_TYPES = {
     "image/jpeg",
     "image/png",
@@ -138,6 +146,7 @@ gender_pipeline    = None
 age_pipeline       = None
 cancer_pipeline    = None
 plant_predictor    = None
+authorship_bundle  = None
 
 
 # ─────────────────────────────────────────────────────────────
@@ -155,6 +164,7 @@ async def lifespan(app: FastAPI):
     global emotion_pipeline, gender_pipeline, age_pipeline
     global cancer_pipeline
     global plant_predictor
+    global authorship_bundle
     global predict_sentiment, load_model
     global predict_spam, load_spam_model
     global predict_emotion, load_emotion_models
@@ -269,6 +279,20 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         plant_predictor = None
         logger.exception(f"⚠️ Plant disease model loading failed: {e}")
+
+    # Authorship multi-model bundle (non-fatal)
+    try:
+        if os.path.exists(AUTHORSHIP_BUNDLE_PATH):
+            from authorship.model import AuthorshipBundle
+            authorship_bundle = AuthorshipBundle.load(AUTHORSHIP_BUNDLE_PATH)
+            logger.info("✅ Authorship multi-model bundle loaded")
+        else:
+            authorship_bundle = None
+            logger.warning(f"⚠️ Authorship bundle missing at {AUTHORSHIP_BUNDLE_PATH}")
+    except Exception as e:
+        authorship_bundle = None
+        OPTIONAL_IMPORT_ERRORS["authorship"] = str(e)
+        logger.exception(f"⚠️ Authorship bundle loading failed: {e}")
 
     # ── Connect Redis (non-fatal) ─────────────────────────────
     try:
@@ -415,6 +439,49 @@ class PlantPredictionResponse(BaseModel):
     top_5_predictions:      List[PlantPredictionItem]
 
 
+# ── Authorship Lab Schemas ──────────────────────────────────
+class AuthorshipInput(BaseModel):
+    text: str
+
+
+class ModelPredictionDetail(BaseModel):
+    model_name: str
+    predicted_label: str
+    predicted_class: int
+    ai_probability: float
+    human_probability: float
+    confidence: float
+    score_type: str
+
+
+class ConsensusSummary(BaseModel):
+    majority_vote_label: str
+    majority_vote_class: int
+    ai_votes: int
+    human_votes: int
+    mean_ai_probability: float
+    agreement: str
+
+
+class TokenAttribution(BaseModel):
+    feature: str
+    tfidf: float
+    coefficient: float
+    contribution: float
+    direction: str
+
+
+class AuthorshipResponse(BaseModel):
+    model_version: str
+    text_length_chars: int
+    text_length_words: int
+    predictions: Dict[str, ModelPredictionDetail]
+    consensus: ConsensusSummary
+    length_warning: Optional[str] = None
+    explanations: List[TokenAttribution] = []
+    limitations_disclaimer: str
+
+
 # ─────────────────────────────────────────────────────────────
 # ROOT
 # ─────────────────────────────────────────────────────────────
@@ -430,6 +497,7 @@ def root():
             "emotion-gender-age",
             "breast-cancer-detection",
             "plant-disease-detection",
+            "ai-authorship-detector",
         ],
         "status": "healthy",
     }
@@ -456,11 +524,12 @@ async def health():
         "uptime_seconds":  uptime_seconds,
 
         "models": {
-            "sentiment_model": sentiment_pipeline is not None,
-            "spam_model":      spam_pipeline      is not None,
-            "emotion_model":   emotion_pipeline   is not None,
-            "cancer_model":    cancer_pipeline     is not None,
-            "plant_model":     plant_predictor     is not None,
+            "sentiment_model":  sentiment_pipeline is not None,
+            "spam_model":       spam_pipeline      is not None,
+            "emotion_model":    emotion_pipeline   is not None,
+            "cancer_model":     cancer_pipeline    is not None,
+            "plant_model":      plant_predictor    is not None,
+            "authorship_model": authorship_bundle  is not None,
         },
 
         "services": {
@@ -632,6 +701,134 @@ async def predict_plant_route(
     except Exception as e:
         logger.exception(f"Plant disease prediction failed: {e}")
         raise HTTPException(500, "Plant disease prediction failed")
+
+
+# ─────────────────────────────────────────────────────────────
+# AI AUTHORSHIP & ROBUSTNESS LAB
+# ─────────────────────────────────────────────────────────────
+@app.post("/predict/authorship", response_model=AuthorshipResponse)
+def predict_authorship_route(input: AuthorshipInput):
+    # Reject empty or whitespace-only input
+    if not input.text or not input.text.strip():
+        raise HTTPException(status_code=400, detail="Text cannot be empty or whitespace only.")
+
+    # Max length ~40,000 characters
+    if len(input.text) > 40000:
+        raise HTTPException(
+            status_code=400,
+            detail="Text exceeds maximum allowed length of 40,000 characters."
+        )
+
+    if authorship_bundle is None:
+        raise HTTPException(status_code=503, detail="Authorship model bundle not loaded on server.")
+
+    try:
+        raw_result = authorship_bundle.predict_single(input.text)
+        explanations_raw = authorship_bundle.explain(input.text, top_k=6)
+    except Exception as e:
+        logger.exception(f"Authorship inference error: {e}")
+        raise HTTPException(status_code=500, detail="Authorship inference failed.")
+
+    # Check observed training distribution (min ~266 words, max ~5,958 words)
+    words_count = raw_result["text_length_words"]
+    length_warning = None
+    if words_count < TRAINING_WORD_COUNT_MIN:
+        length_warning = (
+            f"Input text has {words_count} words, which is below the observed "
+            f"training distribution minimum (~{TRAINING_WORD_COUNT_MIN} words). Short texts may "
+            "exhibit higher classification variance."
+        )
+    elif words_count > TRAINING_WORD_COUNT_MAX:
+        length_warning = (
+            f"Input text has {words_count} words, which exceeds the observed "
+            f"training distribution maximum (~{TRAINING_WORD_COUNT_MAX:,} words)."
+        )
+
+    # Format model details
+    model_name_map = {
+        "naive_bayes": "Multinomial Naive Bayes",
+        "logistic_regression": "Logistic Regression",
+        "calibrated_svm": "Calibrated Linear SVM",
+    }
+    score_type_map = {
+        "naive_bayes": "multinomial_posterior_probability",
+        "logistic_regression": "logistic_sigmoid_probability",
+        "calibrated_svm": "platt_calibrated_probability",
+    }
+
+    formatted_predictions = {}
+    for key, pred in raw_result["predictions"].items():
+        predicted_label = "AI-generated" if pred["predicted_class"] == 1 else "Human-written"
+        formatted_predictions[key] = ModelPredictionDetail(
+            model_name=model_name_map.get(key, key),
+            predicted_label=predicted_label,
+            predicted_class=pred["predicted_class"],
+            ai_probability=pred["ai_probability"],
+            human_probability=pred["human_probability"],
+            confidence=pred["confidence"],
+            score_type=score_type_map.get(key, "estimated_probability"),
+        )
+
+    raw_consensus = raw_result["consensus"]
+    majority_label = "AI-generated" if raw_consensus["consensus_label"] == "AI" else "Human-written"
+    majority_class = 1 if majority_label == "AI-generated" else 0
+    agreement_str = (
+        "unanimous"
+        if (raw_consensus["ai_votes"] == 3 or raw_consensus["human_votes"] == 3)
+        else "disagreement"
+    )
+
+    consensus_obj = ConsensusSummary(
+        majority_vote_label=majority_label,
+        majority_vote_class=majority_class,
+        ai_votes=raw_consensus["ai_votes"],
+        human_votes=raw_consensus["human_votes"],
+        mean_ai_probability=raw_consensus["mean_ai_probability"],
+        agreement=agreement_str,
+    )
+
+    explanations = [
+        TokenAttribution(
+            feature=exp["feature"],
+            tfidf=exp["tfidf"],
+            coefficient=exp["coefficient"],
+            contribution=exp["contribution"],
+            direction=exp["direction"],
+        )
+        for exp in explanations_raw
+    ]
+
+    return AuthorshipResponse(
+        model_version=authorship_bundle.metadata.get("version", "1.0.0"),
+        text_length_chars=raw_result["text_length_chars"],
+        text_length_words=raw_result["text_length_words"],
+        predictions=formatted_predictions,
+        consensus=consensus_obj,
+        length_warning=length_warning,
+        explanations=explanations,
+        limitations_disclaimer=(
+            "Predictions are empirical machine-learning estimates based on stylistic "
+            "and n-gram patterns, not definitive proof of human or AI authorship."
+        ),
+    )
+
+
+@app.get("/benchmark/authorship")
+def get_authorship_benchmark():
+    if not os.path.exists(BENCHMARK_RESULTS_PATH):
+        raise HTTPException(
+            status_code=404,
+            detail="Benchmark results not found on server."
+        )
+    try:
+        with open(BENCHMARK_RESULTS_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.exception(f"Failed to read benchmark results: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to parse benchmark results file."
+        )
 
 
 if __name__ == "__main__":

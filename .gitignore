@@ -29,6 +29,7 @@ ml-backend/logs/
 *.pt
 *.pth
 *.pkl
+!ml-backend/authorship_bundle_v1.pkl
 *.h5
 
 # Data files

@@ -287,6 +287,7 @@
     "title_highlight": "ML Lab",
     "subtitle": "Live-Inferenz-Endpunkte, die Hugging Face & Scikit-Learn Modelle über FastAPI bereitstellen.",
     "tabs": {
+      "authorship": "Urheberschafts-KI",
       "plant": "Pflanzen-KI",
       "interview": "Coach-KI",
       "sentiment": "Stimmung",
@@ -362,6 +363,35 @@
       "benign": "Gutartig (Sicher)",
       "risk": "Risikoanalyse",
       "top_features": "Wichtigste beitragende Merkmale"
+    },
+    "authorship": {
+      "tab_label": "Urheberschafts-KI",
+      "tab_desc": "3 Modelle · Robustheitslabor",
+      "title": "KI-Urheberschafts- & Robustheitslabor",
+      "research_question": "Wie schneiden drei klassische Machine-Learning-Klassifikatoren beim Unterscheiden von menschlichem und KI-generiertem Text ab, und wie empfindlich reagieren ihre Vorhersagen auf Textlänge, Schreibdomäne und einfache Textstörungen?",
+      "disclaimer": "Experimenteller Forschungsklassifikator — kein definitiver Beweis oder Nachweis der Autorschaft.",
+      "analyzer_title": "Live-Inferenz mit 3 Modellen",
+      "placeholder": "Geben Sie englischen Text ein oder fügen Sie ihn ein (wissenschaftliches Abstract, Artikel, Meinungsbeitrag oder Aufsatz)...",
+      "analyze_btn": "Text mit 3 Modellen analysieren",
+      "analyzing": "Inferenz läuft...",
+      "word_count": "Wörter",
+      "char_count": "Zeichen",
+      "load_sample": "Forschungsbeispiel laden",
+      "clear": "Löschen",
+      "results_title": "Klassifikationsergebnisse",
+      "consensus_title": "Ensemble-Konsens",
+      "unanimous": "Einstimmiges Ergebnis",
+      "disagreement": "Modell-Uneinigkeit",
+      "out_of_distribution_warning": "Warnung: Die Textlänge liegt außerhalb der beobachteten Trainingsverteilung (~266 bis ~5.958 Wörter). Bei sehr kurzen Abschnitten besteht höhere Varianz.",
+      "benchmark_title": "Benchmark-Übersicht & Metriken",
+      "benchmark_desc": "Gemessen an 1.734 zurückgehaltenen Testbeispielen des AH&AITD-Benchmark-Datensatzes (Zenodo DOI: 10.5281/zenodo.15506369, CC BY 4.0).",
+      "model_comparison": "Modellvergleichstabelle",
+      "matrices": "Konfusionsmatrizen",
+      "length_subgroups": "Leistung nach Textlängenband",
+      "perturbation_analysis": "Perturbations- und Robustheitsanalyse",
+      "domain_slices": "Domänen- und Generator-Segmente",
+      "research_transparency": "Forschungs- und Methodentransparenz",
+      "model_transparency": "Modelltransparenz & Einschränkungen"
     }
   },
   "Plant": {

@@ -296,6 +296,7 @@
     "title_highlight": "ML Lab",
     "subtitle": "Live inference endpoints serving Hugging Face & Scikit-Learn models via FastAPI.",
     "tabs": {
+      "authorship": "Authorship AI",
       "plant": "Plant AI",
       "interview": "Coach AI",
       "sentiment": "Sentiment",
@@ -371,6 +372,35 @@
       "benign": "Benign (Safe)",
       "risk": "Risk Analysis",
       "top_features": "Top Contributing Features"
+    },
+    "authorship": {
+      "tab_label": "Authorship AI",
+      "tab_desc": "3 Models · Robustness Lab",
+      "title": "AI Authorship & Robustness Lab",
+      "research_question": "How do three classical machine-learning classifiers compare when distinguishing human-written text from AI-generated text, and how sensitive are their predictions to text length, writing domain and simple text perturbations?",
+      "disclaimer": "Experimental research classifier — not a definitive proof or verification of authorship.",
+      "analyzer_title": "Multi-Model Live Inference",
+      "placeholder": "Enter or paste English text to analyze (academic abstract, article, opinion piece, or essay)...",
+      "analyze_btn": "Analyze Text Across 3 Models",
+      "analyzing": "Running Inference...",
+      "word_count": "Words",
+      "char_count": "Characters",
+      "load_sample": "Load Research Sample",
+      "clear": "Clear",
+      "results_title": "Classifier Results",
+      "consensus_title": "Ensemble Consensus",
+      "unanimous": "Unanimous Agreement",
+      "disagreement": "Model Disagreement",
+      "out_of_distribution_warning": "Warning: Text length is outside the observed training distribution (~266 to ~5,958 words). Predictions on very short snippets carry higher variance.",
+      "benchmark_title": "Benchmark Overview & Metrics",
+      "benchmark_desc": "Measured on 1,734 held-out test examples from the AH&AITD benchmark dataset (Zenodo DOI: 10.5281/zenodo.15506369, CC BY 4.0).",
+      "model_comparison": "Model Comparison Table",
+      "matrices": "Confusion Matrices",
+      "length_subgroups": "Performance by Text-Length Band",
+      "perturbation_analysis": "Perturbation Robustness Analysis",
+      "domain_slices": "Domain & Generator Slices",
+      "research_transparency": "Research & Methodology Transparency",
+      "model_transparency": "Model Transparency & Limitations"
     }
   },
   "Plant": {
