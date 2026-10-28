@@ -3,6 +3,10 @@ Unit and smoke tests for AI Authorship & Robustness Lab.
 Covers data validation, bundle loading, single/batch inference,
 metric calculations, and perturbation transforms.
 """
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import numpy as np
 import pytest
 from pathlib import Path

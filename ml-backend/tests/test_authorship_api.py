@@ -2,6 +2,10 @@
 Integration and API tests for Authorship & Robustness Lab endpoints.
 Tests /predict/authorship, /benchmark/authorship, /health, and error handling.
 """
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import pytest
 from fastapi.testclient import TestClient
 
