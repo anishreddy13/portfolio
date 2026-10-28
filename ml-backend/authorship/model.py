@@ -30,6 +30,23 @@ class AuthorshipBundle:
         self.feature_names = feature_names or []
         self.logistic_coef = logistic_coef
         self.metadata = metadata or {}
+        self._ensure_sklearn_compat()
+
+    def _ensure_sklearn_compat(self) -> None:
+        """
+        Cross-version compatibility helper for scikit-learn.
+        Restores missing attributes expected by scikit-learn 1.5.2 (e.g. multi_class).
+        """
+        models = getattr(self, "models", None)
+        if isinstance(models, dict):
+            lr = models.get("logistic_regression")
+            if lr is not None and not hasattr(lr, "multi_class"):
+                lr.multi_class = "auto"
+
+    def __setstate__(self, state: Dict[str, Any]) -> None:
+        """Handle unpickling cleanly across differing scikit-learn versions."""
+        self.__dict__.update(state)
+        self._ensure_sklearn_compat()
 
     def predict_single(self, text: str) -> Dict[str, Any]:
         """
@@ -39,6 +56,7 @@ class AuthorshipBundle:
         if not text or not text.strip():
             raise ValueError("Input text cannot be empty.")
 
+        self._ensure_sklearn_compat()
         X = self.vectorizer.transform([text])
         words = text.split()
         char_count = len(text)
@@ -143,4 +161,5 @@ class AuthorshipBundle:
         bundle = joblib.load(path)
         if not isinstance(bundle, cls):
             raise TypeError(f"Loaded object is {type(bundle)}, expected AuthorshipBundle")
+        bundle._ensure_sklearn_compat()
         return bundle
