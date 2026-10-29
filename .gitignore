@@ -30,6 +30,7 @@ ml-backend/logs/
 *.pth
 *.pkl
 !ml-backend/authorship_bundle_v1.pkl
+!hf_plant_api/authorship_bundle_v1.pkl
 *.h5
 
 # Data files

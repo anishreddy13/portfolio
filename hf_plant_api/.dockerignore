@@ -4,3 +4,5 @@ __pycache__/
 .venv/
 venv/
 *.log
+test_*.py
+test_integration.py

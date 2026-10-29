@@ -1,10 +1,12 @@
 const DEFAULT_ML_API_URL = "https://portfolio-pkdj.onrender.com";
 const DEFAULT_SKIN_API_URL = "https://anishreddy13-skin-cancer-api.hf.space";
 const DEFAULT_PLANT_API_URL = "https://anishreddy13-plant-disease-api.hf.space";
+const DEFAULT_AUTHORSHIP_API_URL = "https://anishreddy13-plant-disease-api.hf.space";
 
 const mlApiUrl = process.env.NEXT_PUBLIC_ML_API_URL || DEFAULT_ML_API_URL;
 const skinApiUrl = process.env.NEXT_PUBLIC_SKIN_API_URL || DEFAULT_SKIN_API_URL;
 const plantApiUrl = process.env.NEXT_PUBLIC_PLANT_API_URL || DEFAULT_PLANT_API_URL;
+const authorshipApiUrl = process.env.NEXT_PUBLIC_AUTHORSHIP_API_URL || DEFAULT_AUTHORSHIP_API_URL;
 
 // 30-second timeout for all ML API calls — Render and HuggingFace cold-starts
 // can be slow; without a timeout requests hang until the platform kills them.
@@ -78,6 +80,10 @@ export function fetchSkinHealth() {
 
 export function fetchPlantHealth() {
   return fetch(buildUrl(plantApiUrl, "/health"), { signal: AbortSignal.timeout(ML_FETCH_TIMEOUT_MS) });
+}
+
+export function fetchAuthorshipHealth() {
+  return fetch(buildUrl(authorshipApiUrl, "/health"), { signal: AbortSignal.timeout(ML_FETCH_TIMEOUT_MS) });
 }
 
 // ─── Authorship Lab Types & API ───────────────────────────────────────────────
@@ -240,7 +246,7 @@ export interface AuthorshipBenchmarkResponse {
 
 export function fetchAuthorshipPrediction(text: string) {
   return postJson<AuthorshipPredictionResponse>(
-    mlApiUrl,
+    authorshipApiUrl,
     "/predict/authorship",
     { text },
     "Authorship analysis failed"
@@ -248,7 +254,7 @@ export function fetchAuthorshipPrediction(text: string) {
 }
 
 export async function fetchAuthorshipBenchmark(): Promise<AuthorshipBenchmarkResponse> {
-  const response = await fetch(buildUrl(mlApiUrl, "/benchmark/authorship"), {
+  const response = await fetch(buildUrl(authorshipApiUrl, "/benchmark/authorship"), {
     method: "GET",
     headers: { "Content-Type": "application/json" },
     signal: AbortSignal.timeout(ML_FETCH_TIMEOUT_MS),

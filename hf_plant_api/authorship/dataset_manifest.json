@@ -1,0 +1,65 @@
+{
+  "dataset_name": "AH&AITD \u2013 Arslan's Human and AI Text Database",
+  "source_url": "https://zenodo.org/records/15506369/files/Dataset.xlsx?download=1",
+  "doi": "https://doi.org/10.5281/zenodo.15506369",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "md5_checksum": "55f3d63b9c3fecfd9807fdd4b5473d3b",
+  "raw_sample_count": 11580,
+  "raw_columns": [
+    "sr.no",
+    "text",
+    "source",
+    "label_name",
+    "label_id"
+  ],
+  "columns_dtypes": {
+    "sr.no": "int64",
+    "text": "str",
+    "source": "str",
+    "label_name": "str",
+    "label_id": "int64"
+  },
+  "detected_text_column": "text",
+  "detected_label_column": "label_id",
+  "detected_source_column": "source",
+  "detected_model_column": null,
+  "null_texts_removed": 0,
+  "null_labels_removed": 0,
+  "empty_texts_removed": 0,
+  "exact_duplicates_removed": 25,
+  "conflicting_duplicate_texts_removed": 0,
+  "final_clean_sample_count": 11555,
+  "final_class_distribution": {
+    "Human (0)": 5766,
+    "AI (1)": 5789
+  },
+  "text_statistics": {
+    "char_len_min": 1379,
+    "char_len_mean": 4295.131890956296,
+    "char_len_median": 3275.0,
+    "char_len_max": 32767,
+    "word_count_min": 266,
+    "word_count_mean": 727.3282561661619,
+    "word_count_median": 552.0,
+    "word_count_max": 5958
+  },
+  "source_distribution": {
+    "openwebtext": 2342,
+    "paraphrase": 1670,
+    "opinion statements": 1549,
+    "chatgpt": 1130,
+    "gpt-4": 744,
+    "answers": 670,
+    "davinci": 433,
+    "news articles": 430,
+    "opt-iml": 406,
+    "webtext": 397,
+    "flan_t5": 395,
+    "gpt-3.5": 364,
+    "gpt2": 328,
+    "gpt-3": 296,
+    "scientific research": 205,
+    "blog": 196
+  },
+  "model_distribution": {}
+}

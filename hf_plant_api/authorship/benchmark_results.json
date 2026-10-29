@@ -1,0 +1,990 @@
+{
+  "benchmark_metadata": {
+    "version": "1.0.0",
+    "timestamp": "2026-10-26T19:54:44.604742Z",
+    "dataset_provenance": {
+      "name": "AH&AITD \u2013 Arslan's Human and AI Text Database",
+      "doi": "https://doi.org/10.5281/zenodo.15506369",
+      "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "raw_samples": 11580,
+      "clean_samples": 11555,
+      "positive_class": "1 (AI-generated)",
+      "negative_class": "0 (Human-written)",
+      "training_word_count_min": 266,
+      "training_word_count_max": 5958,
+      "training_char_len_min": 1379,
+      "training_char_len_max": 32767
+    },
+    "split_protocol": {
+      "random_seed": 42,
+      "train": {
+        "samples": 8088,
+        "human_0": 4036,
+        "ai_1": 4052,
+        "percentage": 70.0
+      },
+      "validation": {
+        "samples": 1733,
+        "human_0": 865,
+        "ai_1": 868,
+        "percentage": 15.0
+      },
+      "test": {
+        "samples": 1734,
+        "human_0": 865,
+        "ai_1": 869,
+        "percentage": 15.01
+      }
+    },
+    "feature_representation": {
+      "vectorizer_type": "FeatureUnion(Word TF-IDF + Char TF-IDF)",
+      "total_features": 30000,
+      "word_features_count": 12000,
+      "char_features_count": 18000,
+      "vectorizer_fit_duration_sec": 106.79
+    },
+    "training_durations_sec": {
+      "naive_bayes": 0.149,
+      "logistic_regression": 3.427,
+      "calibrated_svm": 5.841
+    },
+    "artifact_info": {
+      "bundle_path": "authorship_bundle_v1.pkl",
+      "bundle_size_bytes": 2521569,
+      "bundle_size_mb": 2.4,
+      "compression": "joblib level 3"
+    }
+  },
+  "model_comparison": {
+    "naive_bayes": {
+      "accuracy": 0.8201,
+      "precision_ai": 0.8077,
+      "recall_ai": 0.8412,
+      "f1_ai": 0.8241,
+      "precision_macro": 0.8206,
+      "recall_macro": 0.82,
+      "f1_macro": 0.82,
+      "f1_weighted": 0.82,
+      "roc_auc": 0.9087,
+      "pr_auc": 0.91,
+      "brier_score": 0.1302,
+      "confusion_matrix": {
+        "tn": 691,
+        "fp": 174,
+        "fn": 138,
+        "tp": 731,
+        "raw_matrix": [
+          [
+            691,
+            174
+          ],
+          [
+            138,
+            731
+          ]
+        ],
+        "description": "[[True Human, False AI], [False Human, True AI]]"
+      },
+      "per_class": {
+        "human_0": {
+          "precision": 0.8335,
+          "recall": 0.7988,
+          "f1": 0.8158,
+          "support": 865
+        },
+        "ai_1": {
+          "precision": 0.8077,
+          "recall": 0.8412,
+          "f1": 0.8241,
+          "support": 869
+        }
+      },
+      "test_sample_count": 1734
+    },
+    "logistic_regression": {
+      "accuracy": 0.8985,
+      "precision_ai": 0.9015,
+      "recall_ai": 0.8953,
+      "f1_ai": 0.8984,
+      "precision_macro": 0.8985,
+      "recall_macro": 0.8985,
+      "f1_macro": 0.8985,
+      "f1_weighted": 0.8985,
+      "roc_auc": 0.9663,
+      "pr_auc": 0.9673,
+      "brier_score": 0.0801,
+      "confusion_matrix": {
+        "tn": 780,
+        "fp": 85,
+        "fn": 91,
+        "tp": 778,
+        "raw_matrix": [
+          [
+            780,
+            85
+          ],
+          [
+            91,
+            778
+          ]
+        ],
+        "description": "[[True Human, False AI], [False Human, True AI]]"
+      },
+      "per_class": {
+        "human_0": {
+          "precision": 0.8955,
+          "recall": 0.9017,
+          "f1": 0.8986,
+          "support": 865
+        },
+        "ai_1": {
+          "precision": 0.9015,
+          "recall": 0.8953,
+          "f1": 0.8984,
+          "support": 869
+        }
+      },
+      "test_sample_count": 1734
+    },
+    "calibrated_svm": {
+      "accuracy": 0.9002,
+      "precision_ai": 0.8973,
+      "recall_ai": 0.9045,
+      "f1_ai": 0.9009,
+      "precision_macro": 0.9003,
+      "recall_macro": 0.9002,
+      "f1_macro": 0.9002,
+      "f1_weighted": 0.9002,
+      "roc_auc": 0.9671,
+      "pr_auc": 0.9682,
+      "brier_score": 0.072,
+      "confusion_matrix": {
+        "tn": 775,
+        "fp": 90,
+        "fn": 83,
+        "tp": 786,
+        "raw_matrix": [
+          [
+            775,
+            90
+          ],
+          [
+            83,
+            786
+          ]
+        ],
+        "description": "[[True Human, False AI], [False Human, True AI]]"
+      },
+      "per_class": {
+        "human_0": {
+          "precision": 0.9033,
+          "recall": 0.896,
+          "f1": 0.8996,
+          "support": 865
+        },
+        "ai_1": {
+          "precision": 0.8973,
+          "recall": 0.9045,
+          "f1": 0.9009,
+          "support": 869
+        }
+      },
+      "test_sample_count": 1734
+    }
+  },
+  "validation_metrics": {
+    "naive_bayes": {
+      "accuracy": 0.809,
+      "precision_ai": 0.7835,
+      "recall_ai": 0.8548,
+      "f1_ai": 0.8176,
+      "precision_macro": 0.8116,
+      "recall_macro": 0.8089,
+      "f1_macro": 0.8086,
+      "f1_weighted": 0.8086,
+      "roc_auc": 0.8992,
+      "pr_auc": 0.9004,
+      "brier_score": 0.1382,
+      "confusion_matrix": {
+        "tn": 660,
+        "fp": 205,
+        "fn": 126,
+        "tp": 742,
+        "raw_matrix": [
+          [
+            660,
+            205
+          ],
+          [
+            126,
+            742
+          ]
+        ],
+        "description": "[[True Human, False AI], [False Human, True AI]]"
+      },
+      "per_class": {
+        "human_0": {
+          "precision": 0.8397,
+          "recall": 0.763,
+          "f1": 0.7995,
+          "support": 865
+        },
+        "ai_1": {
+          "precision": 0.7835,
+          "recall": 0.8548,
+          "f1": 0.8176,
+          "support": 868
+        }
+      },
+      "test_sample_count": 1733
+    },
+    "logistic_regression": {
+      "accuracy": 0.8973,
+      "precision_ai": 0.8885,
+      "recall_ai": 0.909,
+      "f1_ai": 0.8986,
+      "precision_macro": 0.8975,
+      "recall_macro": 0.8973,
+      "f1_macro": 0.8973,
+      "f1_weighted": 0.8973,
+      "roc_auc": 0.9665,
+      "pr_auc": 0.9654,
+      "brier_score": 0.0814,
+      "confusion_matrix": {
+        "tn": 766,
+        "fp": 99,
+        "fn": 79,
+        "tp": 789,
+        "raw_matrix": [
+          [
+            766,
+            99
+          ],
+          [
+            79,
+            789
+          ]
+        ],
+        "description": "[[True Human, False AI], [False Human, True AI]]"
+      },
+      "per_class": {
+        "human_0": {
+          "precision": 0.9065,
+          "recall": 0.8855,
+          "f1": 0.8959,
+          "support": 865
+        },
+        "ai_1": {
+          "precision": 0.8885,
+          "recall": 0.909,
+          "f1": 0.8986,
+          "support": 868
+        }
+      },
+      "test_sample_count": 1733
+    },
+    "calibrated_svm": {
+      "accuracy": 0.9002,
+      "precision_ai": 0.8944,
+      "recall_ai": 0.9078,
+      "f1_ai": 0.9011,
+      "precision_macro": 0.9003,
+      "recall_macro": 0.9002,
+      "f1_macro": 0.9002,
+      "f1_weighted": 0.9002,
+      "roc_auc": 0.9676,
+      "pr_auc": 0.966,
+      "brier_score": 0.0709,
+      "confusion_matrix": {
+        "tn": 772,
+        "fp": 93,
+        "fn": 80,
+        "tp": 788,
+        "raw_matrix": [
+          [
+            772,
+            93
+          ],
+          [
+            80,
+            788
+          ]
+        ],
+        "description": "[[True Human, False AI], [False Human, True AI]]"
+      },
+      "per_class": {
+        "human_0": {
+          "precision": 0.9061,
+          "recall": 0.8925,
+          "f1": 0.8992,
+          "support": 865
+        },
+        "ai_1": {
+          "precision": 0.8944,
+          "recall": 0.9078,
+          "f1": 0.9011,
+          "support": 868
+        }
+      },
+      "test_sample_count": 1733
+    }
+  },
+  "subgroup_analysis": {
+    "text_length_slices": {
+      "short (<400 words)": {
+        "sample_count": 234,
+        "human_count": 182,
+        "ai_count": 52,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.8077,
+            "precision_ai": 0.5556,
+            "recall_ai": 0.6731,
+            "f1_ai": 0.6087,
+            "roc_auc": 0.8542,
+            "brier_score": 0.1402
+          },
+          "logistic_regression": {
+            "accuracy": 0.9359,
+            "precision_ai": 0.8936,
+            "recall_ai": 0.8077,
+            "f1_ai": 0.8485,
+            "roc_auc": 0.9621,
+            "brier_score": 0.074
+          },
+          "calibrated_svm": {
+            "accuracy": 0.9188,
+            "precision_ai": 0.8235,
+            "recall_ai": 0.8077,
+            "f1_ai": 0.8155,
+            "roc_auc": 0.9635,
+            "brier_score": 0.06
+          }
+        }
+      },
+      "medium (400-800 words)": {
+        "sample_count": 1031,
+        "human_count": 609,
+        "ai_count": 422,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.8012,
+            "precision_ai": 0.7304,
+            "recall_ai": 0.8152,
+            "f1_ai": 0.7704,
+            "roc_auc": 0.8963,
+            "brier_score": 0.1409
+          },
+          "logistic_regression": {
+            "accuracy": 0.8594,
+            "precision_ai": 0.8337,
+            "recall_ai": 0.8199,
+            "f1_ai": 0.8268,
+            "roc_auc": 0.9442,
+            "brier_score": 0.0979
+          },
+          "calibrated_svm": {
+            "accuracy": 0.8652,
+            "precision_ai": 0.8329,
+            "recall_ai": 0.8389,
+            "f1_ai": 0.8359,
+            "roc_auc": 0.9458,
+            "brier_score": 0.0932
+          }
+        }
+      },
+      "long (>800 words)": {
+        "sample_count": 469,
+        "human_count": 74,
+        "ai_count": 395,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.8678,
+            "precision_ai": 0.9488,
+            "recall_ai": 0.8911,
+            "f1_ai": 0.9191,
+            "roc_auc": 0.9059,
+            "brier_score": 0.1016
+          },
+          "logistic_regression": {
+            "accuracy": 0.9659,
+            "precision_ai": 0.9726,
+            "recall_ai": 0.9873,
+            "f1_ai": 0.9799,
+            "roc_auc": 0.9753,
+            "brier_score": 0.0442
+          },
+          "calibrated_svm": {
+            "accuracy": 0.968,
+            "precision_ai": 0.975,
+            "recall_ai": 0.9873,
+            "f1_ai": 0.9811,
+            "roc_auc": 0.9761,
+            "brier_score": 0.0312
+          }
+        }
+      }
+    },
+    "source_domain_and_generator_slices": {
+      "answers": {
+        "sample_count": 102,
+        "human_count": 0,
+        "ai_count": 102,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 1.0,
+            "mean_ai_probability": 0.9564
+          },
+          "logistic_regression": {
+            "accuracy": 1.0,
+            "mean_ai_probability": 0.8965
+          },
+          "calibrated_svm": {
+            "accuracy": 1.0,
+            "mean_ai_probability": 0.9599
+          }
+        }
+      },
+      "blog": {
+        "sample_count": 27,
+        "human_count": 0,
+        "ai_count": 27,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.963,
+            "mean_ai_probability": 0.914
+          },
+          "logistic_regression": {
+            "accuracy": 0.9259,
+            "mean_ai_probability": 0.7211
+          },
+          "calibrated_svm": {
+            "accuracy": 0.9259,
+            "mean_ai_probability": 0.7938
+          }
+        }
+      },
+      "chatgpt": {
+        "sample_count": 158,
+        "human_count": 158,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.9557,
+            "mean_ai_probability": 0.1273
+          },
+          "logistic_regression": {
+            "accuracy": 0.981,
+            "mean_ai_probability": 0.1893
+          },
+          "calibrated_svm": {
+            "accuracy": 0.9684,
+            "mean_ai_probability": 0.1108
+          }
+        }
+      },
+      "davinci": {
+        "sample_count": 67,
+        "human_count": 67,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.7463,
+            "mean_ai_probability": 0.2624
+          },
+          "logistic_regression": {
+            "accuracy": 0.9552,
+            "mean_ai_probability": 0.184
+          },
+          "calibrated_svm": {
+            "accuracy": 0.9403,
+            "mean_ai_probability": 0.1126
+          }
+        }
+      },
+      "flan_t5": {
+        "sample_count": 46,
+        "human_count": 46,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.8261,
+            "mean_ai_probability": 0.2554
+          },
+          "logistic_regression": {
+            "accuracy": 0.9783,
+            "mean_ai_probability": 0.162
+          },
+          "calibrated_svm": {
+            "accuracy": 1.0,
+            "mean_ai_probability": 0.0727
+          }
+        }
+      },
+      "gpt-3": {
+        "sample_count": 44,
+        "human_count": 44,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.4545,
+            "mean_ai_probability": 0.5404
+          },
+          "logistic_regression": {
+            "accuracy": 0.8864,
+            "mean_ai_probability": 0.2895
+          },
+          "calibrated_svm": {
+            "accuracy": 0.8864,
+            "mean_ai_probability": 0.2364
+          }
+        }
+      },
+      "gpt-3.5": {
+        "sample_count": 48,
+        "human_count": 48,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.8542,
+            "mean_ai_probability": 0.1801
+          },
+          "logistic_regression": {
+            "accuracy": 0.9792,
+            "mean_ai_probability": 0.1384
+          },
+          "calibrated_svm": {
+            "accuracy": 1.0,
+            "mean_ai_probability": 0.0673
+          }
+        }
+      },
+      "gpt-4": {
+        "sample_count": 133,
+        "human_count": 133,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.9774,
+            "mean_ai_probability": 0.0482
+          },
+          "logistic_regression": {
+            "accuracy": 0.985,
+            "mean_ai_probability": 0.0968
+          },
+          "calibrated_svm": {
+            "accuracy": 0.9774,
+            "mean_ai_probability": 0.0473
+          }
+        }
+      },
+      "gpt2": {
+        "sample_count": 49,
+        "human_count": 49,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.2653,
+            "mean_ai_probability": 0.6693
+          },
+          "logistic_regression": {
+            "accuracy": 0.2653,
+            "mean_ai_probability": 0.617
+          },
+          "calibrated_svm": {
+            "accuracy": 0.2653,
+            "mean_ai_probability": 0.6389
+          }
+        }
+      },
+      "news articles": {
+        "sample_count": 56,
+        "human_count": 0,
+        "ai_count": 56,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 1.0,
+            "mean_ai_probability": 0.9598
+          },
+          "logistic_regression": {
+            "accuracy": 1.0,
+            "mean_ai_probability": 0.8741
+          },
+          "calibrated_svm": {
+            "accuracy": 1.0,
+            "mean_ai_probability": 0.9335
+          }
+        }
+      },
+      "openwebtext": {
+        "sample_count": 347,
+        "human_count": 0,
+        "ai_count": 347,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.7983,
+            "mean_ai_probability": 0.7403
+          },
+          "logistic_regression": {
+            "accuracy": 0.9135,
+            "mean_ai_probability": 0.7806
+          },
+          "calibrated_svm": {
+            "accuracy": 0.928,
+            "mean_ai_probability": 0.8516
+          }
+        }
+      },
+      "opinion statements": {
+        "sample_count": 251,
+        "human_count": 0,
+        "ai_count": 251,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.8645,
+            "mean_ai_probability": 0.8431
+          },
+          "logistic_regression": {
+            "accuracy": 0.8367,
+            "mean_ai_probability": 0.802
+          },
+          "calibrated_svm": {
+            "accuracy": 0.8526,
+            "mean_ai_probability": 0.8281
+          }
+        }
+      },
+      "opt-iml": {
+        "sample_count": 63,
+        "human_count": 63,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.6984,
+            "mean_ai_probability": 0.36
+          },
+          "logistic_regression": {
+            "accuracy": 0.9683,
+            "mean_ai_probability": 0.2029
+          },
+          "calibrated_svm": {
+            "accuracy": 0.9683,
+            "mean_ai_probability": 0.1031
+          }
+        }
+      },
+      "paraphrase": {
+        "sample_count": 257,
+        "human_count": 257,
+        "ai_count": 0,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.7938,
+            "mean_ai_probability": 0.195
+          },
+          "logistic_regression": {
+            "accuracy": 0.8755,
+            "mean_ai_probability": 0.1852
+          },
+          "calibrated_svm": {
+            "accuracy": 0.8638,
+            "mean_ai_probability": 0.1564
+          }
+        }
+      },
+      "scientific research": {
+        "sample_count": 40,
+        "human_count": 0,
+        "ai_count": 40,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.525,
+            "mean_ai_probability": 0.4917
+          },
+          "logistic_regression": {
+            "accuracy": 0.85,
+            "mean_ai_probability": 0.6538
+          },
+          "calibrated_svm": {
+            "accuracy": 0.825,
+            "mean_ai_probability": 0.7633
+          }
+        }
+      },
+      "webtext": {
+        "sample_count": 46,
+        "human_count": 0,
+        "ai_count": 46,
+        "models": {
+          "naive_bayes": {
+            "accuracy": 0.6957,
+            "mean_ai_probability": 0.6489
+          },
+          "logistic_regression": {
+            "accuracy": 0.7391,
+            "mean_ai_probability": 0.6324
+          },
+          "calibrated_svm": {
+            "accuracy": 0.7391,
+            "mean_ai_probability": 0.6711
+          }
+        }
+      }
+    }
+  },
+  "perturbation_robustness_tests": {
+    "whitespace_padding": {
+      "description": "Doubles inter-word spacing to test robustness to spacing artifacts.",
+      "sample_count": 1734,
+      "models": {
+        "naive_bayes": {
+          "accuracy": 0.8201,
+          "precision_ai": 0.8077,
+          "recall_ai": 0.8412,
+          "f1_ai": 0.8241,
+          "roc_auc": 0.9087,
+          "brier_score": 0.1302,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        },
+        "logistic_regression": {
+          "accuracy": 0.8985,
+          "precision_ai": 0.9015,
+          "recall_ai": 0.8953,
+          "f1_ai": 0.8984,
+          "roc_auc": 0.9662,
+          "brier_score": 0.0801,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        },
+        "calibrated_svm": {
+          "accuracy": 0.9002,
+          "precision_ai": 0.8973,
+          "recall_ai": 0.9045,
+          "f1_ai": 0.9009,
+          "roc_auc": 0.9671,
+          "brier_score": 0.072,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        }
+      }
+    },
+    "lowercase_normalization": {
+      "description": "Converts all characters to lowercase to evaluate case sensitivity.",
+      "sample_count": 1734,
+      "models": {
+        "naive_bayes": {
+          "accuracy": 0.8201,
+          "precision_ai": 0.8077,
+          "recall_ai": 0.8412,
+          "f1_ai": 0.8241,
+          "roc_auc": 0.9087,
+          "brier_score": 0.1302,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        },
+        "logistic_regression": {
+          "accuracy": 0.8985,
+          "precision_ai": 0.9015,
+          "recall_ai": 0.8953,
+          "f1_ai": 0.8984,
+          "roc_auc": 0.9663,
+          "brier_score": 0.0801,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        },
+        "calibrated_svm": {
+          "accuracy": 0.9002,
+          "precision_ai": 0.8973,
+          "recall_ai": 0.9045,
+          "f1_ai": 0.9009,
+          "roc_auc": 0.9671,
+          "brier_score": 0.072,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        }
+      }
+    },
+    "titlecase_transform": {
+      "description": "Converts every word to Title Case to assess sensitivity to non-standard casing.",
+      "sample_count": 1734,
+      "models": {
+        "naive_bayes": {
+          "accuracy": 0.8201,
+          "precision_ai": 0.8077,
+          "recall_ai": 0.8412,
+          "f1_ai": 0.8241,
+          "roc_auc": 0.9087,
+          "brier_score": 0.1302,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        },
+        "logistic_regression": {
+          "accuracy": 0.8985,
+          "precision_ai": 0.9015,
+          "recall_ai": 0.8953,
+          "f1_ai": 0.8984,
+          "roc_auc": 0.9663,
+          "brier_score": 0.0801,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        },
+        "calibrated_svm": {
+          "accuracy": 0.9002,
+          "precision_ai": 0.8973,
+          "recall_ai": 0.9045,
+          "f1_ai": 0.9009,
+          "roc_auc": 0.9671,
+          "brier_score": 0.072,
+          "accuracy_delta": 0.0,
+          "f1_delta": 0.0
+        }
+      }
+    },
+    "punctuation_removal": {
+      "description": "Strips all ASCII punctuation to test syntactic/delimiter reliance.",
+      "sample_count": 1734,
+      "models": {
+        "naive_bayes": {
+          "accuracy": 0.8114,
+          "precision_ai": 0.808,
+          "recall_ai": 0.8182,
+          "f1_ai": 0.813,
+          "roc_auc": 0.8998,
+          "brier_score": 0.1374,
+          "accuracy_delta": -0.0087,
+          "f1_delta": -0.0111
+        },
+        "logistic_regression": {
+          "accuracy": 0.8818,
+          "precision_ai": 0.8555,
+          "recall_ai": 0.9194,
+          "f1_ai": 0.8863,
+          "roc_auc": 0.959,
+          "brier_score": 0.0892,
+          "accuracy_delta": -0.0167,
+          "f1_delta": -0.0121
+        },
+        "calibrated_svm": {
+          "accuracy": 0.8795,
+          "precision_ai": 0.8367,
+          "recall_ai": 0.9436,
+          "f1_ai": 0.887,
+          "roc_auc": 0.9586,
+          "brier_score": 0.0881,
+          "accuracy_delta": -0.0207,
+          "f1_delta": -0.0139
+        }
+      }
+    },
+    "punctuation_doubling": {
+      "description": "Doubles commas and sentence-ending punctuation (.. and ??) to simulate noisy syntax.",
+      "sample_count": 1734,
+      "models": {
+        "naive_bayes": {
+          "accuracy": 0.8183,
+          "precision_ai": 0.8112,
+          "recall_ai": 0.8308,
+          "f1_ai": 0.8209,
+          "roc_auc": 0.9073,
+          "brier_score": 0.1308,
+          "accuracy_delta": -0.0018,
+          "f1_delta": -0.0032
+        },
+        "logistic_regression": {
+          "accuracy": 0.8962,
+          "precision_ai": 0.8973,
+          "recall_ai": 0.8953,
+          "f1_ai": 0.8963,
+          "roc_auc": 0.9658,
+          "brier_score": 0.081,
+          "accuracy_delta": -0.0023,
+          "f1_delta": -0.0021
+        },
+        "calibrated_svm": {
+          "accuracy": 0.8979,
+          "precision_ai": 0.8932,
+          "recall_ai": 0.9045,
+          "f1_ai": 0.8988,
+          "roc_auc": 0.9664,
+          "brier_score": 0.0728,
+          "accuracy_delta": -0.0023,
+          "f1_delta": -0.0021
+        }
+      }
+    }
+  },
+  "smoke_inference_verification": {
+    "sample_input": "In this study, we investigate the empirical convergence rates of gradient descent algorithms applied to overparameterized neural networks under standard smoothness assumptions.",
+    "prediction_output": {
+      "text_length_chars": 176,
+      "text_length_words": 22,
+      "predictions": {
+        "naive_bayes": {
+          "label": "AI",
+          "predicted_class": 1,
+          "ai_probability": 0.6793,
+          "human_probability": 0.3207,
+          "confidence": 0.6793
+        },
+        "logistic_regression": {
+          "label": "Human",
+          "predicted_class": 0,
+          "ai_probability": 0.3208,
+          "human_probability": 0.6792,
+          "confidence": 0.6792
+        },
+        "calibrated_svm": {
+          "label": "Human",
+          "predicted_class": 0,
+          "ai_probability": 0.4883,
+          "human_probability": 0.5117,
+          "confidence": 0.5117
+        }
+      },
+      "consensus": {
+        "ai_votes": 1,
+        "human_votes": 2,
+        "mean_ai_probability": 0.4961,
+        "consensus_label": "Human"
+      }
+    },
+    "top_explanations": [
+      {
+        "feature": "word_tfidf__algorithms",
+        "tfidf": 0.3498,
+        "coefficient": 0.8464,
+        "contribution": 0.296,
+        "direction": "AI"
+      },
+      {
+        "feature": "word_tfidf__in this",
+        "tfidf": 0.1683,
+        "coefficient": 1.0508,
+        "contribution": 0.1769,
+        "direction": "AI"
+      },
+      {
+        "feature": "word_tfidf__neural",
+        "tfidf": 0.363,
+        "coefficient": 0.4219,
+        "contribution": 0.1532,
+        "direction": "AI"
+      },
+      {
+        "feature": "word_tfidf__networks",
+        "tfidf": 0.294,
+        "coefficient": 0.4868,
+        "contribution": 0.1431,
+        "direction": "AI"
+      },
+      {
+        "feature": "word_tfidf__we",
+        "tfidf": 0.0897,
+        "coefficient": 1.1226,
+        "contribution": 0.1007,
+        "direction": "AI"
+      }
+    ]
+  }
+}
