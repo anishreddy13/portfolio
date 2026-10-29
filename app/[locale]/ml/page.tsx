@@ -1,7 +1,7 @@
 "use client";
 
 import { trackActivity } from "../../../lib/trackActivity";
-import { fetchMlHealth, fetchMlJson, fetchSkinJson } from "../../../lib/mlApi";
+import { fetchMlHealth, fetchAuthorshipHealth, fetchMlJson, fetchSkinJson } from "../../../lib/mlApi";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
@@ -1192,7 +1192,8 @@ function SkinCancerTab({ serverStatus }: { serverStatus: string }) {
 export default function MLPage() {
   const t = useTranslations("ML");
   const [activeTab, setActiveTab]       = useState<TabType>("sentiment");
-  const [serverStatus, setServerStatus] = useState("checking");
+  const [serverStatus, setServerStatus] = useState<"online" | "offline" | "checking">("checking");
+  const [authorshipStatus, setAuthorshipStatus] = useState<"online" | "offline" | "checking">("checking");
 
   useEffect(() => {
     trackActivity("ml_page", "page_visit");
@@ -1218,16 +1219,63 @@ export default function MLPage() {
     };
   }, []);
 
+  // Health check for core Render ML backend (serving sentiment, spam, emotion, cancer)
   useEffect(() => {
-    const check = async () => {
+    let isCancelled = false;
+    let isChecking = false;
+
+    const checkCore = async () => {
+      if (isChecking) return;
+      isChecking = true;
       try {
         const r = await fetchMlHealth();
-        setServerStatus(r.ok ? "online" : "offline");
-      } catch { setServerStatus("offline"); }
+        if (!isCancelled) setServerStatus(r.ok ? "online" : "offline");
+      } catch {
+        if (!isCancelled) setServerStatus("offline");
+      } finally {
+        isChecking = false;
+      }
     };
-    check();
-    const id = setInterval(check, 10000);
-    return () => clearInterval(id);
+
+    checkCore();
+    const id = setInterval(checkCore, 20000);
+    return () => {
+      isCancelled = true;
+      clearInterval(id);
+    };
+  }, []);
+
+  // Health check specifically for Authorship ML API (Hugging Face Space)
+  useEffect(() => {
+    let isCancelled = false;
+    let isChecking = false;
+
+    const checkAuthorship = async () => {
+      if (isChecking) return;
+      isChecking = true;
+      try {
+        const r = await fetchAuthorshipHealth();
+        if (!isCancelled) {
+          if (r.ok) {
+            const data = await r.json().catch(() => ({}));
+            setAuthorshipStatus(data.authorship_model ? "online" : "offline");
+          } else {
+            setAuthorshipStatus("offline");
+          }
+        }
+      } catch {
+        if (!isCancelled) setAuthorshipStatus("offline");
+      } finally {
+        isChecking = false;
+      }
+    };
+
+    checkAuthorship();
+    const id = setInterval(checkAuthorship, 20000);
+    return () => {
+      isCancelled = true;
+      clearInterval(id);
+    };
   }, []);
 
   const tabs = [
@@ -1282,15 +1330,35 @@ export default function MLPage() {
       <motion.div initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
         className="fixed top-20 right-4 sm:right-5 z-30 flex items-center gap-2 px-2.5 sm:px-3 py-2 rounded-sm"
         style={{ background: "rgba(var(--color-overlay-base), 0.8)", border: "1px solid rgba(255,255,255,0.08)" }}>
-        <span className="w-1.5 h-1.5 rounded-full"
-          style={{
-            background: serverStatus === "online" ? "#C8FF00" : serverStatus === "offline" ? "#FF2D2D" : "#FF6B35",
-            boxShadow:  serverStatus === "online" ? "0 0 6px #C8FF00" : "none",
-            animation:  serverStatus !== "offline" ? "pulse 2s infinite" : "none",
-          }} />
-        <span className="font-mono text-[0.52rem] sm:text-[0.58rem] tracking-[0.16em] sm:tracking-[0.2em] uppercase" style={{ color: "var(--text-tertiary)" }}>
-          {serverStatus === "online" ? "Server Online" : serverStatus === "offline" ? "Server Offline" : "Checking..."}
-        </span>
+        {(() => {
+          const isAuthorship = activeTab === "authorship";
+          const currentStatus = isAuthorship ? authorshipStatus : serverStatus;
+          const statusText = isAuthorship
+            ? currentStatus === "online"
+              ? "Authorship API Online"
+              : currentStatus === "offline"
+              ? "Authorship API Offline"
+              : "Authorship API Checking"
+            : currentStatus === "online"
+            ? "Server Online"
+            : currentStatus === "offline"
+            ? "Server Offline"
+            : "Checking...";
+
+          return (
+            <>
+              <span className="w-1.5 h-1.5 rounded-full"
+                style={{
+                  background: currentStatus === "online" ? "#C8FF00" : currentStatus === "offline" ? "#FF2D2D" : "#FF6B35",
+                  boxShadow:  currentStatus === "online" ? "0 0 6px #C8FF00" : "none",
+                  animation:  currentStatus !== "offline" ? "pulse 2s infinite" : "none",
+                }} />
+              <span className="font-mono text-[0.52rem] sm:text-[0.58rem] tracking-[0.16em] sm:tracking-[0.2em] uppercase" style={{ color: "var(--text-tertiary)" }}>
+                {statusText}
+              </span>
+            </>
+          );
+        })()}
       </motion.div>
 
       <div className="relative z-10 pt-20">
@@ -1444,7 +1512,7 @@ export default function MLPage() {
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.25 }}
           >
-            {activeTab === "authorship" ? <AuthorshipLab serverStatus={serverStatus as any} /> :
+            {activeTab === "authorship" ? <AuthorshipLab serverStatus={authorshipStatus} /> :
              activeTab === "sentiment" ? <SentimentTab serverStatus={serverStatus} /> :
              activeTab === "spam"      ? <SpamTab      serverStatus={serverStatus} /> :
              activeTab === "emotion"   ? <EmotionTab   serverStatus={serverStatus} /> :

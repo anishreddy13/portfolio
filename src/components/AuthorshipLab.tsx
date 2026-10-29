@@ -159,6 +159,7 @@ export default function AuthorshipLab({ serverStatus = "online" }: AuthorshipLab
   const [activeBenchmarkTab, setActiveBenchmarkTab] = useState<
     "overview" | "matrices" | "length" | "perturbations" | "domains"
   >("overview");
+  const [chartScale, setChartScale] = useState<"zero" | "zoomed">("zero");
 
   // Word and character count tracking
   const trimmed = inputText.trim();
@@ -755,13 +756,52 @@ export default function AuthorshipLab({ serverStatus = "online" }: AuthorshipLab
               {t("benchmark_desc")} Calibrated Linear SVM and Logistic Regression perform comparably (~90.0% vs ~89.8%), while Multinomial Naive Bayes provides an ultra-fast baseline (0.15s training).
             </p>
 
+            {/* Chart Scaling Control */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-3 pb-1 border-b border-white/5">
+              <span className="font-mono text-[0.62rem] text-neutral-400">
+                {chartScale === "zero"
+                  ? "Scale: Zero-Baseline Axis (0%–100% full scale — fair visual proportion)"
+                  : "⚠️ Scale: Truncated Axis (75%–100% — visually magnifies performance differences)"}
+              </span>
+              <div className="flex items-center gap-1 p-0.5 rounded-sm bg-black/40 border border-white/5 self-start sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => setChartScale("zero")}
+                  className={`font-mono text-[0.55rem] uppercase tracking-wider px-2.5 py-1 rounded-sm transition-all ${
+                    chartScale === "zero"
+                      ? "bg-[#C8FF00] text-black font-semibold"
+                      : "text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  Zero Baseline (0–100%)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setChartScale("zoomed")}
+                  className={`font-mono text-[0.55rem] uppercase tracking-wider px-2.5 py-1 rounded-sm transition-all ${
+                    chartScale === "zoomed"
+                      ? "bg-amber-400 text-black font-semibold"
+                      : "text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  Zoomed (75–100% Truncated)
+                </button>
+              </div>
+            </div>
+
             {/* Recharts Comparison Chart */}
-            <div className="h-64 sm:h-72 w-full pt-4">
+            <div className="h-64 sm:h-72 w-full pt-2">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={dynamicChartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
                   <XAxis dataKey="metric" stroke="#888" tick={{ fontSize: 11 }} />
-                  <YAxis domain={[75, 100]} stroke="#888" tick={{ fontSize: 11 }} unit="%" />
+                  <YAxis
+                    domain={chartScale === "zero" ? [0, 100] : [75, 100]}
+                    ticks={chartScale === "zero" ? [0, 20, 40, 60, 80, 100] : [75, 80, 85, 90, 95, 100]}
+                    stroke="#888"
+                    tick={{ fontSize: 11 }}
+                    unit="%"
+                  />
                   <Tooltip
                     contentStyle={{ background: "#111", border: "1px solid #333", fontSize: "12px" }}
                     formatter={(val) => [`${val}%`]}
@@ -1063,47 +1103,146 @@ export default function AuthorshipLab({ serverStatus = "online" }: AuthorshipLab
         {/* TAB 5: DOMAIN & GENERATOR SLICES */}
         {activeBenchmarkTab === "domains" && (
           <div className="space-y-4">
-            <p className="font-body text-xs text-neutral-300">
-              Evaluated on test set slices across human source domains and AI generator architectures:
-            </p>
+            {/* Methodological Limitation Notice */}
+            <div className="p-3.5 rounded-sm border border-amber-500/30 bg-amber-500/5 space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-amber-400 text-sm">⚠️</span>
+                <span className="font-mono text-xs uppercase tracking-wider font-semibold text-amber-300">
+                  Methodological Notice: Single-Class Subgroup Partitioning
+                </span>
+              </div>
+              <p className="font-body text-xs text-neutral-300 leading-relaxed">
+                In the AH&amp;AITD held-out test split, domain and generator tags are partition-exclusive: every subgroup below contains <strong>exclusively human-written</strong> or <strong>exclusively AI-generated</strong> texts (0 samples of the counter-class).
+              </p>
+              <p className="font-body text-xs text-neutral-400 leading-relaxed">
+                Consequently, accuracy on a single-class group strictly measures <em>isolated class retention</em> within that specific slice (AI Recall on generators, or Human Specificity on sources) — <strong>not</strong> the classifier&apos;s ability to discriminate between human and AI writing within that category. Because no negative counter-examples exist in these slices, false positive rates cannot be computed here, and these results <strong>do not constitute empirical proof of generalization to unseen generators or domains</strong>.
+              </p>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {benchmarkData?.subgroup_analysis?.source_domain_and_generator_slices
-                ? Object.entries(benchmarkData.subgroup_analysis.source_domain_and_generator_slices).map(([name, s]) => (
-                    <div key={name} className="p-3 rounded-sm border border-white/5 bg-black/20 font-mono text-xs">
-                      <div className="font-semibold text-white truncate capitalize">{name}</div>
-                      <div className="text-[0.6rem] text-neutral-400 mt-1">
-                        Support: {s.sample_count} ({s.human_count} Human / {s.ai_count} AI)
+                ? Object.entries(benchmarkData.subgroup_analysis.source_domain_and_generator_slices).map(([name, s]) => {
+                    const isSingleClass = s.human_count === 0 || s.ai_count === 0;
+                    const isAiOnly = s.human_count === 0;
+                    const metricInterpretation = isAiOnly
+                      ? "Measures AI Recall (Sensitivity). Zero human samples."
+                      : "Measures Human Specificity (True Negative Rate). Zero AI samples.";
+
+                    return (
+                      <div
+                        key={name}
+                        className="p-3.5 rounded-sm border font-mono text-xs flex flex-col justify-between"
+                        style={{
+                          background: "rgba(0,0,0,0.25)",
+                          borderColor: isSingleClass ? "rgba(245,158,11,0.25)" : "rgba(255,255,255,0.08)",
+                        }}
+                      >
+                        <div>
+                          <div className="flex items-start justify-between gap-2 mb-1.5">
+                            <div className="font-semibold text-white capitalize truncate">{name}</div>
+                            {isSingleClass && (
+                              <span
+                                className="text-[0.52rem] uppercase tracking-wider px-1.5 py-0.5 rounded-sm font-semibold shrink-0"
+                                style={{
+                                  background: isAiOnly ? "rgba(255,107,53,0.15)" : "rgba(200,255,0,0.15)",
+                                  color: isAiOnly ? "#FF6B35" : "#C8FF00",
+                                  border: `1px solid ${isAiOnly ? "rgba(255,107,53,0.3)" : "rgba(200,255,0,0.3)"}`,
+                                }}
+                              >
+                                {isAiOnly ? "Single-Class: 100% AI" : "Single-Class: 100% Human"}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="text-[0.62rem] text-neutral-300">
+                            Total Support: <span className="text-white font-semibold">{s.sample_count}</span> samples
+                          </div>
+                          <div className="text-[0.58rem] text-neutral-400 mt-0.5">
+                            Distribution: <span className="text-[#C8FF00]">{s.human_count} Human</span> /{" "}
+                            <span className="text-[#FF6B35]">{s.ai_count} AI</span>
+                          </div>
+
+                          {isSingleClass && (
+                            <div className="text-[0.55rem] text-amber-300/80 bg-amber-400/5 p-1.5 rounded-sm border border-amber-400/15 mt-2 leading-tight">
+                              {metricInterpretation}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex justify-between items-center text-[0.62rem] mt-3 pt-2 border-t border-white/5">
+                          <span className="text-[#C8FF00]">LR: {(s.models.logistic_regression.accuracy * 100).toFixed(1)}%</span>
+                          <span className="text-[#FF6B35]">MNB: {(s.models.naive_bayes.accuracy * 100).toFixed(1)}%</span>
+                          <span className="text-[#00F0FF]">SVM: {(s.models.calibrated_svm.accuracy * 100).toFixed(1)}%</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between text-[0.62rem] mt-2 pt-2 border-t border-white/5">
-                        <span className="text-[#C8FF00]">LR: {(s.models.logistic_regression.accuracy * 100).toFixed(1)}%</span>
-                        <span className="text-[#FF6B35]">MNB: {(s.models.naive_bayes.accuracy * 100).toFixed(1)}%</span>
-                        <span className="text-[#00F0FF]">SVM: {(s.models.calibrated_svm.accuracy * 100).toFixed(1)}%</span>
-                      </div>
-                    </div>
-                  ))
+                    );
+                  })
                 : [
-                    { name: "OpenWebText (Human)", count: 351, lrAcc: "96.3%", mnbAcc: "86.9%", svmAcc: "96.0%" },
-                    { name: "Opinion Statements (Human)", count: 232, lrAcc: "81.0%", mnbAcc: "69.4%", svmAcc: "81.9%" },
-                    { name: "Answers & Q&A (Human)", count: 101, lrAcc: "100.0%", mnbAcc: "100.0%", svmAcc: "100.0%" },
-                    { name: "ChatGPT (AI)", count: 170, lrAcc: "91.2%", mnbAcc: "93.5%", svmAcc: "92.4%" },
-                    { name: "GPT-4 (AI)", count: 112, lrAcc: "88.4%", mnbAcc: "87.5%", svmAcc: "88.4%" },
-                    { name: "Paraphrase Models (AI)", count: 251, lrAcc: "88.8%", mnbAcc: "82.1%", svmAcc: "88.4%" },
-                    { name: "DaVinci (GPT-3.5) (AI)", count: 65, lrAcc: "92.3%", mnbAcc: "89.2%", svmAcc: "93.8%" },
-                    { name: "Flan-T5 (AI)", count: 59, lrAcc: "86.4%", mnbAcc: "79.7%", svmAcc: "86.4%" },
-                    { name: "OPT-IML (AI)", count: 61, lrAcc: "90.2%", mnbAcc: "85.2%", svmAcc: "91.8%" },
-                  ].map((s) => (
-                    <div key={s.name} className="p-3 rounded-sm border border-white/5 bg-black/20 font-mono text-xs">
-                      <div className="font-semibold text-white truncate">{s.name}</div>
-                      <div className="text-[0.6rem] text-neutral-400 mt-1">Support: {s.count} samples</div>
-                      <div className="flex justify-between text-[0.62rem] mt-2 pt-2 border-t border-white/5">
-                        <span className="text-[#C8FF00]">LR: {s.lrAcc}</span>
-                        <span className="text-[#FF6B35]">MNB: {s.mnbAcc}</span>
-                        <span className="text-[#00F0FF]">SVM: {s.svmAcc}</span>
+                    { name: "OpenWebText (AI Generator)", count: 347, human: 0, ai: 347, lrAcc: "96.3%", mnbAcc: "86.9%", svmAcc: "96.0%" },
+                    { name: "Opinion Statements (AI Generator)", count: 251, human: 0, ai: 251, lrAcc: "81.0%", mnbAcc: "69.4%", svmAcc: "81.9%" },
+                    { name: "Answers & Q&A (AI Generator)", count: 102, human: 0, ai: 102, lrAcc: "100.0%", mnbAcc: "100.0%", svmAcc: "100.0%" },
+                    { name: "ChatGPT (Human Domain)", count: 158, human: 158, ai: 0, lrAcc: "91.2%", mnbAcc: "93.5%", svmAcc: "92.4%" },
+                    { name: "GPT-4 (Human Domain)", count: 133, human: 133, ai: 0, lrAcc: "88.4%", mnbAcc: "87.5%", svmAcc: "88.4%" },
+                    { name: "Paraphrase Models (Human Domain)", count: 257, human: 257, ai: 0, lrAcc: "88.8%", mnbAcc: "82.1%", svmAcc: "88.4%" },
+                    { name: "DaVinci (Human Domain)", count: 67, human: 67, ai: 0, lrAcc: "92.3%", mnbAcc: "89.2%", svmAcc: "93.8%" },
+                    { name: "Flan-T5 (Human Domain)", count: 46, human: 46, ai: 0, lrAcc: "86.4%", mnbAcc: "79.7%", svmAcc: "86.4%" },
+                    { name: "OPT-IML (Human Domain)", count: 63, human: 63, ai: 0, lrAcc: "90.2%", mnbAcc: "85.2%", svmAcc: "91.8%" },
+                  ].map((s) => {
+                    const isAiOnly = s.human === 0;
+                    const metricInterpretation = isAiOnly
+                      ? "Measures AI Recall (Sensitivity). Zero human samples."
+                      : "Measures Human Specificity (True Negative Rate). Zero AI samples.";
+
+                    return (
+                      <div
+                        key={s.name}
+                        className="p-3.5 rounded-sm border font-mono text-xs flex flex-col justify-between"
+                        style={{
+                          background: "rgba(0,0,0,0.25)",
+                          borderColor: "rgba(245,158,11,0.25)",
+                        }}
+                      >
+                        <div>
+                          <div className="flex items-start justify-between gap-2 mb-1.5">
+                            <div className="font-semibold text-white capitalize truncate">{s.name}</div>
+                            <span
+                              className="text-[0.52rem] uppercase tracking-wider px-1.5 py-0.5 rounded-sm font-semibold shrink-0"
+                              style={{
+                                background: isAiOnly ? "rgba(255,107,53,0.15)" : "rgba(200,255,0,0.15)",
+                                color: isAiOnly ? "#FF6B35" : "#C8FF00",
+                                border: `1px solid ${isAiOnly ? "rgba(255,107,53,0.3)" : "rgba(200,255,0,0.3)"}`,
+                              }}
+                            >
+                              {isAiOnly ? "Single-Class: 100% AI" : "Single-Class: 100% Human"}
+                            </span>
+                          </div>
+
+                          <div className="text-[0.62rem] text-neutral-300">
+                            Total Support: <span className="text-white font-semibold">{s.count}</span> samples
+                          </div>
+                          <div className="text-[0.58rem] text-neutral-400 mt-0.5">
+                            Distribution: <span className="text-[#C8FF00]">{s.human} Human</span> /{" "}
+                            <span className="text-[#FF6B35]">{s.ai} AI</span>
+                          </div>
+
+                          <div className="text-[0.55rem] text-amber-300/80 bg-amber-400/5 p-1.5 rounded-sm border border-amber-400/15 mt-2 leading-tight">
+                            {metricInterpretation}
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between items-center text-[0.62rem] mt-3 pt-2 border-t border-white/5">
+                          <span className="text-[#C8FF00]">LR: {s.lrAcc}</span>
+                          <span className="text-[#FF6B35]">MNB: {s.mnbAcc}</span>
+                          <span className="text-[#00F0FF]">SVM: {s.svmAcc}</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
             </div>
+
+            <p className="font-mono text-[0.6rem] text-neutral-400 pt-2 leading-relaxed">
+              *Robustness Boundary Note: Genuine cross-generator robustness evaluation requires balanced test sets where both human and synthetic texts coexist within each domain. Single-class subgroup evaluations must be interpreted strictly as class-conditional recall/specificity within the AH&amp;AITD sample collection, not as proof that classifiers generalize across new, unobserved generative model families.
+            </p>
           </div>
         )}
       </section>
